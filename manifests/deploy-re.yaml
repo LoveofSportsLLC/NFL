@@ -40,11 +40,11 @@ spec:
               key: azurestorageaccountkey
         - name: AZURE_SHARE_NAME
           value: sportshare
-        - name: MONGODB_URL # Add this environment variable
-          valueFrom:
-            secretKeyRef:
-              name: my-cluster-secrets
-              key: MONGODB_URL # Use the correct key name
+        #- name: MONGODB_URL # Add this environment variable
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: my-cluster-secrets
+        #      key: MONGODB_URL # Use the correct key name
         ports:
         - containerPort: 6379
         resources:

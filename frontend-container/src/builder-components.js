@@ -26,8 +26,8 @@ import Statistics from "./pages/dashboards/Analytics/Statistics";
 import Traffic from "./pages/dashboards/Analytics/Traffic";
 import WorldMap from "./pages/dashboards/Analytics/WorldMap";
 import GamesSchedule from "./pages/dashboards/Analytics/Schedule";
-//import { accordionConfig } from "@builder.io/widgets/dist/lib/components/Accordion.config";
-//import loadable from "@loadable/component";
+import { accordionConfig } from "@builder.io/widgets/dist/lib/components/Accordion.config";
+import loadable from "@loadable/component";
 const colors = ["primary", "secondary", "success", "danger", "warning", "info"];
 const components = [
   {
@@ -85,14 +85,14 @@ const components = [
   { component: GamesSchedule, name: "GamesSchedule", inputs: [] },
 ];
 
-//Builder.registerComponent(
-  //loadable(() =>
-    //import("@builder.io/widgets/dist/lib/components/Accordion").then(
-    //  (mod) => mod.AccordionComponent,
-   // ),
-  //),
- // accordionConfig,
-//);
+Builder.registerComponent(
+  loadable(() =>
+    import("@builder.io/widgets/dist/lib/components/Accordion").then(
+      (mod) => mod.AccordionComponent,
+    ),
+  ),
+  accordionConfig,
+);
 
 components.forEach(({ component, name, inputs }) => {
   Builder.registerComponent(component, {

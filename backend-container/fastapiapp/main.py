@@ -31,8 +31,8 @@ from src.apimappings.TeamProfile import bp as bp_team_profile
 from src.apimappings.TeamProfile import fetch_and_save_team_profile
 from src.apimappings.LeagueHierarchy import bp as bp_league_hierarchy
 from src.apimappings.LeagueHierarchy import fetchandsaveLeagueHierarchy
-from src.apimappings.current_season_schedule import bp as bp_current_season_schedule
-from src.apimappings.current_season_schedule import fetch_and_save_weekly_schedule
+#from src.apimappings.current_season_schedule import bp as bp_current_season_schedule
+#from src.apimappings.current_season_schedule import fetch_and_save_weekly_schedule
 from src.apimappings.PBP import bp as bp_pbp
 from src.apimappings.PBP import process_games_for_year
 from fastapi import FastAPI
