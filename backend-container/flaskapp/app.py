@@ -32,15 +32,16 @@ from src.apimappings.TeamProfile import bp as bp_team_profile
 from src.apimappings.TeamProfile import fetch_and_save_team_profile
 from src.apimappings.LeagueHierarchy import bp as bp_league_hierarchy
 from src.apimappings.LeagueHierarchy import fetchandsaveLeagueHierarchy
-from src.apimappings.current_season_schedule import bp as bp_current_season_schedule
-from src.apimappings.current_season_schedule import fetch_and_save_weekly_schedule
+#from src.apimappings.current_season_schedule import bp as bp_current_season_schedule
+#from src.apimappings.current_season_schedule import fetch_and_save_weekly_schedule
 from src.apimappings.PBP import bp as bp_pbp
 from src.apimappings.PBP import process_games_for_year
-from src.apimappings.gamefeeds import gamefeeds_blueprint
-from src.apimappings.additionalfeeds import additionalfeeds_blueprint
-from src.apimappings.nflverse import nflverse_blueprint, fetch_and_store
+#from src.apimappings.gamefeeds import gamefeeds_blueprint
+#from src.apimappings.additionalfeeds import additionalfeeds_blueprint
+#from src.apimappings.nflverse import nflverse_blueprint, fetch_and_store
 #DATABASE IMPORTS
-from src.database.connections import get_mongodb_connection, connect_to_redis, r
+from src.database.connections import connect_to_redis, r
+#get_mongodb_connection, 
 from src.database.rediscache import clear_cache, FootballData
 #NFLFETCHQUERIES IMPORTS
 from src.nflfetchqueries.fetchallseasonsplayerstatdetails import fetch_AllSeasonsPlayerStatDetails
@@ -61,7 +62,7 @@ from src.nflfeapi.gettop10 import structure_data_for_categories, bp_get_top10
 from src.nflfeapi.getvenues import venues, bp_venues
 from src.nflfeapi.populateseasons import populate_seasons, bp_populate_seasons
 from src.nflfeapi.populateteams import populate_teams, bp_populate_teams
-from src.nflfeapi.support_api import submit_support_request, bp_support_api
+#from src.nflfeapi.support_api import submit_support_request, bp_support_api
 #ROUTERS IMPORTS
 #UTILS IMPORTS
 from src.utils.auth import init_oauth, auth_blueprint, login, callback, logout, home
@@ -90,8 +91,8 @@ CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "https://l
                                  "https://loveoffootball.io/api/submit-support"]}})
 #'https://0.0.0.0', 'https://loveoffootball.io','https://loveoffootball.io/image',
 #'http://localhost:3000','http://localhost:5000','https://loveoffootball.io/api/submit-support'
-mongodb_client = get_mongodb_connection()
-db = MongoEngine(app)
+#mongodb_client = get_mongodb_connection()
+#db = MongoEngine(app)
 redis_primary_host = 'redis'
 redis_fallback_host = 'redis-service'
 redis_port = 6379
@@ -110,7 +111,7 @@ if FLASK_DEBUG.lower() == 'true':
     app.config.from_object(DevelopmentConfig)
 else:
     app.config.from_object(ProductionConfig)
-app.register_blueprint(bp_current_season_schedule)
+#app.register_blueprint(bp_current_season_schedule)
 app.register_blueprint(bp_league_hierarchy)
 app.register_blueprint(bp_team_profile)
 app.register_blueprint(bp_seasons)
@@ -124,11 +125,11 @@ app.register_blueprint(bp_get_top10)
 app.register_blueprint(bp_venues)
 app.register_blueprint(bp_populate_seasons)
 app.register_blueprint(bp_populate_teams)
-app.register_blueprint(bp_support_api, url_prefix='/api')
-app.register_blueprint(gamefeeds_blueprint, url_prefix='/gamefeeds')
-app.register_blueprint(additionalfeeds_blueprint, url_prefix='/additionalfeeds')
+#app.register_blueprint(bp_support_api, url_prefix='/api')
+#app.register_blueprint(gamefeeds_blueprint, url_prefix='/gamefeeds')
+#app.register_blueprint(additionalfeeds_blueprint, url_prefix='/additionalfeeds')
 app.register_blueprint(dalle3_blueprint)
-app.register_blueprint(nflverse_blueprint)
+#app.register_blueprint(nflverse_blueprint)
 app.secret_key = 'sessionkey'
 app.jinja_env.cache = {}
 

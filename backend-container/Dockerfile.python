@@ -14,6 +14,7 @@ RUN apt-get update && \
     libcurl4-openssl-dev libssl-dev \
     r-base
 
+
 # Create a directory for R libraries
 RUN mkdir -p /usr/local/lib/R/site-library
 
@@ -41,4 +42,4 @@ EXPOSE 5001
 
 # Run your Flask application
 CMD ["python", "flaskapp/run.py"]
-CMD ["python", "src/apimappings/nflverse.py"]
+#CMD ["python", "src/apimappings/nflverse.py"]
