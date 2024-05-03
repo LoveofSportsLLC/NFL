@@ -151,6 +151,11 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: javascript_origins
+            - name: GOOGLE_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: apikey
           ports:
             - containerPort: 3000
           volumeMounts:
