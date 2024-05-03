@@ -1,8 +1,6 @@
-Dockerfile.react
 tmp.Dockerfile
 *.log
 
-.env*
 .flaskenv*
 !.env.project
 !.env.vault

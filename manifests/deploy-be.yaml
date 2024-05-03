@@ -116,7 +116,7 @@ spec:
             - name: VITE_SUPPORT_API_URL
               valueFrom:
                 secretKeyRef:
-                  name: environment-secret 
+                  name: environment-secret
                   key: VITE_SUPPORT_API_URL
             - name: DALLE3KEY
               valueFrom:
@@ -138,6 +138,46 @@ spec:
                 secretKeyRef:
                   name: my-cluster-secrets
                   key: WORKERS
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: client_id
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: client_secret
+            - name: GOOGLE_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: project_id
+            - name: GOOGLE_AUTH_URI
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: auth_uri
+            - name: GOOGLE_TOKEN_URI
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: token_uri
+            - name: GOOGLE_AUTH_PROVIDER_X509_CERT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: auth_provider_x509_cert_url
+            - name: GOOGLE_REDIRECT_URIS
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: redirect_uris
+            - name: GOOGLE_JAVASCRIPT_ORIGINS
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: javascript_origins
           ports:
             - containerPort: 5000
           volumeMounts:
