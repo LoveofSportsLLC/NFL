@@ -10,18 +10,6 @@ const root = createRoot(document.getElementById("root"));
 const viteauth0Domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const viteauth0ClientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 const viteauth0Audience = import.meta.env.VITE_API_AUDIENCE;
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ApolloProvider } from "@apollo/client";
-import client from "./apolloClient";
-import { Auth0Provider } from "@auth0/auth0-react";
-const root = createRoot(document.getElementById("root"));
-const viteauth0Domain = import.meta.env.VITE_AUTH0_DOMAIN;
-const viteauth0ClientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
-const viteauth0Audience = import.meta.env.VITE_API_AUDIENCE;
 // Log the environment variables to verify their values
 console.log("Auth0 Domain:", viteauth0Domain);
 console.log("Auth0 Client ID:", viteauth0ClientId);
