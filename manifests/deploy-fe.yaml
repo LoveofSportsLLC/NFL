@@ -91,6 +91,11 @@ spec:
                 secretKeyRef:
                   name: auth0-secrets
                   key: VITE_AUTH0_SECRET
+            - name: VITE_AUTH0_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-secrets
+                  key: VITE_AUTH0_DOMAIN
             - name: VITE_AUTH0_BASE_URL
               valueFrom:
                 secretKeyRef:
