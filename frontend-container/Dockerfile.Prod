@@ -11,7 +11,24 @@ FROM node:20-alpine
 WORKDIR /app
 # Copying from /app/dist of the build stage to /app/build of the final image
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY . .
+# Copy the server.js file into the container
 COPY server.js ./
+
+# No need to run npm install express if it's included in package.json dependencies
 RUN npm install express
+
+# Change owner of the /app folder to the node user for security reasons
+RUN chown -R node:node /app
+
+# Switch to the node user
+USER node
+
+# Set the environment variable for production
+ENV NODE_ENV production
+
+# Expose the port the app runs on
 EXPOSE 3000
+
 CMD ["npm", "start"]
