@@ -63,8 +63,8 @@
 // 3rd party plugins
 @import "apexcharts/src/assets/apexcharts";
 @import "dragula/dist/dragula";
-@import "react-quill/dist/quill.snow";
-@import "react-quill/dist/quill.bubble";
+@import url('https://cdn.quilljs.com/1.3.6/quill.snow.css');
+@import url('https://cdn.quilljs.com/1.3.6/quill.bubble.css');
 @import "notyf/notyf.min";
 @import "jsvectormap/dist/css/jsvectormap.css";
 

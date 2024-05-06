@@ -6,6 +6,7 @@ import { ViteEjsPlugin } from "vite-plugin-ejs";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { resolve } from "path";
 import { checker } from "vite-plugin-checker";
+import { terser } from "rollup-plugin-terser";
 
 export default defineConfig({
   server: {
@@ -31,6 +32,7 @@ export default defineConfig({
     }),
     splitVendorChunkPlugin(),
     checker(),
+    terser(),
   ],
   resolve: {
     alias: {
@@ -39,6 +41,7 @@ export default defineConfig({
     },
   },
   build: {
+    minify: "terser",
     outDir: "dist",
     cssCodeSplit: true,
     chunkSizeWarningLimit: 300,

@@ -14,42 +14,11 @@ const viteauth0Audience = import.meta.env.VITE_API_AUDIENCE;
 console.log("Auth0 Domain:", viteauth0Domain);
 console.log("Auth0 Client ID:", viteauth0ClientId);
 console.log("Auth0 Audience:", viteauth0Audience);
-const onRedirectCallback = (appState) => {
+const authRedirectCallback = (appState) => {
   window.history.replaceState(
     {},
     document.title,
-    appState?.returnTo || "/dashboard/default",
-  );
-};
-
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Auth0Provider
-        domain={viteauth0Domain}
-        clientId={viteauth0ClientId}
-        authorizationParams={{
-          redirect_uri: window.location.origin + "/dashboard/default",
-          returnto: window.location.origin,
-        }}
-        onRedirectCallback={onRedirectCallback}
-        audience={viteauth0Audience}
-      >
-        <ApolloProvider client={client}>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </ApolloProvider>
-      </Auth0Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
-);
-
-const onRedirectCallback = (appState) => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState?.returnTo || "/dashboard/default",
+    appState?.returnTo || "/dashboard/default"
   );
 };
 
@@ -63,7 +32,7 @@ root.render(
           redirect_uri: window.location.origin + "/dashboard/default",
           returnTo: window.location.origin,
         }}
-        onRedirectCallback={onRedirectCallback}
+        onRedirectCallback={authRedirectCallback}
         audience={viteauth0Audience}
       >
         <ApolloProvider client={client}>
@@ -73,5 +42,5 @@ root.render(
         </ApolloProvider>
       </Auth0Provider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
