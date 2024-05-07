@@ -1,0 +1,91 @@
+/* .form li{grid-template-columns:250px calc(100% - 250px)!important;} */
+.form li{display: block!important;}
+
+/* 
+	=============
+	Alerts
+	=============
+*/
+ .alert{padding:8px 10px; margin-bottom: 1rem; border-radius:6px; overflow:hidden;}
+ .alert svg, .alert img{vertical-align:middle; margin-right:10px;}
+ .alert-success{background:#66C397; color: #fff;}
+ .alert-warning{background:#E28040; color: #fff;}
+ .alert-error{background:#CD3546; color:#fff;}
+ .alert-info{background:#f0f6fc; color:#2781d5;}
+ .form li .lbl span{position: relative; margin-left: 10px; left: auto; top: 2px; right: 0px;}
+ 
+ /*====== Sponsor title   =====*/
+h2 .title4 {
+    width: 100%;
+    position: relative;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    font-family: Roboto;
+    color: #293042;
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 24px;
+}
+.crossIcon{position: absolute; right: 5px; top: 5px; color:#fff;}
+.cardIcons{
+  position:absolute;
+  right:16px; top:2px;
+}
+.cardInfo .cvcNum {
+  border-left: 1px solid #E6EBF1;
+  margin-left: 5px;
+  padding-left: 10px;
+}
+ 
+/* ============= */
+.submitBtn {
+    max-width: 400px;
+    position: relative;
+    margin: 0px auto;
+    text-align: center;
+  }
+  .submitBtn .btn {
+      width: auto;
+      position: relative;
+      border-radius: 8px;
+      background-color: #4bbf73;
+      height: 42px;
+      text-align: center;
+      font-size: 16px;
+      color: #fff;
+      font-family: Roboto;
+      padding: 12px 30px;
+      font-size: 17px;
+      font-weight: 500;
+      text-transform: capitalize;
+  }
+  /* .submitBtn .btn:hover {
+    transform: translateY(-10px);
+  } */
+  .submitBtn .btn.disable {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  
+  
+.cardInfo {
+  display: flex;
+  justify-content:space-between;
+  border-top:1px solid #E6EBF1;
+  margin-top:10px;
+  padding-top: 10px;
+}
+
+.loadingGif {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  margin: auto;
+  z-index: 100;
+}

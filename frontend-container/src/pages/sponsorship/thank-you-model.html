@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="initial-scale=1, width=device-width"/>
+    <!--Add this line to include Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="./inc/css/model-theme.css" />
+    <link rel="stylesheet" href="./inc/css/style-model.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap"/>
+<title>Thank You for Your Sponsorship!</title>  
+<script type="text/javascript">
+  function openModal(){
+    $("#overlayId").show();
+    $("#modelId").show();
+  }
+  function closeModal(){   
+    $("#overlayId").hide();
+    $("#modelId").hide();
+  }
+</script>	 
+</head>
+<body>
+<!-- 
+=============== 
+ Model Box :: 
+=============== 
+-->
+<div class="overlay" id="overlayId" style="display: block;"></div>
+<div class="model scroll" id="modelId" style="display:block;">
+<div class="modelWrapper" style="width:360px">    
+<h4>
+  <strong style="font-size: 16px;">Thank You for Your Sponsorship!</strong>
+  <a href="javascript:;" class="crossIcon" id="closePopup" onclick="closeModal();"><i class="fas fa-times"></i></a>
+  <!-- <a href="javascript:;" class="close" id="closePopup" onclick="closeModal();"></a> -->
+</h4>
+<div class="modelContent" style="padding:25px 16px;">
+        <div class="alert alert-success">
+        <!-- <img src="images/success-tik.svg" /> -->
+        <span class=""><i class="fas fa-check-circle"></i></span>
+        <span>Your sponsorship has been received.</span>
+        <!-- <span class="crossIcon"><i class="fas fa-times vector-icon3"></i></span>
+        <span>Your sponsorship has been received.</span> -->
+      </div>	
+    
+    <!-- Add card section  -->
+<section class="">
+    <ul class="form">  
+    <li>
+        <div class="lbl">
+          Message to the team <label>(Optional)
+          </label>
+          <!-- <span>*</span> -->
+        </div>
+        <div class="val">
+            <div class="textareaMaxValue" style="width:100%;">
+                <textarea class="input" placeholder="Share your thoughts"></textarea>	
+                <!-- <textarea class="input" placeholder="I would love to see historical data
+                of all the NFL games and players."></textarea> -->
+                <span class="max">500 charecter</span>				
+            </div>
+            <div class="validation">
+            <!-- <span style="display:block;">Validation message in this span</span> -->
+          </div>
+        </div>
+    </li>
+
+      <div class="submitBtn" style="margin-top: 20px; text-align: left;">
+        <div class="btnLoader" style="display:none;">
+          <span class="spinLoader small"></span>
+        </div>
+        <input value="send" class="btn" type="submit"> 
+      </div>
+      <div class="submitBtn" style="margin-top:20px; text-align: left;">
+        <div class="btnLoader" style="display:none;">
+          <span class="spinLoader small"></span>
+        </div>
+        <input value="Send" class="btn disable" type="submit">
+      </div>
+    </ul>
+</section>
+</div>
+</div>
+</div>
+</body>
+</html>
