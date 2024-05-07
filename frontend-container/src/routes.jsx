@@ -10,7 +10,7 @@ import LandingLayout from "./layouts/Landing";
 // Guards
 import AuthGuard from "./components/guards/AuthGuard";
 import SignInPage from "./pages/auth/SignIn";
-import SignUpPage from "./pages/auth/SignUp";
+import DonatePage from "./pages/auth/Donate";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const AboutUs = lazy(() => import("./pages/landing/AboutUs"));
@@ -35,7 +35,7 @@ const Blank = lazy(() => import("./pages/pages/Blank"));
 const Page500 = lazy(() => import("./pages/auth/Page500"));
 const Page404 = lazy(() => import("./pages/auth/Page404"));
 const SignIn = lazy(() => import("./pages/auth/SignIn"));
-const SignUp = lazy(() => import("./pages/auth/SignUp"));
+const Donate = lazy(() => import("./pages/auth/Donate"));
 const ResetPassword = lazy(() => import("./pages/auth/ResetPassword"));
 const PrivacyPolicy = lazy(() => import("./pages/auth/PrivacyPolicy"));
 const TermsofService = lazy(() => import("./pages/auth/TermsofService"));
@@ -208,7 +208,7 @@ const routes = [
       },
       {
         path: "sign-up",
-        element: <SignUpPage />,
+        element: <DonatePage />,
       },
       {
         path: "reset-password",

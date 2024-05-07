@@ -116,6 +116,21 @@ spec:
                 secretKeyRef:
                   name: environment-secret
                   key: VITE_SUPPORT_API_URL
+            - name: VITE_PUBLISHABLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-secrets
+                  key: VITE_PUBLISHABLE_KEY
+            - name: VITE_BUY_BUTTON
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-secrets
+                  key: VITE_BUY_BUTTON
+            - name: VITE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-secrets
+                  key: VITE_SECRET_KEY
             - name: GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:

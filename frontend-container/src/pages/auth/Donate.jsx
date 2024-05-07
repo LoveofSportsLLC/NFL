@@ -1,14 +1,14 @@
-// SignUpPage.js
+// DonatePage.js
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Card, Button } from "react-bootstrap";
-import SignUpModal from "./SignUpModal"; // Import the SignUpModal component
+import DonateModal from "./DonateModal"; // Import the DonateModal component
 
-const SignUpPage = () => {
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
+const DonatePage = () => {
+  const [showDonateModal, setShowDonateModal] = useState(false);
 
-  const handleSignUpClick = () => setShowSignUpModal(true);
-  const handleCloseSignUpModal = () => setShowSignUpModal(false);
+  const handleDonateClick = () => setShowDonateModal(true);
+  const handleCloseDonateModal = () => setShowDonateModal(false);
 
   return (
     <React.Fragment>
@@ -23,10 +23,10 @@ const SignUpPage = () => {
       <Card>
         <Card.Body>
           <div className="m-sm-3">
-            <Button onClick={handleSignUpClick}>Sign Up</Button>
-            <SignUpModal
-              show={showSignUpModal}
-              onHide={handleCloseSignUpModal}
+            <Button onClick={handleDonateClick}>Donate</Button>
+            <DonateModal
+              show={showDonateModal}
+              onHide={handleCloseDonateModal}
             />
           </div>
         </Card.Body>
@@ -35,4 +35,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default DonatePage;

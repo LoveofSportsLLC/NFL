@@ -44,7 +44,7 @@ import { useTheme } from "../../hooks/useTheme";
 import useSidebar from "../../hooks/useSidebar";
 import useLayout from "../../hooks/useLayout";
 import SignInModal from "../auth/SignInModal"; // Import the SignInModal component
-import SignUpModal from "../auth/SignUpModal"; // Import the SignUpModal component
+import DonateModal from "../auth/DonateModal"; // Import the DonateModal component
 import AboutUsModal from "./AboutUs";
 import SupportModal from "./SupportModal";
 //import { ReactComponent as Logo } from "../../assets/img/logo.svg";
@@ -100,14 +100,14 @@ import TeamSelector from "../../components/TeamSelection";
 const Navigation = () => {
   // State variables to control the visibility of the modals
   const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [showDonateModal, setShowDonateModal] = useState(false);
   const [showAboutUsModal, setShowAboutUsModal] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
   // Functions to open and close the modals
   const handleSignInClick = () => setShowSignInModal(true);
   const handleCloseSignInModal = () => setShowSignInModal(false);
-  const handleSignUpClick = () => setShowSignUpModal(true);
-  const handleCloseSignUpModal = () => setShowSignUpModal(false);
+  const handleDonateClick = () => setShowDonateModal(true);
+  const handleCloseDonateModal = () => setShowDonateModal(false);
   const handleAboutUsClick = () => setShowAboutUsModal(true);
   const handleCloseAboutUsModal = () => setShowAboutUsModal(false);
   const handleSupportClick = () => setShowSupportModal(true);
@@ -151,8 +151,8 @@ const Navigation = () => {
               Sign In
             </Button>
             {/* Trigger the Get Started (Sign Up) modal */}
-            <Button onClick={handleSignUpClick} variant="success">
-              Get Started
+            <Button onClick={handleDonateClick} variant="success">
+              Donate
             </Button>
 
             {/* About Us Modal */}
@@ -172,11 +172,11 @@ const Navigation = () => {
 
       {/* Render the Sign In and Sign Up modals */}
       <SignInModal show={showSignInModal} onHide={handleCloseSignInModal} />
-      <SignUpModal show={showSignUpModal} onHide={handleCloseSignUpModal} />
+      <DonateModal show={showDonateModal} onHide={handleCloseDonateModal} />
     </Navbar>
   );
 };
-const Intro = () => (
+const Intro = ({ handleDonateClick }) => (
   <section className="landing-intro pt-5 pt-lg-6 pb-5 pb-lg-7">
     <Container className="landing-intro-content">
       <Row className="align-items-center">
@@ -200,9 +200,13 @@ const Intro = () => (
             >
               Explore Features
             </Link>
-            <Link to="/signup" className="btn btn-success btn-pill btn-lg">
-              Start Winning Now
-            </Link>
+            <Button
+              onClick={handleDonateClick}
+              variant="success"
+              className="btn-pill btn-lg"
+            >
+              Donate
+            </Button>
           </div>
         </Col>
         <Col lg="7" className="d-none d-lg-flex mx-auto text-center">
@@ -804,7 +808,7 @@ const Footer = () => (
           <Button
             variant="success"
             size="lg"
-            href="/auth/signup"
+            href="/auth/signin"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-n1 btn-pill"
@@ -830,11 +834,13 @@ const Footer = () => (
   </section>
 );
 
-
 const Landing = () => {
   const { setTheme } = useTheme();
   const { setPosition, setBehavior } = useSidebar();
   const { setLayout } = useLayout();
+  const [showDonateModal, setShowDonateModal] = useState(false);
+  const handleDonateClick = () => setShowDonateModal(true);
+  const handleCloseDonateModal = () => setShowDonateModal(false);
 
   useEffect(() => {
     setTheme(THEME.DEFAULT);
@@ -845,8 +851,9 @@ const Landing = () => {
 
   return (
     <React.Fragment>
-      <Navigation />
-      <Intro />
+      <Navigation handleDonateClick={handleDonateClick} />
+      <Intro handleDonateClick={handleDonateClick} />
+      <DonateModal show={showDonateModal} onHide={handleCloseDonateModal} />
       <section className="team-selector-section">
         <TeamSelector />
       </section>

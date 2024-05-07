@@ -16,7 +16,7 @@ import ChartJsDefaults from "./utils/ChartJsDefaults";
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (isLoading) return;
 
