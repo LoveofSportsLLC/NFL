@@ -30,7 +30,6 @@ root.render(
         clientId={viteauth0ClientId}
         authorizationParams={{
           redirect_uri: window.location.origin + "/dashboard/default",
-          returnTo: window.location.origin,
         }}
         onRedirectCallback={authRedirectCallback}
         audience={viteauth0Audience}

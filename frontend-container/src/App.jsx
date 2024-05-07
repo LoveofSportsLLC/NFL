@@ -14,23 +14,14 @@ import ChartJsDefaults from "./utils/ChartJsDefaults";
 //import "./builder-components.js";
 
 const App = () => {
-  const { isAuthenticated, isLoading } = useAuth0();
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (!isAuthenticated) {
-      //navigate("/");
-    }
-  }, [isAuthenticated, isLoading, navigate]);
-
+  const { isLoading } = useAuth0();
   const routeContent = useRoutes(routes);
-//   <builder-component
-//   model="page"
-//   api-key="2c87660801bc48878f989ed5ac733863"
-// >
-//</builder-component>
+
+  //   <builder-component
+  //   model="page"
+  //   api-key="2c87660801bc48878f989ed5ac733863"
+  // >
+  //</builder-component>
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | NFL Dashboard" defaultTitle="NFL Dashboard" />
@@ -41,8 +32,7 @@ const App = () => {
               <LayoutProvider>
                 <ChartJsDefaults />
 
-                  {routeContent}
-                
+                {routeContent}
               </LayoutProvider>
             </SidebarProvider>
           </ThemeProvider>

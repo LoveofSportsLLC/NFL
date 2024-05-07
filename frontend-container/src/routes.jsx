@@ -11,6 +11,7 @@ import LandingLayout from "./layouts/Landing";
 import AuthGuard from "./components/guards/AuthGuard";
 import SignInPage from "./pages/auth/SignIn";
 import DonatePage from "./pages/auth/Donate";
+import AuthCallback from "./components/auth/AuthCallback";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const AboutUs = lazy(() => import("./pages/landing/AboutUs"));
@@ -123,6 +124,10 @@ const routes = [
       {
         path: "about",
         element: <AboutUs />,
+      },
+      {
+        path: "auth/callback",
+        element: <AuthCallback />, // Handle auth redirection here
       },
     ],
   },
