@@ -27,6 +27,25 @@ jobs:
         env:
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
           VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
+          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+          VITE_API_AUDIENCE: ${{ secrets.VITE_API_AUDIENCE }}
+          VITE_AUTH0_SECRET: ${{ secrets.VITE_AUTH0_SECRET }}
+          VITE_AUTH0_BASE_URL: ${{ secrets.VITE_AUTH0_BASE_URL }}
+          VITE_AUTH0_ISSUER_BASE_URL: ${{ secrets.VITE_AUTH0_ISSUER_BASE_URL }}
+          VITE_PUBLISHABLE_KEY: ${{ secrets.VITE_PUBLISHABLE_KEY }}
+          VITE_BUY_BUTTON: ${{ secrets.VITE_BUY_BUTTON }}
+          VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
+          VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          GOOGLE_AUTH_URI: ${{ secrets.GOOGLE_AUTH_URI }}
+          GOOGLE_TOKEN_URI: ${{ secrets.GOOGLE_TOKEN_URI }}
+          GOOGLE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GOOGLE_AUTH_PROVIDER_X509_CERT_URL }}
+          GOOGLE_REDIRECT_URIS: ${{ secrets.GOOGLE_REDIRECT_URIS }}
+          GOOGLE_JAVASCRIPT_ORIGINS: ${{ secrets.GOOGLE_JAVASCRIPT_ORIGINS }}
+          GOOGLE_APIKEY: ${{ secrets.GOOGLE_APIKEY }}
         run: |
           az acr build --image fe:latest --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f frontend-container/Dockerfile.Prod frontend-container/
   deploy:
