@@ -1,38 +1,33 @@
 import React from "react";
+import { createRoot } from "react-dom/client"; // Correct import for React 18
 import { BrowserRouter } from "react-router-dom";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ApolloProvider } from "@apollo/client";
-import client from "./apolloClient";
 import { Auth0Provider } from "@auth0/auth0-react";
-const root = createRoot(document.getElementById("root"));
-const viteauth0Domain = import.meta.env.VITE_AUTH0_DOMAIN;
-const viteauth0ClientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
-const viteauth0Audience = import.meta.env.VITE_API_AUDIENCE;
-// Log the environment variables to verify their values
-console.log("Auth0 Domain:", viteauth0Domain);
-console.log("Auth0 Client ID:", viteauth0ClientId);
-console.log("Auth0 Audience:", viteauth0Audience);
-const authRedirectCallback = (appState) => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState?.returnTo || "/dashboard/default"
-  );
-};
+import { ApolloProvider } from "@apollo/client";
+import App from "./App";
+import client from "./apolloClient";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+// Environment variables
+const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+const audience = import.meta.env.VITE_API_AUDIENCE;
+console.log("Auth0 domain:", domain);
+console.log("Auth0 client ID:", clientId);
+console.log("Auth0 audience:", audience);
+// Create root element
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement); // Proper use of createRoot
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0Provider
-        domain={viteauth0Domain}
-        clientId={viteauth0ClientId}
+        domain={domain}
+        clientId={clientId}
+        audience={audience}
         authorizationParams={{
-          redirect_uri: window.location.origin + "/dashboard/default",
+          redirect_uri: window.location.origin + "/dashboard/default", 
         }}
-        onRedirectCallback={authRedirectCallback}
-        audience={viteauth0Audience}
       >
         <ApolloProvider client={client}>
           <ErrorBoundary>
@@ -41,5 +36,5 @@ root.render(
         </ApolloProvider>
       </Auth0Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

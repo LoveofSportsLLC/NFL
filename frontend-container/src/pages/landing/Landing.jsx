@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import {
   Accordion,
@@ -43,10 +44,10 @@ import {
 import { useTheme } from "../../hooks/useTheme";
 import useSidebar from "../../hooks/useSidebar";
 import useLayout from "../../hooks/useLayout";
-import SignInModal from "../auth/SignInModal"; // Import the SignInModal component
 import DonateModal from "../auth/DonateModal"; // Import the DonateModal component
 import AboutUsModal from "./AboutUs";
 import SupportModal from "./SupportModal";
+
 //import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 //import screenshotMixed from "../../assets/img/screenshots/mixed.jpg";
 //import screenshotThemeDefault from "../../assets/img/screenshots/theme-default.jpg";
@@ -99,19 +100,17 @@ import TeamSelector from "../../components/TeamSelection";
 
 const Navigation = () => {
   // State variables to control the visibility of the modals
-  const [showSignInModal, setShowSignInModal] = useState(false);
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [showAboutUsModal, setShowAboutUsModal] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
   // Functions to open and close the modals
-  const handleSignInClick = () => setShowSignInModal(true);
-  const handleCloseSignInModal = () => setShowSignInModal(false);
   const handleDonateClick = () => setShowDonateModal(true);
   const handleCloseDonateModal = () => setShowDonateModal(false);
   const handleAboutUsClick = () => setShowAboutUsModal(true);
   const handleCloseAboutUsModal = () => setShowAboutUsModal(false);
   const handleSupportClick = () => setShowSupportModal(true);
   const handleCloseSupportModal = () => setShowSupportModal(false);
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <Navbar expand="lg" bg="dark" variant="dark" className="py-3">
@@ -144,11 +143,11 @@ const Navigation = () => {
           <div className="auth-buttons ms-3">
             {/* Trigger the Sign In modal */}
             <Button
-              onClick={handleSignInClick}
+              onClick={loginWithRedirect}
               variant="outline-light"
               className="me-2"
             >
-              Sign In
+              Login
             </Button>
             {/* Trigger the Get Started (Sign Up) modal */}
             <Button onClick={handleDonateClick} variant="success">
@@ -171,7 +170,6 @@ const Navigation = () => {
       </Container>
 
       {/* Render the Sign In and Sign Up modals */}
-      <SignInModal show={showSignInModal} onHide={handleCloseSignInModal} />
       <DonateModal show={showDonateModal} onHide={handleCloseDonateModal} />
     </Navbar>
   );

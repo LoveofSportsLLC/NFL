@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Helmet } from "react-helmet-async";
 
 import {
@@ -47,7 +48,14 @@ const ChatMessage = ({ position, avatar, name, children, time }) => (
   </div>
 );
 
-const Chat = () => (
+const Chat = () => {
+  const { user } = useAuth0();
+  const [messages, setMessages] = useState([]);
+    useEffect(() => {
+    fetch(`/api/messages?userId=${user.sub}`)
+      .then((response) => response.json())
+      .then((data) => setMessages(data));
+  }, [user.sub]);
   <React.Fragment>
     <Helmet title="Chat" />
     <Container fluid className="p-0">
@@ -393,6 +401,6 @@ const Chat = () => (
       </Card>
     </Container>
   </React.Fragment>
-);
+};
 
 export default Chat;

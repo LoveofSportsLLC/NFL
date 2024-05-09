@@ -10,64 +10,55 @@ const initialState = {
   isAuthenticated: false,
   isInitialized: false,
   user: null,
+  error: null, // Added error state
 };
 
 const reducer = (state, action) => {
-  if (action.type === INITIALIZE) {
-    const { isAuthenticated, user } = action.payload;
-    return {
-      ...state,
-      isAuthenticated,
-      isInitialized: true,
-      user,
-    };
+  switch (action.type) {
+    case INITIALIZE:
+      return {
+        ...state,
+        isAuthenticated: action.payload.isAuthenticated,
+        isInitialized: true,
+        user: action.payload.user,
+        error: null,
+      };
+    case SIGN_IN:
+      return { ...state, isAuthenticated: true, user: action.payload.user };
+    case SIGN_OUT:
+      return { ...state, isAuthenticated: false, user: null };
+    default:
+      return state;
   }
-  if (action.type === SIGN_IN) {
-    const { user } = action.payload;
-    return { ...state, isAuthenticated: true, user };
-  }
-  if (action.type === SIGN_OUT) {
-    return {
-      ...state,
-      isAuthenticated: false,
-      user: null,
-    };
-  }
-  return state;
 };
+
+// Initialize Auth0 client outside of useEffect
+const auth0Client = new Auth0Client({
+  domain: process.env.VITE_APP_AUTH0_DOMAIN,
+  client_id: process.env.VITE_APP_AUTH0_CLIENT_ID,
+  audience: process.env.VITE_APP_AUTH0_AUDIENCE,
+  redirect_uri: window.location.origin,
+});
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const initializeAuth0 = async () => {
-      const auth0Client = new Auth0Client({
-        domain: process.env.VITE_APP_AUTH0_DOMAIN,
-        client_id: process.env.VITE_APP_AUTH0_CLIENT_ID,
-        audience: process.env.VITE_APP_AUTH0_AUDIENCE,
-        redirect_uri: window.location.origin,
-      });
       try {
         await auth0Client.checkSession();
         const isAuthenticated = await auth0Client.isAuthenticated();
-
-        if (isAuthenticated) {
-          const user = await auth0Client.getUser();
-          dispatch({
-            type: INITIALIZE,
-            payload: { isAuthenticated, user: user || null },
-          });
-        } else {
-          dispatch({
-            type: INITIALIZE,
-            payload: { isAuthenticated, user: null },
-          });
-        }
+        const user = isAuthenticated ? await auth0Client.getUser() : null;
+        console.log("initializeAuth0 user:", user); // Add this line
+        dispatch({
+          type: INITIALIZE,
+          payload: { isAuthenticated, user },
+        });
       } catch (err) {
         console.error(err);
         dispatch({
           type: INITIALIZE,
-          payload: { isAuthenticated: false, user: null },
+          payload: { isAuthenticated: false, user: null, error: err },
         });
       }
     };
@@ -75,38 +66,32 @@ function AuthProvider({ children }) {
     initializeAuth0();
   }, []);
 
-  const signIn = async () => {
-    await auth0Client?.loginWithPopup();
-    const isAuthenticated = await auth0Client?.isAuthenticated();
+const [loginCount, setLoginCount] = useState(0);
 
-    if (isAuthenticated) {
-      const user = await auth0Client?.getUser();
-      dispatch({ type: SIGN_IN, payload: { user: user || null } });
-    }
-  };
+const signIn = async () => {
+  try {
+    await auth0Client.loginWithPopup();
+    const isAuthenticated = await auth0Client.isAuthenticated();
+    const user = isAuthenticated ? await auth0Client.getUser() : null;
+    console.log("signIn user:", user);
+    dispatch({ type: SIGN_IN, payload: { user } });
+    setLoginCount(loginCount + 1); // Add this line
+  } catch (error) {
+    console.error("Login Failed:", error);
+  }
+};
 
   const signOut = () => {
-    auth0Client?.logout();
+    auth0Client.logout();
     dispatch({ type: SIGN_OUT });
   };
 
-  const resetPassword = (email) => {};
-
-  root.return (
+  return (
     <AuthContext.Provider
       value={{
         ...state,
-        method: "auth0",
-        user: {
-          id: state?.user?.sub,
-          avatar: state?.user?.picture,
-          email: state?.user?.email,
-          displayName: "Lucy",
-          role: "user",
-        },
         signIn,
         signOut,
-        resetPassword,
       }}
     >
       {children}

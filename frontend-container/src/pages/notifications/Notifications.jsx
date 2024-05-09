@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import NotyfContext from "../../contexts/NotyfContext";
 
 const Notifications = () => {
   const notyf = useContext(NotyfContext);
+  const { getTokenSilently } = useAuth0();
+
+  const [notifications, setNotifications] = useState([]);
 
   const [message, setMessage] = useState("");
   const [type, setType] = useState("default");
@@ -15,6 +19,21 @@ const Notifications = () => {
   const [positionX, setPositionX] = useState("right");
   const [positionY, setPositionY] = useState("top");
 
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const token = await getTokenSilently();
+      fetch("/api/notifications", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setNotifications(data));
+    };
+
+    fetchNotifications();
+  }, []);
+  
   return (
     <React.Fragment>
       <Helmet title="Notifications" />
@@ -135,7 +154,9 @@ const Notifications = () => {
                   onClick={() =>
                     notyf.open({
                       type,
-                      message: message || "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+                      message:
+                        message ||
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
                       duration,
                       ripple,
                       dismissible,

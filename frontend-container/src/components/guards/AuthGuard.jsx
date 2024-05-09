@@ -6,6 +6,9 @@ import useAuth from "../../hooks/useAuth";
 function AuthGuard({ children }) {
   const { isAuthenticated, isInitialized } = useAuth();
 
+  console.log("AuthGuard isAuthenticated:", isAuthenticated); // Add this line
+  console.log("AuthGuard isInitialized:", isInitialized); // Add this line
+
   if (isInitialized && !isAuthenticated) {
     return <Navigate to="/auth/sign-in" />;
   }

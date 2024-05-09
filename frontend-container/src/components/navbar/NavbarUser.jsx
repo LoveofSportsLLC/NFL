@@ -1,14 +1,15 @@
 import React from "react";
-
 import { Dropdown } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import { PieChart, Settings, User } from "react-feather";
-import { useAuth0 } from "@auth0/auth0-react"; // Import useAuth0 hook
+import { useAuth0 } from "@auth0/auth0-react";
 import avatar1 from "../../assets/img/avatars/avatar.jpg";
 import LogoutButton from "../LogoutButton";
 
 const NavbarUser = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   return (
     <Dropdown className="nav-item" align="end">
       <span className="d-inline-block d-sm-none">
@@ -35,16 +36,16 @@ const NavbarUser = () => {
         </Dropdown.Toggle>
       </span>
       <Dropdown.Menu drop="end">
-        <Dropdown.Item>
+        <Dropdown.Item onClick={() => navigate("/pages/profile")}>
           <User size={18} className="align-middle me-2" />
           Profile
         </Dropdown.Item>
-        <Dropdown.Item>
+        <Dropdown.Item onClick={() => navigate("/pages/settings")}>
           <Settings size={18} className="align-middle me-2" />
           Settings & Privacy
         </Dropdown.Item>
         <Dropdown.Item>Help</Dropdown.Item>
-        <Dropdown.Item>
+        <Dropdown.Item onClick={() => logout()}>
           <LogoutButton>Sign out</LogoutButton>
         </Dropdown.Item>
       </Dropdown.Menu>

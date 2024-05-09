@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useRoutes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Provider as ReduxProvider } from "react-redux";
@@ -13,15 +13,42 @@ import LayoutProvider from "./contexts/LayoutProvider";
 import ChartJsDefaults from "./utils/ChartJsDefaults";
 //import "./builder-components.js";
 
-const App = () => {
-  const { isLoading } = useAuth0();
+function App() {
+  const { isLoading, isAuthenticated, error, user, getAccessTokenSilently } =
+    useAuth0();
+  const navigate = useNavigate();
   const routeContent = useRoutes(routes);
 
-  //   <builder-component
-  //   model="page"
-  //   api-key="2c87660801bc48878f989ed5ac733863"
-  // >
-  //</builder-component>
+  const [justLoggedIn, setJustLoggedIn] = useState(false);
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && !justLoggedIn) {
+      setJustLoggedIn(true);
+      navigate("/dashboard/default"); // Redirect on auth success
+    }
+    // Fetch access token for API calls or session management
+    const fetchAccessToken = async () => {
+      if (isAuthenticated) {
+        const token = await getAccessTokenSilently();
+        console.log("Access Token:", token); // Log token securely
+      }
+    };
+    fetchAccessToken();
+  }, [
+    isLoading,
+    isAuthenticated,
+    navigate,
+    getAccessTokenSilently,
+    justLoggedIn,
+  ]);
+
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <HelmetProvider>
       <Helmet titleTemplate="%s | NFL Dashboard" defaultTitle="NFL Dashboard" />
@@ -31,7 +58,6 @@ const App = () => {
             <SidebarProvider>
               <LayoutProvider>
                 <ChartJsDefaults />
-
                 {routeContent}
               </LayoutProvider>
             </SidebarProvider>
@@ -40,6 +66,6 @@ const App = () => {
       </Suspense>
     </HelmetProvider>
   );
-};
+}
 
 export default App;

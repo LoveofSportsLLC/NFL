@@ -9,9 +9,7 @@ import DocLayout from "./layouts/Doc";
 import LandingLayout from "./layouts/Landing";
 // Guards
 import AuthGuard from "./components/guards/AuthGuard";
-import SignInPage from "./pages/auth/SignIn";
 import DonatePage from "./pages/auth/Donate";
-import AuthCallback from "./components/auth/AuthCallback";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const AboutUs = lazy(() => import("./pages/landing/AboutUs"));
@@ -35,7 +33,6 @@ const Blank = lazy(() => import("./pages/pages/Blank"));
 // Auth
 const Page500 = lazy(() => import("./pages/auth/Page500"));
 const Page404 = lazy(() => import("./pages/auth/Page404"));
-const SignIn = lazy(() => import("./pages/auth/SignIn"));
 const Donate = lazy(() => import("./pages/auth/Donate"));
 const ResetPassword = lazy(() => import("./pages/auth/ResetPassword"));
 const PrivacyPolicy = lazy(() => import("./pages/auth/PrivacyPolicy"));
@@ -125,10 +122,6 @@ const routes = [
         path: "about",
         element: <AboutUs />,
       },
-      {
-        path: "auth/callback",
-        element: <AuthCallback />, // Handle auth redirection here
-      },
     ],
   },
   {
@@ -199,18 +192,14 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/login",
-    element: <RedirectToLogin />,
-  },
+  // {
+  //   path: "/login",
+  //   element: <RedirectToLogin />,
+  // },
   {
     path: "auth",
     element: <AuthLayout />,
     children: [
-      {
-        path: "sign-in",
-        element: <SignInPage />,
-      },
       {
         path: "sign-up",
         element: <DonatePage />,

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Navbar, Nav, Form, InputGroup } from "react-bootstrap";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   AlertCircle,
@@ -23,33 +24,6 @@ import avatar1 from "../../assets/img/avatars/avatar.jpg";
 import avatar3 from "../../assets/img/avatars/avatar-3.jpg";
 import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
 import avatar5 from "../../assets/img/avatars/avatar-5.jpg";
-
-const notifications = [
-  {
-    type: "important",
-    title: "Update completed",
-    description: "Restart server 12 to complete the update.",
-    time: "2h ago",
-  },
-  {
-    type: "default",
-    title: "Lorem ipsum",
-    description: "Aliquam ex eros, imperdiet vulputate hendrerit et.",
-    time: "6h ago",
-  },
-  {
-    type: "login",
-    title: "Login from 192.186.1.1",
-    description: "",
-    time: "6h ago",
-  },
-  {
-    type: "request",
-    title: "New connection",
-    description: "Anna accepted your request.",
-    time: "12h ago",
-  },
-];
 
 const messages = [
   {
@@ -81,6 +55,37 @@ const messages = [
 const NavbarComponent = () => {
   const { t } = useTranslation();
   const { isOpen, setIsOpen } = useSidebar();
+  const { getTokenSilently } = useAuth0();
+  const [notifications, setNotifications] = useState([]);
+  const [messages, setMessages] = useState([]); // New state variable for messages
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const token = await getTokenSilently();
+      fetch("/api/notifications", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setNotifications(data));
+    };
+
+    const fetchMessages = async () => {
+      const token = await getTokenSilently();
+      fetch("/api/messages", {
+        // Replace with your actual API endpoint
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setMessages(data));
+    };
+
+    fetchNotifications();
+    fetchMessages(); // Fetch messages when the component mounts
+  }, []);
 
   return (
     <Navbar variant="light" expand className="navbar-bg">
@@ -111,24 +116,22 @@ const NavbarComponent = () => {
             count={messages.length}
             showBadge
           >
-            {messages.map((item, key) => {
-              return (
-                <NavbarDropdownItem
-                  key={key}
-                  icon={
-                    <img
-                      className="avatar img-fluid rounded-circle"
-                      src={item.avatar}
-                      alt={item.name}
-                    />
-                  }
-                  title={item.name}
-                  description={item.description}
-                  time={item.time}
-                  spacing
-                />
-              );
-            })}
+            {messages.map((message, index) => (
+              <NavbarDropdownItem
+                key={index}
+                icon={
+                  <img
+                    className="avatar img-fluid rounded-circle"
+                    src={message.avatar}
+                    alt={message.name}
+                  />
+                }
+                title={message.name}
+                description={message.description}
+                time={message.time}
+                spacing
+              />
+            ))}
           </NavbarDropdown>
 
           <NavbarDropdown

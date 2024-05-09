@@ -15,10 +15,10 @@ const Sidebar = ({ items, showFooter = true }) => {
       <div className="sidebar-content">
         <PerfectScrollbar>
           <a className="sidebar-brand" href="/">
-            <div classname="brand-icon">
+            <div className="brand-icon">
               <img src={logo} alt="Logo" />{" "}
             </div>
-            <div classname="brand-text">
+            <div className="brand-text">
               <span className="align-middle me-3">
                 {" "}
                 "For the Love of Sports"
