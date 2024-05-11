@@ -80,8 +80,6 @@ jobs:
           else
             manifest_dir="manifests/uat"
           fi
-          sed -i "s/{{.Date}}/$(date +%s)/" "${{ github.workspace }}/${manifest_dir}/deploy-fe.yaml"
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f ${{ github.workspace }}/${manifest_dir}/deploy-fe.yaml
-          kubectl apply -f ${{ github.workspace }}/${manifest_dir}/svc-fe.yaml
+          echo "Using manifest directory: $manifest_dir"
+          kubectl apply -f ${{ github.workspace }}/$manifest_dir/deploy-fe.yaml
+          kubectl apply -f ${{ github.workspace }}/$manifest_dir/svc-fe.yaml
