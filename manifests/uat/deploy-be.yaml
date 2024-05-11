@@ -15,17 +15,17 @@ spec:
       maxSurge: 2
   selector:
     matchLabels:
-      app: be
+      app: beuat
   template:
     metadata:
       labels:
-        app: be
+        app: beuat
       annotations:
         date: "{{.Date}}"
     spec:
       containers:
         - name: be
-          image: loveofsports.azurecr.io/beuat:latest 
+          image: loveofsports.azurecr.io/be:uatlatest 
           imagePullPolicy: Always
           env:
             - name: R_LIBS_USER
@@ -187,7 +187,7 @@ spec:
           ports:
             - containerPort: 5000
           volumeMounts:
-            - mountPath: //backend-container
+            - mountPath: /app/data
               name: backend-file
           resources:
             limits:
@@ -201,5 +201,5 @@ spec:
       volumes:
         - name: backend-file
           persistentVolumeClaim:
-            claimName: backend-pvc
+            claimName: backend-pvc-uat
 

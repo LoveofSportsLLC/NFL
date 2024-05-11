@@ -5,7 +5,12 @@ const app = express();
 
 const distPath = path.join(__dirname, "dist");
 const publicPath = path.join(__dirname, "public");
+const wellKnownPath = path.join(__dirname, ".well-known");
 
+// Serve ACME Challenge files
+app.use('/.well-known/acme-challenge', express.static(wellKnownPath, {
+  dotfiles: 'allow' // Important to allow dotfiles for ACME challenge
+}));
 // Serve static files from the public and dist directories
 app.use(express.static(publicPath));
 app.use(express.static(distPath));

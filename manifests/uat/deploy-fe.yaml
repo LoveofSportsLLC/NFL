@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: feuat
-          image: loveofsports.azurecr.io/feuat:latest
+          image: loveofsports.azurecr.io/fe:uatlatest
           imagePullPolicy: Always
           env:
             - name: FRONTEND_SERVICE_HOST
@@ -180,7 +180,7 @@ spec:
           ports:
             - containerPort: 3000
           volumeMounts:
-            - mountPath: /app/frontend-container
+            - mountPath: /app/data
               name: frontend-file
           resources:
             requests:
@@ -194,4 +194,4 @@ spec:
       volumes:
         - name: frontend-file
           persistentVolumeClaim:
-            claimName: frontend-pvc
+            claimName: frontend-pvc-uat
