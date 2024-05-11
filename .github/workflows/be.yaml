@@ -28,13 +28,14 @@ jobs:
           else
             echo "IMAGE_TAG=beuat" >> $GITHUB_ENV
           fi
-      - name: Build and push image to ACR
+      - name: Set image tag based on branch
         run: |
-          az acr build --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:${{ env.IMAGE_TAG }} \
-                      -g ${{ secrets.ACR_RESOURCE_GROUP }} \
-                      -f backend-container/Dockerfile.python \
-                      backend-container/
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            IMAGE_TAG="beprod:latest"
+          else
+            IMAGE_TAG="beuat:latest"
+          fi
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         env:
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
           VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
