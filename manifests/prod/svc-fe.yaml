@@ -1,0 +1,23 @@
+#manifests/prod/svc-fe.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: feprod
+  namespace: azdevspace
+spec:
+  ports:
+  - name: fehttp
+    port: 80
+    targetPort: 3000
+  - name: fehttps
+    port: 443
+    targetPort: 3000
+  - name: 3k
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: feprod
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,27 @@
+#manifests/uat/pvc-frontend.yaml
+apiVersion: policy/v1
+kind: Pod Disruption Budget
+metadata:
+  name: frontend-pdb-uat  # UAT-specific naming
+  namespace: uat  # UAT namespace
+spec:
+  minAvailable: 0  # You might choose to lower this for UAT if high availability is less critical
+  selector:
+    matchLabels:
+      app: feuat  # Ensure this matches the labels used in your UAT deployment
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frontend-pvc-uat  # Specify UAT-specific naming to avoid conflicts
+  namespace: uat  # Adjust to the UAT namespace
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 35Gi  # Maintain the same storage requirements unless adjustments are necessary
+  storageClassName: storageclass  # Using the same StorageClass as production, assuming shared resources
+  volumeName: frontend-file-uat  # Ensure this matches the UAT-specific PersistentVolume
+
+

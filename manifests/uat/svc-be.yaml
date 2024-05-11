@@ -1,8 +1,9 @@
+#manifests/uat/svc-be.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: be
-  namespace: azdevspace
+  name: beuat
+  namespace: uat  # Adjust to the UAT namespace
 spec:
   ports:
   - name: behttp
@@ -15,7 +16,7 @@ spec:
     port: 5000
     targetPort: 5000
   selector:
-    app: be
+    app: beuat  # Adjust to select the UAT deployment pods
   sessionAffinity: None
   type: ClusterIP
 status:

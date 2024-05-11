@@ -1,10 +1,11 @@
+#manifests/uat/deploy-re.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-deploy
-  namespace: azdevspace
+  namespace: uat
   labels:
-    app: redis
+    app: redisuat
 spec:
   replicas: 2
   strategy:
@@ -14,15 +15,15 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: redis
+      app: redisuat
   template:
     metadata:
       labels:
-        app: redis
+        app: redisuat
     spec:
       containers:
       - name: redis
-        image: redis:latest
+        image: redisuat:latest
         imagePullPolicy: Always
         env:
         - name: REDIS_SERVICE_HOST

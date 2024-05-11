@@ -10,6 +10,7 @@ import Feed from "./Feed";
 import PieChart from "./PieChart";
 import Projects from "./Projects";
 import Statistics from "./Statistics";
+import NFLScoreCard from "./LiveScores";
 
 const Default = () => (
   <React.Fragment>
@@ -19,7 +20,7 @@ const Default = () => (
       <Statistics />
       <Row>
         <Col lg="8" className="d-flex">
-          <BarChart />
+          <NFLScoreCard />
         </Col>
         <Col lg="4" className="d-flex">
           <Feed />

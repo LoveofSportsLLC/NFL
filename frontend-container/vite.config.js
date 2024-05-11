@@ -1,3 +1,4 @@
+//frontend-container/vite.config.js
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import Inspect from "vite-plugin-inspect";
 import svgrPlugin from "vite-plugin-svgr";
@@ -9,6 +10,8 @@ import { checker } from "vite-plugin-checker";
 import { terser } from "rollup-plugin-terser";
 
 export default defineConfig({
+  root: './',
+  publicDir: 'public',
   server: {
     hmr: {
       overlay: true,

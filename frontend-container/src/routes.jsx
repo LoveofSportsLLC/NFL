@@ -1,3 +1,4 @@
+//frontend-container/src/routes.jsx
 import React from "react";
 import { lazy } from "@loadable/component";
 import { useEffect } from "react";

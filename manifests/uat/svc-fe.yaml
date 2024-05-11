@@ -1,0 +1,23 @@
+# UAT version of the Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: feuat
+  namespace: uat  # Adjust to the UAT namespace
+spec:
+  ports:
+  - name: fehttp
+    port: 80
+    targetPort: 3000
+  - name: fehttps
+    port: 443
+    targetPort: 3000
+  - name: 3k
+    port: 3000
+    targetPort: 3000
+  selector:
+    app: feuat  # Adjust to select the UAT deployment pods
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

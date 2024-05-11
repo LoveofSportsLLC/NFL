@@ -1,30 +1,31 @@
+#manifests/uat/deploy-fe.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fe
-  namespace: azdevspace
+  name: feuat
+  namespace: uat
   labels:
-    app: fe
+    app: feuat
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+      maxUnavailable: 1
+      maxSurge: 2
   selector:
     matchLabels:
-      app: fe
+      app: feuat
   template:
     metadata:
       labels:
-        app: fe
+        app: feuat
       annotations:
         date: "{{.Date}}"
     spec:
       containers:
-        - name: fe
-          image: loveofsports.azurecr.io/fe:latest
+        - name: feuat
+          image: loveofsports.azurecr.io/feuat:latest
           imagePullPolicy: Always
           env:
             - name: FRONTEND_SERVICE_HOST
@@ -179,7 +180,7 @@ spec:
           ports:
             - containerPort: 3000
           volumeMounts:
-            - mountPath: /ssweb/frontend-container
+            - mountPath: /app/frontend-container
               name: frontend-file
           resources:
             requests:

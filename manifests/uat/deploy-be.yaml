@@ -1,17 +1,18 @@
+#manifests/uat/deploy-be.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: be
-  namespace: azdevspace
+  name: beuat
+  namespace: uat  # Changed from azdevspace to uat
   labels:
-    app: be
+    app: beuat
 spec:
-  replicas: 3
+  replicas: 1  # Scaled down for UAT
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+      maxUnavailable: 1
+      maxSurge: 2
   selector:
     matchLabels:
       app: be
@@ -24,7 +25,7 @@ spec:
     spec:
       containers:
         - name: be
-          image: loveofsports.azurecr.io/be:latest
+          image: loveofsports.azurecr.io/beuat:latest 
           imagePullPolicy: Always
           env:
             - name: R_LIBS_USER
@@ -186,7 +187,7 @@ spec:
           ports:
             - containerPort: 5000
           volumeMounts:
-            - mountPath: /ssweb/backend-container
+            - mountPath: //backend-container
               name: backend-file
           resources:
             limits:
@@ -201,3 +202,4 @@ spec:
         - name: backend-file
           persistentVolumeClaim:
             claimName: backend-pvc
+

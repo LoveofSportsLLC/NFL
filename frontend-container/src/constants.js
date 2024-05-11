@@ -1,3 +1,4 @@
+//frontend-container/src/constants.js
 export const SIDEBAR_POSITION = {
   LEFT: "left",
   RIGHT: "right",
