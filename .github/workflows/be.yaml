@@ -31,8 +31,7 @@ jobs:
       - name: Build and push image to ACR
         run: |
           az acr build --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:${{ env.IMAGE_TAG }}-latest \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:${{ env.IMAGE_TAG }}-$(date +%Y%m%d%H%M) \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:${{ env.IMAGE_TAG }} \
                       -g ${{ secrets.ACR_RESOURCE_GROUP }} \
                       -f backend-container/Dockerfile.python \
                       backend-container/
