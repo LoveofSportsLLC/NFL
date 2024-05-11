@@ -39,7 +39,7 @@ jobs:
           az acr build --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
                       --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:$image_tag-latest \
                       --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/be:$image_tag-$(date +%Y%m%d%H%M) \
-                      -g ${{ secrets.AZURE_RESOURCE_GROUP }} \
+                      -g ${{ secrets.ACR_RESOURCE_GROUP }} \
                       -f backend-container/Dockerfile.python \
                       backend-container/
   deploy:

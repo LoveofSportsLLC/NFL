@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: uat
+  name: lpkrestorationjob-role-v2
+  labels:
+    mindaro.io/component: lpkrestorationjob
+    mindaro.io/version: v2
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["delete", "list"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["delete", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "update", "patch", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets", "replicasets"]
+  verbs: ["get", "list", "update", "patch"]
+- apiGroups: ["extensions"]
+  resources: ["deployments", "statefulsets", "replicasets"]
+  verbs: ["get", "list", "update", "patch"]

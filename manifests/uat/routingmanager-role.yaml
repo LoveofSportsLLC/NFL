@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: uat
+  name: routingmanager-role
+  labels:
+    routing.visualstudio.io/component: routingmanager
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "services", "pods"]
+  verbs: ["list", "create", "update", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "deployments/status"]
+  verbs: ["get", "list", "create", "update", "delete"]
+- apiGroups: ["extensions"]
+  resources: ["deployments", "deployments/status", "ingresses"]
+  verbs: ["get", "list", "create", "update", "delete"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["watch", "list", "create", "update", "delete"]
+- apiGroups: ["traefik.containo.us"]
+  resources: ["ingressroutes"]
+  verbs: ["get", "create", "apply", "list", "delete", "update"]
