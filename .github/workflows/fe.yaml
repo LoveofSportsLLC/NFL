@@ -14,13 +14,29 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
-        name: Azure login
+      - name: Azure login
+        uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      - name: Set image tag based on branch
+        run: |
+          BRANCH_NAME="${{ github.ref_name }}"
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            IMAGE_TAG="feprod"
+          else
+            IMAGE_TAG="fe${BRANCH_NAME}"
+          fi
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
       - name: Build and push image to ACR
+        run: |
+          az acr build --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/fe:${{ env.IMAGE_TAG }}-latest \
+                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/fe:${{ env.IMAGE_TAG }}-$(date +%Y%m%d%H%M) \
+                      -g ${{ secrets.ACR_RESOURCE_GROUP }} \
+                      -f frontend-container/Dockerfile.Prod \
+                      frontend-container/
         env:
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
           VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
@@ -34,14 +50,22 @@ jobs:
           VITE_BUY_BUTTON: ${{ secrets.VITE_BUY_BUTTON }}
           VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
           VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
-        run: |
-          image_tag="${{ github.ref_name }}" == "main" ? "feprod" : "feuat"
-          az acr build --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/fe:$image_tag-latest \
-                      --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/fe:$image_tag-$(date +%Y%m%d%H%M) \
-                      -g ${{ secrets.ACR_RESOURCE_GROUP }} \
-                      -f frontend-container/Dockerfile.Prod \
-                      frontend-container/
+
+        env:
+          VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
+          VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
+          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+          VITE_API_AUDIENCE: ${{ secrets.VITE_API_AUDIENCE }}
+          VITE_AUTH0_SECRET: ${{ secrets.VITE_AUTH0_SECRET }}
+          VITE_AUTH0_BASE_URL: ${{ secrets.VITE_AUTH0_BASE_URL }}
+          VITE_AUTH0_ISSUER_BASE_URL: ${{ secrets.VITE_AUTH0_ISSUER_BASE_URL }}
+          VITE_PUBLISHABLE_KEY: ${{ secrets.VITE_PUBLISHABLE_KEY }}
+          VITE_BUY_BUTTON: ${{ secrets.VITE_BUY_BUTTON }}
+          VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
+          VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
+
+
   deploy:
     permissions:
       contents: read
