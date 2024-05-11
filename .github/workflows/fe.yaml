@@ -72,10 +72,9 @@ jobs:
           resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}
       - name: Prepare Deployment Manifest
         run: |
-          manifest_dir="${{ github.ref_name }}" == "main" ? "manifests/prod" : "manifests/uat"
-          sed -i "s/{{.Date}}/$(date +%s)/" ${{ github.workspace }}/${manifest_dir}/deploy-fe.yaml
-      - name: Deploy to Kubernetes
-        run: |
-          manifest_dir="${{ github.ref_name }}" == "main" ? "manifests/prod" : "manifests/uat"
-          kubectl apply -f ${{ github.workspace }}/${manifest_dir}/deploy-fe.yaml
-          kubectl apply -f ${{ github.workspace }}/${manifest_dir}/svc-fe.yaml
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            manifest_dir="manifests/prod"
+          else
+            manifest_dir="manifests/uat"
+          fi
+          sed -i "s/{{.Date}}/$(date +%s)/" "${{ github.workspace }}/${manifest_dir}/deploy-fe.yaml"
