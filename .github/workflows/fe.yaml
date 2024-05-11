@@ -51,21 +51,6 @@ jobs:
           VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
           VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
 
-        env:
-          VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
-          VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
-          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
-          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
-          VITE_API_AUDIENCE: ${{ secrets.VITE_API_AUDIENCE }}
-          VITE_AUTH0_SECRET: ${{ secrets.VITE_AUTH0_SECRET }}
-          VITE_AUTH0_BASE_URL: ${{ secrets.VITE_AUTH0_BASE_URL }}
-          VITE_AUTH0_ISSUER_BASE_URL: ${{ secrets.VITE_AUTH0_ISSUER_BASE_URL }}
-          VITE_PUBLISHABLE_KEY: ${{ secrets.VITE_PUBLISHABLE_KEY }}
-          VITE_BUY_BUTTON: ${{ secrets.VITE_BUY_BUTTON }}
-          VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
-          VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
-
-
   deploy:
     permissions:
       contents: read
