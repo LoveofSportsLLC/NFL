@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bridge-to-kubernetes
+data:
+  kubernetesLocalProcessConfig.yaml: |
+    version: 0.1
+    volumes:
+    - name: app
+      mountPath: /app
+env:
+  - name: feuat
+    value: $(services:feuat.uat)
+  - name: DEBUG_MODE
+    value: "true"
+# volumeMounts:
+#   - name: default-token-*
+#     localPath: /var/run/secrets/kubernetes.io/serviceaccount
+# env:
+#   - name: KUBERNETES_IN_CLUSTER_CONFIG_OVERRIDE
+#     value: $(volumeMounts:default-token-*)
+
