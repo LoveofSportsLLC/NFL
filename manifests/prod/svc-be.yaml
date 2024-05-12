@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: berod
+  name: beprod
   namespace: azdevspace
 spec:
   ports:

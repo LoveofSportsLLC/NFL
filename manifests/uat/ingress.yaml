@@ -13,7 +13,7 @@ spec:
   tls:
   - hosts:
     - "uat.loveoffootball.io"
-    secretName: loveoffootball-uat-tls  # Ensure you have a TLS secret for UAT
+    secretName: loveoffootball-uat-tls  # Updated secret name
   rules:
   - host: "uat.loveoffootball.io"
     http:
@@ -29,7 +29,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: be  # Ensure BE service is configured for UAT
+            name: beuat  # Ensure BE service is configured for UAT
             port:
               number: 80
       - path: "/api/submit-support"
