@@ -1,3 +1,4 @@
+//frontend-container/src/components/TeamSelection.jsx
 import React, { useState } from "react";
 import { Carousel, Row, Col, Container } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";

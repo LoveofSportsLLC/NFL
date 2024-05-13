@@ -1,18 +1,18 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: bridge-to-kubernetes
-data:
-  kubernetesLocalProcessConfig.yaml: |
-    version: 0.1
-    volumes:
-    - name: app
-      mountPath: /app
+#KubernetesLocalProcessConfig.yaml
+# kind: ConfigMap
+# metadata:
+#   name: bridge-to-kubernetes
+# data:
+#   kubernetesLocalProcessConfig.yaml: |
+version: 0.1
 env:
   - name: feuat
-    value: $(services:feuat.uat)
+    value: feuat
   - name: DEBUG_MODE
     value: "true"
+# volumes:
+#   - name: app
+#     mountPath: /app
 # volumeMounts:
 #   - name: default-token-*
 #     localPath: /var/run/secrets/kubernetes.io/serviceaccount
