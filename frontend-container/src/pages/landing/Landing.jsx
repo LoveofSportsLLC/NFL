@@ -128,7 +128,7 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/analytics">AnalP</Nav.Link>
+            <Nav.Link href="/analysis">Analysis</Nav.Link>
             <Nav.Link href="/fantasy-draft">Fantasy Draft</Nav.Link>
             <Nav.Link href="/predictions">Predictions</Nav.Link>
             <Nav.Link href="/player-comparison">Player Comparison</Nav.Link>
