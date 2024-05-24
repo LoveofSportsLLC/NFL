@@ -47,7 +47,7 @@ ENV VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN \
     GOOGLE_JAVASCRIPT_ORIGINS=$GOOGLE_JAVASCRIPT_ORIGINS \
     GOOGLE_APIKEY=$GOOGLE_APIKEY
 
-    RUN npm run build
+    RUN npm run build:prod
 
 # Stage 2: Set up the Express server to serve the build directory
 FROM node:20-alpine
@@ -76,4 +76,4 @@ ENV APOLLO_TELEMETRY_DISABLED=true
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "server.js"]
+CMD ["npm", "start"]

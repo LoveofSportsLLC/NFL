@@ -11,6 +11,7 @@
   "scripts": {
     "start": "vite --host --port 3000",
     "build": "vite build --debug",
+    "build:prod": "NODE_OPTIONS=--max-old-space-size=12288 npx vite build --debug --mode production",
     "build:dev": "NODE_OPTIONS=--max-old-space-size=12288 npx vite build --debug --mode development",
     "serve": "vite preview --port 3000npm --host",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
