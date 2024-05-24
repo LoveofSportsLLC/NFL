@@ -9,7 +9,7 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 async function createServer() {
   const app = express();
 
-  // Serve static files from the Public directory directly from the root URL
+  // Serve static files from the public directory directly from the root URL
   app.use(express.static(resolve(__dirname, "Public")));
 
   // Middleware to set correct MIME type for JavaScript files
