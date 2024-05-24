@@ -52,3 +52,11 @@ src/config.js
 NFL-Stats/
 **.idea
 **.vite-inspect
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Sentry Config File
+.env.sentry-build-plugin

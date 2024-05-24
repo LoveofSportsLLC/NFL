@@ -1,40 +1,51 @@
-//frontend-container/src/components/TeamSelection.jsx
-import React, { useState } from "react";
-import { Carousel, Row, Col, Container } from "react-bootstrap";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { useState, useEffect } from "react";
+import { Carousel, Container, Row, Col } from "react-bootstrap";
+import { TEAMS } from "../constants";
 
-import { TEAMS } from "../constants"; // Ensure TEAMS is correctly imported
-
-const TeamSelector = () => {
+const TeamSelection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
     setActiveIndex(selectedIndex);
   };
 
+  // useEffect(() => {
+  //   console.log("TEAMS:", TEAMS);
+  //   Object.keys(TEAMS).forEach((teamName) => {
+  //     console.log(`/teamlogos/${teamName.toLowerCase()}.png`);
+  //     console.log(`/fans/${teamName.toLowerCase()}fans.png`);
+  //   });
+  // }, []);
+
+  const handleImageError = (e, teamName, type) => {
+    e.target.onerror = null; // Prevent infinite fallback loop
+    console.error(`Failed to load image for ${teamName} (${type})`);
+    e.target.src = "/src/assets/img/Logo.png"; // Fallback image path
+  };
+
   return (
     <Container className="py-5">
       <Row className="justify-content-center">
-        <Col lg={8}>
+        <Col lg={12}>
           <h2 className="text-center">Select Your Favorite NFL Team</h2>
           <Carousel activeIndex={activeIndex} onSelect={handleSelect}>
             {Object.keys(TEAMS).map((teamName) => (
               <Carousel.Item key={teamName}>
                 <Row className="align-items-center">
                   <Col md={6}>
-                    <LazyLoadImage
+                    <img
                       className="d-block w-100 img-lazy"
                       src={`/teamlogos/${teamName.toLowerCase()}.png`}
                       alt={`${teamName} logo`}
-                      effect="blur"
+                      onError={(e) => handleImageError(e, teamName, "logo")}
                     />
                   </Col>
                   <Col md={6}>
-                    <LazyLoadImage
+                    <img
                       className="d-block w-100 img-lazy"
                       src={`/fans/${teamName.toLowerCase()}fans.png`}
                       alt={`${teamName} fans`}
-                      effect="blur"
+                      onError={(e) => handleImageError(e, teamName, "fans")}
                     />
                   </Col>
                 </Row>
@@ -47,4 +58,4 @@ const TeamSelector = () => {
   );
 };
 
-export default TeamSelector;
+export default TeamSelection;

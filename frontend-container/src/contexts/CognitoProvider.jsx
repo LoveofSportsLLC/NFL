@@ -50,7 +50,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const loadConfig = async () => {
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.PUBLIC_ENV__NODE_ENV === "development") {
         const configModule = await import("../config");
         setCognitoConfig(configModule.cognitoConfig);
       } else {

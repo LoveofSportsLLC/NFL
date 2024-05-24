@@ -1,7 +1,5 @@
-//frontend-container/src/routes.jsx
-import React from "react";
-import { lazy } from "@loadable/component";
-import { useEffect } from "react";
+// frontend-container/src/routes.jsx
+import React, { lazy, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Layouts
 import AuthLayout from "./layouts/Auth";
@@ -102,6 +100,7 @@ const Support = lazy(() => import("./pages/docs/Support"));
 const Changelog = lazy(() => import("./pages/docs/Changelog"));
 // Protected routes
 const ProtectedPage = lazy(() => import("./pages/protected/ProtectedPage"));
+
 const RedirectToLogin = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -110,6 +109,7 @@ const RedirectToLogin = () => {
   }, [navigate]);
   return null; // or a loading indicator if preferred
 };
+
 const routes = [
   {
     path: "/",
@@ -503,6 +503,7 @@ const routes = [
       },
     ],
   },
+  // This route should handle all unmatched routes and show a 404 page
   {
     path: "*",
     element: <AuthLayout />,

@@ -32,7 +32,7 @@ spec:
               value: frontend
             - name: FRONTEND_SERVICE_PORT
               value: "3000"
-            - name: NODE_ENV
+            - name: PUBLIC_ENV__NODE_ENV
               value: production
             - name: AZURE_STORAGE_ACCOUNT
               value: sportfs
@@ -177,6 +177,11 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: apikey
+            - name: SENTRY_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-secrets
+                  key: SENTRY_AUTH_TOKEN 
           ports:
             - containerPort: 3000
           volumeMounts:

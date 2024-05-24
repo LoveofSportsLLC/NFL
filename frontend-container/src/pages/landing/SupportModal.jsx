@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 const apiUrlSubmitSupport =
-  process.env.NODE_ENV === "development"
+  process.env.PUBLIC_ENV__NODE_ENV === "development"
     ? "http://localhost:5000/api/submit-support"
     : "https://loveoffootball.io/api/submit-support";
 

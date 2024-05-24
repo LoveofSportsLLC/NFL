@@ -1,4 +1,5 @@
-//frontend-container/vite.config.js
+// vite.config.js
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 import Inspect from "vite-plugin-inspect";
 import svgrPlugin from "vite-plugin-svgr";
@@ -6,19 +7,21 @@ import react from "@vitejs/plugin-react";
 import { ViteEjsPlugin } from "vite-plugin-ejs";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { resolve } from "path";
-import { checker } from "vite-plugin-checker";
-import { terser } from "rollup-plugin-terser";
+import checker from "vite-plugin-checker";
+import terser from "@rollup/plugin-terser"; // Correct import using default export
 
 export default defineConfig({
-  root: './',
-  publicDir: 'public',
+  root: "./",
+  publicDir: "public",
   server: {
     hmr: {
       overlay: true,
     },
   },
   plugins: [
-    react({ jsxRuntime: "@emotion/react" }),
+    react({
+      jsxRuntime: "automatic",
+    }),
     svgrPlugin({
       exportType: "component",
       svgrOptions: {
@@ -36,6 +39,10 @@ export default defineConfig({
     splitVendorChunkPlugin(),
     checker(),
     terser(),
+    sentryVitePlugin({
+      org: "loveofsportsllc",
+      project: "javascript-react",
+    }),
   ],
   resolve: {
     alias: {
@@ -58,30 +65,31 @@ export default defineConfig({
       output: {
         assetFileNames: "assets/[name][extname]",
         manualChunks(id) {
-          if (id.includes("node_modules/apexcharts")) {
-            return "apexcharts";
-          }
-          if (
-            id.includes("node_modules/chart.js") ||
-            id.includes("node_modules/react-chartjs-2")
-          ) {
-            return "chartjs";
-          }
-          if (id.includes("node_modules/google-map-react")) {
-            return "googlemaps";
-          }
-          if (
-            id.includes("node_modules/jsvectormap") ||
-            id.includes("src/vendor/us_aea_en.js") ||
-            id.includes("src/vendor/world.js")
-          ) {
-            return "vectormaps";
-          }
-          if (id.includes("node_modules/@fullcalendar")) {
-            return "fullcalendar";
+          if (id.includes("node_modules")) {
+            if (id.includes("apexcharts")) {
+              return "apexcharts";
+            }
+            if (id.includes("chart.js") || id.includes("react-chartjs-2")) {
+              return "chartjs";
+            }
+            if (id.includes("google-map-react")) {
+              return "googlemaps";
+            }
+            if (
+              id.includes("jsvectormap") ||
+              id.includes("src/vendor/us_aea_en.js") ||
+              id.includes("src/vendor/world.js")
+            ) {
+              return "vectormaps";
+            }
+            if (id.includes("@fullcalendar")) {
+              return "fullcalendar";
+            }
+            return "vendor";
           }
         },
       },
     },
+    sourcemap: true,
   },
 });

@@ -1,3 +1,4 @@
+// frontend-container/src/App.jsx
 import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useRoutes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -11,15 +12,15 @@ import ThemeProvider from "./contexts/ThemeProvider";
 import SidebarProvider from "./contexts/SidebarProvider";
 import LayoutProvider from "./contexts/LayoutProvider";
 import ChartJsDefaults from "./utils/ChartJsDefaults";
-//import "./builder-components.js";
 
 function App() {
-  const { isLoading, isAuthenticated, error, user, getAccessTokenSilently } =
+  const { isLoading, isAuthenticated, error, getAccessTokenSilently } =
     useAuth0();
   const navigate = useNavigate();
   const routeContent = useRoutes(routes);
 
   const [justLoggedIn, setJustLoggedIn] = useState(false);
+
   useEffect(() => {
     if (!isLoading && isAuthenticated && !justLoggedIn) {
       setJustLoggedIn(true);

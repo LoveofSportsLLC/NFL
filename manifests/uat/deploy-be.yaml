@@ -3,11 +3,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: beuat
-  namespace: uat  # Changed from azdevspace to uat
+  namespace: uat # Changed from azdevspace to uat
   labels:
     app: beuat
 spec:
-  replicas: 1  # Scaled down for UAT
+  replicas: 1 # Scaled down for UAT
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: be
-          image: loveofsports.azurecr.io/be:uatlatest 
+          image: loveofsports.azurecr.io/be:uatlatest
           imagePullPolicy: Always
           env:
             - name: R_LIBS_USER
@@ -36,7 +36,7 @@ spec:
               value: backend
             - name: BACKEND_SERVICE_PORT
               value: "5000"
-            - name: NODE_ENV
+            - name: PUBLIC_ENV__NODE_ENV
               value: production
             - name: AZURE_STORAGE_ACCOUNT
               value: sportfs
@@ -202,4 +202,3 @@ spec:
         - name: backend-file
           persistentVolumeClaim:
             claimName: backend-pvc-uat
-

@@ -26,6 +26,8 @@ ARG GOOGLE_REDIRECT_URIS
 ARG GOOGLE_JAVASCRIPT_ORIGINS
 ARG GOOGLE_APIKEY
 
+
+
 # Setting environment variables from build arguments
 ENV VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN \
     VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID \
@@ -45,11 +47,13 @@ ENV VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN \
     GOOGLE_AUTH_PROVIDER_X509_CERT_URL=$GOOGLE_AUTH_PROVIDER_X509_CERT_URL \
     GOOGLE_REDIRECT_URIS=$GOOGLE_REDIRECT_URIS \
     GOOGLE_JAVASCRIPT_ORIGINS=$GOOGLE_JAVASCRIPT_ORIGINS \
-    GOOGLE_APIKEY=$GOOGLE_APIKEY
+    GOOGLE_APIKEY=$GOOGLE_APIKEY \
+    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN 
 
-    RUN npm run build
+# Run the build script with increased memory limit
+RUN npm run build:dev
 
-# Stage 2: Set up the Express server to serve the build directory
+# Stage 2: Development environment with node_modules and built source
 FROM node:20-alpine
 WORKDIR /app
 # Copy built files from the build stage
@@ -69,11 +73,10 @@ RUN chown -R node:node /app
 USER node
 
 # Set the environment variable for  development
-ENV PUBLIC_ENV__NODE_ENV=production
-ENV NODE_ENV=production
+ENV PUBLIC_ENV__NODE_ENV=development
+ENV NODE_ENV=development
 ENV APOLLO_TELEMETRY_DISABLED=true
 # Expose the port the app runs on
 EXPOSE 3000
-
-# Start the application
-CMD ["node", "server.js"]
+# Run the server.js script with Node
+CMD ["npm", "start"]
