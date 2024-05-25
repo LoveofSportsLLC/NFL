@@ -1,6 +1,7 @@
+//src/components/TeamSelection.jsx
 import React, { useState, useEffect } from "react";
 import { Carousel, Container, Row, Col } from "react-bootstrap";
-import { TEAMS } from "../constants";
+import { TEAMS } from "../../constants";
 
 const TeamSelection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
