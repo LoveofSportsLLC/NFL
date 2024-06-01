@@ -7,12 +7,12 @@ import Players from "./Players";
 import Games from "./Games";
 import Standings from "./Standings";
 import Stats from "./Stats";
-import News from "./News";
+import News from "./News/News";
 import Fantasy from "./Fantasy";
 import Analysis from "./Analysis";
-import ModelInsights from "./ModelInsights";
-import About from "./About";
-import Search from "./Search";
+import ModelInsights from "./ai/ModelInsights";
+import About from "./Aboutus/About";
+import Search from "./Navigation/Search";
 import "./LandingPage.css"; // Style the page
 
 const LandingPage = () => {

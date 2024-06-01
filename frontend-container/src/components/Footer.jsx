@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SupportModal from "../pages/landing/SupportModal";
+import SupportModal from "../pages/landing/Aboutus/SupportModal";
 
 const Footer = () => {
   const [showSupportModal, setShowSupportModal] = useState(false);

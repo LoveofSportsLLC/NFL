@@ -50,7 +50,6 @@ export const TEAMS = {
   COMMANDERS: { primary: "#773141", secondary: "#FFB612" },
 };
 
-
 export const THEME = {
   DEFAULT: "default",
   COLORED: "colored",

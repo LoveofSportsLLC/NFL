@@ -11,8 +11,8 @@ import AuthGuard from "./components/guards/AuthGuard";
 import DonatePage from "./pages/auth/Donate";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
-const AboutUs = lazy(() => import("./pages/landing/AboutUs"));
-const Analysis = lazy(() => import("./pages/landing/AnalyticsPage"));
+const AboutUs = lazy(() => import("./pages/landing/Aboutus/AboutUs"));
+const Analysis = lazy(() => import("./pages/landing/Analysis/AnalyticsPage"));
 // Dashboards
 const Default = lazy(() => import("./pages/dashboards/Default"));
 const Analytics = lazy(() => import("./pages/dashboards/Analytics"));

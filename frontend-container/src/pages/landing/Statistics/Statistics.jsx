@@ -1,6 +1,6 @@
 // src/pages/landing/Statistics/Statistics.jsx
 import React from "react";
-import { Container, Row, Col, Carousel } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import TeamsPreview from "./Teams/TeamsPreview";
 import PlayersPreview from "./Players/PlayersPreview";
 import GamesPreview from "./Games/GamesPreview";
@@ -13,6 +13,9 @@ const Statistics = () => {
       <Container>
         <Row>
           <Col md="12" className="mx-auto text-center">
+            <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+              Statistics
+            </span>
             <h2 className="h1 mb-5">Explore Our NFL Statistics</h2>
           </Col>
         </Row>

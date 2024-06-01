@@ -14,6 +14,13 @@ export default defineConfig({
   root: "./",
   publicDir: "public",
   server: {
+    proxy: {
+      "/api": {
+        target: "https://newsapi.org/v2", // Base URL for the news API
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
     hmr: {
       overlay: true,
     },

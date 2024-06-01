@@ -1,18 +1,18 @@
 import React from "react";
 import TopNavBar from "./TopNavBar";
 import Home from "./Home";
-import Dashboard from "./Dashboards";
+import Dashboard from "./Dashboards/Dashboards";
 import Teams from "./Statistics/Teams/Teams";
 import Players from "./Statistics/Players/Players";
 import Games from "./Statistics/Games/Games";
 import Standings from "./Statistics/Standings/Standings";
 import Stats from "./Statistics/Statistics";
-import News from "./News";
+import News from "./News/News";
 import Fantasy from "./Fantasy";
-import Analysis from "./Analysis";
-import ModelInsights from "./ModelInsights";
-import About from "./About";
-import Search from "./Search";
+import Analysis from "./Analysis/Analysis";
+import ModelInsights from "./ai/ModelInsights";
+import About from "./Aboutus/About";
+import Search from "./Navigation/Search";
 import "./LandingPage.css"; // Style the page
 
 const LandingPage = () => {

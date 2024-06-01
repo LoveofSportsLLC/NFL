@@ -1,21 +1,32 @@
+// src/pages/landing/Landing.jsx
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
-import Intro from "./Intro";
-import TeamSelectorAndDesignOptions from "./TeamSelectorAndDesignOptions";
-import Dashboards from "./Dashboards";
-import Analysis from "./Analysis";
-import Statistics from "./Statistics/Statistics";
-import Integrations from "./Integrations";
-import Testimonials from "./Testimonials";
-import Faq from "./Faq";
+import { Suspense, lazy } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import Navigation from "./Navigation/Navigation";
+import Intro from "./Intro/Intro";
+import Integrations from "./BottomPage/Integrations";
+import Footer from "./BottomPage/Footer";
+import About from "./Aboutus/About";
+
+// Lazy-loaded components
+const CombinedComponent = lazy(() => import("./Dashboards/CombinedComponent"));
+const Dashboards = lazy(() => import("./Dashboards/Dashboards"));
+const Analysis = lazy(() => import("./Analysis/Analysis"));
+const Statistics = lazy(() => import("./Statistics/Statistics"));
+const News = lazy(() => import("./News/News"));
+const ModelOverview = lazy(() => import("./ai/ModelOverview"));
+const ModelInsights = lazy(() => import("./ai/ModelInsights"));
+const Predictions = lazy(() => import("./ai/Predictions"));
+const PredictionsAccuracy = lazy(() => import("./ai/PredictionsAccuracy"));
+const Community = lazy(() => import("./Community/Community"));
+
+const FUNCTION_API_URL =
+  "https://<your-function-app-name>.azurewebsites.net/api/<function-name>";
 
 const Landing = () => {
-  // State to manage interactive football (Optional)
   const [showInteractive, setShowInteractive] = useState(false);
+  const [predictionAccuracy, setPredictionAccuracy] = useState(null);
 
-  // Fetching script for interactive football (Optional)
   useEffect(() => {
     if (showInteractive) {
       const script = document.createElement("script");
@@ -23,6 +34,27 @@ const Landing = () => {
       script.async = true;
       document.body.appendChild(script);
     }
+
+    const fetchPredictionAccuracy = async () => {
+      try {
+        const response = await fetch(FUNCTION_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}), // Adjust payload if needed
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPredictionAccuracy(data);
+      } catch (error) {
+        console.error("Error fetching prediction accuracy data:", error);
+      }
+    };
+
+    fetchPredictionAccuracy();
   }, [showInteractive]);
 
   return (
@@ -31,81 +63,107 @@ const Landing = () => {
       {/* Intro Section */}
       <Intro handleDonateClick={() => setShowInteractive(!showInteractive)} />
 
-      {/* Company Vision */}
-      <section className="py-5">
-        <Container>
-          <Row>
-            <Col md="4" className="text-center">
-              <h3>Real-Time Statistics</h3>
-              <p>Stay up-to-date with real-time stats.</p>
-            </Col>
-            <Col md="4" className="text-center">
-              <h3>Detailed Analysis</h3>
-              <p>Analyze every aspect of the game.</p>
-            </Col>
-            <Col md="4" className="text-center">
-              <h3>Customizable Dashboards</h3>
-              <p>Create your own dashboard views.</p>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* Team Selector and Design Options */}
+        <section className="bg-light py-5" id="team-selector">
+          <CombinedComponent />
+        </section>
 
-      {/* Team Selector and Design Options */}
-      <section className="bg-light py-5">
-        <TeamSelectorAndDesignOptions />
-      </section>
+        {/* Dashboards */}
+        <section className="py-5" id="dashboards">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  Analysis
+                </span>
+                <h3 className="h1 mb-5">Dashboards</h3>
+              </Col>
+              <Dashboards />
+            </Row>
+          </Container>
+        </section>
 
-      {/* Technology */}
-      {/* <section className="py-5">
-        <Container>
-          <Row>
-            <Col md="6">
-              <h3>Advanced Technology</h3>
-              <p>
-                We use state-of-the-art technology to deliver precise and
-                insightful football analytics.
-              </p>
-            </Col>
-            <Col md="6">
-              <img
-                src="/path/to/technology/image.jpg"
-                alt="Technology"
-                className="img-fluid"
-              />
-            </Col>
-          </Row>
-        </Container>
-      </section> */}
+        {/* Statistics */}
+        <section className="bg-light py-5" id="statistics">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  Statistics
+                </span>
+                <h3 className="h1 mb-5">Explore Our NFL Statistics</h3>
+              </Col>
+              <Statistics />
+            </Row>
+          </Container>
+        </section>
 
-      {/* Analysis */}
-      <section className="bg-light py-5">
-        <Analysis />
-      </section>
+        {/* Latest News */}
+        <section className="py-5" id="news">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  News
+                </span>
+                <h3 className="h1 mb-5">Latest Headlines</h3>
+              </Col>
+              <News />
+            </Row>
+          </Container>
+        </section>
 
-      {/* Dashboards */}
-      <section className="py-5">
-        <Dashboards />
-      </section>
+        {/* AI Overview */}
+        <section className="bg-light py-5" id="ai-overview">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  AI Overview
+                </span>
+                <h3 className="h1 mb-5">AI Model Insights & Predictions</h3>
+              </Col>
+              <Col md="6">
+                <ModelOverview />
+              </Col>
+              <Col md="6">
+                <ModelInsights />
+              </Col>
+              <Col md="6">
+                <Predictions />
+              </Col>
+              <Col md="6">
+                <PredictionsAccuracy predictionAccuracy={predictionAccuracy} />
+              </Col>
+            </Row>
+          </Container>
+        </section>
 
-      {/* Statistics */}
-      <section className="py-5">
-        <Statistics />
-      </section>
+        {/* Community Forum */}
+        <section className="py-5" id="community">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  Community Forum
+                </span>
+                <h3 className="h1 mb-5">Join the Discussion</h3>
+              </Col>
+              <Community />
+            </Row>
+          </Container>
+        </section>
+      </Suspense>
 
       {/* Integrations */}
-      <section className="py-5">
+      <section className="bg-light py-5">
         <Integrations />
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-light py-5">
-        <Testimonials />
-      </section>
-
-      {/* FAQ */}
-      <section className="py-5">
-        <Faq />
+      {/* AboutUs */}
+      <section className="py-5" id="about">
+        <About />
       </section>
 
       {/* Footer */}
