@@ -5,9 +5,7 @@ import { Container } from "react-bootstrap";
 import FilterComponent from "./FilterComponent";
 import CarouselComponent from "../../../components/CarouselComponent";
 import { axiosRetry } from "../../../utils/retry";
-
-const LATEST_NEWS_API_URL =
-  "/api/everything?q=NFL&apiKey=b82732bd703f495a8c9f7ee9a325184a"; // Replace with your actual API key
+import { LATEST_NEWS_API_URL } from "../../../config";
 
 const LatestHeadlines = () => {
   const [news, setNews] = useState([]);

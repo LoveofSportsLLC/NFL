@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card, Form } from "react-bootstrap";
 import { TEAMS } from "../../../constants";
-const INJURIES_API_URL =
-  "/api/everything?q=NFL%20injury&apiKey=b82732bd703f495a8c9f7ee9a325184a"; // Proxy URL with API key
+import { INJURIES_API_URL } from "../../../config";
 
 const InjuriesFeed = () => {
   const [injuries, setInjuries] = useState([]);

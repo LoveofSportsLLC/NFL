@@ -5,9 +5,7 @@ import { Container } from "react-bootstrap";
 import FilterComponent from "./FilterComponent";
 import CarouselComponent from "../../../components/CarouselComponent";
 import { axiosRetry } from "../../../utils/retry";
-
-const HIGHLIGHTS_API_URL =
-  "/api/everything?q=NFL%20highlight&apiKey=b82732bd703f495a8c9f7ee9a325184a"; // Replace with your actual API key
+import { HIGHLIGHTS_API_URL } from "../../../config";
 
 const FeaturedHighlights = () => {
   const [highlights, setHighlights] = useState([]);
