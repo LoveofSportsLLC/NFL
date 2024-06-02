@@ -1,10 +1,9 @@
-// src/pages/landing/News/FilterComponenet.jsx
 import React from "react";
 import { Form } from "react-bootstrap";
-import { TEAMS } from "../../../constants";
+import { TEAMS } from "../constants";
 
 const FilterComponent = ({ filter, team, onFilterChange, onTeamChange }) => (
-  <div className="text-center mb-4">
+  <div className="text-left mb-4">
     <Form.Group className="d-inline-block mr-4">
       <Form.Label>Filter by time range:</Form.Label>
       <Form.Control

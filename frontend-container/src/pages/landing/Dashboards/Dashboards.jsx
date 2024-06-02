@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/landing/Dashboards/Dashboards.jsx
+import React from "react";
 import { Container, Row, Col, Carousel } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

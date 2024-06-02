@@ -8,7 +8,7 @@ import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
 import * as Sentry from "@sentry/react";
 import { useNavigate } from "react-router-dom";
-
+import { domain, clientId, audience } from "./config.js";
 // Initialize Sentry
 Sentry.init({
   dsn: "https://b16886f980d8c15a00c13777956e85dc@o4507292522053632.ingest.us.sentry.io/4507292533260288",
@@ -31,10 +31,6 @@ Sentry.init({
 });
 
 // Environment variables
-const domain = import.meta.env.VITE_AUTH0_DOMAIN;
-const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
-const audience = import.meta.env.VITE_API_AUDIENCE;
-const newsApiKey = import.meta.env.VITE_NEWS_API_KEY;
 
 const Auth0Callback = withAuth0(({ auth0 }) => {
   const navigate = useNavigate();

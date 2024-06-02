@@ -1,11 +1,12 @@
-// src/pages/landing/News/FeaturedHighlights.jsx
-import React, { useState, useEffect, Card } from "react";
+// frontend-container/src/pages/landing/News/FeaturedHighlights.jsx
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container } from "react-bootstrap";
-import FilterComponent from "./FilterComponent";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import FilterComponent from "../../../components/FilterComponent";
 import CarouselComponent from "../../../components/CarouselComponent";
-import { axiosRetry } from "../../../utils/retry";
 import { HIGHLIGHTS_API_URL } from "../../../config";
+import { axiosRetry } from "../../../utils/retry";
+import placeholderImage from "/src/assets/img/logo.png";
 
 const FeaturedHighlights = () => {
   const [highlights, setHighlights] = useState([]);
@@ -17,11 +18,18 @@ const FeaturedHighlights = () => {
     const fetchHighlights = async () => {
       try {
         const response = await axiosRetry(axios, {
-          url: HIGHLIGHTS_API_URL,
           method: "get",
+          url: HIGHLIGHTS_API_URL,
         });
         if (response.headers["content-type"].includes("application/json")) {
-          const articles = response.data.articles;
+          const articles = response.data.articles.map((article) => ({
+            ...article,
+            urlToImage: article.urlToImage || placeholderImage,
+            url: article.url || "",
+            title: article.title || "No Title",
+            description: article.description || "No Description",
+            publishedAt: article.publishedAt || new Date().toISOString(),
+          }));
           setHighlights(articles);
           filterHighlights(articles, filter, team);
         } else {
@@ -34,47 +42,47 @@ const FeaturedHighlights = () => {
     fetchHighlights();
   }, [filter, team]);
 
-  const filterHighlights = (articles, filter, team) => {
+  const filterHighlights = (videos, filter, team) => {
     const now = new Date();
     let filtered;
     switch (filter) {
       case "24hrs":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
+        filtered = videos.filter((video) => {
+          const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 24;
         });
         break;
       case "2days":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
+        filtered = videos.filter((video) => {
+          const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 48;
         });
         break;
       case "7days":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
+        filtered = videos.filter((video) => {
+          const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 7;
         });
         break;
       case "1month":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
+        filtered = videos.filter((video) => {
+          const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 30;
         });
         break;
       case "2months":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
+        filtered = videos.filter((video) => {
+          const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 60;
         });
         break;
       default:
-        filtered = articles;
+        filtered = videos;
     }
 
     if (team !== "all") {
-      filtered = filtered.filter((article) =>
-        article.title.toLowerCase().includes(team.toLowerCase()),
+      filtered = filtered.filter((video) =>
+        video.title.toLowerCase().includes(team.toLowerCase()),
       );
     }
     setFilteredHighlights(filtered);
@@ -100,12 +108,23 @@ const FeaturedHighlights = () => {
   return (
     <Container className="featured-highlights py-5">
       <h2 className="text-center mb-4">Featured Highlights</h2>
-      <FilterComponent
-        filter={filter}
-        team={team}
-        onFilterChange={handleFilterChange}
-        onTeamChange={handleTeamChange}
-      />
+      <Row className="mb-4">
+        <Col md={8}>
+          <FilterComponent
+            filter={filter}
+            team={team}
+            onFilterChange={handleFilterChange}
+            onTeamChange={handleTeamChange}
+            className="w-auto d-inline-block ml-2"
+          />
+        </Col>
+        <Col md={4} className="text-end">
+          <span>
+            Showing {Math.min(filteredHighlights.length, 3)} of{" "}
+            {highlights.length} videos
+          </span>
+        </Col>
+      </Row>
       {filteredHighlights.length <= 3 ? (
         <div className="d-flex justify-content-around">
           {filteredHighlights.map((item, idx) => (
@@ -120,10 +139,7 @@ const FeaturedHighlights = () => {
                   ></iframe>
                 </div>
               ) : (
-                <Card.Img
-                  variant="top"
-                  src={item.urlToImage || "https://via.placeholder.com/150"}
-                />
+                <Card.Img variant="top" src={item.urlToImage} loading="lazy" />
               )}
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>

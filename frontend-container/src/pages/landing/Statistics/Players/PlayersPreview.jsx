@@ -9,13 +9,12 @@ import player5 from "/analysis/player5.webp";
 import player6 from "/analysis/player6.webp";
 import player7 from "/analysis/player7.webp";
 import player8 from "/analysis/player8.webp";
-import player9 from "/analysis/player9.jpg";
+import player9 from "/analysis/player9.webp";
 import player10 from "/analysis/player10.webp";
-import player11 from "/analysis/player11.jpg";
+import player11 from "/analysis/player11.webp";
 import player12 from "/analysis/player12.webp";
-import player13 from "/analysis/player13.png";
-import player14 from "/analysis/player14.jpg";
-import player15 from "/analysis/player15.webp";
+import player13 from "/analysis/player13.webp";
+import player14 from "/analysis/player14.webp";
 
 const playerImages = [
   {
@@ -101,12 +100,6 @@ const playerImages = [
     alt: "Player 14 Overview",
     captionTitle: "Player",
     captionText: "Player Breakdown",
-  },
-  {
-    src: player15,
-    alt: "Player 15 Overview",
-    captionTitle: "Player",
-    captionText: "Player Snapshot",
   },
 ];
 

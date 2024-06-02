@@ -1,3 +1,4 @@
+//src/pages/landing/Dashboards/CombinedComponent.jsx
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import Dashboards from "./Dashboards";

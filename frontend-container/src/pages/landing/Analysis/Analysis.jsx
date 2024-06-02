@@ -1,20 +1,17 @@
 import React from "react";
-import { Container, Row, Col, Carousel } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChartLine,
-  faClipboardList,
-  faFootballBall,
-} from "@fortawesome/free-solid-svg-icons";
-import player1 from "/analysis/player1.webp";
-import player2 from "/analysis/player2.webp";
-import player3 from "/analysis/player3.webp";
-import player4 from "/analysis/player4.webp";
-import player5 from "/analysis/player5.webp";
-import player6 from "/analysis/player6.webp";
-import team1 from "/analysis/team1.webp";
-import team2 from "/analysis/team2.webp";
-import team3 from "/analysis/team3.webp";
+import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
+import draft1 from "/analysis/draft1.webp";
+import draft2 from "/analysis/draft2.webp";
+import draft3 from "/analysis/draft3.webp";
+import draft4 from "/analysis/draft4.webp";
+import draft5 from "/analysis/draft5.webp";
+import draft6 from "/analysis/draft6.png";
+import fantasy1 from "/analysis/fantasy1.webp";
+import fantasy2 from "/analysis/fantasy2.webp";
+import fantasy3 from "/analysis/fantasy3.webp";
+import fantasy4 from "/analysis/fantasy4.webp";
+import fantasy5 from "/analysis/fantasy5.webp";
+import fantasy6 from "/analysis/fantasy6.webp";
 import game1 from "/analysis/match1.webp";
 import game2 from "/analysis/match2.webp";
 import game3 from "/analysis/match3.webp";
@@ -40,9 +37,7 @@ import v18 from "/vis/v18.png";
 import v19 from "/vis/v19.png";
 import v20 from "/vis/v20.png";
 import v21 from "/vis/v21.png";
-import { NavLink } from "react-router-dom";
 
-// List of visualization images
 const visImages = [
   v1,
   v2,
@@ -79,24 +74,30 @@ const Analysis = () => {
   };
 
   return (
-    <section className="py-6 bg-white" id="analysis">
-      <Container className="position-relative z-3">
-        <Row>
-          <Col md="12" className="mx-auto text-center">
-            <div className="mb-4">
-              <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
-                Analysis
-              </span>
-              <h2 className="h1 mb-3">In-Depth NFL Analysis</h2>
-              <p className="text-muted fs-lg">
-                Get real-time game analysis with key play breakdowns, player
-                contributions, and game-changing moments. Stay ahead with
-                data-driven insights during every match.
-              </p>
-            </div>
+    <Container className="py-5">
+      <Card
+        className="p-4"
+        style={{
+          backgroundColor: "#f8f9fa",
+          border: "1px solid #dee2e6",
+          borderRadius: "10px",
+        }}
+      >
+        <Row className="mb-4">
+          <Col md="12" className="text-center">
+            <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+              Analysis
+            </span>
+            <h2 className="h1 mb-3">In-Depth NFL Analysis</h2>
+            <p className="text-muted fs-lg">
+              Get advanced insights and predictions powered by AI, focusing on
+              performance metrics, team and game analysis, fantasy football, and
+              draft analysis.
+            </p>
           </Col>
         </Row>
 
+        {/* Advanced Performance Metrics */}
         <Row className="text-start mb-4">
           <Col md="12" className="text-center">
             <h3>Advanced Performance Metrics</h3>
@@ -140,98 +141,83 @@ const Analysis = () => {
           </Col>
         </Row>
 
-        <Row className="mb-4">
+        {/* Analysis Sections */}
+        <Row className="text-start mb-4">
+          {/* Real Time Team/Game Analysis Predictions Via AI */}
           <Col md="4" className="text-center">
-            <h4>Team Analysis Tools</h4>
-            <p className="text-muted fs-lg">
-              Analyze team strategies, strengths, and weaknesses with our
-              team-focused analytics. Gain insights into win-loss records,
-              offensive and defensive performance, and more.
-            </p>
-            <Carousel>
-              {[team1, team2, team3].map((src, idx) => (
-                <Carousel.Item key={idx}>
-                  <NavLink
-                    className="d-block w-100 img-lazy"
-                    target="_blank"
-                    rel="noreferrer"
-                    to={`/dashboard/team-stats/${idx + 1}`}
-                  >
-                    <img
-                      src={src}
-                      className="img-fluid rounded-lg landing-img img-lazy"
-                      alt={`NFL Team ${idx + 1} Stats Dashboard`}
-                      loading="lazy"
-                      onError={handleImageError}
-                    />
-                  </NavLink>
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          </Col>
-
-          <Col md="4" className="text-center">
-            <h4>In-Depth Game Insights</h4>
-            <p className="text-muted fs-lg">
-              Get real-time game analysis with key play breakdowns, player
-              contributions, and game-changing moments. Stay ahead with
-              data-driven insights during every match.
+            <h3>Real Time Team/Game Analysis Predictions Via AI</h3>
+            <p className="fs-lg">
+              Gain insights into team strategies and game predictions using
+              AI-powered analytics. Stay ahead with real-time data-driven
+              predictions during every match.
             </p>
             <Carousel>
               {[game1, game2, game3, game4].map((src, idx) => (
                 <Carousel.Item key={idx}>
-                  <NavLink
+                  <img
                     className="d-block w-100 img-lazy"
-                    target="_blank"
-                    rel="noreferrer"
-                    to={`/dashboard/game-analysis/${idx + 1}`}
-                  >
-                    <img
-                      src={src}
-                      className="img-fluid rounded-lg landing-img img-lazy"
-                      alt={`NFL Game ${idx + 1} Analysis Dashboard`}
-                      loading="lazy"
-                      onError={handleImageError}
-                    />
-                  </NavLink>
+                    src={src}
+                    alt={`Game Analysis ${idx + 1}`}
+                    loading="lazy"
+                    onError={handleImageError}
+                  />
                 </Carousel.Item>
               ))}
             </Carousel>
           </Col>
 
+          {/* Real Time Fantasy Analysis and Predictions via AI */}
           <Col md="4" className="text-center">
-            <h4>NFL Player Stats</h4>
-            <p className="text-muted fs-lg mb-3">
-              Dive into detailed player statistics, including performance
-              metrics, historical data, and player comparisons. Stay informed
-              about your favorite NFL players' performance.
+            <h3>Real Time Fantasy Analysis and Predictions via AI</h3>
+            <p className="fs-lg">
+              Enhance your fantasy football experience with real-time analysis
+              and AI-driven predictions. Make informed decisions based on
+              comprehensive data insights.
             </p>
             <Carousel>
-              {[player1, player2, player3, player4, player5, player6].map(
+              {[fantasy1, fantasy2, fantasy3, fantasy4, fantasy5, fantasy6].map(
                 (src, idx) => (
                   <Carousel.Item key={idx}>
-                    <NavLink
+                    <img
                       className="d-block w-100 img-lazy"
-                      target="_blank"
-                      rel="noreferrer"
-                      to={`/dashboard/player-stats/${idx + 1}`}
-                    >
-                      <img
-                        src={src}
-                        className="img-fluid rounded-lg landing-img img-lazy"
-                        alt={`NFL Player ${idx + 1} Stats Dashboard`}
-                        loading="lazy"
-                        onError={handleImageError}
-                      />
-                    </NavLink>
+                      src={src}
+                      alt={`Fantasy Analysis ${idx + 1}`}
+                      loading="lazy"
+                      onError={handleImageError}
+                    />
+                  </Carousel.Item>
+                ),
+              )}
+            </Carousel>
+          </Col>
+
+          {/* NFL Draft Analysis */}
+          <Col md="4" className="text-center">
+            <h3>NFL Draft Analysis</h3>
+            <p className="fs-lg">
+              Get comprehensive analysis of NFL draft prospects. Understand
+              player strengths, weaknesses, and potential impact on their new
+              teams.
+            </p>
+            <Carousel>
+              {[draft1, draft2, draft3, draft4, draft5, draft6].map(
+                (src, idx) => (
+                  <Carousel.Item key={idx}>
+                    <img
+                      className="d-block w-100 img-lazy"
+                      src={src}
+                      alt={`Draft Analysis ${idx + 1}`}
+                      loading="lazy"
+                      onError={handleImageError}
+                    />
                   </Carousel.Item>
                 ),
               )}
             </Carousel>
           </Col>
         </Row>
-      </Container>
-    </section>
+      </Card>
+    </Container>
   );
 };
 

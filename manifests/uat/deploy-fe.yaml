@@ -177,6 +177,11 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: apikey
+            - name: VITE_GOOGLE_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: google-auth-secrets
+                  key: apikey
             - name: SENTRY_AUTH
               valueFrom:
                 secretKeyRef:
@@ -186,7 +191,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: news-api-key
-                  key: VITE_NEWS_API_KEY
+                  key: NEWS_API_KEY
+            - name: VITE_GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: google-client-id-secret
+                  key: VITE_GOOGLE_CLIENT_ID
           ports:
             - containerPort: 3000
           volumeMounts:

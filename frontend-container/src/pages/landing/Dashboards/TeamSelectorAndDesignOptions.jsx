@@ -1,3 +1,4 @@
+//src/pages/landing/Dashboards/TeamSelectorAndDesignOptions.jsx
 import React, { useState } from "react";
 import { Container, Row, Col, Carousel, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -186,7 +187,7 @@ const TeamSelectorAndDesignOptions = () => {
         </Col>
       </Row>
       <Row className="text-center mt-5">
-        <h3 className="mb-4">Choose Your Color Scheme &amp; Layout</h3>
+        <h3 className="mb-4">Choose Your Color Scheme & Layout</h3>
         <p className="text-muted fs-lg mb-4">
           Customize the look and feel of your NFL statistics platform with
           various color schemes and layouts. You have the flexibility to create

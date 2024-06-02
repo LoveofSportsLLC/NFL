@@ -1,14 +1,16 @@
-// src/pages/landing/News/InjuriesFeed.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col, Card, Form } from "react-bootstrap";
-import { TEAMS } from "../../../constants";
+import CarouselComponent from "../../../components/CarouselComponent";
+import FilterComponent from "../../../components/FilterComponent";
 import { INJURIES_API_URL } from "../../../config";
+import placeholderImage from "/src/assets/img/logo.png";
 
 const InjuriesFeed = () => {
   const [injuries, setInjuries] = useState([]);
   const [filteredInjuries, setFilteredInjuries] = useState([]);
-  const [filter, setFilter] = useState("7days");
+  const [filter, setFilter] = useState("2months");
+  const [team, setTeam] = useState("all");
 
   useEffect(() => {
     const fetchInjuries = async () => {
@@ -17,7 +19,7 @@ const InjuriesFeed = () => {
         if (response.headers["content-type"].includes("application/json")) {
           const articles = response.data.articles;
           setInjuries(articles);
-          filterInjuries(articles, filter);
+          filterInjuries(articles, filter, team);
         } else {
           console.error("Invalid response data:", response.data);
         }
@@ -26,9 +28,9 @@ const InjuriesFeed = () => {
       }
     };
     fetchInjuries();
-  }, [filter]);
+  }, [filter, team]);
 
-  const filterInjuries = (articles, filter) => {
+  const filterInjuries = (articles, filter, team) => {
     const now = new Date();
     let filtered;
     switch (filter) {
@@ -65,61 +67,67 @@ const InjuriesFeed = () => {
       default:
         filtered = articles;
     }
+
+    if (team !== "all") {
+      filtered = filtered.filter((article) =>
+        article.title.toLowerCase().includes(team.toLowerCase()),
+      );
+    }
     setFilteredInjuries(filtered);
   };
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
-    filterInjuries(injuries, event.target.value);
+    filterInjuries(injuries, event.target.value, team);
+  };
+
+  const handleTeamChange = (event) => {
+    setTeam(event.target.value);
+    filterInjuries(injuries, filter, event.target.value);
   };
 
   return (
     <Container className="injuries-feed py-5">
       <h2 className="text-center mb-4">Injury Updates</h2>
-      <Form.Group className="mb-4 text-center">
-        <Form.Label>Filter by time range:</Form.Label>
-        <Form.Control
-          as="select"
-          value={filter}
-          onChange={handleFilterChange}
-          className="w-auto d-inline-block ml-2"
-        >
-          <option value="24hrs">Last 24 Hours</option>
-          <option value="2days">Last 2 Days</option>
-          <option value="7days">Last 7 Days</option>
-          <option value="1month">Last 1 Month</option>
-          <option value="2months">Last 2 Months</option>
-        </Form.Control>
-      </Form.Group>
-      <Row>
-        {filteredInjuries.length === 0 ? (
-          <Col>
-            <p className="text-center">
-              No injury updates available at the moment.
-            </p>
-          </Col>
-        ) : (
-          filteredInjuries.slice(0, 9).map((article, index) => (
-            <Col lg={4} key={index} className="mb-4">
-              <Card className="h-100">
-                <Card.Img
-                  variant="top"
-                  src={article.urlToImage || "https://via.placeholder.com/150"}
-                />
-                <Card.Body>
-                  <Card.Title>{article.title}</Card.Title>
-                  <Card.Text>
-                    {article.description?.slice(0, 100) + "..."}
-                  </Card.Text>
-                  <Card.Link href={article.url} target="_blank">
-                    Read more
-                  </Card.Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        )}
+      <Row className="mb-4">
+        <Col md={8}>
+          <FilterComponent
+            filter={filter}
+            team={team}
+            onFilterChange={handleFilterChange}
+            onTeamChange={handleTeamChange}
+            className="w-auto d-inline-block ml-2"
+          />
+        </Col>
+        <Col md={4} className="text-end">
+          <span>
+            Showing {Math.min(filteredInjuries.length, 3)} of {injuries.length}{" "}
+            articles
+          </span>
+        </Col>
       </Row>
+      {filteredInjuries.length <= 3 ? (
+        <div className="d-flex justify-content-around">
+          {filteredInjuries.map((item, idx) => (
+            <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
+              <Card.Img
+                variant="top"
+                src={item.urlToImage || placeholderImage}
+                loading="lazy"
+              />
+              <Card.Body>
+                <Card.Title>{item.title}</Card.Title>
+                <Card.Text>{item.description?.slice(0, 100) + "..."}</Card.Text>
+                <Card.Link href={item.url} target="_blank">
+                  Read more
+                </Card.Link>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <CarouselComponent items={filteredInjuries.slice(0, 3)} />
+      )}
     </Container>
   );
 };

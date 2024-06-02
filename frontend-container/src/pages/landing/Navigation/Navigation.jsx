@@ -1,4 +1,3 @@
-// src/pages/landing/Navigation.jsx
 import React, { useState } from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -28,24 +27,29 @@ const Navigation = () => {
   };
 
   const analysisSections = [
-    "performance-Metrics",
-    "team-Analysis",
-    "game-Insights",
-    "fantasy-Football",
+    { id: "analysis", label: "Analysis Overview" },
+    {
+      id: "advanced-performance-metrics",
+      label: "Advanced Performance Metrics",
+    },
+    { id: "real-time-team-game-analysis", label: "Team/Game Analysis" },
+    { id: "real-time-fantasy-analysis", label: "Fantasy Analysis" },
+    { id: "nfl-draft-analysis", label: "NFL Draft Analysis" },
   ];
 
   const statisticsSections = [
-    "Teams",
-    "Players",
-    "Games",
-    "Standings",
-    "Coaches",
+    { id: "teams", label: "Teams" },
+    { id: "players", label: "Players" },
+    { id: "games", label: "Games" },
+    { id: "standings", label: "Standings" },
+    { id: "coaches", label: "Coaches" },
   ];
+
   const aiOverviewSections = [
-    "Model-Overview",
-    "Model-Insights",
-    "Predictions",
-    "Predictions-Accuracy",
+    { id: "model-overview", label: "Model Overview" },
+    { id: "model-insights", label: "Model Insights" },
+    { id: "predictions", label: "Predictions" },
+    { id: "predictions-accuracy", label: "Predictions Accuracy" },
   ];
 
   return (
@@ -77,11 +81,10 @@ const Navigation = () => {
           <NavDropdown title="Analysis" id="analysis-nav-dropdown">
             {analysisSections.map((section) => (
               <NavDropdown.Item
-                key={section}
-                onClick={() => scrollToSection(section)}
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
               >
-                {section.charAt(0).toUpperCase() +
-                  section.slice(1).replace("-", " ")}
+                {section.label}
               </NavDropdown.Item>
             ))}
           </NavDropdown>
@@ -89,12 +92,10 @@ const Navigation = () => {
           <NavDropdown title="Statistics" id="statistics-nav-dropdown">
             {statisticsSections.map((section) => (
               <NavDropdown.Item
-                key={section}
-                onClick={() =>
-                  scrollToSection(section.toLowerCase().replace(" ", "-"))
-                }
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
               >
-                {section}
+                {section.label}
               </NavDropdown.Item>
             ))}
           </NavDropdown>
@@ -104,10 +105,10 @@ const Navigation = () => {
           <NavDropdown title="AI Overview" id="ai-overview-nav-dropdown">
             {aiOverviewSections.map((section) => (
               <NavDropdown.Item
-                key={section}
-                onClick={() => scrollToSection(section)}
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
               >
-                {section.replace("-", " ")}
+                {section.label}
               </NavDropdown.Item>
             ))}
           </NavDropdown>

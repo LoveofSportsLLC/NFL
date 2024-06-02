@@ -75,6 +75,7 @@
     "react-dragula": "^1.1.17",
     "react-error-boundary": "^4.0.13",
     "react-feather": "^2.0.10",
+    "react-google-charts": "^4.0.1",
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^14.1.1",
     "react-input-mask": "^2.0.4",

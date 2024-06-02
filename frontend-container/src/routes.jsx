@@ -12,7 +12,6 @@ import DonatePage from "./pages/auth/Donate";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
 const AboutUs = lazy(() => import("./pages/landing/Aboutus/AboutUs"));
-const Analysis = lazy(() => import("./pages/landing/Analysis/AnalyticsPage"));
 // Dashboards
 const Default = lazy(() => import("./pages/dashboards/Default"));
 const Analytics = lazy(() => import("./pages/dashboards/Analytics"));
@@ -32,7 +31,6 @@ const Blank = lazy(() => import("./pages/pages/Blank"));
 // Auth
 const Page500 = lazy(() => import("./pages/auth/Page500"));
 const Page404 = lazy(() => import("./pages/auth/Page404"));
-const Donate = lazy(() => import("./pages/auth/Donate"));
 const ResetPassword = lazy(() => import("./pages/auth/ResetPassword"));
 const PrivacyPolicy = lazy(() => import("./pages/auth/PrivacyPolicy"));
 const TermsofService = lazy(() => import("./pages/auth/TermsofService"));
@@ -122,10 +120,6 @@ const routes = [
       {
         path: "about",
         element: <AboutUs />,
-      },
-      {
-        path: "analysis",
-        element: <Analysis />,
       },
     ],
   },

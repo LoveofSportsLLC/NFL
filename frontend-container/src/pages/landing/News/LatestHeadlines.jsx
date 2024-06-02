@@ -1,11 +1,10 @@
-// src/pages/landing/News/LatestHeadlines.jsx
-import React, { useState, useEffect, Card } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Container } from "react-bootstrap";
-import FilterComponent from "./FilterComponent";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import CarouselComponent from "../../../components/CarouselComponent";
-import { axiosRetry } from "../../../utils/retry";
+import FilterComponent from "../../../components/FilterComponent";
 import { LATEST_NEWS_API_URL } from "../../../config";
+import placeholderImage from "/src/assets/img/logo.png";
 
 const LatestHeadlines = () => {
   const [news, setNews] = useState([]);
@@ -16,10 +15,7 @@ const LatestHeadlines = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axiosRetry(axios, {
-          url: LATEST_NEWS_API_URL,
-          method: "get",
-        });
+        const response = await axios.get(LATEST_NEWS_API_URL);
         if (response.headers["content-type"].includes("application/json")) {
           const articles = response.data.articles;
           setNews(articles);
@@ -39,34 +35,34 @@ const LatestHeadlines = () => {
     let filtered;
     switch (filter) {
       case "24hrs":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
-          return (now - date) / (1000 * 60 * 60) <= 24;
-        });
+        filtered = articles.filter(
+          (article) =>
+            (now - new Date(article.publishedAt)) / (1000 * 60 * 60) <= 24,
+        );
         break;
       case "2days":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
-          return (now - date) / (1000 * 60 * 60) <= 48;
-        });
+        filtered = articles.filter(
+          (article) =>
+            (now - new Date(article.publishedAt)) / (1000 * 60 * 60) <= 48,
+        );
         break;
       case "7days":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
-          return (now - date) / (1000 * 60 * 60 * 24) <= 7;
-        });
+        filtered = articles.filter(
+          (article) =>
+            (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 7,
+        );
         break;
       case "1month":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
-          return (now - date) / (1000 * 60 * 60 * 24) <= 30;
-        });
+        filtered = articles.filter(
+          (article) =>
+            (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 30,
+        );
         break;
       case "2months":
-        filtered = articles.filter((article) => {
-          const date = new Date(article.publishedAt);
-          return (now - date) / (1000 * 60 * 60 * 24) <= 60;
-        });
+        filtered = articles.filter(
+          (article) =>
+            (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 60,
+        );
         break;
       default:
         filtered = articles;
@@ -77,6 +73,7 @@ const LatestHeadlines = () => {
         article.title.toLowerCase().includes(team.toLowerCase()),
       );
     }
+
     setFilteredNews(filtered);
   };
 
@@ -93,19 +90,29 @@ const LatestHeadlines = () => {
   return (
     <Container className="latest-headlines py-5">
       <h2 className="text-center mb-4">Latest Headlines</h2>
-      <FilterComponent
-        filter={filter}
-        team={team}
-        onFilterChange={handleFilterChange}
-        onTeamChange={handleTeamChange}
-      />
+      <Row className="mb-4">
+        <Col md={8}>
+          <FilterComponent
+            filter={filter}
+            team={team}
+            onFilterChange={handleFilterChange}
+            onTeamChange={handleTeamChange}
+          />
+        </Col>
+        <Col md={4} className="text-end">
+          <span>
+            Showing {Math.min(filteredNews.length, 3)} of {news.length} articles
+          </span>
+        </Col>
+      </Row>
       {filteredNews.length <= 3 ? (
         <div className="d-flex justify-content-around">
           {filteredNews.map((item, idx) => (
             <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
               <Card.Img
                 variant="top"
-                src={item.urlToImage || "https://via.placeholder.com/150"}
+                src={item.urlToImage || placeholderImage}
+                loading="lazy"
               />
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
@@ -121,7 +128,7 @@ const LatestHeadlines = () => {
           ))}
         </div>
       ) : (
-        <CarouselComponent items={filteredNews} />
+        <CarouselComponent items={filteredNews.slice(0, 3)} />
       )}
     </Container>
   );
