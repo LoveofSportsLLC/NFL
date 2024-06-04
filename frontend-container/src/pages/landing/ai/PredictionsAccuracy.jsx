@@ -1,4 +1,4 @@
-// frontend-container/src/pages/landing/ai/PredictionsAccuracy.jsx
+// src/pages/landing/ai/PredictionsAccuracy.jsx
 import React from "react";
 import {
   Container,
@@ -132,7 +132,7 @@ const PredictionsAccuracy = () => {
                 <h3 className="mb-3">Prediction Accuracy</h3>
                 <Row className="text-center">
                   <Col lg={6} className="py-3">
-                    <Accordion defaultActiveKey="0">
+                    <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="0">
                         <Accordion.Header>
                           Explained Variance: {accuracyData.explainedVariance}
@@ -160,7 +160,7 @@ const PredictionsAccuracy = () => {
                     </Accordion>
                   </Col>
                   <Col lg={6} className="py-3">
-                    <Accordion defaultActiveKey="1">
+                    <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="1">
                         <Accordion.Header>
                           Mean Absolute Error (MAE):{" "}
@@ -189,7 +189,7 @@ const PredictionsAccuracy = () => {
                     </Accordion>
                   </Col>
                   <Col lg={6} className="py-3">
-                    <Accordion defaultActiveKey="2">
+                    <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="2">
                         <Accordion.Header>
                           R2 Score: {accuracyData.r2Score}
@@ -217,7 +217,7 @@ const PredictionsAccuracy = () => {
                     </Accordion>
                   </Col>
                   <Col lg={6} className="py-3">
-                    <Accordion defaultActiveKey="3">
+                    <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="3">
                         <Accordion.Header>
                           Spearman Correlation:{" "}
@@ -246,7 +246,7 @@ const PredictionsAccuracy = () => {
                     </Accordion>
                   </Col>
                   <Col lg={12} className="py-3">
-                    <Accordion defaultActiveKey="4">
+                    <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="4">
                         <Accordion.Header>
                           Confidence Interval: {accuracyData.confidenceInterval}

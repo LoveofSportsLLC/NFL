@@ -60,7 +60,7 @@ const TeamsPreview = () => {
       {teamImages.map((team, index) => (
         <Carousel.Item key={index}>
           <img
-            className="d-block w-100 img-lazy"
+            className="d-block w-100"
             src={team.src}
             alt={team.alt}
             loading="lazy"

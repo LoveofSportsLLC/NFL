@@ -11,7 +11,8 @@ const GamesPreview = () => {
     <Carousel>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={gamerecap4}
           alt="Game Review for Player"
         />
@@ -22,7 +23,8 @@ const GamesPreview = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={gamerecap1}
           alt="Game 2 Overview"
         />
@@ -33,7 +35,8 @@ const GamesPreview = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={gamerecap2}
           alt="Game 3 Overview"
         />
@@ -44,7 +47,8 @@ const GamesPreview = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={gamerecap3}
           alt="Game 3 Overview"
         />

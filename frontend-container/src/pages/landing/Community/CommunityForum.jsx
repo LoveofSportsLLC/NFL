@@ -1,9 +1,10 @@
-// src/pages/landing/CommunityForum.jsx
+// src/pages/landing/Community/CommunityForum.jsx
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom"; // Ensure this import is included
 
 const CommunityForum = () => (
-  <section className="py-6">
+  <section className="py-6 bg-light">
     <Container>
       <div className="mb-5 text-center">
         <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">

@@ -112,7 +112,7 @@ const Analysis = () => {
                   {shuffleImages(visImages).map((src, idx) => (
                     <Carousel.Item key={idx}>
                       <img
-                        className="d-block w-100 img-lazy"
+                        className="d-block w-100"
                         src={src}
                         alt={`Visualization ${idx + 1}`}
                         loading="lazy"
@@ -127,7 +127,7 @@ const Analysis = () => {
                   {shuffleImages(visImages).map((src, idx) => (
                     <Carousel.Item key={idx}>
                       <img
-                        className="d-block w-100 img-lazy"
+                        className="d-block w-100"
                         src={src}
                         alt={`Visualization ${idx + 1}`}
                         loading="lazy"
@@ -155,7 +155,7 @@ const Analysis = () => {
               {[game1, game2, game3, game4].map((src, idx) => (
                 <Carousel.Item key={idx}>
                   <img
-                    className="d-block w-100 img-lazy"
+                    className="d-block w-100"
                     src={src}
                     alt={`Game Analysis ${idx + 1}`}
                     loading="lazy"
@@ -179,7 +179,7 @@ const Analysis = () => {
                 (src, idx) => (
                   <Carousel.Item key={idx}>
                     <img
-                      className="d-block w-100 img-lazy"
+                      className="d-block w-100"
                       src={src}
                       alt={`Fantasy Analysis ${idx + 1}`}
                       loading="lazy"
@@ -204,7 +204,7 @@ const Analysis = () => {
                 (src, idx) => (
                   <Carousel.Item key={idx}>
                     <img
-                      className="d-block w-100 img-lazy"
+                      className="d-block w-100"
                       src={src}
                       alt={`Draft Analysis ${idx + 1}`}
                       loading="lazy"

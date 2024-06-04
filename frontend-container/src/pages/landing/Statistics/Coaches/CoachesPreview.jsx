@@ -11,7 +11,12 @@ const CoachesPreview = () => {
   return (
     <Carousel>
       <Carousel.Item>
-        <img className="d-block w-100 img-lazy" src={coach1} alt="Coach" />
+        <img
+          className="d-block w-100 img-lazy"
+          loading="lazy"
+          src={coach1}
+          alt="Coach"
+        />
         <Carousel.Caption>
           <h5>Coach</h5>
           <p>Coaches</p>
@@ -19,7 +24,8 @@ const CoachesPreview = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={coach2}
           alt="Last 3 Coaches"
         />
@@ -29,14 +35,24 @@ const CoachesPreview = () => {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <img className="d-block w-100 img-lazy" src={coach3} alt="Coach 3" />
+        <img
+          className="d-block w-100"
+          loading="lazy"
+          src={coach3}
+          alt="Coach 3"
+        />
         <Carousel.Caption>
           <h5>Coach Tendancies</h5>
           <p>Coaching Tendancies</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <img className="d-block w-100 img-lazy" src={coach4} alt="Coach " />
+        <img
+          className="d-block w-100"
+          loading="lazy"
+          src={coach4}
+          alt="Coach "
+        />
         <Carousel.Caption>
           <h5>Sean Mcvay</h5>
           <p>Coach Overview</p>
@@ -44,7 +60,8 @@ const CoachesPreview = () => {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100 img-lazy"
+          className="d-block w-100"
+          loading="lazy"
           src={coach5}
           alt="Coach Consistancy"
         />

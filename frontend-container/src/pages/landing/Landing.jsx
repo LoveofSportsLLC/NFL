@@ -1,4 +1,4 @@
-// frontend-container/src/pages/landing/Landing.jsx
+// src/pages/landing/Landing.jsx
 import React, { useEffect, useState } from "react";
 import { Suspense, lazy } from "react";
 import { Container, Row, Col } from "react-bootstrap";
@@ -10,11 +10,12 @@ import About from "./Aboutus/About";
 
 // Lazy-loaded components
 const CombinedComponent = lazy(() => import("./Dashboards/CombinedComponent"));
+const Dashboards = lazy(() => import("./Dashboards/Dashboards"));
 const Analysis = lazy(() => import("./Analysis/Analysis"));
 const Statistics = lazy(() => import("./Statistics/Statistics"));
 const News = lazy(() => import("./News/News"));
 const PredictionsAccuracy = lazy(() => import("./ai/PredictionsAccuracy"));
-const Community = lazy(() => import("./Community/Community"));
+const CommunityForum = lazy(() => import("./Community/CommunityForum"));
 
 const Landing = () => {
   const [showInteractive, setShowInteractive] = useState(false);
@@ -37,13 +38,24 @@ const Landing = () => {
         <section className="bg-light py-5" id="team-selector">
           <CombinedComponent />
         </section>
+        <section className="bg-light py-5" id="ai-overview">
+          <Container>
+            <Row>
+              <Col md="12" className="text-center">
+                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
+                  AI Overview
+                </span>
+                <h3 className="h1 mb-5">AI Model Insights & Predictions</h3>
 
+                <PredictionsAccuracy />
+              </Col>
+            </Row>
+          </Container>
+        </section>
         <section className="py-5" id="analysis">
           <Container>
             <Row>
-              <Col lg={8}>
-                <PredictionsAccuracy />
-              </Col>
+              <Analysis />
             </Row>
           </Container>
         </section>
@@ -64,26 +76,16 @@ const Landing = () => {
           </Container>
         </section>
 
-        <section className="bg-light py-5" id="community">
-          <Container>
-            <Row>
-              <Col md="12" className="text-center">
-                <span className="text-uppercase text-primary text-sm fw-medium mb-1 d-block">
-                  Community Forum
-                </span>
-                <h3 className="h1 mb-5">Join the Discussion</h3>
-              </Col>
-              <Community />
-            </Row>
-          </Container>
+        <section className="py-5" id="community">
+          <CommunityForum />
         </section>
       </Suspense>
 
-      <section className="py-5">
+      <section className="bg-light py-5">
         <Integrations />
       </section>
 
-      <section className="bg-light py-5" id="about">
+      <section className="py-5" id="about">
         <About />
       </section>
 

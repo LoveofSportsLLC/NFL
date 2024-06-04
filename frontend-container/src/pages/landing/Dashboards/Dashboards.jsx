@@ -4,6 +4,7 @@ import { Container, Row, Col, Carousel } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDesktop, faChartBar } from "@fortawesome/free-solid-svg-icons";
+import LazyImage from "../../../components/LazyImage"; // Import LazyImage component
 import darkDashboardOverview from "/analysis/darkdashboardoverview.webp";
 import lightDashboardOverview from "/analysis/lightdashboardoverview.webp";
 import nflDashboardOverview from "/analysis/nfldashboardoverview.webp";
@@ -81,36 +82,33 @@ const Dashboards = () => {
             <h3>Default Dashboards</h3>
             <Carousel>
               <Carousel.Item>
-                <img
-                  className="d-block w-100 img-lazy"
+                <LazyImage
                   src={darkDashboardOverview}
                   alt="Dark Dashboard Overview"
-                  loading="lazy"
                   onError={handleImageError}
+                  className="d-block w-100 img-lazy"
                 />
                 <Carousel.Caption>
                   <p>Dark Dashboard Overview</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
-                <img
-                  className="d-block w-100 img-lazy"
+                <LazyImage
                   src={lightDashboardOverview}
                   alt="Light Dashboard Overview"
-                  loading="lazy"
                   onError={handleImageError}
+                  className="d-block w-100 img-lazy"
                 />
                 <Carousel.Caption>
                   <p>Light Dashboard Overview</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
-                <img
-                  className="d-block w-100 img-lazy"
+                <LazyImage
                   src={nflDashboardOverview}
                   alt="NFL Dashboard Overview"
-                  loading="lazy"
                   onError={handleImageError}
+                  className="d-block w-100 img-lazy"
                 />
                 <Carousel.Caption>
                   <p>NFL Dashboard Overview</p>
@@ -130,12 +128,11 @@ const Dashboards = () => {
                 teamDashboardOverview5,
               ].map((src, idx) => (
                 <Carousel.Item key={idx}>
-                  <img
-                    className="d-block w-100 img-lazy"
+                  <LazyImage
                     src={src}
                     alt={`Team Dashboard Overview ${idx + 1}`}
-                    loading="lazy"
                     onError={handleImageError}
+                    className="d-block w-100 img-lazy"
                   />
                   <Carousel.Caption>
                     <p>{`Team Dashboard Overview ${idx + 1}`}</p>
@@ -154,12 +151,11 @@ const Dashboards = () => {
                 mobileDashboardOverview3,
               ].map((src, idx) => (
                 <Carousel.Item key={idx}>
-                  <img
-                    className="d-block w-100 img-lazy"
+                  <LazyImage
                     src={src}
                     alt={`Mobile Dashboard Overview ${idx + 1}`}
-                    loading="lazy"
                     onError={handleImageError}
+                    className="d-block w-100"
                   />
                   <Carousel.Caption>
                     <p>{`Mobile Dashboard Overview ${idx + 1}`}</p>

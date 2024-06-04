@@ -1,8 +1,9 @@
-//src/pages/landing/Dashboards/TeamSelectorAndDesignOptions.jsx
+// src/pages/landing/Dashboards/TeamSelectorAndDesignOptions.jsx
 import React, { useState } from "react";
 import { Container, Row, Col, Carousel, Badge } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
+import LazyImage from "../../../components/LazyImage"; // Import LazyImage component
 import { TEAMS } from "../../../constants";
 import { Link } from "react-router-dom";
 import Packers1 from "/scheme/packers1.webp";
@@ -165,7 +166,7 @@ const TeamSelectorAndDesignOptions = () => {
               <Carousel.Item key={teamName}>
                 <Row className="align-items-center">
                   <Col md={6}>
-                    <img
+                    <LazyImage
                       className="d-block w-100 img-lazy"
                       src={`/teamlogos/${teamName.toLowerCase()}.png`}
                       alt={`${teamName} logo`}
@@ -173,7 +174,7 @@ const TeamSelectorAndDesignOptions = () => {
                     />
                   </Col>
                   <Col md={6}>
-                    <img
+                    <LazyImage
                       className="d-block w-100 img-lazy"
                       src={`/fans/${teamName.toLowerCase()}fans.png`}
                       alt={`${teamName} fans`}
@@ -216,11 +217,10 @@ const TeamSelectorAndDesignOptions = () => {
                           <div className="landing-feature">
                             <FontAwesomeIcon icon={faPalette} />
                           </div>
-                          <img
+                          <LazyImage
                             src={src}
                             className="img-fluid rounded-lg landing-img img-lazy"
                             alt={`${teamName} Color Scheme ${idx + 1}`}
-                            loading="lazy"
                             onError={(e) =>
                               handleImageError(e, teamName, "colorScheme")
                             }

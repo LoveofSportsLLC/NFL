@@ -78,6 +78,16 @@ const Navigation = () => {
           <Nav.Link onClick={() => scrollToSection("dashboards")}>
             Dashboards
           </Nav.Link>
+          <NavDropdown title="AI Overview" id="ai-overview-nav-dropdown">
+            {aiOverviewSections.map((section) => (
+              <NavDropdown.Item
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+              >
+                {section.label}
+              </NavDropdown.Item>
+            ))}
+          </NavDropdown>
           <NavDropdown title="Analysis" id="analysis-nav-dropdown">
             {analysisSections.map((section) => (
               <NavDropdown.Item
@@ -101,17 +111,6 @@ const Navigation = () => {
           </NavDropdown>
 
           <Nav.Link onClick={() => scrollToSection("news")}>News</Nav.Link>
-
-          <NavDropdown title="AI Overview" id="ai-overview-nav-dropdown">
-            {aiOverviewSections.map((section) => (
-              <NavDropdown.Item
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-              >
-                {section.label}
-              </NavDropdown.Item>
-            ))}
-          </NavDropdown>
 
           <Nav.Link onClick={() => scrollToSection("community")}>
             Community
