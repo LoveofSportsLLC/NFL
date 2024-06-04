@@ -1,0 +1,23 @@
+#manifests/prod/svc-be.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: beprod
+  namespace: azdevspace
+spec:
+  ports:
+  - name: behttp
+    port: 80
+    targetPort: 5000
+  - name: behttps
+    port: 443
+    targetPort: 5000
+  - name: 5k
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: berod
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,5 @@
+agentInjector:
+  resources:
+    requests:
+      cpu: "100m"  # Reduced CPU request
+      memory: "128Mi"  # Reduced memory request

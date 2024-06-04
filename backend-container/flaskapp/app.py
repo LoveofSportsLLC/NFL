@@ -34,8 +34,8 @@ from src.apimappings.LeagueHierarchy import bp as bp_league_hierarchy
 from src.apimappings.LeagueHierarchy import fetchandsaveLeagueHierarchy
 #from src.apimappings.current_season_schedule import bp as bp_current_season_schedule
 #from src.apimappings.current_season_schedule import fetch_and_save_weekly_schedule
-from src.apimappings.PBP import bp as bp_pbp
-from src.apimappings.PBP import process_games_for_year
+#from src.apimappings.PBP import bp as bp_pbp
+#from src.apimappings.PBP import process_games_for_year
 #from src.apimappings.gamefeeds import gamefeeds_blueprint
 #from src.apimappings.additionalfeeds import additionalfeeds_blueprint
 #from src.apimappings.nflverse import nflverse_blueprint, fetch_and_store
@@ -116,7 +116,7 @@ app.register_blueprint(bp_league_hierarchy)
 app.register_blueprint(bp_team_profile)
 app.register_blueprint(bp_seasons)
 app.register_blueprint(bp_seasonal_stats)
-app.register_blueprint(bp_pbp, url_prefix='/pbp')
+#app.register_blueprint(bp_pbp, url_prefix='/pbp')
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 app.register_blueprint(bp_default)
 app.register_blueprint(bp_get_data)

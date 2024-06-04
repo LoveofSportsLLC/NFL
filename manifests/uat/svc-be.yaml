@@ -1,0 +1,23 @@
+#manifests/uat/svc-be.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: beuat
+  namespace: uat  # Adjust to the UAT namespace
+spec:
+  ports:
+  - name: behttp
+    port: 80
+    targetPort: 5000
+  - name: behttps
+    port: 443
+    targetPort: 5000
+  - name: 5k
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: beuat  # Adjust to select the UAT deployment pods
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

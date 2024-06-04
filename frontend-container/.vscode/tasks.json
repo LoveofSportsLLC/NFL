@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Bridge to Kubernetes: Setup",
+      "type": "process",
+      "command": "echo",
+      "args": ["Setting up Bridge to Kubernetes..."],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "bridge-to-kubernetes.resource",
+      "type": "bridge-to-kubernetes.resource",
+      "resource": "feuat",
+      "resourceType": "service",
+      "ports": [3000],
+      "targetCluster": "DevCluster",
+      "targetNamespace": "uat",
+      "useKubernetesServiceEnvironmentVariables": true,
+      "targetContainer": "feuat"
+    },
+    {
+      "label": "bridge-to-kubernetes.compound",
+      "dependsOn": [
+        "bridge-to-kubernetes.resource",
+        "Start Docker Compose Debug"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "Start Docker Compose Debug",
+      "type": "shell",
+      "command": "docker compose -f docker-compose.debug.yml up --build",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

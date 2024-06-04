@@ -1,14 +1,11 @@
-#2
 name: be
-"on":
+on:
   push:
     branches:
       - main
-  workflow_dispatch: {}
-env:
-  DEPLOYMENT_MANIFEST_PATH: |
-    manifests/deploy-be.yaml
-    manifests/svc-be.yaml
+      - uat
+  workflow_dispatch:
+
 jobs:
   buildImage:
     permissions:
@@ -17,29 +14,56 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
-        name: Azure login
+      - name: Azure login
+        uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      - name: Build and push image to ACR
+      - name: Set image tag based on branch
+        run: |
+          BRANCH_NAME="${{ github.ref_name }}"
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            IMAGE_TAG="prodlatest"
+          else
+            IMAGE_TAG="uatlatest"
+          fi
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+      - name: Build and push Docker image
         env:
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
           VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
+          VITE_AUTH0_DOMAIN: ${{ secrets.VITE_AUTH0_DOMAIN }}
+          VITE_AUTH0_CLIENT_ID: ${{ secrets.VITE_AUTH0_CLIENT_ID }}
+          VITE_API_AUDIENCE: ${{ secrets.VITE_API_AUDIENCE }}
+          VITE_AUTH0_SECRET: ${{ secrets.VITE_AUTH0_SECRET }}
+          VITE_AUTH0_BASE_URL: ${{ secrets.VITE_AUTH0_BASE_URL }}
+          VITE_AUTH0_ISSUER_BASE_URL: ${{ secrets.VITE_AUTH0_ISSUER_BASE_URL }}
+          VITE_PUBLISHABLE_KEY: ${{ secrets.VITE_PUBLISHABLE_KEY }}
+          VITE_BUY_BUTTON: ${{ secrets.VITE_BUY_BUTTON }}
+          VITE_SECRET_KEY: ${{ secrets.VITE_SECRET_KEY }}
+          VITE_SUPPORT_API_URL: ${{ secrets.VITE_SUPPORT_API_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          GOOGLE_AUTH_URI: ${{ secrets.GOOGLE_AUTH_URI }}
+          GOOGLE_TOKEN_URI: ${{ secrets.GOOGLE_TOKEN_URI }}
+          GOOGLE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.GOOGLE_AUTH_PROVIDER_X509_CERT_URL }}
+          GOOGLE_REDIRECT_URIS: ${{ secrets.GOOGLE_REDIRECT_URIS }}
+          GOOGLE_JAVASCRIPT_ORIGINS: ${{ secrets.GOOGLE_JAVASCRIPT_ORIGINS }}
+          GOOGLE_APIKEY: ${{ secrets.GOOGLE_APIKEY }}
         run: |
-          az acr build --image be:latest --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f backend-container/Dockerfile.python backend-container/
-
+          az acr build --image be:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f backend-container/Dockerfile.python backend-container
+          
   deploy:
     permissions:
       contents: read
       id-token: write
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
     needs: buildImage
     steps:
       - uses: actions/checkout@v3
       - uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
-        name: Azure login
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -51,9 +75,11 @@ jobs:
           resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}
       - name: Prepare Deployment Manifest
         run: |
-          DATE=$(date +%s)
-          sed -i "s/{{.Date}}/$DATE/" manifests/deploy-be.yaml
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f manifests/deploy-be.yaml
-          kubectl apply -f manifests/svc-be.yaml
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            manifest_dir="manifests/prod"
+          else
+            manifest_dir="manifests/uat"
+          fi
+          echo "Using manifest directory: $manifest_dir"
+          kubectl apply -f ${{ github.workspace }}/$manifest_dir/deploy-be.yaml
+          kubectl apply -f ${{ github.workspace }}/$manifest_dir/svc-be.yaml

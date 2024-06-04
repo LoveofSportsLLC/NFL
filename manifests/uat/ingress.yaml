@@ -1,0 +1,72 @@
+#manifests/uat/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loveoffootball-uat-ingress
+  namespace: uat
+  annotations:
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/backend-protocol: "http"
+spec:
+  ingressClassName: azure-application-gateway
+  tls:
+  - hosts:
+    - "uat.loveoffootball.io"
+    secretName: loveoffootball-tls  # Updated secret name
+  rules:
+  - host: "uat.loveoffootball.io"
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: feuat
+            port:
+              number: 80
+      - path: "/image"
+        pathType: Prefix
+        backend:
+          service:
+            name: beuat  # Ensure BE service is configured for UAT
+            port:
+              number: 80
+      - path: "/api/submit-support"
+        pathType: Prefix
+        backend:
+          service:
+            name: beuat  # Ensure BE service is configured for UAT
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nwp-ingress-fe
+  namespace: uat
+spec:
+  podSelector:
+    matchLabels:
+      app: feuat
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nwp-ingress-be
+  namespace: uat
+spec:
+  podSelector:
+    matchLabels:
+      app: beuat
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0

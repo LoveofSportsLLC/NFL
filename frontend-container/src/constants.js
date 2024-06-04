@@ -1,3 +1,4 @@
+//frontend-container/src/constants.js
 export const SIDEBAR_POSITION = {
   LEFT: "left",
   RIGHT: "right",
@@ -48,7 +49,6 @@ export const TEAMS = {
   TITANS: { primary: "#4B92DB", secondary: "#0C2340" },
   COMMANDERS: { primary: "#773141", secondary: "#FFB612" },
 };
-
 
 export const THEME = {
   DEFAULT: "default",

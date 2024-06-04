@@ -1,6 +1,5 @@
-import React from "react";
-import { lazy } from "@loadable/component";
-import { useEffect } from "react";
+// frontend-container/src/routes.jsx
+import React, { lazy, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Layouts
 import AuthLayout from "./layouts/Auth";
@@ -12,8 +11,7 @@ import AuthGuard from "./components/guards/AuthGuard";
 import DonatePage from "./pages/auth/Donate";
 // Landing
 const Landing = lazy(() => import("./pages/landing/Landing"));
-const AboutUs = lazy(() => import("./pages/landing/AboutUs"));
-
+const AboutUs = lazy(() => import("./pages/landing/Aboutus/AboutUs"));
 // Dashboards
 const Default = lazy(() => import("./pages/dashboards/Default"));
 const Analytics = lazy(() => import("./pages/dashboards/Analytics"));
@@ -33,7 +31,6 @@ const Blank = lazy(() => import("./pages/pages/Blank"));
 // Auth
 const Page500 = lazy(() => import("./pages/auth/Page500"));
 const Page404 = lazy(() => import("./pages/auth/Page404"));
-const Donate = lazy(() => import("./pages/auth/Donate"));
 const ResetPassword = lazy(() => import("./pages/auth/ResetPassword"));
 const PrivacyPolicy = lazy(() => import("./pages/auth/PrivacyPolicy"));
 const TermsofService = lazy(() => import("./pages/auth/TermsofService"));
@@ -101,6 +98,7 @@ const Support = lazy(() => import("./pages/docs/Support"));
 const Changelog = lazy(() => import("./pages/docs/Changelog"));
 // Protected routes
 const ProtectedPage = lazy(() => import("./pages/protected/ProtectedPage"));
+
 const RedirectToLogin = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -109,6 +107,7 @@ const RedirectToLogin = () => {
   }, [navigate]);
   return null; // or a loading indicator if preferred
 };
+
 const routes = [
   {
     path: "/",
@@ -502,6 +501,7 @@ const routes = [
       },
     ],
   },
+  // This route should handle all unmatched routes and show a 404 page
   {
     path: "*",
     element: <AuthLayout />,

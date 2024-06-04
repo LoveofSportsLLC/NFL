@@ -10,8 +10,8 @@ const Intro = () => (
     <p className="text-lg">
       Your project can consume variables declared in your environment as if they
       were declared locally in your JS files. By default you will have{" "}
-      <code>NODE_ENV</code> defined for you, and any other environment variables
-      starting with <code>VITE_</code>.
+      <code>PUBLIC_ENV__NODE_ENV</code> defined for you, and any other
+      environment variables starting with <code>VITE_</code>.
     </p>
   </div>
 );
@@ -37,13 +37,13 @@ const Accessing = () => (
   <div className="mb-5">
     <h3>Accessing environment variables</h3>
     <p className="text-lg">
-      Environment variables will be defined for you on <code>process.env</code>.
-      For example, having an environment variable named{" "}
-      <code>VITE_NOT_SECRET_CODE</code> will be exposed in your JS as{" "}
+      Environment variables will be defined for you on{" "}
+      <code>import.meta.env</code>. For example, having an environment variable
+      named <code>VITE_NOT_SECRET_CODE</code> will be exposed in your JS as{" "}
       <code>import.meta.env.VITE_NOT_SECRET_CODE</code>.
     </p>
 
-    <Code>{`if (import.meta.env.NODE_ENV !== 'production') {
+    <Code>{`if (import.meta.env.PUBLIC_ENV__NODE_ENV !== 'production') {
   // do something
 }`}</Code>
 
@@ -55,6 +55,7 @@ const Accessing = () => (
     </p>
   </div>
 );
+
 const LearnMore = () => (
   <div className="mb-5">
     <h3>Learn more</h3>

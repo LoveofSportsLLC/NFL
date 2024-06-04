@@ -1,17 +1,33 @@
+//.vscode/tasks.json
 {
   "version": "2.0.0",
   "tasks": [
       {
-      "label": "bridge-to-kubernetes.resource",
-      "type": "bridge-to-kubernetes.resource",
-      "resource": "fe",
-      "resourceType": "service",
-      "ports": [3001],
-      "targetCluster": "DevCluster",
-      "targetNamespace": "azdevspace",
-      "useKubernetesServiceEnvironmentVariables": true,
-      "isolateAs": "zepor-842d",
-      "targetContainer": "fe"
+      "label": "Start Docker Compose Debug",
+      "type": "shell",
+      "command": "docker compose",
+      "args": [
+        "-f",
+        "docker-compose.debug.yml",
+        "up"
+      ],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Bridge to Kubernetes: Setup",
+      "type": "process",
+      "command": "echo",
+      "args": ["Setting up Bridge to Kubernetes..."],
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     },
     {
       "label": "Start Web",
@@ -84,6 +100,17 @@
       "dependsOn": ["Start API", "Start Web"],
       "problemMatcher": []
     },
+    {
+      "label": "bridge-to-kubernetes.resource",
+      "type": "bridge-to-kubernetes.resource",
+      "resource": "feuat",
+      "resourceType": "service",
+      "ports": [3001],
+      "targetCluster": "DevCluster",
+      "targetNamespace": "uat",
+      "useKubernetesServiceEnvironmentVariables": true,
+      "targetContainer": "feuat"
+    }
   ],
   "inputs": [
     {

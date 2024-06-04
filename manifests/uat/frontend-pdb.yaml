@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: Pod Disruption Budget
+metadata:
+  name: frontend-pdb-uat
+  namespace: uat
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: feuat

@@ -1,0 +1,63 @@
+#manifests/prod/deploy-re.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deploy
+  namespace: azdevspace
+  labels:
+    app: redisprod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: redisprod
+  template:
+    metadata:
+      labels:
+        app: redisprod
+    spec:
+      containers:
+        - name: redisprod
+          image: redis:latest
+          imagePullPolicy: Always
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: redis
+            - name: REDIS_SERVICE_PORT
+              value: "6379"
+            - name: PUBLIC_ENV__NODE_ENV
+              value: production
+            - name: AZURE_STORAGE_ACCOUNT
+              value: sportfs
+            - name: AZURE_STORAGE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: azure-storage-account-secret
+                  key: azurestorageaccountkey
+            - name: AZURE_SHARE_NAME
+              value: sportshare
+          #- name: MONGODB_URL # Add this environment variable
+          #  valueFrom:
+          #    secretKeyRef:
+          #      name: my-cluster-secrets
+          #      key: MONGODB_URL # Use the correct key name
+          ports:
+            - containerPort: 6379
+          resources:
+            limits:
+              cpu: "2"
+              memory: "1Gi"
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+      imagePullSecrets:
+        - name: my-registry-secret
+      volumes:
+        - name: redis-file
+          persistentVolumeClaim:
+            claimName: redis-pvc

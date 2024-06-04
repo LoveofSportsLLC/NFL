@@ -1,0 +1,13 @@
+# UAT version of the Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service-uat
+  namespace: uat  # Adjust to the UAT namespace
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redisuat  # Adjust to select the UAT deployment pods

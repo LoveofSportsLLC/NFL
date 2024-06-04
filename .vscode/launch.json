@@ -1,31 +1,29 @@
+//.vscode/launch.json
 {
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal",
-      "justMyCode": true,
-      "python": "/home/zepor/.pyenv/versions/3.10.0/envs/venv310/bin/python",
-      "pipPath": "/home/zepor/.pyenv/versions/3.10.0/envs/venv310/bin/pip"
-    },
-    {
+      "name": "Docker: Attach to Node with Kubernetes",
       "type": "node",
       "request": "attach",
-      "name": "Docker: Attach to Node with Kubernetes",
-      "remoteRoot": "/usr/src/app",
-      "preLaunchTask": "bridge-to-kubernetes.resource",
+      "remoteRoot": "/app",
+      "localRoot": "${workspaceFolder}/frontend-container",
+      "port": 3000,
+      "address": "localhost",
+      "preLaunchTask": "Start Docker Compose Debug",
       "env": {
         "GRPC_DNS_RESOLVER": "native"
       }
     },
     {
-      "type": "node",
-      "request": "attach",
-      "name": "Docker: Attach to Node",
-      "remoteRoot": "/usr/src/app"
+      "name": "Python: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "python": "/home/zepor/.pyenv/versions/3.10.0/envs/venv310/bin/python",
+      // Remove the "pipPath" property
     },
     {
       "name": "Attach to Chrome",
@@ -36,7 +34,7 @@
     },
     {
       "name": "Python: Attach to Azure",
-      "type": "python",
+      "type": "debugpy",
       "request": "attach",
       "pathMappings": [
         {

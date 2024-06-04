@@ -42,7 +42,7 @@ const UsageWithHooks = () => (
     <p className="text-lg">
       Using the hook in functional components is one of the options you got.
     </p>
-    <Code>{`import React from 'react';
+    <Code>{`import * as React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
@@ -60,7 +60,7 @@ const UsageWithHOC = () => (
       Using higher order components is one of the most used method to extend
       existing components by passing additional props to them.
     </p>
-    <Code>{`import React from 'react';
+    <Code>{`import * as React from 'react';
 
 import { withTranslation } from 'react-i18next';
 
