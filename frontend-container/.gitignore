@@ -48,7 +48,6 @@ amplifytools.xcconfig
 !.env.project
 !.env.vault
 .env.me
-src/config.js
 NFL-Stats/
 **.idea
 **.vite-inspect
