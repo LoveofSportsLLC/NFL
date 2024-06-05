@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: beprod
-          image: loveofsports.azurecr.io/beprod:latest
+          image: loveofsports.azurecr.io/be:prodlatest
           imagePullPolicy: Always
           env:
             - name: R_LIBS_USER

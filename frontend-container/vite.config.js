@@ -14,6 +14,7 @@ export default defineConfig({
   root: "./",
   publicDir: "public",
   server: {
+    historyApiFallback: true,
     proxy: {
       "/api": {
         target: "https://newsapi.org/v2", // Base URL for the news API

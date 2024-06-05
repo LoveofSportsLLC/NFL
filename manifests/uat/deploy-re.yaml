@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: redisuat:latest
+          image: redis:latest
           imagePullPolicy: Always
           env:
             - name: REDIS_SERVICE_HOST
@@ -60,4 +60,4 @@ spec:
       volumes:
         - name: redis-file
           persistentVolumeClaim:
-            claimName: redis-pvc
+            claimName: redis-pvc-uat
