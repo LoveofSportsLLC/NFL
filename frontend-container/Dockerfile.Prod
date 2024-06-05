@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
+
 ARG VITE_VITE_GOOGLE_CLIENT_ID
 ARG VITE_GOOGLE_APIKEY
 ARG VITE_NEWS_API_KEY
