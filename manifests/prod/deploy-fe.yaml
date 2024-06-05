@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: fe
-          image: loveofsports.azurecr.io/fe:latest
+          image: loveofsports.azurecr.io/fe:prodlatest
           imagePullPolicy: Always
           env:
             - name: FRONTEND_SERVICE_HOST
