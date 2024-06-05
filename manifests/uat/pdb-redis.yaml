@@ -1,0 +1,11 @@
+# uat-pdb-redis.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: redis-pdb-uat
+  namespace: uat
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: redisuat

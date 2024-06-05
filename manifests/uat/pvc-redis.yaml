@@ -11,15 +11,5 @@ spec:
     requests:
       storage: 35Gi  # Maintain the same storage requirements unless adjustments are necessary
   storageClassName: storageclass  # Using the same StorageClass as production, assuming shared resources
-  volumeName: redis-file-uat  # Ensure this matches the UAT-specific PersistentVolume
----
-apiVersion: policy/v1
-kind: Pod Disruption Budget
-metadata:
-  name: redis-pdb-uat
-  namespace: uat  # UAT namespace
-spec:
-  minAvailable: 1  # Adjusted down for UAT; can be set to 2 if high availability is required
-  selector:
-    matchLabels:
-      app: redisuat  # Ensure this matches the labels used in your UAT deployment
+
+

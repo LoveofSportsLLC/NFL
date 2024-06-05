@@ -58,7 +58,7 @@ spec:
             #      name: my-cluster-secrets
             #      key: MONGODB_URL
             - name: REDIS_HOST
-              value: "redis-service"
+              value: "redis-service-uat"
             - name: AUTH0_DOMAIN
               valueFrom:
                 secretKeyRef:

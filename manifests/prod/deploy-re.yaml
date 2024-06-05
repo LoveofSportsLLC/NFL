@@ -22,7 +22,7 @@ spec:
         app: redisprod
     spec:
       containers:
-        - name: redisprod
+        - name: redis
           image: redis:latest
           imagePullPolicy: Always
           env:
