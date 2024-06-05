@@ -1,8 +1,8 @@
 FROM node:20-alpine as build
 WORKDIR /app
-COPY --chown=node:node package.json package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install
-COPY --chown=node:node . .
+COPY  . .
 ARG VITE_GOOGLE_CLIENT_ID
 ARG VITE_GOOGLE_APIKEY
 ARG VITE_NEWS_API_KEY
@@ -52,11 +52,11 @@ RUN npm run build:dev
 # Stage 2: Development environment with node_modules and built source
 FROM node:20-alpine
 WORKDIR /app
-COPY --from=build --chown=node:node /app/dist /app/dist
-COPY --from=build --chown=node:node /app/public /app/public
-COPY --from=build --chown=node:node /app/node_modules /app/node_modules
-COPY --from=build --chown=node:node /app/package.json /app/package.json
-COPY --from=build --chown=node:node /app/server.js /app/server.js
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/public /app/public
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/server.js /app/server.js
 RUN chown -R node:node /app
 USER node
 ENV PUBLIC_ENV__NODE_ENV=development
