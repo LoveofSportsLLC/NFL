@@ -1,0 +1,24 @@
+#frontend-container/docker-compose.yml
+services:
+  feuat:
+    container_name: frontend-uat-container
+    build:
+      context: .
+      dockerfile: Dockerfile.uat
+      args:
+        - NODE_ENV=development
+    image: fe:uatlatest
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app/:delegated
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - PUBLIC_ENV__NODE_ENV=development
+      - SOURCE_PATH=/app
+      - NODE_OPTIONS=--max-old-space-size=12288
+    user: node
+    stdin_open: true
+    tty: true

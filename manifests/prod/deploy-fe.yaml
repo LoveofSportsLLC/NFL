@@ -200,7 +200,7 @@ spec:
           ports:
             - containerPort: 3000
           volumeMounts:
-            - mountPath: /ssweb/frontend-container
+            - mountPath: /app/data
               name: frontend-file
           resources:
             requests:

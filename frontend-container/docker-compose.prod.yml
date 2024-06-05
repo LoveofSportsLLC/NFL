@@ -1,0 +1,20 @@
+#frontend-container/docker-compose.prod.yml
+services:
+  feuat:
+    container_name: frontend-prod-container
+    build:
+      context: .
+      dockerfile: Dockerfile.Prod
+      args:
+        - NODE_ENV=production
+    image: fe:prodlatest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PUBLIC_ENV__NODE_ENV=production
+      - SOURCE_PATH=/app
+      - NODE_OPTIONS=--max-old-space-size=12288
+    user: node
+    stdin_open: true
+    tty: true
