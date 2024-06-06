@@ -48,10 +48,6 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
-docker-compose.azdev.yml
-docker-compose.prod.yml
-docker-compose.yml
-Dockerfile
 tmp.Dockerfile
 my-chart/
 
@@ -131,10 +127,6 @@ production.env
 .azure
 .ssweb.code-workspace
 node_modules
-Secrets/
-frontend-container/public/static/images/users/Docker Desktop #Installer.exe
-jabascript/
-"New Folder"/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

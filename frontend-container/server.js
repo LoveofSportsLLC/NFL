@@ -9,6 +9,11 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 async function createServer() {
   const app = express();
 
+  // Log the __dirname and resolved paths for debugging
+  console.log("Serving from directory:", __dirname);
+  console.log("Public directory:", resolve(__dirname, "public"));
+  console.log("Dist directory:", resolve(__dirname, "dist"));
+
   // Serve static files from the public directory directly from the root URL
   app.use(express.static(resolve(__dirname, "Public")));
 
@@ -26,6 +31,11 @@ async function createServer() {
   // Catch-all route to serve the app
   app.use("*", async (req, res) => {
     try {
+      // Log the path of the index.html for debugging
+      console.log(
+        "Serving index.html from:",
+        resolve(__dirname, "dist/index.html"),
+      );
       // Read index.html from the dist directory
       const template = fs.readFileSync(
         resolve(__dirname, "dist/index.html"),
