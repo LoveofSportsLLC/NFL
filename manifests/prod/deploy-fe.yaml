@@ -1,4 +1,3 @@
-# manifests/prod/deploy-fe.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -179,7 +178,7 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: apikey
-            - name: SENTRY_AUTH
+            - name: SENTRY_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: sentry-secrets
