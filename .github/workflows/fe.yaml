@@ -29,6 +29,12 @@ jobs:
             IMAGE_TAG="uatlatest"
           fi
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Generate Sentry release
+        run: |
+          SENTRY_RELEASE=$(git rev-parse --short HEAD)
+          echo "SENTRY_RELEASE=$SENTRY_RELEASE" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         env:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
@@ -56,6 +62,7 @@ jobs:
           GOOGLE_JAVASCRIPT_ORIGINS: ${{ secrets.GOOGLE_JAVASCRIPT_ORIGINS }}
           GOOGLE_APIKEY: ${{ secrets.GOOGLE_APIKEY }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_RELEASE: ${{ env.SENTRY_RELEASE }}
         run: |
           az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f frontend-container/Dockerfile.Prod frontend-container
  
@@ -77,6 +84,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}
+
+
       - name: Prepare Deployment Manifest
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
@@ -84,6 +93,6 @@ jobs:
           else
             manifest_dir="manifests/uat"
           fi
-          echo "Using manifest directory: $manifest_dir"
+          sed -i "s/SENTRY_RELEASE_PLACEHOLDER/${{ env.SENTRY_RELEASE }}/g" ${{ github.workspace }}/$manifest_dir/deploy-fe.yaml
           kubectl apply -f ${{ github.workspace }}/$manifest_dir/deploy-fe.yaml
           kubectl apply -f ${{ github.workspace }}/$manifest_dir/svc-fe.yaml
