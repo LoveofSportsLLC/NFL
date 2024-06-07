@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: frontend-pvc
+  name: fe-pvc-prod
   namespace: azdevspace # Make sure it matches the namespace of your pods
 spec:
   accessModes:
@@ -11,7 +11,7 @@ spec:
     requests:
       storage: 35Gi # Adjust the storage size as needed
   storageClassName: storageclass # Make sure it matches your StorageClass
-  volumeName: frontend-file #
+  volumeName: fe-file-prod #
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget

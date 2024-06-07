@@ -33,7 +33,9 @@ spec:
             - name: FRONTEND_SERVICE_PORT
               value: "3000"
             - name: PUBLIC_ENV__NODE_ENV
-              value: production
+              value: development  
+            - name: NODE_ENV
+              value: development
             - name: AZURE_STORAGE_ACCOUNT
               value: sportfs
             - name: AZURE_STORAGE_KEY

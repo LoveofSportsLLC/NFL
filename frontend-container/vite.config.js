@@ -13,6 +13,7 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === "production";
+  const releaseName = process.env.SENTRY_RELEASE || "unknown-release";
 
   return {
     root: "./",
@@ -57,10 +58,16 @@ export default defineConfig(({ mode }) => {
         }),
       isProduction && commonjs(),
       isProduction && terser(),
-      sentryVitePlugin({
-        org: "loveofsportsllc",
-        project: "javascript-react",
-      }),
+      isProduction &&
+        sentryVitePlugin({
+          org: "loveofsportsllc",
+          project: "javascript-react",
+          authToken: process.env.SENTRY_AUTH_TOKEN,
+          release: {
+            name: releaseName,
+          },
+          telemetry: false,
+        }),
     ].filter(Boolean), // Filter out false values
     resolve: {
       alias: {

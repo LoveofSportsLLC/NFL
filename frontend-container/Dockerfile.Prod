@@ -1,4 +1,9 @@
+# Stage 1: Build the application
 FROM node:20-alpine as build
+
+# Install git
+RUN apk add --no-cache git
+
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
@@ -26,6 +31,9 @@ ARG GOOGLE_AUTH_PROVIDER_X509_CERT_URL
 ARG GOOGLE_REDIRECT_URIS
 ARG GOOGLE_JAVASCRIPT_ORIGINS
 ARG GOOGLE_APIKEY
+ARG SENTRY_AUTH_TOKEN
+ARG SENTRY_RELEASE
+
 ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
     VITE_GOOGLE_APIKEY=$GOOGLE_APIKEY \
     VITE_NEWS_API_KEY=$VITE_NEWS_API_KEY \
@@ -48,17 +56,22 @@ ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
     GOOGLE_REDIRECT_URIS=$GOOGLE_REDIRECT_URIS \
     GOOGLE_JAVASCRIPT_ORIGINS=$GOOGLE_JAVASCRIPT_ORIGINS \
     GOOGLE_APIKEY=$GOOGLE_APIKEY \
-    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN 
+    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN \
+    SENTRY_RELEASE=$SENTRY_RELEASE
+
 RUN npm run build:prod
+
 # Stage 2: Set up the Express server to serve the build directory
 FROM node:20-alpine
 WORKDIR /app
 COPY --from=build /app /app
-#RUN chown -R node:node /app
+
 RUN chown -R node:node /app
 USER node
+
 ENV PUBLIC_ENV__NODE_ENV=production
 ENV NODE_ENV=production
 ENV APOLLO_TELEMETRY_DISABLED=true
+
 EXPOSE 3000
 CMD ["npm", "start"]

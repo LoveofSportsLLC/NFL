@@ -28,7 +28,7 @@ volumeBindingMode: Immediate
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: frontend-file
+  name: fe-file-prod
 spec:
   accessModes:
     - ReadWriteMany
@@ -45,7 +45,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: backend-file
+  name: be-file-prod
 spec:
   accessModes:
     - ReadWriteMany
@@ -56,14 +56,13 @@ spec:
   azureFile:
     secretName: azure-storage-account-secret # Corrected name
     shareName: sportshare # Actual share name
-
 ---
 
 # Define the PersistentVolume (PV)
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: redis-file
+  name: re-file-prod
 spec:
   accessModes:
     - ReadWriteMany
