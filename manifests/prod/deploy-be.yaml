@@ -188,7 +188,7 @@ spec:
             - containerPort: 5000
           volumeMounts:
             - mountPath: /app/backend-container
-              name: backend-file
+              name: be-file-prod
           resources:
             limits:
               cpu: "2"
@@ -199,6 +199,6 @@ spec:
       imagePullSecrets:
         - name: my-registry-secret
       volumes:
-        - name: backend-file
+        - name: be-file-prod
           persistentVolumeClaim:
-            claimName: backend-pvc
+            claimName: be-pvc-uat

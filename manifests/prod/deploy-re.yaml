@@ -58,6 +58,6 @@ spec:
       imagePullSecrets:
         - name: my-registry-secret
       volumes:
-        - name: redis-file
+        - name: re-file-prod
           persistentVolumeClaim:
-            claimName: redis-pvc
+            claimName: re-pvc-prod
