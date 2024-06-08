@@ -193,11 +193,6 @@ spec:
                 secretKeyRef:
                   name: google-client-id-secret
                   key: VITE_GOOGLE_CLIENT_ID
-            - name: SENTRY_RELEASE
-              valueFrom:
-                secretKeyRef:
-                  name: sentry-secrets
-                  key: SENTRY_RELEASE
           ports:
             - containerPort: 3000
           volumeMounts:
