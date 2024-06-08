@@ -49,7 +49,6 @@ export default defineConfig(({ mode }) => {
         org: "loveofsportsllc",
         project: "javascript-react",
         authToken: process.env.SENTRY_AUTH_TOKEN,
-        release: process.env.SENTRY_RELEASE,
       }),
     ].filter(Boolean),
     resolve: {
