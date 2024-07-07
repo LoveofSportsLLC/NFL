@@ -1,0 +1,77 @@
+import React from "react";
+import "./App.css"; // Assuming this file contains the SVG and the Tailwind CSS
+
+const BarChart = () => {
+  return (
+    <div className="bg-black p-5 rounded-lg w-[530px] text-white">
+      <div className="flex items-center justify-between mb-5">
+        <div className="text-2xl font-extrabold">Sales / Revenue</div>
+      </div>
+
+      <div className="relative h-full">
+        <div className="flex justify-between mt-5">
+          <div className="flex flex-col items-center">
+            <span>100</span>
+            <span className="mt-16">80</span>
+            <span className="mt-16">40</span>
+            <span className="mt-16">20</span>
+            <span className="mt-16">0</span>
+          </div>
+          
+          <div className="flex-grow relative">
+            <img
+              src={require("./assets/group-401.svg")}
+              alt="Bar Graph"
+              className="w-full"
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-between mt-[-30px]">
+          {["Feb", "Jan", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((month, index) => (
+            <div key={index} className="text-center">
+              {month}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BarChart;
+TailwindCSS Configuration
+Include this section in your tailwind.config.js:
+
+module.exports = {
+  purge: [],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+};
+App.css
+Add the following in your App.css:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+Project Structure
+Assuming you have a project structure like:
+
+/src
+  /components
+    BarChart.tsx
+  /assets
+    group-401.svg
+  App.css
+  index.tsx
+  ...
+Ensure group-401.svg is placed in the src/assets/ directory.
+
+This code captures the layout and styling of the bar chart, following the design provided in the screenshot. Adjustments can be made according to specific requirements or if additional functionalities are required.
+
