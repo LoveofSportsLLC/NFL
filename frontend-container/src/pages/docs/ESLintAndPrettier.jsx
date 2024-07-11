@@ -1,8 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
-
-import Code from "../../components/Code";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
+import Code from '../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -39,7 +38,7 @@ const VSCodeIntegration = () => (
     <h3>VSCode integration</h3>
     <p className="text-lg">
       To use ESLint & Prettier in combination with VSCode, we suggest installing
-      the{" "}
+      the{' '}
       <a
         target="_blank"
         rel="noreferrer noopener"
@@ -64,21 +63,27 @@ const VSCodeIntegration = () => (
   </div>
 );
 
-const ESLintAndPrettier = () => (
-  <React.Fragment>
-    <Helmet title="Support" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>ESLint &amp; Prettier</h1>
-          <hr className="my-4" />
-          <Intro />
-          <Usage />
-          <VSCodeIntegration />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const ESLintAndPrettier = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Support" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>ESLint &amp; Prettier</h1>
+            <hr className="my-4" />
+            <Intro />
+            <Usage />
+            <VSCodeIntegration />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default ESLintAndPrettier;

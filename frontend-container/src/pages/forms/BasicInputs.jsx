@@ -1,6 +1,6 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Card, Col, Container, Form, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Form, Row } from 'react-bootstrap';
 
 const InputComponent = () => (
   <Card>
@@ -215,29 +215,37 @@ const ReadOnly = () => (
   </Card>
 );
 
-const BasicInputs = () => (
-  <React.Fragment>
-    <Helmet title="Basic Inputs" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Basic Inputs</h1>
+const BasicInputs = () => {
+  const Helmet = useHelmet();
 
-      <Row>
-        <Col lg="6">
-          <InputComponent />
-          <TextareaComponent />
-          <Checkboxes />
-          <Sizes />
-        </Col>
-        <Col lg="6">
-          <Radios />
-          <Switches />
-          <Selects />
-          <Disabled />
-          <ReadOnly />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Basic Inputs" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Basic Inputs</h1>
+
+        <Row>
+          <Col lg="6">
+            <InputComponent />
+            <TextareaComponent />
+            <Checkboxes />
+            <Sizes />
+          </Col>
+          <Col lg="6">
+            <Radios />
+            <Switches />
+            <Selects />
+            <Disabled />
+            <ReadOnly />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default BasicInputs;

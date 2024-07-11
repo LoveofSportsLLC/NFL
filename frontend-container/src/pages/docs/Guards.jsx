@@ -1,8 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
-
-import Code from "../../components/Code";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
+import Code from '../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -52,21 +51,27 @@ function Component() {
   </div>
 );
 
-const Guards = () => (
-  <React.Fragment>
-    <Helmet title="Guards" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Guards</h1>
-          <hr className="my-4" />
-          <Intro />
-          <AuthGuard />
-          <GuestGuard />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Guards = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Guards" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Guards</h1>
+            <hr className="my-4" />
+            <Intro />
+            <AuthGuard />
+            <GuestGuard />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Guards;

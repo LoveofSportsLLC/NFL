@@ -1,9 +1,9 @@
+//NFL/frontend-container/src/contexts/JWTProvider.jsx
 import { useEffect, useReducer } from "react";
-
 import axios from "../utils/axios";
 import { isValidToken, setSession } from "../utils/jwt";
-
 import AuthContext from "./JWTContext";
+import { log } from "../utils/logs"; // Import the log utility
 
 const INITIALIZE = "INITIALIZE";
 const SIGN_IN = "SIGN_IN";
@@ -80,7 +80,7 @@ function AuthProvider({ children }) {
           });
         }
       } catch (err) {
-        console.error(err);
+        log("JWTProvider.jsx", "initialize", "Error:", err.message);
         dispatch({
           type: INITIALIZE,
           payload: {
@@ -95,19 +95,21 @@ function AuthProvider({ children }) {
   }, []);
 
   const signIn = async (email, password) => {
-    const response = await axios.post("/api/auth/sign-in", {
-      email,
-      password,
-    });
-    const { accessToken, user } = response.data;
+    try {
+      const response = await axios.post("/api/auth/sign-in", {
+        email,
+        password,
+      });
+      const { accessToken, user } = response.data;
 
-    setSession(accessToken);
-    dispatch({
-      type: SIGN_IN,
-      payload: {
-        user,
-      },
-    });
+      setSession(accessToken);
+      dispatch({
+        type: SIGN_IN,
+        payload: { user },
+      });
+    } catch (error) {
+      log("JWTProvider.jsx", "signIn", "Error:", error.message);
+    }
   };
 
   const signOut = async () => {
@@ -116,32 +118,42 @@ function AuthProvider({ children }) {
   };
 
   const signUp = async (email, password, firstName, lastName) => {
-    const response = await axios.post("/api/auth/sign-up", {
-      email,
-      password,
-      firstName,
-      lastName,
-    });
-    const { accessToken, user } = response.data;
+    try {
+      const response = await axios.post("/api/auth/sign-up", {
+        email,
+        password,
+        firstName,
+        lastName,
+      });
+      const { accessToken, user } = response.data;
 
-    window.localStorage.setItem("accessToken", accessToken);
-    dispatch({
-      type: SIGN_UP,
-      payload: {
-        user,
-      },
-    });
+      window.localStorage.setItem("accessToken", accessToken);
+      dispatch({
+        type: SIGN_UP,
+        payload: { user },
+      });
+    } catch (error) {
+      log("JWTProvider.jsx", "signUp", "Error:", error.message);
+    }
   };
 
-  const resetPassword = (email) => console.log(email);
+  const resetPassword = (email) => {
+    log("JWTProvider.jsx", "resetPassword", "Email:", email);
+  };
 
   return (
-    <AuthContext.Provider value={{...state,
+    <AuthContext.Provider
+      value={{
+        ...state,
         method: "jwt",
         signIn,
         signOut,
         signUp,
-        resetPassword}}>{children}</AuthContext.Provider>
+        resetPassword,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }
 

@@ -1,8 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
-
-import Code from "../../components/Code";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import Code from '../../components/Code';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 
 const Intro = () => (
   <div className="mb-5">
@@ -76,7 +75,7 @@ const LearnMore = () => (
   <div className="mb-5">
     <h3>Learn more</h3>
     <p className="text-lg">
-      To learn more about react-i18next,{" "}
+      To learn more about react-i18next,{' '}
       <a
         href="https://react.i18next.com/"
         target="_blank"
@@ -89,22 +88,30 @@ const LearnMore = () => (
   </div>
 );
 
-const Internationalization = () => (
-  <React.Fragment>
-    <Helmet title="Internationalization" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Internationalization</h1>
-          <hr className="my-4" />
-          <Intro />
-          <UsageWithHooks />
-          <UsageWithHOC />
-          <LearnMore />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Internationalization = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>Internationalization</title>
+      </Helmet>
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Internationalization</h1>
+            <hr className="my-4" />
+            <Intro />
+            <UsageWithHooks />
+            <UsageWithHOC />
+            <LearnMore />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Internationalization;

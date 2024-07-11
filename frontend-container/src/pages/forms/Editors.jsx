@@ -1,7 +1,7 @@
-import React from "react";
-import ReactQuill from "react-quill";
-import { Helmet } from "react-helmet-async";
-import { Card, Container } from "react-bootstrap";
+import React from 'react';
+import ReactQuill from 'react-quill';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Container } from 'react-bootstrap';
 
 const Quill = () => (
   <Card>
@@ -26,21 +26,29 @@ const Bubble = () => (
       </h6>
     </Card.Header>
     <Card.Body>
-      <ReactQuill theme="bubble" placeholder="Compase an epic..." />
+      <ReactQuill theme="bubble" placeholder="Compose an epic..." />
     </Card.Body>
   </Card>
 );
 
-const Editors = () => (
-  <React.Fragment>
-    <Helmet title="Editors" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Editors</h1>
+const Editors = () => {
+  const Helmet = useHelmet();
 
-      <Quill />
-      <Bubble />
-    </Container>
-  </React.Fragment>
-);
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Editors" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Editors</h1>
+
+        <Quill />
+        <Bubble />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Editors;

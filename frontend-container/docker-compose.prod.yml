@@ -1,6 +1,6 @@
 #frontend-container/docker-compose.prod.yml
 services:
-  feuat:
+  feprod:
     container_name: frontend-prod-container
     build:
       context: .
@@ -10,6 +10,8 @@ services:
     image: fe:prodlatest
     ports:
       - "3000:3000"
+    networks:
+      - prod-network
     environment:
       - NODE_ENV=production
       - PUBLIC_ENV__NODE_ENV=production
@@ -18,3 +20,5 @@ services:
     user: node
     stdin_open: true
     tty: true
+networks:
+  prod-network:

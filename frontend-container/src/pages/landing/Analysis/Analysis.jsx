@@ -1,42 +1,42 @@
-import React from "react";
-import { Container, Row, Col, Card, Carousel } from "react-bootstrap";
-import draft1 from "/analysis/draft1.webp";
-import draft2 from "/analysis/draft2.webp";
-import draft3 from "/analysis/draft3.webp";
-import draft4 from "/analysis/draft4.webp";
-import draft5 from "/analysis/draft5.webp";
-import draft6 from "/analysis/draft6.png";
-import fantasy1 from "/analysis/fantasy1.webp";
-import fantasy2 from "/analysis/fantasy2.webp";
-import fantasy3 from "/analysis/fantasy3.webp";
-import fantasy4 from "/analysis/fantasy4.webp";
-import fantasy5 from "/analysis/fantasy5.webp";
-import fantasy6 from "/analysis/fantasy6.webp";
-import game1 from "/analysis/match1.webp";
-import game2 from "/analysis/match2.webp";
-import game3 from "/analysis/match3.webp";
-import game4 from "/analysis/match4.webp";
-import v1 from "/vis/v1.png";
-import v2 from "/vis/v2.png";
-import v3 from "/vis/v3.png";
-import v4 from "/vis/v4.png";
-import v5 from "/vis/v5.png";
-import v6 from "/vis/v6.png";
-import v7 from "/vis/v7.png";
-import v8 from "/vis/v8.png";
-import v9 from "/vis/v9.png";
-import v10 from "/vis/v10.png";
-import v11 from "/vis/v11.png";
-import v12 from "/vis/v12.png";
-import v13 from "/vis/v13.png";
-import v14 from "/vis/v14.png";
-import v15 from "/vis/v15.png";
-import v16 from "/vis/v16.png";
-import v17 from "/vis/v17.png";
-import v18 from "/vis/v18.png";
-import v19 from "/vis/v19.png";
-import v20 from "/vis/v20.png";
-import v21 from "/vis/v21.png";
+import React from 'react';
+import { Container, Row, Col, Card, Carousel } from 'react-bootstrap';
+import draft1 from '/analysis/draft1.webp';
+import draft2 from '/analysis/draft2.webp';
+import draft3 from '/analysis/draft3.webp';
+import draft4 from '/analysis/draft4.webp';
+import draft5 from '/analysis/draft5.webp';
+import draft6 from '/analysis/draft6.png';
+import fantasy1 from '/analysis/fantasy1.webp';
+import fantasy2 from '/analysis/fantasy2.webp';
+import fantasy3 from '/analysis/fantasy3.webp';
+import fantasy4 from '/analysis/fantasy4.webp';
+import fantasy5 from '/analysis/fantasy5.webp';
+import fantasy6 from '/analysis/fantasy6.webp';
+import game1 from '/analysis/match1.webp';
+import game2 from '/analysis/match2.webp';
+import game3 from '/analysis/match3.webp';
+import game4 from '/analysis/match4.webp';
+import v1 from '/vis/v1.png';
+import v2 from '/vis/v2.png';
+import v3 from '/vis/v3.png';
+import v4 from '/vis/v4.png';
+import v5 from '/vis/v5.png';
+import v6 from '/vis/v6.png';
+import v7 from '/vis/v7.png';
+import v8 from '/vis/v8.png';
+import v9 from '/vis/v9.png';
+import v10 from '/vis/v10.png';
+import v11 from '/vis/v11.png';
+import v12 from '/vis/v12.png';
+import v13 from '/vis/v13.png';
+import v14 from '/vis/v14.png';
+import v15 from '/vis/v15.png';
+import v16 from '/vis/v16.png';
+import v17 from '/vis/v17.png';
+import v18 from '/vis/v18.png';
+import v19 from '/vis/v19.png';
+import v20 from '/vis/v20.png';
+import v21 from '/vis/v21.png';
 
 const visImages = [
   v1,
@@ -65,12 +65,7 @@ const visImages = [
 const Analysis = () => {
   const handleImageError = (e) => {
     e.target.onerror = null; // Prevent infinite fallback loop
-    e.target.src = "/src/assets/img/Logo.png"; // Fallback image path
-  };
-
-  // Shuffle images randomly
-  const shuffleImages = (images) => {
-    return images.sort(() => Math.random() - 0.5);
+    e.target.src = '/src/assets/img/Logo.png'; // Fallback image path
   };
 
   return (
@@ -78,9 +73,9 @@ const Analysis = () => {
       <Card
         className="p-4"
         style={{
-          backgroundColor: "#f8f9fa",
-          border: "1px solid #dee2e6",
-          borderRadius: "10px",
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '10px',
         }}
       >
         <Row className="mb-4">
@@ -109,7 +104,7 @@ const Analysis = () => {
             <Row className="mb-4">
               <Col md="6" className="mb-3 text-center">
                 <Carousel>
-                  {shuffleImages(visImages).map((src, idx) => (
+                  {visImages.map((src, idx) => (
                     <Carousel.Item key={idx}>
                       <img
                         className="d-block w-100"
@@ -124,7 +119,7 @@ const Analysis = () => {
               </Col>
               <Col md="6" className="mb-3 text-center">
                 <Carousel>
-                  {shuffleImages(visImages).map((src, idx) => (
+                  {visImages.map((src, idx) => (
                     <Carousel.Item key={idx}>
                       <img
                         className="d-block w-100"

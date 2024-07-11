@@ -1,6 +1,9 @@
+///NFL/frontend-container/src/pages/landing/Aboutus/SupportModal.jsx
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
+import { log } from "../../../utils/logs"; // Import the log utility
+
 const apiUrlSubmitSupport =
   process.env.PUBLIC_ENV__NODE_ENV === "development"
     ? "http://localhost:5000/api/submit-support"
@@ -14,7 +17,13 @@ const SupportModal = ({ show, onHide, emailAddress }) => {
   const [errorMessage, setErrorMessage] = useState(""); // To store error messages
   const [rateLimited, setRateLimited] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  console.log("API URL for submitting support:", apiUrlSubmitSupport);
+
+  log(
+    "SupportModal.jsx",
+    "SupportModal",
+    "API URL for submitting support:",
+    apiUrlSubmitSupport,
+  );
 
   const sendEmail = async () => {
     setErrorMessage("");

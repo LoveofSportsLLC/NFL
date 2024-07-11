@@ -1,13 +1,13 @@
-import React from "react";
-import InputMask from "react-input-mask";
-import Select from "react-select";
-import { Helmet } from "react-helmet-async";
-import { Card, Col, Container, Form, Row } from "react-bootstrap";
+import React from 'react';
+import InputMask from 'react-input-mask';
+import Select from 'react-select';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Form, Row } from 'react-bootstrap';
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
 ];
 
 const ReactSelect = () => (
@@ -211,16 +211,24 @@ const InputMasks = () => (
   </Card>
 );
 
-const AdvancedInputs = () => (
-  <React.Fragment>
-    <Helmet title="Advanced Inputs" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Advanced Inputs</h1>
+const AdvancedInputs = () => {
+  const Helmet = useHelmet();
 
-      <ReactSelect />
-      <InputMasks />
-    </Container>
-  </React.Fragment>
-);
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Advanced Inputs" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Advanced Inputs</h1>
+
+        <ReactSelect />
+        <InputMasks />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default AdvancedInputs;

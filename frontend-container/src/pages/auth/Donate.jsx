@@ -1,18 +1,23 @@
-// DonatePage.js
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { Card, Button } from "react-bootstrap";
-import DonateModal from "./DonateModal"; // Import the DonateModal component
+// Donate.jsx
+import React, { useState } from 'react';
+import { Card, Button } from 'react-bootstrap';
+import DonateModal from './DonateModal';
+import useHelmet from '../../utils/HelmetLoader';
 
 const DonatePage = () => {
+  const Helmet = useHelmet();
   const [showDonateModal, setShowDonateModal] = useState(false);
 
   const handleDonateClick = () => setShowDonateModal(true);
   const handleCloseDonateModal = () => setShowDonateModal(false);
 
+  if (!Helmet) return null;
+
   return (
     <React.Fragment>
-      <Helmet title="Sign Up" />
+      <Helmet>
+        <title>Donate</title>
+      </Helmet>
       <div className="text-center mt-4">
         <h1 className="h2">Get started</h1>
         <p className="lead">

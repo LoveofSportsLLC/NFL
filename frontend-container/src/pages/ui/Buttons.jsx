@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Button,
   ButtonGroup,
@@ -10,18 +10,18 @@ import {
   Dropdown,
   DropdownButton,
   Row,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCheck,
   faExclamation,
   faGlobeAmericas,
   faInfo,
   faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
-import { faSmile } from "@fortawesome/free-regular-svg-icons";
+import { faSmile } from '@fortawesome/free-regular-svg-icons';
 
 import {
   faBitbucket,
@@ -35,32 +35,32 @@ import {
   faTwitter,
   faVimeo,
   faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 
 const colors = [
   {
-    name: "Primary",
-    value: "primary",
+    name: 'Primary',
+    value: 'primary',
   },
   {
-    name: "Secondary",
-    value: "secondary",
+    name: 'Secondary',
+    value: 'secondary',
   },
   {
-    name: "Success",
-    value: "success",
+    name: 'Success',
+    value: 'success',
   },
   {
-    name: "Danger",
-    value: "danger",
+    name: 'Danger',
+    value: 'danger',
   },
   {
-    name: "Warning",
-    value: "warning",
+    name: 'Warning',
+    value: 'warning',
   },
   {
-    name: "Info",
-    value: "info",
+    name: 'Info',
+    value: 'info',
   },
 ];
 
@@ -265,7 +265,7 @@ const SocialButtons = () => (
     <Card.Body className="text-center">
       <div className="mb-3">
         <Button variant="facebook" className="me-1 mb-1">
-          <FontAwesomeIcon icon={faFacebook} className="align-middle" />{" "}
+          <FontAwesomeIcon icon={faFacebook} className="align-middle" />{' '}
           Facebook
         </Button>
         <Button variant="twitter" className="me-1 mb-1">
@@ -281,25 +281,25 @@ const SocialButtons = () => (
           <FontAwesomeIcon icon={faVimeo} className="align-middle" /> Vimeo
         </Button>
         <Button variant="dribbble" className="me-1 mb-1">
-          <FontAwesomeIcon icon={faDribbble} className="align-middle" />{" "}
+          <FontAwesomeIcon icon={faDribbble} className="align-middle" />{' '}
           Dribbble
         </Button>
         <Button variant="github" className="me-1 mb-1">
           <FontAwesomeIcon icon={faGithub} className="align-middle" /> Github
         </Button>
         <Button variant="instagram" className="me-1 mb-1">
-          <FontAwesomeIcon icon={faInstagram} className="align-middle" />{" "}
+          <FontAwesomeIcon icon={faInstagram} className="align-middle" />{' '}
           Instagram
         </Button>
         <Button variant="pinterest" className="me-1 mb-1">
-          <FontAwesomeIcon icon={faPinterest} className="align-middle" />{" "}
+          <FontAwesomeIcon icon={faPinterest} className="align-middle" />{' '}
           Pinterest
         </Button>
         <Button variant="flickr" className="me-1 mb-1">
           <FontAwesomeIcon icon={faFlickr} className="align-middle" /> Flickr
         </Button>
         <Button variant="bitbucket" className="me-1 mb-1">
-          <FontAwesomeIcon icon={faBitbucket} className="align-middle" />{" "}
+          <FontAwesomeIcon icon={faBitbucket} className="align-middle" />{' '}
           Bitbucket
         </Button>
       </div>
@@ -502,40 +502,42 @@ const ButtonGroups = () => (
   </Card>
 );
 
-const Buttons = () => (
-  <React.Fragment>
-    <Helmet title="Buttons" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Buttons</h1>
-      <Row>
-        <Col lg="6">
-          <BasicButtons />
-        </Col>
-        <Col lg="6">
-          <RoundedButtons />
-        </Col>
-        <Col lg="6">
-          <OutlineButtons />
-        </Col>
-        <Col lg="6">
-          <SquareButtons />
-        </Col>
-        <Col lg="6">
-          <IconButtons />
-        </Col>
-        <Col lg="6">
-          <SocialButtons />
-        </Col>
-        <Col lg="6">
-          <ButtonSizes />
-          <ButtonDropdowns />
-        </Col>
-        <Col lg="6">
-          <ButtonGroups />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Buttons = () => {
+  useHelmet('Buttons');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Buttons</h1>
+        <Row>
+          <Col lg="6">
+            <BasicButtons />
+          </Col>
+          <Col lg="6">
+            <RoundedButtons />
+          </Col>
+          <Col lg="6">
+            <OutlineButtons />
+          </Col>
+          <Col lg="6">
+            <SquareButtons />
+          </Col>
+          <Col lg="6">
+            <IconButtons />
+          </Col>
+          <Col lg="6">
+            <SocialButtons />
+          </Col>
+          <Col lg="6">
+            <ButtonSizes />
+            <ButtonDropdowns />
+          </Col>
+          <Col lg="6">
+            <ButtonGroups />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Buttons;

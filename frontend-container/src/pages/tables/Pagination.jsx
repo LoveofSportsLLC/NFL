@@ -1,6 +1,6 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { useTable, usePagination } from "react-table";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { useTable, usePagination } from 'react-table';
 
 import {
   Card,
@@ -10,9 +10,9 @@ import {
   Row,
   Col,
   Form,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
-import { tableData, tableColumns } from "./data.js";
+import { tableData, tableColumns } from './data.js';
 
 const PaginationTable = ({ columns, data }) => {
   const {
@@ -36,7 +36,7 @@ const PaginationTable = ({ columns, data }) => {
       data,
       initialState: { pageIndex: 0 },
     },
-    usePagination
+    usePagination,
   );
 
   return (
@@ -52,7 +52,7 @@ const PaginationTable = ({ columns, data }) => {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
+                    {column.render('Header')}
                   </th>
                 ))}
               </tr>
@@ -65,7 +65,7 @@ const PaginationTable = ({ columns, data }) => {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -77,7 +77,7 @@ const PaginationTable = ({ columns, data }) => {
         <Row>
           <Col md="6">
             <span className="mx-2">
-              Page{" "}
+              Page{' '}
               <strong>
                 {pageIndex + 1} of {pageOptions.length}
               </strong>
@@ -106,7 +106,7 @@ const PaginationTable = ({ columns, data }) => {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                 gotoPage(page);
               }}
-              style={{ width: "75px" }}
+              style={{ width: '75px' }}
             />
           </Col>
           <Col md="6">
@@ -135,15 +135,19 @@ const PaginationTable = ({ columns, data }) => {
   );
 };
 
-const PaginationPage = () => (
-  <React.Fragment>
-    <Helmet title="Pagination" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Pagination</h1>
+const PaginationPage = () => {
+  const { Helmet } = useHelmet(); // Use the custom hook for HelmetLoader
 
-      <PaginationTable columns={tableColumns} data={tableData} />
-    </Container>
-  </React.Fragment>
-);
+  return (
+    <React.Fragment>
+      <Helmet title="Pagination" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Pagination</h1>
+
+        <PaginationTable columns={tableColumns} data={tableData} />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default PaginationPage;

@@ -1,10 +1,10 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 
-import unsplash1 from "../../assets/img/photos/unsplash-1.jpg";
-import unsplash2 from "../../assets/img/photos/unsplash-2.jpg";
-import unsplash3 from "../../assets/img/photos/unsplash-3.jpg";
+import unsplash1 from '../../assets/img/photos/unsplash-1.jpg';
+import unsplash2 from '../../assets/img/photos/unsplash-2.jpg';
+import unsplash3 from '../../assets/img/photos/unsplash-3.jpg';
 
 const CardWithImageAndLinks = () => (
   <Card>
@@ -101,34 +101,36 @@ const CardWithList = () => (
   </Card>
 );
 
-const Cards = () => (
-  <React.Fragment>
-    <Helmet title="Cards" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Cards</h1>
+const Cards = () => {
+  useHelmet('Cards');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Cards</h1>
 
-      <Row>
-        <Col md="6" lg="4">
-          <CardWithImageAndLinks />
-        </Col>
-        <Col md="6" lg="4">
-          <CardWithImageAndButton />
-        </Col>
-        <Col md="6" lg="4">
-          <CardWithImageAndList />
-        </Col>
-        <Col md="6" lg="4">
-          <CardWithLinks />
-        </Col>
-        <Col md="6" lg="4">
-          <CardWithButton />
-        </Col>
-        <Col md="6" lg="4">
-          <CardWithList />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col md="6" lg="4">
+            <CardWithImageAndLinks />
+          </Col>
+          <Col md="6" lg="4">
+            <CardWithImageAndButton />
+          </Col>
+          <Col md="6" lg="4">
+            <CardWithImageAndList />
+          </Col>
+          <Col md="6" lg="4">
+            <CardWithLinks />
+          </Col>
+          <Col md="6" lg="4">
+            <CardWithButton />
+          </Col>
+          <Col md="6" lg="4">
+            <CardWithList />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Cards;

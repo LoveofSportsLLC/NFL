@@ -1,15 +1,22 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-import {Button, ButtonGroup, Card,
-  Col, Container, Row, Tab} from "react-bootstrap";
+import React, { useState } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Container,
+  Row,
+  Tab,
+} from 'react-bootstrap';
 
 const Pricing = () => {
-  const [activeTab, setActiveTab] = useState("monthly");
+  const Helmet = useHelmet();
+  const [activeTab, setActiveTab] = useState('monthly');
 
   return (
     <React.Fragment>
-      <Helmet title="Plans & Pricing" />
-
+      {Helmet && <Helmet title="Plans & Pricing" />}
       <Container fluid className="p-0">
         <h1 className="h3 mb-3">Plans & Pricing</h1>
 
@@ -25,11 +32,20 @@ const Pricing = () => {
               <Row className="justify-content-center mt-3 mb-2">
                 <Col xs="auto">
                   <ButtonGroup>
-                    <Button variant="outline-primary" onClick={() => setActiveTab("monthly")}
-                      className={activeTab === "monthly" ? "active" : ""}>Monthly billing</Button>
-                    <Button variant="outline-primary"
-                      onClick={() => setActiveTab("annual")}
-                      className={activeTab === "annual" ? "active" : ""}>Annual billing</Button>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setActiveTab('monthly')}
+                      className={activeTab === 'monthly' ? 'active' : ''}
+                    >
+                      Monthly billing
+                    </Button>
+                    <Button
+                      variant="outline-primary"
+                      onClick={() => setActiveTab('annual')}
+                      className={activeTab === 'annual' ? 'active' : ''}
+                    >
+                      Annual billing
+                    </Button>
                   </ButtonGroup>
                 </Col>
               </Row>
@@ -46,7 +62,7 @@ const Pricing = () => {
                           </div>
                           <h6>Includes:</h6>
                           <ul className="list-unstyled">
-                            <li className="mb-2">1 users</li>
+                            <li className="mb-2">1 user</li>
                             <li className="mb-2">5 projects</li>
                             <li className="mb-2">5 GB storage</li>
                           </ul>
@@ -121,7 +137,7 @@ const Pricing = () => {
                           </div>
                           <h6>Includes:</h6>
                           <ul className="list-unstyled">
-                            <li className="mb-2">1 users</li>
+                            <li className="mb-2">1 user</li>
                             <li className="mb-2">5 projects</li>
                             <li className="mb-2">5 GB storage</li>
                           </ul>

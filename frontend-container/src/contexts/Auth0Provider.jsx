@@ -1,6 +1,8 @@
+//NFL/frontend-container/src/contexts/AuthProvider.jsx
 import { useEffect, useReducer } from "react";
 import { Auth0Client } from "@auth0/auth0-spa-js";
 import AuthContext from "./Auth0Context";
+import { log } from "../utils/logs"; // Import the log utility
 
 const INITIALIZE = "INITIALIZE";
 const SIGN_IN = "SIGN_IN";
@@ -10,7 +12,7 @@ const initialState = {
   isAuthenticated: false,
   isInitialized: false,
   user: null,
-  error: null, // Added error state
+  error: null,
 };
 
 const reducer = (state, action) => {
@@ -32,7 +34,6 @@ const reducer = (state, action) => {
   }
 };
 
-// Initialize Auth0 client outside of useEffect
 const auth0Client = new Auth0Client({
   domain: process.env.VITE_APP_AUTH0_DOMAIN,
   client_id: process.env.VITE_APP_AUTH0_CLIENT_ID,
@@ -49,13 +50,13 @@ function AuthProvider({ children }) {
         await auth0Client.checkSession();
         const isAuthenticated = await auth0Client.isAuthenticated();
         const user = isAuthenticated ? await auth0Client.getUser() : null;
-        console.log("initializeAuth0 user:", user); // Add this line
+        log("AuthProvider.jsx", "initializeAuth0", "User:", user);
         dispatch({
           type: INITIALIZE,
           payload: { isAuthenticated, user },
         });
       } catch (err) {
-        console.error(err);
+        log("AuthProvider.jsx", "initializeAuth0", "Error:", err.message);
         dispatch({
           type: INITIALIZE,
           payload: { isAuthenticated: false, user: null, error: err },
@@ -66,20 +67,17 @@ function AuthProvider({ children }) {
     initializeAuth0();
   }, []);
 
-const [loginCount, setLoginCount] = useState(0);
-
-const signIn = async () => {
-  try {
-    await auth0Client.loginWithPopup();
-    const isAuthenticated = await auth0Client.isAuthenticated();
-    const user = isAuthenticated ? await auth0Client.getUser() : null;
-    console.log("signIn user:", user);
-    dispatch({ type: SIGN_IN, payload: { user } });
-    setLoginCount(loginCount + 1); // Add this line
-  } catch (error) {
-    console.error("Login Failed:", error);
-  }
-};
+  const signIn = async () => {
+    try {
+      await auth0Client.loginWithPopup();
+      const isAuthenticated = await auth0Client.isAuthenticated();
+      const user = isAuthenticated ? await auth0Client.getUser() : null;
+      log("AuthProvider.jsx", "signIn", "User:", user);
+      dispatch({ type: SIGN_IN, payload: { user } });
+    } catch (error) {
+      log("AuthProvider.jsx", "signIn", "Login Failed:", error.message);
+    }
+  };
 
   const signOut = () => {
     auth0Client.logout();

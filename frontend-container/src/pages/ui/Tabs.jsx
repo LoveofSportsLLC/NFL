@@ -1,12 +1,10 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-
-import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
-
-import { Home, Settings, MessageSquare } from "react-feather";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Col, Container, Nav, Row, Tab } from 'react-bootstrap';
+import { Home, Settings, MessageSquare } from 'react-feather';
 
 const TabsWithTextLabel = ({ name, className }) => (
-  <div className={"tab " + className}>
+  <div className={'tab ' + className}>
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
       <Nav variant="tabs">
         <Nav.Item>
@@ -71,7 +69,7 @@ const TabsWithTextLabel = ({ name, className }) => (
 );
 
 const TabsWithIconLabel = ({ name, className }) => (
-  <div className={"tab " + className}>
+  <div className={'tab ' + className}>
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
       <Nav variant="tabs">
         <Nav.Item>
@@ -141,38 +139,38 @@ const TabsWithIconLabel = ({ name, className }) => (
   </div>
 );
 
-const TabsComponent = () => (
-  <React.Fragment>
-    <Helmet title="Tabs" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Tabs</h1>
-
-      <Row>
-        <Col lg="6">
-          <TabsWithTextLabel name="Default" />
-        </Col>
-        <Col lg="6">
-          <TabsWithTextLabel name="Colored" className="tab-primary" />
-        </Col>
-
-        <Col lg="6">
-          <TabsWithIconLabel name="Icon" />
-        </Col>
-        <Col lg="6">
-          <TabsWithIconLabel name="Colored icon" className="tab-success" />
-        </Col>
-        <Col lg="6">
-          <TabsWithIconLabel name="Vertical icon" className="tab-vertical" />
-        </Col>
-        <Col lg="6">
-          <TabsWithIconLabel
-            name="Colored vertical icon"
-            className="tab-danger tab-vertical"
-          />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const TabsComponent = () => {
+  useHelmet('Tabs');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Tabs</h1>
+        <Row>
+          <Col lg="6">
+            <TabsWithTextLabel name="Default" />
+          </Col>
+          <Col lg="6">
+            <TabsWithTextLabel name="Colored" className="tab-primary" />
+          </Col>
+          <Col lg="6">
+            <TabsWithIconLabel name="Icon" />
+          </Col>
+          <Col lg="6">
+            <TabsWithIconLabel name="Colored icon" className="tab-success" />
+          </Col>
+          <Col lg="6">
+            <TabsWithIconLabel name="Vertical icon" className="tab-vertical" />
+          </Col>
+          <Col lg="6">
+            <TabsWithIconLabel
+              name="Colored vertical icon"
+              className="tab-danger tab-vertical"
+            />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default TabsComponent;

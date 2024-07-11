@@ -1,59 +1,55 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-
-import { Button, Card, Col, Container, Modal, Row } from "react-bootstrap";
+import React, { useState } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Button, Card, Col, Container, Modal, Row } from 'react-bootstrap';
 
 const colors = [
   {
-    name: "Primary",
-    value: "primary",
+    name: 'Primary',
+    value: 'primary',
   },
   {
-    name: "Success",
-    value: "success",
+    name: 'Success',
+    value: 'success',
   },
   {
-    name: "Danger",
-    value: "danger",
+    name: 'Danger',
+    value: 'danger',
   },
   {
-    name: "Warning",
-    value: "warning",
+    name: 'Warning',
+    value: 'warning',
   },
 ];
 
 const sizes = [
   {
-    name: "Small",
-    value: "sm",
+    name: 'Small',
+    value: 'sm',
   },
   {
-    name: "Medium",
-    value: "md",
+    name: 'Medium',
+    value: 'md',
   },
   {
-    name: "Large",
-    value: "lg",
+    name: 'Large',
+    value: 'lg',
   },
 ];
 
 const DefaultModal = () => {
   const initOpenModals = () => {
     let modals = {};
-
     colors.forEach((color, index) => {
       modals = Object.assign({}, modals, { [index]: false });
     });
-
     return modals;
   };
 
   const [openModals, setOpenModals] = useState(() => initOpenModals());
 
   const toggle = (index) => {
-    // Toggle selected element
     setOpenModals((openModals) =>
-      Object.assign({}, openModals, { [index]: !openModals[index] })
+      Object.assign({}, openModals, { [index]: !openModals[index] }),
     );
   };
 
@@ -90,7 +86,7 @@ const DefaultModal = () => {
               <Modal.Footer>
                 <Button variant="secondary" onClick={() => toggle(index)}>
                   Close
-                </Button>{" "}
+                </Button>{' '}
                 <Button variant={color.value} onClick={() => toggle(index)}>
                   Save changes
                 </Button>
@@ -106,20 +102,17 @@ const DefaultModal = () => {
 const ColoredModal = () => {
   const initOpenModals = () => {
     let modals = {};
-
     colors.forEach((color, index) => {
       modals = Object.assign({}, modals, { [index]: false });
     });
-
     return modals;
   };
 
   const [openModals, setOpenModals] = useState(() => initOpenModals());
 
   const toggle = (index) => {
-    // Toggle selected element
     setOpenModals((openModals) =>
-      Object.assign({}, openModals, { [index]: !openModals[index] })
+      Object.assign({}, openModals, { [index]: !openModals[index] }),
     );
   };
 
@@ -147,7 +140,7 @@ const ColoredModal = () => {
             <Modal
               show={openModals[index]}
               onHide={() => toggle(index)}
-              className={"modal-colored modal-" + color.value}
+              className={'modal-colored modal-' + color.value}
             >
               <Modal.Header closeButton className="text-white">
                 Colored modal
@@ -162,7 +155,7 @@ const ColoredModal = () => {
               <Modal.Footer>
                 <Button variant="light" onClick={() => toggle(index)}>
                   Close
-                </Button>{" "}
+                </Button>{' '}
                 <Button variant="light" onClick={() => toggle(index)}>
                   Save changes
                 </Button>
@@ -178,20 +171,17 @@ const ColoredModal = () => {
 const CenteredModal = () => {
   const initOpenModals = () => {
     let modals = {};
-
     colors.forEach((color, index) => {
       modals = Object.assign({}, modals, { [index]: false });
     });
-
     return modals;
   };
 
   const [openModals, setOpenModals] = useState(() => initOpenModals());
 
   const toggle = (index) => {
-    // Toggle selected element
     setOpenModals((openModals) =>
-      Object.assign({}, openModals, { [index]: !openModals[index] })
+      Object.assign({}, openModals, { [index]: !openModals[index] }),
     );
   };
 
@@ -232,7 +222,7 @@ const CenteredModal = () => {
               <Modal.Footer>
                 <Button variant="secondary" onClick={() => toggle(index)}>
                   Close
-                </Button>{" "}
+                </Button>{' '}
                 <Button variant={color.value} onClick={() => toggle(index)}>
                   Save changes
                 </Button>
@@ -248,20 +238,17 @@ const CenteredModal = () => {
 const ModalSizes = () => {
   const initOpenModals = () => {
     let modals = {};
-
     sizes.forEach((color, index) => {
       modals = Object.assign({}, modals, { [index]: false });
     });
-
     return modals;
   };
 
   const [openModals, setOpenModals] = useState(() => initOpenModals());
 
   const toggle = (index) => {
-    // Toggle selected element
     setOpenModals((openModals) =>
-      Object.assign({}, openModals, { [index]: !openModals[index] })
+      Object.assign({}, openModals, { [index]: !openModals[index] }),
     );
   };
 
@@ -305,7 +292,7 @@ const ModalSizes = () => {
               <Modal.Footer>
                 <Button variant="secondary" onClick={() => toggle(index)}>
                   Close
-                </Button>{" "}
+                </Button>{' '}
                 <Button variant="primary" onClick={() => toggle(index)}>
                   Save changes
                 </Button>
@@ -318,28 +305,30 @@ const ModalSizes = () => {
   );
 };
 
-const Modals = () => (
-  <React.Fragment>
-    <Helmet title="Modals" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Modals</h1>
+const Modals = () => {
+  useHelmet('Modals');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Modals</h1>
 
-      <Row>
-        <Col lg="6">
-          <DefaultModal />
-        </Col>
-        <Col lg="6">
-          <ColoredModal />
-        </Col>
-        <Col lg="6">
-          <CenteredModal />
-        </Col>
-        <Col lg="6">
-          <ModalSizes />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <DefaultModal />
+          </Col>
+          <Col lg="6">
+            <ColoredModal />
+          </Col>
+          <Col lg="6">
+            <CenteredModal />
+          </Col>
+          <Col lg="6">
+            <ModalSizes />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Modals;

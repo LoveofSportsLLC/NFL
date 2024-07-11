@@ -1,38 +1,36 @@
-// src/pages/landing/Landing.jsx
-import React, { useEffect, useState } from "react";
-import { Suspense, lazy } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import Navigation from "./Navigation/Navigation";
-import Intro from "./Intro/Intro";
-import Integrations from "./BottomPage/Integrations";
-import Footer from "./BottomPage/Footer";
-import About from "./Aboutus/About";
+import React, { useState, Suspense, lazy } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import Navigation from './Navigation/Navigation';
+import Intro from './Intro/Intro';
+import Integrations from './BottomPage/Integrations';
+import Footer from './BottomPage/Footer';
+import About from './Aboutus/About';
+import DonateModal from '../auth/DonateModal';
 
 // Lazy-loaded components
-const CombinedComponent = lazy(() => import("./Dashboards/CombinedComponent"));
-const Dashboards = lazy(() => import("./Dashboards/Dashboards"));
-const Analysis = lazy(() => import("./Analysis/Analysis"));
-const Statistics = lazy(() => import("./Statistics/Statistics"));
-const News = lazy(() => import("./News/News"));
-const PredictionsAccuracy = lazy(() => import("./ai/PredictionsAccuracy"));
-const CommunityForum = lazy(() => import("./Community/CommunityForum"));
+const CombinedComponent = lazy(() => import('./Dashboards/CombinedComponent'));
+const Analysis = lazy(() => import('./Analysis/Analysis'));
+const Statistics = lazy(() => import('./Statistics/Statistics'));
+const News = lazy(() => import('./News/News'));
+const PredictionsAccuracy = lazy(() => import('./ai/PredictionsAccuracy'));
+const CommunityForum = lazy(() => import('./Community/CommunityForum'));
 
 const Landing = () => {
-  const [showInteractive, setShowInteractive] = useState(false);
+  const [showDonateModal, setShowDonateModal] = useState(false);
 
-  useEffect(() => {
-    if (showInteractive) {
-      const script = document.createElement("script");
-      script.src = "path/to/interactive/football/script.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, [showInteractive]);
+  const handleDonateClick = () => {
+    setShowDonateModal(true);
+  };
+
+  const handleCloseDonateModal = () => {
+    setShowDonateModal(false);
+  };
 
   return (
     <React.Fragment>
       <Navigation />
-      <Intro handleDonateClick={() => setShowInteractive(!showInteractive)} />
+      <Intro handleDonateClick={handleDonateClick} />
+      <DonateModal show={showDonateModal} onHide={handleCloseDonateModal} />
 
       <Suspense fallback={<div>Loading...</div>}>
         <section className="bg-light py-5" id="team-selector">

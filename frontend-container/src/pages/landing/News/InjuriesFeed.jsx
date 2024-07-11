@@ -5,6 +5,7 @@ import CarouselComponent from "../../../components/CarouselComponent";
 import FilterComponent from "../../../components/FilterComponent";
 import { INJURIES_API_URL } from "../../../config";
 import placeholderImage from "/src/assets/img/logo.png";
+import { log } from "../../../utils/logs";
 
 const InjuriesFeed = () => {
   const [injuries, setInjuries] = useState([]);
@@ -21,10 +22,10 @@ const InjuriesFeed = () => {
           setInjuries(articles);
           filterInjuries(articles, filter, team);
         } else {
-          console.error("Invalid response data:", response.data);
+          log("Invalid response data:", response.data);
         }
       } catch (error) {
-        console.error("Error fetching injuries:", error);
+        log("Error fetching injuries:", error);
       }
     };
     fetchInjuries();

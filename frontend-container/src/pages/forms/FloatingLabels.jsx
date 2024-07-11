@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Card,
   Col,
@@ -7,7 +7,7 @@ import {
   Form,
   FloatingLabel,
   Row,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
 const InputComponent = () => (
   <Card>
@@ -43,7 +43,7 @@ const TextareaComponent = () => (
         <Form.Control
           as="textarea"
           placeholder="Leave a comment here"
-          style={{ height: "100px" }}
+          style={{ height: '100px' }}
         />
       </FloatingLabel>
     </Card.Body>
@@ -115,25 +115,33 @@ const ReadOnly = () => (
   </Card>
 );
 
-const FloatingLabels = () => (
-  <React.Fragment>
-    <Helmet title="Floating Labels" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Floating Labels</h1>
+const FloatingLabels = () => {
+  const Helmet = useHelmet();
 
-      <Row>
-        <Col lg="6">
-          <InputComponent />
-          <TextareaComponent />
-        </Col>
-        <Col lg="6">
-          <SelectComponent />
-          <Layout />
-          <ReadOnly />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Floating Labels" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Floating Labels</h1>
+
+        <Row>
+          <Col lg="6">
+            <InputComponent />
+            <TextareaComponent />
+          </Col>
+          <Col lg="6">
+            <SelectComponent />
+            <Layout />
+            <ReadOnly />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default FloatingLabels;

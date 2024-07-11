@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+// src/pages/pages/Settings.jsx
+import React, { useState, useEffect } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Button,
   Card,
@@ -10,11 +11,10 @@ import {
   Row,
   ToggleButton,
   ToggleButtonGroup,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
+} from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import { log } from '../../utils/logs'; // Import the log utility
 
 // Navigation Component to switch between settings
 const Navigation = ({ setActiveSection }) => (
@@ -22,22 +22,22 @@ const Navigation = ({ setActiveSection }) => (
     <Card.Header>Profile Settings</Card.Header>
     <ListGroup variant="flush">
       {[
-        "Public Info",
-        "Private Info",
-        "Password",
-        "Email Notifications",
-        "Web Notifications",
-        "Widgets",
-        "Your Data",
-        "Delete Account",
-        "League Preferences",
-        "Dashboard Customization",
-        "Player Tracking",
-        "Integration Settings",
-        "Security Settings",
-        "Social Sharing Options",
-        "Accessibility Settings",
-        "Subscription and Billing",
+        'Public Info',
+        'Private Info',
+        'Password',
+        'Email Notifications',
+        'Web Notifications',
+        'Widgets',
+        'Your Data',
+        'Delete Account',
+        'League Preferences',
+        'Dashboard Customization',
+        'Player Tracking',
+        'Integration Settings',
+        'Security Settings',
+        'Social Sharing Options',
+        'Accessibility Settings',
+        'Subscription and Billing',
       ].map((section) => (
         <ListGroup.Item
           key={section}
@@ -60,7 +60,12 @@ const PublicInfo = ({ userData, setUserData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Saving Public Info", userData);
+    log(
+      'Settings.jsx',
+      'PublicInfo.handleSubmit',
+      'Saving Public Info',
+      userData,
+    );
     // Here you would typically make an API call to save the data
   };
 
@@ -71,13 +76,27 @@ const PublicInfo = ({ userData, setUserData }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Username" name="username" value={userData.username || ''} onChange={handleChange} />
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={userData.username || ''}
+              onChange={handleChange}
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Biography</Form.Label>
-            <Form.Control as="textarea" rows={3} name="bio" value={userData.bio || ''} onChange={handleChange} />
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="bio"
+              value={userData.bio || ''}
+              onChange={handleChange}
+            />
           </Form.Group>
-          <Button variant="primary" type="submit">Save Changes</Button>
+          <Button variant="primary" type="submit">
+            Save Changes
+          </Button>
         </Form>
       </Card.Body>
     </Card>
@@ -92,9 +111,16 @@ const PrivateInfo = ({ userData }) => (
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Email" defaultValue={userData.email} readOnly />
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            defaultValue={userData.email}
+            readOnly
+          />
         </Form.Group>
-        <Button variant="primary" type="submit">Save Changes</Button>
+        <Button variant="primary" type="submit">
+          Save Changes
+        </Button>
       </Form>
     </Card.Body>
   </Card>
@@ -156,7 +182,7 @@ const NotificationSettings = ({ type }) => {
             value={1}
             variant="outline-primary"
           >
-            {enabled ? "Enabled" : "Disabled"}
+            {enabled ? 'Enabled' : 'Disabled'}
           </ToggleButton>
         </ToggleButtonGroup>
       </Card.Body>
@@ -187,7 +213,9 @@ const YourDataSettings = () => (
     <Card.Body>
       <Button
         variant="primary"
-        onClick={() => console.log("User data requested")}
+        onClick={() =>
+          log('Settings.jsx', 'YourDataSettings', 'User data requested')
+        }
       >
         Download My Data
       </Button>
@@ -200,10 +228,10 @@ const DeleteAccount = () => {
   const handleDelete = () => {
     if (
       window.confirm(
-        "Are you sure you want to delete your account permanently?",
+        'Are you sure you want to delete your account permanently?',
       )
     ) {
-      console.log("Account deletion process started.");
+      log('Settings.jsx', 'DeleteAccount', 'Account deletion process started.');
       // Implement deletion logic here
     }
   };
@@ -225,23 +253,31 @@ const Settings = () => {
   const [activeSection, setActiveSection] = useState('Public Info');
   const [userData, setUserData] = useState({});
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const Helmet = useHelmet(); // Use the custom hook
 
   const fetchUserData = async () => {
     if (!isAuthenticated) return;
     try {
       const accessToken = await getAccessTokenSilently();
-      const response = await axios.get("/api/user-data", {
+      const response = await axios.get('/api/user-data', {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       setUserData(response.data);
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
+      log(
+        'Settings.jsx',
+        'fetchUserData',
+        'Failed to fetch user data:',
+        error.message,
+      );
     }
   };
 
   useEffect(() => {
     fetchUserData();
   }, [isAuthenticated, getAccessTokenSilently]);
+
+  if (!Helmet) return null;
 
   return (
     <Container fluid>
@@ -252,22 +288,44 @@ const Settings = () => {
           <Navigation setActiveSection={setActiveSection} />
         </Col>
         <Col md={9}>
-          {activeSection === 'Public Info' && <PublicInfo userData={userData} setUserData={setUserData} />}
-          {activeSection === 'Private Info' && <PrivateInfo userData={userData} />}
-          {activeSection === 'Password' && <PasswordSettings isSocialLogin={user && user.sub.startsWith('google-oauth2|')} />}
-          {activeSection === 'Email Notifications' && <NotificationSettings type="Email" />}
-          {activeSection === 'Web Notifications' && <NotificationSettings type="Web" />}
+          {activeSection === 'Public Info' && (
+            <PublicInfo userData={userData} setUserData={setUserData} />
+          )}
+          {activeSection === 'Private Info' && (
+            <PrivateInfo userData={userData} />
+          )}
+          {activeSection === 'Password' && (
+            <PasswordSettings
+              isSocialLogin={user && user.sub.startsWith('google-oauth2|')}
+            />
+          )}
+          {activeSection === 'Email Notifications' && (
+            <NotificationSettings type="Email" />
+          )}
+          {activeSection === 'Web Notifications' && (
+            <NotificationSettings type="Web" />
+          )}
           {activeSection === 'Widgets' && <WidgetsSettings />}
           {activeSection === 'Your Data' && <YourDataSettings />}
           {activeSection === 'Delete Account' && <DeleteAccount />}
-          {activeSection === 'League Preferences' && <LeaguePreferences userData={userData} />}
-          {activeSection === 'Dashboard Customization' && <DashboardCustomization userData={userData} />}
+          {activeSection === 'League Preferences' && (
+            <LeaguePreferences userData={userData} />
+          )}
+          {activeSection === 'Dashboard Customization' && (
+            <DashboardCustomization userData={userData} />
+          )}
           {activeSection === 'Player Tracking' && <PlayerTracking />}
           {activeSection === 'Integration Settings' && <IntegrationSettings />}
           {activeSection === 'Security Settings' && <SecuritySettings />}
-          {activeSection === 'Social Sharing Options' && <SocialSharingOptions />}
-          {activeSection === 'Accessibility Settings' && <AccessibilitySettings />}
-          {activeSection === 'Subscription and Billing' && <SubscriptionAndBilling />}
+          {activeSection === 'Social Sharing Options' && (
+            <SocialSharingOptions />
+          )}
+          {activeSection === 'Accessibility Settings' && (
+            <AccessibilitySettings />
+          )}
+          {activeSection === 'Subscription and Billing' && (
+            <SubscriptionAndBilling />
+          )}
         </Col>
       </Row>
     </Container>

@@ -1,7 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import * as Yup from "yup";
-import { Formik } from "formik";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import * as Yup from 'yup';
+import { Formik } from 'formik';
 import {
   Button,
   Card,
@@ -10,7 +10,8 @@ import {
   Row,
   Form,
   InputGroup,
-} from "react-bootstrap";
+} from 'react-bootstrap';
+import { log } from '../../utils/logs'; // Import the log utility
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -32,14 +33,16 @@ const FormikExample = () => (
     <Card.Body>
       <Formik
         validationSchema={schema}
-        onSubmit={console.log}
+        onSubmit={(values) =>
+          log('Formik.jsx', 'FormikExample', 'Form submitted', values)
+        }
         initialValues={{
-          firstName: "Mark",
-          lastName: "Otto",
-          username: "",
-          city: "",
-          state: "",
-          zip: "",
+          firstName: 'Mark',
+          lastName: 'Otto',
+          username: '',
+          city: '',
+          state: '',
+          zip: '',
           terms: false,
         }}
       >
@@ -150,15 +153,23 @@ const FormikExample = () => (
   </Card>
 );
 
-const FormikPage = () => (
-  <React.Fragment>
-    <Helmet title="Formik" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Formik</h1>
+const FormikPage = () => {
+  const Helmet = useHelmet();
 
-      <FormikExample />
-    </Container>
-  </React.Fragment>
-);
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Formik" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Formik</h1>
+
+        <FormikExample />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default FormikPage;

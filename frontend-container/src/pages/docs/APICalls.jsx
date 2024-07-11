@@ -1,31 +1,32 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
-
-import Code from "../../components/Code";
+//NFL/frontend-container/src/pages/docs/APICalls.jsx
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
+import Code from '../../components/Code';
+import { log } from '../../utils/logs'; // Import the log utility
 
 const Intro = () => (
   <div className="mb-5">
     <h3>Introduction</h3>
     <p className="text-lg">
       A common use case for code actions is to make API calls to external
-      services. AppStack includes{" "}
+      services. AppStack includes{' '}
       <a
         href="https://github.com/axios/axios"
         target="_blank"
         rel="noreferrer noopener"
       >
         Axios
-      </a>{" "}
-      for making XMLHttpRequests from the browser.{" "}
+      </a>{' '}
+      for making XMLHttpRequests from the browser.{' '}
       <a
         href="https://github.com/ctimmerm/axios-mock-adapter#readme"
         target="_blank"
         rel="noreferrer noopener"
       >
         Axios Mock Adapter
-      </a>{" "}
-      is also included to mock those requests.{" "}
+      </a>{' '}
+      is also included to mock those requests.{' '}
       <a
         href="https://github.com/axios/axios"
         target="_blank"
@@ -45,11 +46,11 @@ const Axios = () => (
     <Code>{`axios.get('/api/user?id=12345')
 .then(function (response) {
   // handle success
-  console.log(response);
+  log("APICalls.jsx", "Axios.GET", "response", response);
 })
 .catch(function (error) {
   // handle error
-  console.log(error);
+  log("APICalls.jsx", "Axios.GET", "error", error);
 });`}</Code>
     <p className="text-lg">Performing a POST request:</p>
     <Code>{`axios.post('/api/user', {
@@ -58,11 +59,11 @@ const Axios = () => (
 })
 .then(function (response) {
   // handle success
-  console.log(response);
+  log("APICalls.jsx", "Axios.POST", "response", response);
 })
 .catch(function (error) {
   // handle error
-  console.log(error);
+  log("APICalls.jsx", "Axios.POST", "error", error);
 });`}</Code>
   </div>
 );
@@ -71,7 +72,7 @@ const AxiosMockAdapter = () => (
   <div className="mb-5">
     <h3>Axios Mock Adapter</h3>
     <p className="text-lg">
-      Axios adapter that allows to easily mock requests.{" "}
+      Axios adapter that allows to easily mock requests.{' '}
       <a
         href="https://github.com/ctimmerm/axios-mock-adapter#readme"
         target="_blank"
@@ -100,7 +101,7 @@ const AxiosMockAdapter = () => (
       id: "12345",
       firstName: "Fred",
       lastName: "Flintstone",
-    };];
+    }];
   }
 
   return [400, { message: "Looks like you didn't provide the required data." }];
@@ -109,21 +110,29 @@ const AxiosMockAdapter = () => (
   </div>
 );
 
-const APICalls = () => (
-  <React.Fragment>
-    <Helmet title="API Calls" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>API Calls</h1>
-          <hr className="my-4" />
-          <Intro />
-          <Axios />
-          <AxiosMockAdapter />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const APICalls = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet>
+        <title>API Calls</title>
+      </Helmet>
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>API Calls</h1>
+            <hr className="my-4" />
+            <Intro />
+            <Axios />
+            <AxiosMockAdapter />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default APICalls;

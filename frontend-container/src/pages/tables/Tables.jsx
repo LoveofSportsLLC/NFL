@@ -1,13 +1,13 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Card, Col, Container, Row, Table } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Row, Table } from 'react-bootstrap';
 
-import { Edit2, Trash } from "react-feather";
+import { Edit2, Trash } from 'react-feather';
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
-import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
-import avatar3 from "../../assets/img/avatars/avatar-3.jpg";
-import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
+import avatar1 from '../../assets/img/avatars/avatar.jpg';
+import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
+import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
+import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
 
 const BasicTable = () => (
   <Card>
@@ -21,9 +21,9 @@ const BasicTable = () => (
     <Table>
       <thead>
         <tr>
-          <th style={{ width: "40%" }}>Name</th>
-          <th style={{ width: "25%" }}>Phone Number</th>
-          <th className="d-none d-md-table-cell" style={{ width: "25%" }}>
+          <th style={{ width: '40%' }}>Name</th>
+          <th style={{ width: '25%' }}>Phone Number</th>
+          <th className="d-none d-md-table-cell" style={{ width: '25%' }}>
             Date of Birth
           </th>
           <th>Actions</th>
@@ -92,9 +92,9 @@ const StripedRows = () => (
     <Table striped>
       <thead>
         <tr>
-          <th style={{ width: "40%" }}>Name</th>
-          <th style={{ width: "25%" }}>Phone Number</th>
-          <th className="d-none d-md-table-cell" style={{ width: "25%" }}>
+          <th style={{ width: '40%' }}>Name</th>
+          <th style={{ width: '25%' }}>Phone Number</th>
+          <th className="d-none d-md-table-cell" style={{ width: '25%' }}>
             Date of Birth
           </th>
           <th>Actions</th>
@@ -218,12 +218,13 @@ const CondensedTable = () => (
     </Table>
   </Card>
 );
+
 const HoverableRows = () => (
   <Card>
     <Card.Header>
       <Card.Title>Hoverable Rows</Card.Title>
       <h6 className="card-subtitle text-muted">
-        Add <code>hover</code> to enable a hover state on table rows within a{" "}
+        Add <code>hover</code> to enable a hover state on table rows within a{' '}
         <code>&#x3C;tbody&#x3E;</code>.
       </h6>
     </Card.Header>
@@ -244,7 +245,7 @@ const HoverableRows = () => (
               height="48"
               className="rounded-circle me-2"
               alt="Avatar"
-            />{" "}
+            />{' '}
             Stacie Hall
           </td>
           <td>864-348-0485</td>
@@ -258,7 +259,7 @@ const HoverableRows = () => (
               height="48"
               className="rounded-circle me-2"
               alt="Avatar"
-            />{" "}
+            />{' '}
             Chris Wood
           </td>
           <td>914-939-2458</td>
@@ -272,7 +273,7 @@ const HoverableRows = () => (
               height="48"
               className="rounded-circle me-2"
               alt="Avatar"
-            />{" "}
+            />{' '}
             Carl Jenkins
           </td>
           <td>704-993-5435</td>
@@ -286,7 +287,7 @@ const HoverableRows = () => (
               height="48"
               className="rounded-circle me-2"
               alt="Avatar"
-            />{" "}
+            />{' '}
             Bertha Martin
           </td>
           <td>765-382-8195</td>
@@ -309,9 +310,9 @@ const BorderedTable = () => (
     <Table bordered>
       <thead>
         <tr>
-          <th style={{ width: "40%" }}>Name</th>
-          <th style={{ width: "25%" }}>Phone Number</th>
-          <th className="d-none d-md-table-cell" style={{ width: "25%" }}>
+          <th style={{ width: '40%' }}>Name</th>
+          <th style={{ width: '25%' }}>Phone Number</th>
+          <th className="d-none d-md-table-cell" style={{ width: '25%' }}>
             Date of Birth
           </th>
           <th>Actions</th>
@@ -379,9 +380,9 @@ const ContextualClasses = () => (
     <Table>
       <thead>
         <tr>
-          <th style={{ width: "40%" }}>Name</th>
-          <th style={{ width: "25%" }}>Phone Number</th>
-          <th className="d-none d-md-table-cell" style={{ width: "25%" }}>
+          <th style={{ width: '40%' }}>Name</th>
+          <th style={{ width: '25%' }}>Phone Number</th>
+          <th className="d-none d-md-table-cell" style={{ width: '25%' }}>
             Date of Birth
           </th>
           <th>Actions</th>
@@ -504,37 +505,39 @@ const ResponsiveTable = () => (
   </Card>
 );
 
-const Tables = () => (
-  <React.Fragment>
-    <Helmet title="Tables" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Tables</h1>
+const Tables = () => {
+  useHelmet('Tables');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Tables</h1>
 
-      <Row>
-        <Col lg="6">
-          <BasicTable />
-        </Col>
-        <Col lg="6">
-          <StripedRows />
-        </Col>
-        <Col lg="6">
-          <CondensedTable />
-        </Col>
-        <Col lg="6">
-          <HoverableRows />
-        </Col>
-        <Col lg="6">
-          <BorderedTable />
-        </Col>
-        <Col lg="6">
-          <ContextualClasses />
-        </Col>
-        <Col lg="12">
-          <ResponsiveTable />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <BasicTable />
+          </Col>
+          <Col lg="6">
+            <StripedRows />
+          </Col>
+          <Col lg="6">
+            <CondensedTable />
+          </Col>
+          <Col lg="6">
+            <HoverableRows />
+          </Col>
+          <Col lg="6">
+            <BorderedTable />
+          </Col>
+          <Col lg="6">
+            <ContextualClasses />
+          </Col>
+          <Col lg="12">
+            <ResponsiveTable />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Tables;

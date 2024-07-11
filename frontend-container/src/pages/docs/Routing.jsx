@@ -1,8 +1,8 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import Code from "../../components/Code";
+import Code from '../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -18,9 +18,9 @@ const HowToAddRoutes = () => (
   <div className="mb-5">
     <h3>How to add routes</h3>
     <p className="text-lg">
-      Open <code>/src/routes.js</code> and add your new route to the{" "}
-      <code>routes</code> variable. The example below will result in the{" "}
-      <code>{`<NewPage />`}</code> element being called on the{" "}
+      Open <code>/src/routes.js</code> and add your new route to the{' '}
+      <code>routes</code> variable. The example below will result in the{' '}
+      <code>{`<NewPage />`}</code> element being called on the{' '}
       <code>http://localhost:3000/pages/new</code> route.
     </p>
 
@@ -92,22 +92,30 @@ export default ExampleComponent;
   </div>
 );
 
-const Routing = () => (
-  <React.Fragment>
-    <Helmet title="Routing" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Routing</h1>
-          <hr className="my-4" />
-          <Intro />
-          <HowToAddRoutes />
-          <HowToAddALink />
-          <HowToNavigateProgrammatically />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Routing = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Routing" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Routing</h1>
+            <hr className="my-4" />
+            <Intro />
+            <HowToAddRoutes />
+            <HowToAddALink />
+            <HowToNavigateProgrammatically />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Routing;

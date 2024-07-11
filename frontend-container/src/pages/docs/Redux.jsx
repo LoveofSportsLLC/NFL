@@ -1,11 +1,11 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 
-import Code from "../../components/Code";
+import Code from '../../components/Code';
 
-import useAppSelector from "../../hooks/useAppSelector";
-import useAppDispatch from "../../hooks/useAppDispatch";
+import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 import {
   decrement,
@@ -14,7 +14,7 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
-} from "../../redux/slices/counter";
+} from '../../redux/slices/counter';
 
 const Intro = () => (
   <div className="mb-5">
@@ -23,7 +23,7 @@ const Intro = () => (
     <p className="text-lg">
       Redux helps you write applications that behave consistently, run in
       different environments (client, server, and native), and are easy to test.
-      AppStack leverages{" "}
+      AppStack leverages{' '}
       <a
         href="https://redux-toolkit.js.org/"
         target="_blank"
@@ -60,7 +60,7 @@ const CreatingANewSlice = () => (
   <div className="mb-5">
     <h4>1. Creating a new slice</h4>
     <p className="text-lg">
-      If you want to create a new slice, pleae add a file to the{" "}
+      If you want to create a new slice, pleae add a file to the{' '}
       <code>/src/redux/slices/</code> folder. Quick example:
     </p>
 
@@ -205,7 +205,7 @@ const RealLifeExample = () => (
   <div className="mb-5">
     <h3>Real-life example</h3>
     <p className="text-lg">
-      The example below includes various methods, including{" "}
+      The example below includes various methods, including{' '}
       <code>createSlice</code> and <code>createAsyncThunk</code>. Any time you
       click the "Increment" and "Decrement buttons in the example below, the
       following happens:
@@ -235,7 +235,7 @@ const ReduxDevTools = () => (
       integrations).
     </p>
     <p className="text-lg">
-      It can be used as a browser extension (for{" "}
+      It can be used as a browser extension (for{' '}
       <a
         href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd"
         target="_blank"
@@ -243,15 +243,15 @@ const ReduxDevTools = () => (
       >
         Chrome
       </a>
-      ,{" "}
+      ,{' '}
       <a
         href="https://microsoftedge.microsoft.com/addons/detail/redux-devtools/nnkgneoiohoecpdiaponcejilbhhikei"
         target="_blank"
         rel="nofollow noreferrer"
       >
         Edge
-      </a>{" "}
-      and{" "}
+      </a>{' '}
+      and{' '}
       <a
         href="https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/"
         target="_blank"
@@ -259,46 +259,54 @@ const ReduxDevTools = () => (
       >
         Firefox
       </a>
-      ), as{" "}
+      ), as{' '}
       <a
         href="https://github.com/zalmoxisus/remotedev-app"
         target="_blank"
         rel="nofollow noreferrer"
       >
         a standalone app
-      </a>{" "}
-      or as{" "}
+      </a>{' '}
+      or as{' '}
       <a
         href="https://github.com/reduxjs/redux-devtools/tree/master/packages/redux-devtools"
         target="_blank"
         rel="nofollow noreferrer"
       >
         a React component
-      </a>{" "}
+      </a>{' '}
       integrated in the client app.
     </p>
   </div>
 );
 
-const Redux = () => (
-  <React.Fragment>
-    <Helmet title="Redux" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Redux</h1>
-          <hr className="my-4" />
-          <Intro />
-          <Usage />
-          <CreatingANewSlice />
-          <AddSliceToRootReducer />
-          <UsingTheSlice />
-          <RealLifeExample />
-          <ReduxDevTools />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Redux = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="Redux" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Redux</h1>
+            <hr className="my-4" />
+            <Intro />
+            <Usage />
+            <CreatingANewSlice />
+            <AddSliceToRootReducer />
+            <UsingTheSlice />
+            <RealLifeExample />
+            <ReduxDevTools />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Redux;

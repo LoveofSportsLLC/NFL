@@ -1,58 +1,226 @@
-// frontend-container/server.js
-import express from "express";
-import { resolve } from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import fs from 'node:fs/promises';
+import express from 'express';
+import { Transform } from 'node:stream';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import { log } from './src/utils/logs.js';
+import dotenv from 'dotenv';
+import pkg from 'express-openid-connect';
+import mime from 'mime-types';
+import * as config from './src/config.js';
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const { auth, requiresAuth } = pkg;
 
-async function createServer() {
-  const app = express();
+dotenv.config();
 
-  // Log the __dirname and resolved paths for debugging
-  console.log("Serving from directory:", __dirname);
-  console.log("Public directory:", resolve(__dirname, "public"));
-  console.log("Dist directory:", resolve(__dirname, "dist"));
+const isProduction = process.env.NODE_ENV === 'production';
+const port = process.env.PORT || 3000;
+const base = process.env.BASE || '/';
+const ABORT_DELAY = 10000;
 
-  // Serve static files from the public directory directly from the root URL
-  app.use(express.static(resolve(__dirname, "Public")));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-  // Middleware to set correct MIME type for JavaScript files
-  app.use((req, res, next) => {
-    if (req.url.endsWith(".js")) {
-      res.setHeader("Content-Type", "application/javascript");
-    }
-    next();
+log('Server.js', 'Running Server.js script');
+
+let templateHtml = '';
+let ssrManifest;
+
+if (isProduction) {
+  try {
+    templateHtml = await fs.readFile('./dist/client/index.html', 'utf-8');
+    ssrManifest = JSON.parse(
+      await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8'),
+    );
+  } catch (error) {
+    log('Server.js', 'Error loading production files:', error);
+  }
+}
+
+const app = express();
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+app.post('/log', (req, res) => {
+  const { fileName, functionName, messages, logCount } = req.body;
+  console.log(
+    `[LOG] [${fileName}:${functionName}] ${messages.join(' ')} (Log Count: ${logCount}) [CLIENT]`,
+  );
+  res.sendStatus(200);
+});
+
+const baseURL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://loveoffootball.io'
+    : 'http://localhost:3000';
+
+const authConfig = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: config.secret,
+  baseURL,
+  clientID: config.clientId,
+  issuerBaseURL: config.issuerBaseURL,
+  authorizationParams: {
+    response_mode: 'form_post',
+  },
+};
+
+log('Auth0 Config:', JSON.stringify(authConfig, null, 2));
+
+app.use(auth(authConfig));
+
+// Middleware to handle correct MIME types
+app.use((req, res, next) => {
+  const ext = path.extname(req.url);
+  const mimeType = mime.lookup(ext);
+  if (mimeType) {
+    res.setHeader('Content-Type', mimeType);
+  }
+  next();
+});
+
+// Middleware to serve static files
+app.use(
+  '/src/assets/img',
+  express.static(path.join(__dirname, 'src/assets/img')),
+);
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist/client')));
+
+app.get('/', (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    res.redirect('/dashboard/default');
+  } else {
+    res.sendFile(path.join(__dirname, 'dist/client', 'index.html'));
+  }
+});
+
+// The /profile route will show the user profile as JSON
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user, null, 2));
+});
+
+async function setupServer() {
+  let vite;
+  if (!isProduction) {
+    const { createServer } = await import('vite');
+    vite = await createServer({
+      server: { middlewareMode: 'ssr' },
+      base,
+    });
+    app.use(vite.middlewares);
+  } else {
+    const compression = (await import('compression')).default;
+    const sirv = (await import('sirv')).default;
+    app.use(compression());
+    app.use(base, sirv('./dist/client', { extensions: [] }));
+  }
+
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/client', 'index.html'));
   });
 
-  // Serve the dist directory
-  app.use(express.static(resolve(__dirname, "dist")));
-
-  // Catch-all route to serve the app
-  app.use("*", async (req, res) => {
+  app.use('*', async (req, res) => {
     try {
-      // Log the path of the index.html for debugging
-      console.log(
-        "Serving index.html from:",
-        resolve(__dirname, "dist/index.html"),
-      );
-      // Read index.html from the dist directory
-      const template = fs.readFileSync(
-        resolve(__dirname, "dist/index.html"),
-        "utf-8",
+      const url = req.originalUrl.replace(base, '');
+
+      let template;
+      let render;
+      const initialData = {
+        user: req.oidc.user || null,
+        config: {},
+      };
+
+      if (!isProduction) {
+        template = await fs.readFile('./index.html', 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+        render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render;
+      } else {
+        template = templateHtml;
+        render = (await import('./dist/server/entry-server.js')).render;
+      }
+
+      let didError = false;
+
+      const onShellReady = (pipe) => {
+        log('Server.js', 'onShellReady called');
+        res.status(didError ? 500 : 200);
+        res.set({ 'Content-Type': 'text/html' });
+
+        const transformStream = new Transform({
+          transform(chunk, encoding, callback) {
+            res.write(chunk, encoding);
+            callback();
+          },
+        });
+
+        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
+        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
+
+        res.write(htmlStart + initialStateScript);
+
+        transformStream.on('finish', () => {
+          log('Server.js', 'HTML fully sent');
+          res.end(htmlEnd);
+        });
+
+        pipe(transformStream);
+      };
+
+      const onShellError = () => {
+        log('Server.js', 'onShellError called');
+        res.status(500);
+        res.set({ 'Content-Type': 'text/html' });
+        res.send('<h1>Something went wrong</h1>');
+      };
+
+      const onError = (error) => {
+        didError = true;
+        log('Server.js', 'Render error:', error);
+      };
+
+      const { pipe, abort } = render(
+        url,
+        ssrManifest,
+        onShellReady,
+        onShellError,
+        onError,
+        initialData,
       );
 
-      // Send the HTML back
-      res.status(200).set({ "Content-Type": "text/html" }).end(template);
+      // Log the server-rendered HTML chunk
+      const htmlStream = new Transform({
+        transform(chunk, encoding, callback) {
+          log(
+            'Server.js',
+            'Server rendered HTML chunk:',
+            chunk.toString().slice(0, 500) + '...[truncated]',
+          );
+          callback(null, chunk);
+        },
+      });
+
+      htmlStream.on('finish', () => {
+        log('Server.js', 'Server rendered HTML fully sent');
+      });
+
+      pipe(htmlStream);
+
+      setTimeout(() => {
+        abort();
+      }, ABORT_DELAY);
     } catch (e) {
-      console.error(e);
+      if (vite) {
+        vite.ssrFixStacktrace(e);
+      }
+      log('Server.js', e.stack);
       res.status(500).end(e.stack);
     }
   });
 
-  app.listen(3000, () => {
-    console.log("Server started on http://localhost:3000");
+  app.listen(port, () => {
+    log('Server.js', `Server started at http://localhost:${port}`);
   });
 }
 
-createServer();
+setupServer();

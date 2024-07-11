@@ -1,4 +1,3 @@
-#manifests/uat/deploy-fe.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,6 +35,21 @@ spec:
               value: development  
             - name: NODE_ENV
               value: development
+            - name: BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment-urls
+                  key: BASE_URL
+            - name: API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment-urls
+                  key: API_URL
+            - name: LOG_URL
+              valueFrom:
+                secretKeyRef:
+                  name: environment-urls
+                  key: LOG_URL
             - name: AZURE_STORAGE_ACCOUNT
               value: sportfs
             - name: AZURE_STORAGE_KEY
@@ -45,11 +59,6 @@ spec:
                   key: azurestorageaccountkey
             - name: AZURE_SHARE_NAME
               value: sportshare
-            #- name: MONGODB_URL
-            #  valueFrom:
-            #    secretKeyRef:
-            #      name: my-cluster-secrets
-            #      key: MONGODB_URL
             - name: REDIS_HOST
               value: "redis-service"
             - name: BACKEND_HOST
@@ -184,21 +193,36 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: apikey
-            - name: SENTRY_AUTH
+            - name: VITE_SENTRY_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: sentry-secrets
-                  key: SENTRY_AUTH_TOKEN 
+                  name: app-secrets
+                  key: VITE_SENTRY_AUTH_TOKEN
+            - name: VITE_APP_INSIGHTS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights-secrets
+                  key: VITE_APP_INSIGHTS_CONNECTION_STRING
+            - name: VITE_APP_INSIGHTS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights-secrets
+                  key: VITE_APP_INSIGHTS_KEY
             - name: VITE_NEWS_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: news-api-key
-                  key: NEWS_API_KEY
+                  key: VITE_NEWS_API_KEY
             - name: VITE_GOOGLE_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: google-client-id-secret
                   key: VITE_GOOGLE_CLIENT_ID
+            - name: SENTRY_RELEASE
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-secrets
+                  key: SENTRY_RELEASE
           ports:
             - containerPort: 3000
           volumeMounts:

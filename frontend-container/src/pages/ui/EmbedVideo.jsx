@@ -1,6 +1,6 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Row } from 'react-bootstrap';
 
 const Embed21By9 = () => (
   <Card>
@@ -70,28 +70,30 @@ const Embed4By3 = () => (
   </Card>
 );
 
-const EmbedVideo = () => (
-  <React.Fragment>
-    <Helmet title="Embed Video" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Embed Video</h1>
+const EmbedVideo = () => {
+  useHelmet('Embed Video');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Embed Video</h1>
 
-      <Row>
-        <Col lg="6">
-          <Embed21By9 />
-        </Col>
-        <Col lg="6">
-          <Embed16By9 />
-        </Col>
-        <Col lg="6">
-          <Embed1By1 />
-        </Col>
-        <Col lg="6">
-          <Embed4By3 />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <Embed21By9 />
+          </Col>
+          <Col lg="6">
+            <Embed16By9 />
+          </Col>
+          <Col lg="6">
+            <Embed1By1 />
+          </Col>
+          <Col lg="6">
+            <Embed4By3 />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default EmbedVideo;

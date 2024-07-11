@@ -1,8 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
-
-import Code from "../../components/Code";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
+import Code from '../../components/Code';
 
 const QuickStart = () => (
   <div className="mb-5">
@@ -21,9 +20,9 @@ const QuickStart = () => (
     <Code>npm install</Code>
 
     <p className="text-lg mb-3">
-      Now you're ready to modify the source files and generate new{" "}
+      Now you're ready to modify the source files and generate new{' '}
       <code>build/</code> files. AppStack is using webpack and webpack-serve to
-      automatically detect file changes and start a local webserver at{" "}
+      automatically detect file changes and start a local webserver at{' '}
       <code>http://localhost:3000</code>.
     </p>
     <Code>npm start</Code>
@@ -40,7 +39,7 @@ const BuildTools = () => (
     <Code>npm start</Code>
 
     <p className="text-lg mb-3">
-      Compile, optimize, minify and uglify all source files to{" "}
+      Compile, optimize, minify and uglify all source files to{' '}
       <code>build/</code>:
     </p>
     <Code>npm run build</Code>
@@ -85,21 +84,27 @@ const Contents = () => (
   </div>
 );
 
-const GettingStarted = () => (
-  <React.Fragment>
-    <Helmet title="Getting Started" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Getting Started</h1>
-          <hr className="my-4" />
-          <QuickStart />
-          <BuildTools />
-          <Contents />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const GettingStarted = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Getting Started" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Getting Started</h1>
+            <hr className="my-4" />
+            <QuickStart />
+            <BuildTools />
+            <Contents />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default GettingStarted;

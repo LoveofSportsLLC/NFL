@@ -1,28 +1,29 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, Card, Col, Container, Row, Form } from "react-bootstrap";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useContext, useState, useEffect } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Button, Card, Col, Container, Row, Form } from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
 
-import NotyfContext from "../../contexts/NotyfContext";
+import NotyfContext from '../../contexts/NotyfContext';
 
 const Notifications = () => {
+  const Helmet = useHelmet();
   const notyf = useContext(NotyfContext);
   const { getTokenSilently } = useAuth0();
 
   const [notifications, setNotifications] = useState([]);
 
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("default");
-  const [duration, setDuration] = useState("2500");
+  const [message, setMessage] = useState('');
+  const [type, setType] = useState('default');
+  const [duration, setDuration] = useState('2500');
   const [ripple, setRipple] = useState(true);
   const [dismissible, setDismissible] = useState(false);
-  const [positionX, setPositionX] = useState("right");
-  const [positionY, setPositionY] = useState("top");
+  const [positionX, setPositionX] = useState('right');
+  const [positionY, setPositionY] = useState('top');
 
   useEffect(() => {
     const fetchNotifications = async () => {
       const token = await getTokenSilently();
-      fetch("/api/notifications", {
+      fetch('/api/notifications', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,8 +33,12 @@ const Notifications = () => {
     };
 
     fetchNotifications();
-  }, []);
-  
+  }, [getTokenSilently]);
+
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
   return (
     <React.Fragment>
       <Helmet title="Notifications" />
@@ -108,24 +113,24 @@ const Notifications = () => {
                         name="positionX"
                         label="Left"
                         value="left"
-                        onChange={() => setPositionX("left")}
-                        checked={positionX === "left"}
+                        onChange={() => setPositionX('left')}
+                        checked={positionX === 'left'}
                       />
                       <Form.Check
                         type="radio"
                         name="positionX"
                         label="Center"
                         value="center"
-                        onChange={() => setPositionX("center")}
-                        checked={positionX === "center"}
+                        onChange={() => setPositionX('center')}
+                        checked={positionX === 'center'}
                       />
                       <Form.Check
                         type="radio"
                         name="positionX"
                         label="Right"
                         value="right"
-                        onChange={() => setPositionX("right")}
-                        checked={positionX === "right"}
+                        onChange={() => setPositionX('right')}
+                        checked={positionX === 'right'}
                       />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -135,16 +140,16 @@ const Notifications = () => {
                         name="positionY"
                         label="Top"
                         value="top"
-                        onChange={() => setPositionY("top")}
-                        checked={positionY === "top"}
+                        onChange={() => setPositionY('top')}
+                        checked={positionY === 'top'}
                       />
                       <Form.Check
                         type="radio"
                         name="positionY"
                         label="Bottom"
                         value="bottom"
-                        onChange={() => setPositionY("bottom")}
-                        checked={positionY === "bottom"}
+                        onChange={() => setPositionY('bottom')}
+                        checked={positionY === 'bottom'}
                       />
                     </Form.Group>
                   </Col>
@@ -156,7 +161,7 @@ const Notifications = () => {
                       type,
                       message:
                         message ||
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+                        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.',
                       duration,
                       ripple,
                       dismissible,
