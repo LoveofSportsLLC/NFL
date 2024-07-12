@@ -70,6 +70,7 @@ COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/server.js /app/server.js
 COPY --from=build /app/scripts /app/scripts
 COPY --from=build /app/routes /app/routes
+COPY --from=build /app/index.html /app/index.html
 RUN chown -R node:node /app
 USER node
 ENV PUBLIC_ENV__NODE_ENV=development
