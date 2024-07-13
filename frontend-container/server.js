@@ -57,7 +57,7 @@ app.post('/log', (req, res) => {
 const baseURL =
   process.env.NODE_ENV === 'production'
     ? 'https://loveoffootball.io'
-    : 'http://localhost:3000';
+    : 'https://uat.loveoffootball.io';
 
 const authConfig = {
   authRequired: false,
@@ -68,6 +68,7 @@ const authConfig = {
   issuerBaseURL: config.issuerBaseURL,
   authorizationParams: {
     response_mode: 'form_post',
+    redirect_uri: baseURL + '/dashboard/default',
   },
 };
 
