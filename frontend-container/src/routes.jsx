@@ -92,7 +92,7 @@ const RedirectToLogin = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/auth/sign-in');
+      navigate('/login');
     }
   }, [isAuthenticated, navigate]);
 

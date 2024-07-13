@@ -1,5 +1,11 @@
-// src/config.js
 const isServer = typeof process !== 'undefined' && process.env.NODE_ENV;
+
+export const baseURL = (() => {
+  if (isServer) {
+    return process.env.BASE_URL; // Local development and cluster secrets
+  }
+  return import.meta.env.VITE_AUTH0_BASE_URL; // Fallback for client-side
+})();
 
 export const newsApiKey = isServer
   ? process.env.VITE_NEWS_API_KEY
@@ -28,9 +34,6 @@ export const AZURE_ML_ENDPOINT =
 export const secret = isServer
   ? process.env.VITE_AUTH0_SECRET
   : import.meta.env.VITE_AUTH0_SECRET;
-export const baseURL = isServer
-  ? process.env.VITE_AUTH0_BASE_URL
-  : import.meta.env.VITE_AUTH0_BASE_URL;
 export const issuerBaseURL = isServer
   ? process.env.VITE_AUTH0_ISSUER_BASE_URL
   : import.meta.env.VITE_AUTH0_ISSUER_BASE_URL;
