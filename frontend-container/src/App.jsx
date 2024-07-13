@@ -28,7 +28,10 @@ import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 
 log('App.jsx', 'Starting execution');
 
-const instrumentationKey = VITE_APP_INSIGHTS_CONNECTION_STRING;
+const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
+const instrumentationKey = connectionString.match(
+  /InstrumentationKey=([^;]+)/,
+)[1];
 
 let appInsights;
 const reactPlugin = new ReactPlugin();
@@ -39,7 +42,8 @@ const initializeAppInsights = () => {
     const browserHistory = createBrowserHistory({ basename: '' });
     appInsights = new ApplicationInsights({
       config: {
-        connectionString: instrumentationKey,
+        connectionString,
+        instrumentationKey, // Added instrumentation key
         enableAutoRouteTracking: true,
         extensions: [reactPlugin],
         extensionConfig: {
