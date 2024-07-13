@@ -1,6 +1,7 @@
 # Dockerfile.Prod
 
-FROM node:20-alpine
+# Stage 1: Build
+FROM node:20-alpine as build
 
 WORKDIR /app
 
@@ -73,6 +74,25 @@ ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
 
 # Build the application
 RUN npm run build:prod
+
+# Stage 2: Run
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy the built files from the previous stage
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/public /app/public
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/server.js /app/server.js
+COPY --from=build /app/scripts /app/scripts
+COPY --from=build /app/routes /app/routes
+COPY --from=build /app/index.html /app/index.html
+
+# Copy additional necessary files
+COPY --from=build /app/vite.config.js /app/vite.config.js
+COPY --from=build /app/src /app/src
 
 # Change the ownership of the files to a non-root user for security
 RUN chown -R node:node /app

@@ -118,11 +118,16 @@ spec:
                 secretKeyRef:
                   name: auth0-secrets
                   key: AUTH0_CLIENT_ID
-            - name: VITE_AUTH0_ISSUER_BASE_URL
+            - name: AUTH0_ISSUER_BASE_URL
               valueFrom:
                 secretKeyRef:
                   name: auth0-secrets
                   key: AUTH0_ISSUER_BASE_URL
+            - name: VITE_AUTH0_ISSUER_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: auth0-secrets
+                  key: VITE_AUTH0_ISSUER_BASE_URL
             - name: VITE_SUPPORT_API_URL
               valueFrom:
                 secretKeyRef:

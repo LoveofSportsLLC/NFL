@@ -13,6 +13,12 @@ const { auth, requiresAuth } = pkg;
 
 dotenv.config();
 
+log(
+  'VITE_AUTH0_ISSUER_BASE_URL:',
+  process.env.VITE_AUTH0_ISSUER_BASE_URL,
+);
+log('All environment variables:', process.env);
+
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
 const base = process.env.BASE || '/';

@@ -60,3 +60,4 @@ NFL-Stats/
 .env.sentry-build-plugin
 
 .history/
+.vite-inspect/
