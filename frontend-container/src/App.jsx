@@ -23,21 +23,14 @@ import {
   clientId,
   audience,
   VITE_APP_INSIGHTS_CONNECTION_STRING,
+  VITE_APP_INSIGHTS_INSTRUMENTATION_KEY,
 } from './config';
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 
 log('App.jsx', 'Starting execution');
 
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
-log('VITE_APP_INSIGHTS_CONNECTION_STRING:', connectionString);
-
-const match = connectionString
-  ? connectionString.match(/InstrumentationKey=([^;]+)/)
-  : null;
-if (!match) {
-  throw new Error('InstrumentationKey not found in the connection string');
-}
-const instrumentationKey = match[1];
+const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 
 let appInsights;
 const reactPlugin = new ReactPlugin();
@@ -49,7 +42,7 @@ const initializeAppInsights = () => {
     appInsights = new ApplicationInsights({
       config: {
         connectionString,
-        instrumentationKey, // Added instrumentation key
+        instrumentationKey,
         enableAutoRouteTracking: true,
         extensions: [reactPlugin],
         extensionConfig: {
