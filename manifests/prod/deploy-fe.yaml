@@ -198,11 +198,6 @@ spec:
                 secretKeyRef:
                   name: google-auth-secrets
                   key: apikey
-            - name: SENTRY_AUTH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: sentry-secrets
-                  key: SENTRY_AUTH_TOKEN
             - name: VITE_NEWS_API_KEY
               valueFrom:
                 secretKeyRef:

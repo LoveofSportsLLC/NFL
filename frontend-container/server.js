@@ -26,7 +26,7 @@ const ABORT_DELAY = 10000;
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-log('Server.js', 'Running Server.js script');
+log( 'Server.js', 'Running Server.js script' );
 
 let templateHtml = '';
 let ssrManifest;

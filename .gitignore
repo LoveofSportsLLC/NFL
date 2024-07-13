@@ -160,6 +160,9 @@ MANIFEST
 *.manifest
 *.spec
 
+.history/
+
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -349,3 +352,4 @@ activate_conda.sh
 AML/
 WSL2-Linux-Kernal/
 .history/
+.vite-insptect/
