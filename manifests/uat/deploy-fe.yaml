@@ -208,6 +208,11 @@ spec:
                 secretKeyRef:
                   name: app-insights-secrets
                   key: VITE_APP_INSIGHTS_KEY
+            - name: VITE_APP_INSIGHTS_INSTRUMENTATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-insights-secrets
+                  key: VITE_APP_INSIGHTS_INSTRUMENTATION_KEY
             - name: VITE_NEWS_API_KEY
               valueFrom:
                 secretKeyRef:
