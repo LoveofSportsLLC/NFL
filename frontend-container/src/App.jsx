@@ -29,9 +29,15 @@ import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 log('App.jsx', 'Starting execution');
 
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
-const instrumentationKey = connectionString.match(
-  /InstrumentationKey=([^;]+)/,
-)[1];
+log('VITE_APP_INSIGHTS_CONNECTION_STRING:', connectionString);
+
+const match = connectionString
+  ? connectionString.match(/InstrumentationKey=([^;]+)/)
+  : null;
+if (!match) {
+  throw new Error('InstrumentationKey not found in the connection string');
+}
+const instrumentationKey = match[1];
 
 let appInsights;
 const reactPlugin = new ReactPlugin();
