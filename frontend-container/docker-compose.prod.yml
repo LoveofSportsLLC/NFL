@@ -12,6 +12,8 @@ services:
       - "3000:3000"
     networks:
       - prod-network
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
       - PUBLIC_ENV__NODE_ENV=production
