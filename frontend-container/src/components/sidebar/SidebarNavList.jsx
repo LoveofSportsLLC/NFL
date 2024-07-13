@@ -1,7 +1,6 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-
-import reduceChildRoutes from "./reduceChildRoutes";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import reduceChildRoutes from './reduceChildRoutes';
 
 const SidebarNavList = (props) => {
   const { pages, depth } = props;
@@ -9,8 +8,15 @@ const SidebarNavList = (props) => {
   const currentRoute = router.pathname;
 
   const childRoutes = pages.reduce(
-    (items, page) => reduceChildRoutes({ items, page, currentRoute, depth }),
-    []
+    (items, page) =>
+      reduceChildRoutes({
+        items,
+        page,
+        currentRoute,
+        depth,
+        SidebarNavListComponent: SidebarNavList,
+      }),
+    [],
   );
 
   return <React.Fragment>{childRoutes}</React.Fragment>;

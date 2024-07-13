@@ -10,6 +10,8 @@ services:
     image: fe:uatlatest
     ports:
       - "3000:3000"
+    networks:
+      - uat-network
     volumes:
       - .:/app/:delegated
     env_file:
@@ -22,3 +24,5 @@ services:
     user: node
     stdin_open: true
     tty: true
+networks:
+  uat-network:

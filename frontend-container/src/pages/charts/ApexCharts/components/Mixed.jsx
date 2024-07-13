@@ -1,8 +1,7 @@
-import React from "react";
-import Chart from "react-apexcharts";
+import React, { Suspense } from "react";
 import { Card } from "react-bootstrap";
-
-import usePalette from "../../../hooks/usePalette";
+import usePalette from "../../../../hooks/usePalette";
+import Chart from 'react-apexcharts';
 
 const MixedChart = () => {
   const palette = usePalette();
@@ -26,18 +25,9 @@ const MixedChart = () => {
   ];
 
   const options = {
-    chart: {
-      stacked: false,
-    },
-    stroke: {
-      width: [0, 2, 5],
-      curve: "smooth",
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: "50%",
-      },
-    },
+    chart: { stacked: false },
+    stroke: { width: [0, 2, 5], curve: "smooth" },
+    plotOptions: { bar: { columnWidth: "50%" } },
     fill: {
       opacity: [0.85, 0.25, 1],
       gradient: {
@@ -62,28 +52,15 @@ const MixedChart = () => {
       "10/01/2003",
       "11/01/2003",
     ],
-    markers: {
-      size: 0,
-    },
-    xaxis: {
-      type: "datetime",
-    },
-    yaxis: {
-      title: {
-        text: "Points",
-      },
-      min: 0,
-    },
+    markers: { size: 0 },
+    xaxis: { type: "datetime" },
+    yaxis: { title: { text: "Points" }, min: 0 },
     tooltip: {
       shared: true,
       intersect: false,
       y: {
-        formatter: function (y) {
-          if (typeof y !== "undefined") {
-            return y.toFixed(0) + " points";
-          }
-          return y;
-        },
+        formatter: (y) =>
+          typeof y !== "undefined" ? y.toFixed(0) + " points" : y,
       },
     },
     colors: [
@@ -100,13 +77,15 @@ const MixedChart = () => {
       <Card.Header>
         <Card.Title>Mixed Chart</Card.Title>
         <h6 className="card-subtitle text-muted">
-          A Mixed Chart is a visualization that allows the combination of two or
+          A Mixed Chart is a visualization that allows the combination of two
           more distinct graphs.
         </h6>
       </Card.Header>
       <Card.Body>
         <div className="chart">
-          <Chart options={options} series={data} type="line" height="350" />
+          <Suspense fallback={<div>Loading Chart...</div>}>
+            <Chart options={options} series={data} type="line" height="350" />
+          </Suspense>
         </div>
       </Card.Body>
     </Card>

@@ -1,15 +1,19 @@
-# Stage 1: Build the application
+# Dockerfile.Prod
+
+# Stage 1: Build
 FROM node:20-alpine as build
 
-# Install git
-RUN apk add --no-cache git
-
 WORKDIR /app
+
+# Copy package files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
+
+# Copy all source files
 COPY . .
 
-ARG VITE_VITE_GOOGLE_CLIENT_ID
+# Set build arguments
+ARG VITE_GOOGLE_CLIENT_ID
 ARG VITE_GOOGLE_APIKEY
 ARG VITE_NEWS_API_KEY
 ARG VITE_AUTH0_DOMAIN
@@ -31,10 +35,15 @@ ARG GOOGLE_AUTH_PROVIDER_X509_CERT_URL
 ARG GOOGLE_REDIRECT_URIS
 ARG GOOGLE_JAVASCRIPT_ORIGINS
 ARG GOOGLE_APIKEY
-ARG SENTRY_AUTH_TOKEN
+ARG BASE_URL
+ARG API_URL
+ARG LOG_URL
+ARG VITE_APP_INSIGHTS_KEY
+ARG VITE_APP_INSIGHTS_CONNECTION_STRING
 
+# Set environment variables
 ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
-    VITE_GOOGLE_APIKEY=$GOOGLE_APIKEY \
+    VITE_GOOGLE_APIKEY=$VITE_GOOGLE_APIKEY \
     VITE_NEWS_API_KEY=$VITE_NEWS_API_KEY \
     VITE_AUTH0_DOMAIN=$VITE_AUTH0_DOMAIN \
     VITE_AUTH0_CLIENT_ID=$VITE_AUTH0_CLIENT_ID \
@@ -55,21 +64,53 @@ ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
     GOOGLE_REDIRECT_URIS=$GOOGLE_REDIRECT_URIS \
     GOOGLE_JAVASCRIPT_ORIGINS=$GOOGLE_JAVASCRIPT_ORIGINS \
     GOOGLE_APIKEY=$GOOGLE_APIKEY \
-    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN 
+    BASE_URL=$BASE_URL \
+    API_URL=$API_URL \
+    LOG_URL=$LOG_URL \
+    VITE_APP_INSIGHTS_KEY=$VITE_APP_INSIGHTS_KEY \
+    VITE_APP_INSIGHTS_CONNECTION_STRING=$APP_INSIGHTS_CONNECTION_STRING \
+    NODE_ENV=production \
+    PUBLIC_ENV__NODE_ENV=production
 
+# Build the application
 RUN npm run build:prod
 
-# Stage 2: Set up the Express server to serve the build directory
+# Stage 2: Run
 FROM node:20-alpine
-WORKDIR /app
-COPY --from=build /app /app
 
+WORKDIR /app
+
+# Copy the built files from the previous stage
+COPY --from=build /app/dist /app/dist
+COPY --from=build /app/public /app/public
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/server.js /app/server.js
+COPY --from=build /app/scripts /app/scripts
+COPY --from=build /app/routes /app/routes
+COPY --from=build /app/index.html /app/index.html
+
+# Copy additional necessary files
+COPY --from=build /app/vite.config.js /app/vite.config.js
+COPY --from=build /app/src /app/src
+
+# Change the ownership of the files to a non-root user for security
 RUN chown -R node:node /app
+
+# Switch to the non-root user
 USER node
 
+# Set runtime environment variables
 ENV PUBLIC_ENV__NODE_ENV=production
 ENV NODE_ENV=production
 ENV APOLLO_TELEMETRY_DISABLED=true
+ENV BASE_URL=$BASE_URL
+ENV API_URL=$API_URL
+ENV LOG_URL=$LOG_URL
+ENV VITE_APP_INSIGHTS_CONNECTION_STRING=$VITE_APP_INSIGHTS_CONNECTION_STRING
 
+# Expose the application port
 EXPOSE 3000
-CMD ["npm", "start"]
+
+# Start the application
+CMD ["node", "server.js"]

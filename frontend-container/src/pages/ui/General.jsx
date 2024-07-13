@@ -1,5 +1,5 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Accordion,
   Badge,
@@ -15,53 +15,53 @@ import {
   ProgressBar,
   Spinner,
   OverlayTrigger,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
+import avatar1 from '../../assets/img/avatars/avatar.jpg';
 
 const colors = [
   {
-    name: "Primary",
-    value: "primary",
+    name: 'Primary',
+    value: 'primary',
   },
   {
-    name: "Secondary",
-    value: "secondary",
+    name: 'Secondary',
+    value: 'secondary',
   },
   {
-    name: "Success",
-    value: "success",
+    name: 'Success',
+    value: 'success',
   },
   {
-    name: "Danger",
-    value: "danger",
+    name: 'Danger',
+    value: 'danger',
   },
   {
-    name: "Warning",
-    value: "warning",
+    name: 'Warning',
+    value: 'warning',
   },
   {
-    name: "Info",
-    value: "info",
+    name: 'Info',
+    value: 'info',
   },
 ];
 
 const directions = [
   {
-    name: "Left",
-    value: "left",
+    name: 'Left',
+    value: 'left',
   },
   {
-    name: "Top",
-    value: "top",
+    name: 'Top',
+    value: 'top',
   },
   {
-    name: "Bottom",
-    value: "bottom",
+    name: 'Bottom',
+    value: 'bottom',
   },
   {
-    name: "Right",
-    value: "right",
+    name: 'Right',
+    value: 'right',
   },
 ];
 
@@ -124,11 +124,11 @@ const Badges = () => (
       <h6 className="card-subtitle text-muted">Examples for badges.</h6>
     </Card.Header>
     <Card.Body>
-        {colors.map((color, index) => (
-          <Badge key={index} bg={color.value} className="me-1 mb-1">
-            {color.name}
-          </Badge>
-        ))}
+      {colors.map((color, index) => (
+        <Badge key={index} bg={color.value} className="me-1 mb-1">
+          {color.name}
+        </Badge>
+      ))}
       <div>
         {colors.map((color, index) => (
           <Badge
@@ -437,29 +437,31 @@ const Spinners = () => (
   </Card>
 );
 
-const General = () => (
-  <React.Fragment>
-    <Helmet title="General" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">General</h1>
+const General = () => {
+  useHelmet('General');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">General</h1>
 
-      <Row>
-        <Col lg="6">
-          <AccordionElement />
-          <BreadCrumbs />
-          <Images />
-          <Popovers />
-          <Tooltips />
-        </Col>
-        <Col lg="6">
-          <Badges />
-          <PaginationElement />
-          <ProgressBars />
-          <Spinners />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <AccordionElement />
+            <BreadCrumbs />
+            <Images />
+            <Popovers />
+            <Tooltips />
+          </Col>
+          <Col lg="6">
+            <Badges />
+            <PaginationElement />
+            <ProgressBars />
+            <Spinners />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default General;

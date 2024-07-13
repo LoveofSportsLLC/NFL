@@ -8,34 +8,31 @@
     <link rel="shortcut icon" href="/src/assets/img/favicon.ico" />
     <link rel="preconnect" href="//fonts.gstatic.com/" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
-
-    <% if(isDev){ %>
-      <link href="/src/assets/scss/light.scss" rel="stylesheet" class="js-stylesheet" />
-    <% } else { %>
-      <link href="/assets/dark.css" rel="stylesheet" class="js-stylesheet" />
-    <% } %>
-    
+    <link href="/src/assets/scss/light.scss" rel="stylesheet" class="js-stylesheet" />
     <script async src="https://js.stripe.com/v3/buy-button.js"></script>
     <script src="https://cdn.auth0.com/js/lock/12.5.0/lock.min.js"></script>
+    <!--app-head-->
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/index.jsx"></script>
+    <div id="app"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.jsx"></script>
     <script>
       window.global = window;
       window.process = {
-        env: { DEBUG: undefined },
-      }
+        env: { DEBUG: undefined }
+      };
       var exports = {};
     </script>
     <script type="text/javascript">
-      (function(c, l, a, r, i, t, y) {
-        c[a] = c[a] || function() {
-          (c[a].q = c[a].q || []).push(arguments);
-        };
-        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-      })(window, document, "clarity", "script", "ksqbgwh6sm");
+      ( function ( c, l, a, r, i, t, y )
+      {
+        c[ a ] = c[ a ] || function ()
+        {
+          ( c[ a ].q = c[ a ].q || [] ).push( arguments );
+          t = l.createElement( r ); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+          y = l.getElementsByTagName( r )[ 0 ]; y.parentNode.insertBefore( t, y );
+        }
+      } )( window, document, "clarity", "script", "ksqbgwh6sm" );
     </script>
   </body>
 </html>

@@ -1,8 +1,8 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import Code from "../../components/Code";
+import Code from '../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -10,7 +10,7 @@ const Intro = () => (
     <p className="text-lg">
       <code>npm run build</code> creates a build directory with a production
       build of your app. Set up your favorite HTTP server so that a visitor to
-      your site is served index.html, and requests to static paths like{" "}
+      your site is served index.html, and requests to static paths like{' '}
       <code>{`/static/js/main.<hash>.js`}</code> are served with the contents of
       the <code>{`/static/js/main.<hash>.js`}</code> file.
     </p>
@@ -21,7 +21,7 @@ const StaticServer = () => (
   <div className="mb-5">
     <h3>Static Server</h3>
     <p className="text-lg">
-      For environments using{" "}
+      For environments using{' '}
       <a
         href="https://nodejs.org/en/"
         target="_blank"
@@ -29,14 +29,14 @@ const StaticServer = () => (
       >
         Node
       </a>
-      , the easiest way to handle this would be to install{" "}
+      , the easiest way to handle this would be to install{' '}
       <a
         href="https://github.com/zeit/serve"
         target="_blank"
         rel="noreferrer noopener"
       >
         serve
-      </a>{" "}
+      </a>{' '}
       and let it handle the rest:
     </p>
     <Code>{`npm install -g serve
@@ -52,7 +52,7 @@ serve -s build`}</Code>
       >
         serve
       </a>
-      ’s internal settings, the port can be adjusted using the <code>-l</code>{" "}
+      ’s internal settings, the port can be adjusted using the <code>-l</code>{' '}
       or <code>--listen</code> flags:
     </p>
     <Code>serve -s build -l 4000</Code>
@@ -131,23 +131,29 @@ netlify deploy`}</Code>
   </div>
 );
 
-const Deployment = () => (
-  <React.Fragment>
-    <Helmet title="Deployment" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Deployment</h1>
-          <hr className="my-4" />
-          <Intro />
-          <StaticServer />
-          <OtherSolutions />
-          <Express />
-          <Netlify />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Deployment = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Deployment" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Deployment</h1>
+            <hr className="my-4" />
+            <Intro />
+            <StaticServer />
+            <OtherSolutions />
+            <Express />
+            <Netlify />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Deployment;

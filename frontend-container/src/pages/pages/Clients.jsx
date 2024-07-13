@@ -1,13 +1,13 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 
-import { Badge, Card, Col, Container, Row, Table } from "react-bootstrap";
+import { Badge, Card, Col, Container, Row, Table } from 'react-bootstrap';
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
-import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
-import avatar3 from "../../assets/img/avatars/avatar-3.jpg";
-import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../../assets/img/avatars/avatar-5.jpg";
+import avatar1 from '../../assets/img/avatars/avatar.jpg';
+import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
+import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
+import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
+import avatar5 from '../../assets/img/avatars/avatar-5.jpg';
 
 const ClientsList = () => (
   <Card>
@@ -323,22 +323,25 @@ const Single = () => (
   </Card>
 );
 
-const Clients = () => (
-  <React.Fragment>
-    <Helmet title="Clients" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Clients</h1>
+const Clients = () => {
+  const Helmet = useHelmet();
+  return (
+    <React.Fragment>
+      {Helmet && <Helmet title="Clients" />}
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Clients</h1>
 
-      <Row>
-        <Col xl="8">
-          <ClientsList />
-        </Col>
-        <Col xl="4">
-          <Single />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col xl="8">
+            <ClientsList />
+          </Col>
+          <Col xl="4">
+            <Single />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Clients;

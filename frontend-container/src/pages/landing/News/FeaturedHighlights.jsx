@@ -7,6 +7,7 @@ import CarouselComponent from "../../../components/CarouselComponent";
 import { HIGHLIGHTS_API_URL } from "../../../config";
 import { axiosRetry } from "../../../utils/retry";
 import placeholderImage from "/src/assets/img/logo.png";
+import { log } from "../../../utils/logs";
 
 const FeaturedHighlights = () => {
   const [highlights, setHighlights] = useState([]);
@@ -33,10 +34,10 @@ const FeaturedHighlights = () => {
           setHighlights(articles);
           filterHighlights(articles, filter, team);
         } else {
-          console.error("Invalid response data:", response.data);
+          log("Invalid response data:", response.data);
         }
       } catch (error) {
-        console.error("Error fetching highlights:", error);
+        log("Error fetching highlights:", error);
       }
     };
     fetchHighlights();

@@ -1,11 +1,9 @@
-import React from "react";
-import { matchPath } from "react-router-dom";
-
-import SidebarNavListItem from "./SidebarNavListItem";
-import SidebarNavList from "./SidebarNavList";
+import React from 'react';
+import { matchPath } from 'react-router-dom';
+import SidebarNavListItem from './SidebarNavListItem';
 
 const reduceChildRoutes = (props) => {
-  const { items, page, depth, currentRoute } = props;
+  const { items, page, depth, currentRoute, SidebarNavListComponent } = props;
 
   if (page.children) {
     const open = page.href
@@ -14,27 +12,33 @@ const reduceChildRoutes = (props) => {
             path: page.href,
             end: false,
           },
-          currentRoute
+          currentRoute,
         )
       : false;
 
     items.push(
-      <SidebarNavListItem depth={depth}
+      <SidebarNavListItem
+        depth={depth}
         icon={page.icon}
         key={page.title}
         badge={page.badge}
         open={!!open}
         title={page.title}
-        href={page.href}>
-        <SidebarNavList depth={depth + 1} pages={page.children} /></SidebarNavListItem>
+        href={page.href}
+      >
+        <SidebarNavListComponent depth={depth + 1} pages={page.children} />
+      </SidebarNavListItem>,
     );
-  } else {items.push(<SidebarNavListItem
+  } else {
+    items.push(
+      <SidebarNavListItem
         depth={depth}
         href={page.href}
         icon={page.icon}
         key={page.title}
         badge={page.badge}
-        title={page.title}/>
+        title={page.title}
+      />,
     );
   }
 

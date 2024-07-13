@@ -1,28 +1,67 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { useTable, useExpanded } from "react-table";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { useTable, useRowSelect } from 'react-table';
 
-import { Card, Container, Table } from "react-bootstrap";
-import { PlusCircle, MinusCircle } from "react-feather";
+import { Card, Container, Table } from 'react-bootstrap';
 
-import { tableData, tableColumns } from "./data.js";
+import { tableData, tableColumns } from './data.js';
 
-const RowExpandingTable = ({ columns: userColumns, data }) => {
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  },
+);
+
+const RowSelectionTable = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
       {
-        columns: userColumns,
+        columns,
         data,
       },
-      useExpanded // Use the useExpanded plugin hook
+      useRowSelect,
+      (hooks) => {
+        hooks.visibleColumns.push((columns) => [
+          // Let's make a column for selection
+          {
+            id: 'selection',
+            // The header can use the table's getToggleAllRowsSelectedProps method
+            // to render a checkbox
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <div>
+                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+              </div>
+            ),
+            // The cell can use the individual row's getToggleRowSelectedProps method
+            // to the render a checkbox
+            Cell: ({ row }) => (
+              <div>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </div>
+            ),
+          },
+          ...columns,
+        ]);
+      },
     );
 
   return (
     <Card>
       <Card.Header>
-        <Card.Title>Row Expanding</Card.Title>
+        <Card.Title>Row Selection</Card.Title>
         <h6 className="card-subtitle text-muted">
-          Expandable rows by react-table
+          Row selection by react-table
         </h6>
       </Card.Header>
       <Card.Body>
@@ -32,7 +71,7 @@ const RowExpandingTable = ({ columns: userColumns, data }) => {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
+                    {column.render('Header')}
                   </th>
                 ))}
               </tr>
@@ -45,7 +84,7 @@ const RowExpandingTable = ({ columns: userColumns, data }) => {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -58,56 +97,22 @@ const RowExpandingTable = ({ columns: userColumns, data }) => {
   );
 };
 
-const tableColumnsExpandable = [
-  {
-    // Build our expander column
-    id: "expander", // Make sure it has an ID
-    Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
-      <span {...getToggleAllRowsExpandedProps()}>
-        {isAllRowsExpanded ? (
-          <MinusCircle className="feather" />
-        ) : (
-          <PlusCircle className="feather" />
-        )}
-      </span>
-    ),
-    Cell: ({ row }) =>
-      // Use the row.canExpand and row.getToggleRowExpandedProps prop getter
-      // to build the toggle for expanding a row
-      row.canExpand ? (
-        <span
-          {...row.getToggleRowExpandedProps({
-            style: {
-              // We can even use the row.depth property
-              // and paddingLeft to indicate the depth
-              // of the row
-              paddingLeft: `${row.depth * 2}rem`,
-            },
-          })}
-        >
-          {row.isExpanded ? (
-            <MinusCircle className="feather" />
-          ) : (
-            <PlusCircle className="feather" />
-          )}
-        </span>
-      ) : null,
-  },
-  ...tableColumns,
-];
+const RowSelection = () => {
+  const { Helmet } = useHelmet(); // Use the custom hook for HelmetLoader
 
-const RowExpanding = () => (
-  <React.Fragment>
-    <Helmet title="Row Expanding" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Row Expanding</h1>
+  return (
+    <React.Fragment>
+      <Helmet title="Row Selection" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Row Selection</h1>
 
-      <RowExpandingTable
-        columns={tableColumnsExpandable}
-        data={tableData.slice(0, 10)}
-      />
-    </Container>
-  </React.Fragment>
-);
+        <RowSelectionTable
+          columns={tableColumns}
+          data={tableData.slice(0, 10)}
+        />
+      </Container>
+    </React.Fragment>
+  );
+};
 
-export default RowExpanding;
+export default RowSelection;

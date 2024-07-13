@@ -1,8 +1,7 @@
-import React from "react";
-import Chart from "react-apexcharts";
+import React, { Suspense } from "react";
 import { Card } from "react-bootstrap";
-
-import usePalette from "../../../hooks/usePalette";
+import usePalette from "../../../../hooks/usePalette";
+import Chart from 'react-apexcharts';
 
 const PieChart = () => {
   const palette = usePalette();
@@ -10,9 +9,7 @@ const PieChart = () => {
   const data = [44, 55, 13, 33];
 
   const options = {
-    dataLabels: {
-      enabled: false,
-    },
+    dataLabels: { enabled: false },
     colors: [
       palette.primary,
       palette.success,
@@ -27,13 +24,15 @@ const PieChart = () => {
       <Card.Header>
         <Card.Title>Pie Chart</Card.Title>
         <h6 className="card-subtitle text-muted">
-          Pie charts are an instrumental visualization tool useful in expressing
-          data and information in terms of percentages, ratio.
+          Pie charts are an instrumental visualization tool useful in
+          information in terms of percentages, ratio.
         </h6>
       </Card.Header>
       <Card.Body>
         <div className="chart">
-          <Chart options={options} series={data} type="donut" height="350" />
+          <Suspense fallback={<div>Loading Chart...</div>}>
+            <Chart options={options} series={data} type="donut" height="350" />
+          </Suspense>
         </div>
       </Card.Body>
     </Card>

@@ -1,218 +1,334 @@
-import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Button,
   Card,
   Col,
   Container,
-  Row,
   Form,
-  Badge,
-} from "react-bootstrap";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import { Briefcase, Home, MapPin, MessageSquare } from "react-feather";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe, faHeart } from "@fortawesome/free-solid-svg-icons";
-import {
-  faFacebook,
-  faInstagram,
-  faLinkedin,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+  ListGroup,
+  Row,
+  ToggleButton,
+  ToggleButtonGroup,
+} from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import { log } from '../../utils/logs'; // Import the log utility
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
-import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
-import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../../assets/img/avatars/avatar-5.jpg";
-import unsplash1 from "../../assets/img/photos/unsplash-1.jpg";
-import unsplash2 from "../../assets/img/photos/unsplash-2.jpg";
+// Navigation Component to switch between settings
+const Navigation = ({ setActiveSection }) => (
+  <Card>
+    <Card.Header>Profile Settings</Card.Header>
+    <ListGroup variant="flush">
+      {[
+        'Public Info',
+        'Private Info',
+        'Password',
+        'Email Notifications',
+        'Web Notifications',
+        'Widgets',
+        'Your Data',
+        'Delete Account',
+        'League Preferences',
+        'Dashboard Customization',
+        'Player Tracking',
+        'Integration Settings',
+        'Security Settings',
+        'Social Sharing Options',
+        'Accessibility Settings',
+        'Subscription and Billing',
+      ].map((section) => (
+        <ListGroup.Item
+          key={section}
+          action
+          onClick={() => setActiveSection(section)}
+        >
+          {section}
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
+  </Card>
+);
 
-
-const ProfileDetails = () => {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [editMode, setEditMode] = useState(false);
-  const [profile, setProfile] = useState({
-    jobTitle: "",
-    favoriteNFLTeam: "",
-  });
-
-useEffect(() => {
-  const fetchProfile = async () => {
-    if (!isAuthenticated) return;
-
-    try {
-      const token = await getAccessTokenSilently();
-      const response = await axios.get("/api/profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.data) {
-        setProfile({
-          jobTitle: response.data.jobTitle || "",
-          favoriteNFLTeam: response.data.favoriteNFLTeam || "",
-        });
-      }
-    } catch (error) {
-      console.error("Failed to fetch profile details:", error);
-    }
-  };
-
-  fetchProfile();
-}, [isAuthenticated, getAccessTokenSilently]);
-
-
-  const handleInputChange = (e) => {
+// Form Component for Public Info
+const PublicInfo = ({ userData, setUserData }) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+    setUserData({ ...userData, [name]: value });
   };
 
-  const saveProfile = async () => {
-    try {
-      const token = await getAccessTokenSilently();
-      await axios.post("/api/profile/update", profile, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log("Profile updated successfully.");
-      setEditMode(false);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    log(
+      'Settings.jsx',
+      'PublicInfo.handleSubmit',
+      'Saving Public Info',
+      userData,
+    );
+    // Here you would typically make an API call to save the data
   };
-
 
   return (
     <Card>
-      <Card.Header>
-        <Card.Title className="mb-0">Profile Details</Card.Title>
-        <Button variant="link" onClick={() => setEditMode(!editMode)}>
-          {editMode ? "Cancel" : "Edit"}
-        </Button>
-      </Card.Header>
-      <Card.Body className="text-center">
-        <img
-          src={user.picture || "path_to_default_image"}
-          alt={user.name}
-          className="img-fluid rounded-circle mb-2"
-          width="128"
-          height="128"
-        />
-        <Card.Title className="mb-0">{user.name}</Card.Title>
-        {editMode ? (
-          <Form>
-            <Form.Group>
-              <Form.Label>Job Title</Form.Label>
-              <Form.Control
-                type="text"
-                name="jobTitle"
-                value={profile.jobTitle}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Favorite NFL Team</Form.Label>
-              <Form.Control
-                type="text"
-                name="favoriteNFLTeam"
-                value={profile.favoriteNFLTeam}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Button variant="primary" onClick={saveProfile}>
-              Save Changes
-            </Button>
-          </Form>
-        ) : (
-          <div>
-            <p className="text-muted mb-2">
-              {profile.jobTitle || "No Job Title"}
-            </p>
-            <p className="text-muted">
-              {profile.favoriteNFLTeam || "No Favorite NFL Team"}
-            </p>
-            <Button size="sm" variant="primary">
-              <MessageSquare width={16} height={16} /> Message
-            </Button>
-          </div>
-        )}
-      </Card.Body>
-    </Card>
-  );
-};
-
-const Activities = () => {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [activities, setActivities] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-useEffect(() => {
-  const fetchActivities = async () => {
-    if (!isAuthenticated) return;
-
-    setLoading(true);
-    try {
-      const token = await getAccessTokenSilently();
-      const response = await axios.get("/api/activities", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log("Activities data:", response.data); // Log the response to see the structure
-      if (response.data && Array.isArray(response.data)) {
-        setActivities(response.data); // Set activities if the response is an array
-      } else {
-        setActivities([]); // Set an empty array if the data isn't in the expected format
-        setError("Data format incorrect or no activities found.");
-      }
-    } catch (err) {
-      console.error("Failed to fetch activities:", err);
-      setError("Failed to fetch activities.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchActivities();
-}, [isAuthenticated, getAccessTokenSilently]);
-
-
-  return (
-    <Card>
-      <Card.Header>
-        <Card.Title className="mb-0">Activities</Card.Title>
-      </Card.Header>
+      <Card.Header>Public Info</Card.Header>
       <Card.Body>
-        {loading && <div>Loading activities...</div>}
-        {error && <div>Error: {error}</div>}
-        {!loading &&
-          !error &&
-          activities.map((activity) => (
-            <div key={activity.id} className="mb-2">
-              {activity.text}
-            </div>
-          ))}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={userData.username || ''}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Biography</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="bio"
+              value={userData.bio || ''}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Save Changes
+          </Button>
+        </Form>
       </Card.Body>
     </Card>
   );
 };
 
-const Profile = () => (
-  <React.Fragment>
-    <Helmet title="Profile" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Profile</h1>
+// Form Component for Private Info
+const PrivateInfo = ({ userData }) => (
+  <Card>
+    <Card.Header>Private Info</Card.Header>
+    <Card.Body>
+      <Form>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            defaultValue={userData.email}
+            readOnly
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Save Changes
+        </Button>
+      </Form>
+    </Card.Body>
+  </Card>
+);
 
+// Example of Password Settings
+const PasswordSettings = ({ isSocialLogin }) => (
+  <Card>
+    <Card.Header>Password</Card.Header>
+    <Card.Body>
+      {isSocialLogin ? (
+        <div>
+          <p>
+            You are logged in using a social account. To change your password,
+            please visit the respective service's website.
+          </p>
+          <Button variant="primary" href="https://accounts.google.com/">
+            Change Password on Google
+          </Button>
+        </div>
+      ) : (
+        <Form>
+          <Form.Group className="mb-3">
+            <Form.Label>Current Password</Form.Label>
+            <Form.Control type="password" placeholder="Current Password" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>New Password</Form.Label>
+            <Form.Control type="password" placeholder="New Password" />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirm New Password</Form.Label>
+            <Form.Control type="password" placeholder="Confirm New Password" />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Update Password
+          </Button>
+        </Form>
+      )}
+    </Card.Body>
+  </Card>
+);
+
+// Email Notifications Settings
+const NotificationSettings = ({ type }) => {
+  const [enabled, setEnabled] = useState(false);
+
+  return (
+    <Card>
+      <Card.Header>{`${type} Notifications`}</Card.Header>
+      <Card.Body>
+        <ToggleButtonGroup
+          type="checkbox"
+          value={enabled ? [1] : []}
+          onChange={(e) => setEnabled(e.length > 0)}
+        >
+          <ToggleButton
+            id={`toggle-${type}`}
+            value={1}
+            variant="outline-primary"
+          >
+            {enabled ? 'Enabled' : 'Disabled'}
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Card.Body>
+    </Card>
+  );
+};
+
+// Widget Settings Example
+const WidgetsSettings = () => (
+  <Card>
+    <Card.Header>Widgets</Card.Header>
+    <Card.Body>
+      <p>Select your preferred widgets for the dashboard:</p>
+      <Form.Check type="checkbox" label="Weather Widget" />
+      <Form.Check type="checkbox" label="News Feed Widget" />
+      <Form.Check type="checkbox" label="Calendar Widget" />
+      <Button variant="primary" type="submit">
+        Save Widget Settings
+      </Button>
+    </Card.Body>
+  </Card>
+);
+
+// Data Management
+const YourDataSettings = () => (
+  <Card>
+    <Card.Header>Your Data</Card.Header>
+    <Card.Body>
+      <Button
+        variant="primary"
+        onClick={() =>
+          log('Settings.jsx', 'YourDataSettings', 'User data requested')
+        }
+      >
+        Download My Data
+      </Button>
+    </Card.Body>
+  </Card>
+);
+
+// Account Deletion
+const DeleteAccount = () => {
+  const handleDelete = () => {
+    if (
+      window.confirm(
+        'Are you sure you want to delete your account permanently?',
+      )
+    ) {
+      log('Settings.jsx', 'DeleteAccount', 'Account deletion process started.');
+      // Implement deletion logic here
+    }
+  };
+
+  return (
+    <Card>
+      <Card.Header>Delete Account</Card.Header>
+      <Card.Body>
+        <Button variant="danger" onClick={handleDelete}>
+          Delete My Account
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+};
+
+// Main Settings Component
+const Settings = () => {
+  const [activeSection, setActiveSection] = useState('Public Info');
+  const [userData, setUserData] = useState({});
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const Helmet = useHelmet(); // Use the custom hook
+
+  const fetchUserData = async () => {
+    if (!isAuthenticated) return;
+    try {
+      const accessToken = await getAccessTokenSilently();
+      const response = await axios.get('/api/user-data', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      setUserData(response.data);
+    } catch (error) {
+      log(
+        'Settings.jsx',
+        'fetchUserData',
+        'Failed to fetch user data:',
+        error.message,
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  if (!Helmet) return null;
+
+  return (
+    <Container fluid>
+      <Helmet title="Settings" />
+      <h1 className="h3 mb-3">Settings</h1>
       <Row>
-        <Col md="4" xl="3">
-          <ProfileDetails />
+        <Col md={3}>
+          <Navigation setActiveSection={setActiveSection} />
         </Col>
-        <Col md="8" xl="9">
-          <Activities />
+        <Col md={9}>
+          {activeSection === 'Public Info' && (
+            <PublicInfo userData={userData} setUserData={setUserData} />
+          )}
+          {activeSection === 'Private Info' && (
+            <PrivateInfo userData={userData} />
+          )}
+          {activeSection === 'Password' && (
+            <PasswordSettings
+              isSocialLogin={user && user.sub.startsWith('google-oauth2|')}
+            />
+          )}
+          {activeSection === 'Email Notifications' && (
+            <NotificationSettings type="Email" />
+          )}
+          {activeSection === 'Web Notifications' && (
+            <NotificationSettings type="Web" />
+          )}
+          {activeSection === 'Widgets' && <WidgetsSettings />}
+          {activeSection === 'Your Data' && <YourDataSettings />}
+          {activeSection === 'Delete Account' && <DeleteAccount />}
+          {activeSection === 'League Preferences' && (
+            <LeaguePreferences userData={userData} />
+          )}
+          {activeSection === 'Dashboard Customization' && (
+            <DashboardCustomization userData={userData} />
+          )}
+          {activeSection === 'Player Tracking' && <PlayerTracking />}
+          {activeSection === 'Integration Settings' && <IntegrationSettings />}
+          {activeSection === 'Security Settings' && <SecuritySettings />}
+          {activeSection === 'Social Sharing Options' && (
+            <SocialSharingOptions />
+          )}
+          {activeSection === 'Accessibility Settings' && (
+            <AccessibilitySettings />
+          )}
+          {activeSection === 'Subscription and Billing' && (
+            <SubscriptionAndBilling />
+          )}
         </Col>
       </Row>
     </Container>
-  </React.Fragment>
-);
+  );
+};
 
-export default Profile;
+export default Settings;

@@ -1,8 +1,8 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import Code from "../../components/Code";
+import Code from '../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -19,7 +19,7 @@ const OfficialGuide = () => (
     <h3>Official Guide</h3>
     <p className="text-lg">
       The official guide on how to migrate from Create React App to Next.js can
-      be found{" "}
+      be found{' '}
       <a
         href="https://nextjs.org/docs/migrating/from-create-react-app"
         target="_blank"
@@ -43,7 +43,7 @@ const UpdateDependencies = () => (
     </p>
 
     <p className="text-lg">
-      Remove the <code>vite</code>, <code>@vitejs/plugin-react</code> and{" "}
+      Remove the <code>vite</code>, <code>@vitejs/plugin-react</code> and{' '}
       <code>react-router-dom</code> dependencies.
     </p>
     <Code>{`npm uninstall vite @vitejs/plugin-react vite-plugin-ejs vite-plugin-node-polyfills vite-plugin-svgr react-router-dom`}</Code>
@@ -54,7 +54,7 @@ const UpdateDependencies = () => (
     <Code>{`npm install next --save`}</Code>
 
     <p className="text-lg">
-      Open the <code>package.json</code> file and replace the{" "}
+      Open the <code>package.json</code> file and replace the{' '}
       <code>scripts</code> with:
     </p>
     <Code>{`"scripts": {
@@ -75,9 +75,9 @@ const UpdateEntryFile = () => (
       <code>/src/pages/_document.js</code>).
     </p>
     <p className="text-lg">
-      All code in the <code>{`<head>`}</code> section of the{" "}
-      <code>/index.html</code> file should be moved to the{" "}
-      <code>/src/pages/_document.js</code> file. Learn more{" "}
+      All code in the <code>{`<head>`}</code> section of the{' '}
+      <code>/index.html</code> file should be moved to the{' '}
+      <code>/src/pages/_document.js</code> file. Learn more{' '}
       <a
         href="https://nextjs.org/docs/advanced-features/custom-document"
         target="_blank"
@@ -97,7 +97,7 @@ const UpdateSharedLayout = () => (
     <p className="text-lg">
       Vite uses the <code>/src/index.js</code> file as an entry point, whereas
       Next.js requires a custom <code>/src/_app.js</code> file. You may want to
-      move logic to the new <code>_app.js</code> file. Learn more{" "}
+      move logic to the new <code>_app.js</code> file. Learn more{' '}
       <a
         href="https://nextjs.org/docs/advanced-features/custom-app"
         target="_blank"
@@ -120,8 +120,8 @@ const UpdateRoutes = () => (
     </p>
     <ul className="text-lg">
       <li>
-        Convert all Route components to new files in the <code>src/pages</code>{" "}
-        directory. It is recommended to rename the files using{" "}
+        Convert all Route components to new files in the <code>src/pages</code>{' '}
+        directory. It is recommended to rename the files using{' '}
         <code>dash-case</code>.
       </li>
       <li>
@@ -133,7 +133,7 @@ const UpdateRoutes = () => (
       </li>
     </ul>
     <p className="text-lg">
-      For more information, see{" "}
+      For more information, see{' '}
       <a
         href="https://nextjs.org/docs/migrating/from-react-router"
         target="_blank"
@@ -146,24 +146,30 @@ const UpdateRoutes = () => (
   </div>
 );
 
-const MigratingToNextJS = () => (
-  <React.Fragment>
-    <Helmet title="Migrating to Next.js" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Migrating to Next.js</h1>
-          <hr className="my-4" />
-          <Intro />
-          <OfficialGuide />
-          <UpdateDependencies />
-          <UpdateEntryFile />
-          <UpdateSharedLayout />
-          <UpdateRoutes />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const MigratingToNextJS = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Migrating to Next.js" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Migrating to Next.js</h1>
+            <hr className="my-4" />
+            <Intro />
+            <OfficialGuide />
+            <UpdateDependencies />
+            <UpdateEntryFile />
+            <UpdateSharedLayout />
+            <UpdateRoutes />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default MigratingToNextJS;

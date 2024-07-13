@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-
-import ApexCharts from "react-apexcharts";
-
+import React, { Suspense, useEffect } from "react";
 import { Card, Dropdown } from "react-bootstrap";
-
 import { MoreHorizontal } from "react-feather";
 
+const LazyApexCharts = R;
 const data = [
   {
     data: [
@@ -154,18 +151,13 @@ const data = [
 ];
 
 const options = {
-  stroke: {
-    width: 1,
-  },
-  xaxis: {
-    type: "datetime",
-  },
+  stroke: { width: 1 },
+  xaxis: { type: "datetime" },
   colors: ["#0cc2aa", "#5fc27e", "#fcc100", "#f44455", "#5b7dff"],
 };
 
-const Chart = () => {
+const LTCBTCChart = () => {
   useEffect(() => {
-    // Trigger resize manually so chart doesn't fall off canvas
     window.dispatchEvent(new Event("resize"));
   }, []);
 
@@ -174,9 +166,9 @@ const Chart = () => {
       <Card.Header>
         <div className="card-actions float-end">
           <Dropdown>
-            <Dropdown.Menu tag="a">
+            <Dropdown.Toggle as="a">
               <MoreHorizontal />
-            </Dropdown.Menu>
+            </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>Action</Dropdown.Item>
               <Dropdown.Item>Another Action</Dropdown.Item>
@@ -187,17 +179,19 @@ const Chart = () => {
         <Card.Title className="mb-0">LTC/BTC</Card.Title>
       </Card.Header>
       <Card.Body>
-        <div className="chart">
-          <ApexCharts
-            options={options}
-            series={data}
-            type="candlestick"
-            height="450"
-          />
-        </div>
+        <Suspense fallback={<div>Loading Chart...</div>}>
+          <div className="chart">
+            <LazyApexCharts
+              options={options}
+              series={data}
+              type="candlestick"
+              height="450"
+            />
+          </div>
+        </Suspense>
       </Card.Body>
     </Card>
   );
 };
 
-export default Chart;
+export default LTCBTCChart;

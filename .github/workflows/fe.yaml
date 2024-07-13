@@ -35,6 +35,36 @@ jobs:
           SENTRY_RELEASE=$(git rev-parse --short HEAD)
           echo "SENTRY_RELEASE=$SENTRY_RELEASE" >> $GITHUB_ENV
 
+      - name: Delete existing Sentry secret in uat namespace
+        run: |
+          kubectl delete secret sentry-secrets --namespace=uat || true
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Create Sentry release secret in uat namespace
+        run: |
+          kubectl create secret generic sentry-secrets \
+            --from-literal=SENTRY_RELEASE=${{ env.SENTRY_RELEASE }} \
+            --namespace=uat \
+            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Delete existing Sentry secret in azdevspace namespace
+        run: |
+          kubectl delete secret sentry-secrets --namespace=azdevspace || true
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+      - name: Create Sentry release secret in azdevspace namespace
+        run: |
+          kubectl create secret generic sentry-secrets \
+            --from-literal=SENTRY_RELEASE=${{ env.SENTRY_RELEASE }} \
+            --namespace=azdevspace \
+            --dry-run=client -o yaml | kubectl apply -f -
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
       - name: Build and push Docker image
         env:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
@@ -63,6 +93,12 @@ jobs:
           GOOGLE_APIKEY: ${{ secrets.GOOGLE_APIKEY }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_RELEASE: ${{ env.SENTRY_RELEASE }}
+          VITE_SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
+          VITE_APP_INSIGHTS_KEY: ${{ secrets.VITE_APP_INSIGHTS_KEY }}
+          VITE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.VITE_APP_INSIGHTS_CONNECTION_STRING }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          API_URL: ${{ secrets.API_URL }}
+          LOG_URL: ${{ secrets.LOG_URL }}
         run: |
           az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f frontend-container/Dockerfile.Prod frontend-container
  
@@ -85,7 +121,6 @@ jobs:
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}
 
-
       - name: Prepare Deployment Manifest
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
@@ -93,6 +128,5 @@ jobs:
           else
             manifest_dir="manifests/uat"
           fi
-          sed -i "s/SENTRY_RELEASE_PLACEHOLDER/${{ env.SENTRY_RELEASE }}/g" ${{ github.workspace }}/$manifest_dir/deploy-fe.yaml
           kubectl apply -f ${{ github.workspace }}/$manifest_dir/deploy-fe.yaml
           kubectl apply -f ${{ github.workspace }}/$manifest_dir/svc-fe.yaml

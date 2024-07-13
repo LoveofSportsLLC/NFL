@@ -1,7 +1,7 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader';
+import { Link } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const Intro = () => (
   <div className="mb-5">
@@ -86,21 +86,27 @@ const SomethingMissing = () => (
   </div>
 );
 
-const Introduction = () => (
-  <React.Fragment>
-    <Helmet title="Introduction" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>Documentation</h1>
-          <hr className="my-4" />
-          <Intro />
-          <TableOfContents />
-          <SomethingMissing />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Introduction = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) return null;
+
+  return (
+    <React.Fragment>
+      <Helmet title="Introduction" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>Documentation</h1>
+            <hr className="my-4" />
+            <Intro />
+            <TableOfContents />
+            <SomethingMissing />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Introduction;

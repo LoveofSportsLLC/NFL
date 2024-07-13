@@ -1,31 +1,31 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Row } from 'react-bootstrap';
 
 const colors = [
   {
-    name: "Primary",
-    value: "primary",
+    name: 'Primary',
+    value: 'primary',
   },
   {
-    name: "Secondary",
-    value: "secondary",
+    name: 'Secondary',
+    value: 'secondary',
   },
   {
-    name: "Success",
-    value: "success",
+    name: 'Success',
+    value: 'success',
   },
   {
-    name: "Danger",
-    value: "danger",
+    name: 'Danger',
+    value: 'danger',
   },
   {
-    name: "Warning",
-    value: "warning",
+    name: 'Warning',
+    value: 'warning',
   },
   {
-    name: "Info",
-    value: "info",
+    name: 'Info',
+    value: 'info',
   },
 ];
 
@@ -34,7 +34,7 @@ const Headings = () => (
     <Card.Header>
       <Card.Title>Headings</Card.Title>
       <h6 className="card-subtitle text-muted">
-        All HTML headings, <code>&lt;h1&gt;</code> through{" "}
+        All HTML headings, <code>&lt;h1&gt;</code> through{' '}
         <code>&lt;h6&gt;</code>, are available.
       </h6>
     </Card.Header>
@@ -82,7 +82,7 @@ const ColouredText = () => (
     </Card.Header>
     <Card.Body>
       {colors.map((color, index) => (
-        <p key={index} className={"text-" + color.value}>
+        <p key={index} className={'text-' + color.value}>
           This line of text contains the text-primary class.
         </p>
       ))}
@@ -195,26 +195,27 @@ const ListOrdered = () => (
   </Card>
 );
 
-const Typography = () => (
-  <React.Fragment>
-    <Helmet title="Typography" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Typography</h1>
-
-      <Row>
-        <Col lg="6">
-          <Headings />
-          <ColouredText />
-        </Col>
-        <Col lg="6">
-          <InlineText />
-          <Blockquotes />
-          <ListUnordered />
-          <ListOrdered />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const Typography = () => {
+  useHelmet('Typography');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Typography</h1>
+        <Row>
+          <Col lg="6">
+            <Headings />
+            <ColouredText />
+          </Col>
+          <Col lg="6">
+            <InlineText />
+            <Blockquotes />
+            <ListUnordered />
+            <ListOrdered />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Typography;

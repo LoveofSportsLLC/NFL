@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import React, { useEffect } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 
-import dragula from "react-dragula";
+import dragula from 'react-dragula';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
-import avatar2 from "../../assets/img/avatars/avatar-2.jpg";
-import avatar3 from "../../assets/img/avatars/avatar-3.jpg";
-import avatar4 from "../../assets/img/avatars/avatar-4.jpg";
+import avatar1 from '../../assets/img/avatars/avatar.jpg';
+import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
+import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
+import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
 
 const Lane = ({ name, children, onContainerLoaded }) => {
   const handleContainerLoaded = (container) => {
@@ -43,7 +43,7 @@ const Task = ({ id, checked, text, avatar }) => (
       <div className="float-end">
         <Form.Check
           type="checkbox"
-          id={"exampleCustomCheckbox" + id}
+          id={'exampleCustomCheckbox' + id}
           defaultChecked={!!checked}
         />
       </div>
@@ -67,6 +67,8 @@ const Task = ({ id, checked, text, avatar }) => (
 const containers = [];
 
 const Tasks = () => {
+  const Helmet = useHelmet();
+
   const onContainerReady = (container) => {
     containers.push(container);
   };
@@ -77,7 +79,7 @@ const Tasks = () => {
 
   return (
     <React.Fragment>
-      <Helmet title="Tasks" />
+      {Helmet && <Helmet title="Tasks" />}
       <Container fluid className="p-0">
         <Button variant="primary" className="float-end mt-n1">
           <FontAwesomeIcon icon={faPlus} /> New task

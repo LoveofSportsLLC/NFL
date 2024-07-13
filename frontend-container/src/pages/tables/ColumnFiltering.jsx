@@ -1,152 +1,210 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { useTable, useFilters, useGlobalFilter } from "react-table";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import {
+  useTable,
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  usePagination,
+} from 'react-table';
+import { Card, Container, Table, Form } from 'react-bootstrap';
+import { tableData } from './data.js';
 
-import { Card, Container, Table, Form } from "react-bootstrap";
+const FilterWrapper = ({ shouldRender, children }) => {
+  if (!shouldRender) return null;
+  return children;
+};
 
-import { tableData } from "./data.js";
-
-// This is a custom UI for our 'between' or number range
-// filter. It uses two number boxes and filters rows to
-// ones that have values between the two
+/**
+ * A custom filter component for number range filtering.
+ * @param {Object} props - The component props.
+ * @param {Array} props.filterValue - The current filter value.
+ * @param {Array} props.preFilteredRows - The rows before filtering.
+ * @param {Function} props.setFilter - The function to set the filter value.
+ * @param {String} props.id - The unique identifier for the column.
+ * @returns {JSX.Element} - The NumberRangeColumnFilter component.
+ */
 function NumberRangeColumnFilter({
   column: { filterValue = [], preFilteredRows, setFilter, id },
 }) {
-  const [min, max] = React.useMemo(() => {
-    let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
-    let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
-    preFilteredRows.forEach((row) => {
-      min = Math.min(row.values[id], min);
-      max = Math.max(row.values[id], max);
-    });
-    return [min, max];
-  }, [id, preFilteredRows]);
+  let minValue = preFilteredRows.length ? preFilteredRows[0].values[id] : 0;
+  let maxValue = preFilteredRows.length
+    ? preFilteredRows[preFilteredRows.length - 1].values[id]
+    : 0;
+
+  preFilteredRows.forEach((row) => {
+    minValue = Math.min(row.values[id], minValue);
+    maxValue = Math.max(row.values[id], maxValue);
+  });
 
   return (
-    <div className="d-flex mt-2">
-      <Form.Control
-        value={filterValue[0] || ""}
-        type="number"
-        onChange={(e) => {
-          const val = e.target.value;
-          setFilter((old = []) => [
-            val ? parseInt(val, 10) : undefined,
-            old[1],
-          ]);
-        }}
-        placeholder={`Min (${min})`}
-        style={{
-          width: "110px",
-        }}
-      />
-      <span className="mx-2 mt-1">to</span>
-      <Form.Control
-        value={filterValue[1] || ""}
-        type="number"
-        onChange={(e) => {
-          const val = e.target.value;
-          setFilter((old = []) => [
-            old[0],
-            val ? parseInt(val, 10) : undefined,
-          ]);
-        }}
-        placeholder={`Max (${max})`}
-        style={{
-          width: "110px",
-        }}
-      />
-    </div>
+    <FilterWrapper shouldRender={preFilteredRows.length > 0}>
+      <div className="d-flex mt-2">
+        <Form.Control
+          value={filterValue[0] || ''}
+          type="number"
+          onChange={(e) => {
+            const val = e.target.value;
+            setFilter((old = []) => [
+              val !== '' ? parseInt(val, 10) : undefined,
+              filterValue[1],
+            ]);
+          }}
+          placeholder={`Min (${minValue})`}
+          style={{
+            width: '110px',
+          }}
+        />
+        <span className="mx-2 mt-1">to</span>
+        <Form.Control
+          value={filterValue[1] || ''}
+          type="number"
+          onChange={(e) => {
+            const val = e.target.value;
+            setFilter((old = []) => [
+              filterValue[0],
+              val !== '' ? parseInt(val, 10) : undefined,
+            ]);
+          }}
+          placeholder={`Max (${maxValue})`}
+          style={{
+            width: '110px',
+          }}
+        />
+      </div>
+    </FilterWrapper>
   );
 }
 
-// This is a custom filter UI for selecting
-// a unique option from a list
+/**
+ * A custom filter component for selecting options.
+ * @param {Object} props - The component props.
+ * @param {Array} props.filterValue - The current filter value.
+ * @param {Array} props.preFilteredRows - The rows before filtering.
+ * @param {Function} props.setFilter - The function to set the filter value.
+ * @param {String} props.id - The unique identifier for the column.
+ * @returns {JSX.Element} - The SelectColumnFilter component.
+ */
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
-  // Calculate the options for filtering
-  // using the preFilteredRows
-  const options = React.useMemo(() => {
-    const options = new Set();
-    preFilteredRows.forEach((row) => {
-      options.add(row.values[id]);
-    });
-    return [...options.values()];
-  }, [id, preFilteredRows]);
+  const options = preFilteredRows.map((row) => row.values[id]);
 
-  // Render a multi-select box
   return (
-    <Form.Select
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </Form.Select>
+    <FilterWrapper shouldRender={preFilteredRows.length > 0}>
+      <Form.Select
+        value={filterValue || ''}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </Form.Select>
+    </FilterWrapper>
   );
 }
 
+/**
+ * A custom filter component for default filtering.
+ * @param {Object} props - The component props.
+ * @param {Array} props.filterValue - The current filter value.
+ * @param {Array} props.preFilteredRows - The rows before filtering.
+ * @param {Function} props.setFilter - The function to set the filter value.
+ * @param {String} props.id - The unique identifier for the column.
+ * @returns {JSX.Element} - The DefaultColumnFilter component.
+ */
 function DefaultColumnFilter({
-  column: { filterValue, preFilteredRows, setFilter },
+  column: { filterValue, setFilter, preFilteredRows, id },
 }) {
-  const count = preFilteredRows.length;
+  const [selectedOptions, setSelectedOptions] = React.useState([]);
+
+  const uniqueValues = new Set();
+  preFilteredRows.forEach((row) => {
+    uniqueValues.add(row.values[id]);
+  });
+  const options = [...uniqueValues.values()];
+
+  const handleSelectChange = (e) => {
+    setSelectedOptions(e.target.value);
+    setFilter(selectedOptions);
+  };
 
   return (
-    <Form.Control
-      value={filterValue || ""}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-      }}
-      placeholder={`Search ${count} records...`}
-      className="mt-2"
-    />
+    <FilterWrapper shouldRender={true}>
+      <Form.Control
+        as="select"
+        value={selectedOptions}
+        onChange={handleSelectChange}
+        multiple
+      >
+        <option value="">All</option>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </Form.Control>
+    </FilterWrapper>
   );
 }
 
+/**
+ * A custom table component with column filtering, sorting, and pagination.
+ * @param {Object} props - The component props.
+ * @param {Array} props.columns - The table columns.
+ * @param {Array} props.data - The table data.
+ * @returns {JSX.Element} - The ColumnFilteringTable component.
+ */
 const ColumnFilteringTable = ({ columns, data }) => {
-  const filterTypes = React.useMemo(
-    () => ({
-      // Or, override the default text filter to use
-      // "startWith"
-      text: (rows, id, filterValue) => {
-        return rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        });
-      },
-    }),
-    []
-  );
+  const filterTypes = {
+    text: (rows, id, filterValue) => {
+      if (filterValue === null) return rows; // Add this check
+      return rows.filter((row) => {
+        const rowValue = row.values[id];
+        return rowValue !== undefined
+          ? String(rowValue)
+              .toLowerCase()
+              .startsWith(String(filterValue).toLowerCase())
+          : true;
+      });
+    },
+  };
 
-  const defaultColumn = React.useMemo(
-    () => ({
-      // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
-    }),
-    []
-  );
+  const defaultColumn = {
+    Filter: DefaultColumnFilter,
+  };
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-        defaultColumn, // Be sure to pass the defaultColumn option
-        filterTypes,
-      },
-      useFilters, // useFilters!
-      useGlobalFilter // useGlobalFilter!
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize, filters },
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+      filterTypes,
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination,
+  );
 
   return (
     <Card>
@@ -162,10 +220,9 @@ const ColumnFilteringTable = ({ columns, data }) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                    {/* Render the columns filter UI */}
-                      {column.canFilter ? column.render("Filter") : null}
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render('Header')}
+                    {column.canFilter ? column.render('Filter') : null}
                   </th>
                 ))}
               </tr>
@@ -178,7 +235,7 @@ const ColumnFilteringTable = ({ columns, data }) => {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -186,6 +243,58 @@ const ColumnFilteringTable = ({ columns, data }) => {
             })}
           </tbody>
         </Table>
+        <div className="d-flex justify-content-between mt-3">
+          <div>
+            Showing {pageIndex * pageSize + 1} to{' '}
+            {Math.min((pageIndex + 1) * pageSize, rows.length)} of {rows.length}{' '}
+            entries
+          </div>
+          <div>
+            <Form.Control
+              as="select"
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50].map((size) => (
+                <option key={size} value={size}>
+                  Show {size}
+                </option>
+              ))}
+            </Form.Control>
+          </div>
+          <div>
+            <button
+              onClick={() => gotoPage(0)}
+              disabled={!canPreviousPage}
+              className="btn btn-sm btn-primary mr-1"
+            >
+              First
+            </button>
+            <button
+              onClick={() => previousPage()}
+              disabled={!canPreviousPage}
+              className="btn btn-sm btn-primary mr-1"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => nextPage()}
+              disabled={!canNextPage}
+              className="btn btn-sm btn-primary mr-1"
+            >
+              Next
+            </button>
+            <button
+              onClick={() => gotoPage(pageCount - 1)}
+              disabled={!canNextPage}
+              className="btn btn-sm btn-primary"
+            >
+              Last
+            </button>
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );
@@ -193,50 +302,53 @@ const ColumnFilteringTable = ({ columns, data }) => {
 
 const tableColumns = [
   {
-    Header: "Name",
-    accessor: "name",
+    Header: 'Name',
+    accessor: 'name',
   },
   {
-    Header: "Position",
-    accessor: "position",
+    Header: 'Position',
+    accessor: 'position',
     Filter: SelectColumnFilter,
-    filter: "includes",
+    filter: 'includes',
   },
   {
-    Header: "Office",
-    accessor: "office",
+    Header: 'Office',
+    accessor: 'office',
     Filter: SelectColumnFilter,
-    filter: "includes",
+    filter: 'includes',
   },
   {
-    Header: "Age",
-    accessor: "age",
+    Header: 'Age',
+    accessor: 'age',
     Filter: NumberRangeColumnFilter,
-    filter: "between",
+    filter: 'between',
   },
   {
-    Header: "Start Date",
-    accessor: "startDate",
+    Header: 'Start Date',
+    accessor: 'startDate',
   },
   {
-    Header: "Salary",
-    accessor: "salary",
+    Header: 'Salary',
+    accessor: 'salary',
     Filter: false,
   },
 ];
 
-const ColumnFiltering = () => (
-  <React.Fragment>
-    <Helmet title="Column Filtering" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Column Filtering</h1>
+const ColumnFiltering = () => {
+  const { Helmet } = useHelmet(); // Use the custom hook for HelmetLoader
 
-      <ColumnFilteringTable
-        columns={tableColumns}
-        data={tableData.slice(0, 15)}
-      />
-    </Container>
-  </React.Fragment>
-);
+  return (
+    <React.Fragment>
+      <Helmet title="Column Filtering" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Column Filtering</h1>
+        <ColumnFilteringTable
+          columns={tableColumns}
+          data={tableData.slice(0, 15)}
+        />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default ColumnFiltering;

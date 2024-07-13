@@ -1,11 +1,11 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Button, Card, Col, Container, Row, Alert } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Button, Card, Col, Container, Row, Alert } from 'react-bootstrap';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-regular-svg-icons';
 
-const colors = ["primary", "secondary", "success", "danger", "warning", "info"];
+const colors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
 
 const DefaultAlerts = () => (
   <Card>
@@ -187,34 +187,36 @@ const AlertsWithButtons = () => (
   </Card>
 );
 
-const Alerts = () => (
-  <React.Fragment>
-    <Helmet title="Alerts" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Alerts</h1>
+const Alerts = () => {
+  useHelmet('Alerts');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Alerts</h1>
 
-      <Row>
-        <Col lg="6">
-          <DefaultAlerts />
-        </Col>
-        <Col lg="6">
-          <IconAlerts />
-        </Col>
-        <Col lg="6">
-          <OutlineAlerts />
-        </Col>
-        <Col lg="6">
-          <ColouredOutlineAlerts />
-        </Col>
-        <Col lg="6">
-          <AdditionalContentAlerts />
-        </Col>
-        <Col lg="6">
-          <AlertsWithButtons />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <DefaultAlerts />
+          </Col>
+          <Col lg="6">
+            <IconAlerts />
+          </Col>
+          <Col lg="6">
+            <OutlineAlerts />
+          </Col>
+          <Col lg="6">
+            <ColouredOutlineAlerts />
+          </Col>
+          <Col lg="6">
+            <AdditionalContentAlerts />
+          </Col>
+          <Col lg="6">
+            <AlertsWithButtons />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default Alerts;

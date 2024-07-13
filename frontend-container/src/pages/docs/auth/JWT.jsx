@@ -1,8 +1,8 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import useHelmet from '../../../utils/HelmetLoader';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import Code from "../../../components/Code";
+import Code from '../../../components/Code';
 
 const Intro = () => (
   <div className="mb-5">
@@ -39,7 +39,7 @@ function App() {
     <h4>2. Enable useAuthenticator hook</h4>
 
     <p className="text-lg">
-      Enable JWT's <code>useAuth</code> hook in{" "}
+      Enable JWT's <code>useAuth</code> hook in{' '}
       <code>/src/hooks/useAuth.js</code>.
     </p>
 
@@ -59,7 +59,7 @@ const HowToUse = () => (
       including sign in, sign up and sign out.
     </p>
     <h4>Retrieve user info</h4>
-    <Code>{`import { AuthProvider } from "./contexts/CognitoContext";
+    <Code>{`import { AuthProvider } from "./contexts/JWTContext";
 
 const App = () => {
   const { displayName } = useAuthenticator((context) => [context.user]);
@@ -71,7 +71,7 @@ const App = () => {
   );
 };`}</Code>
     <h4>Execute actions</h4>
-    <Code>{`import { AuthProvider } from "./contexts/CognitoContext";
+    <Code>{`import { AuthProvider } from "./contexts/JWTContext";
 
 const App = () => {
   const { signIn } = useAuthenticator((context) => [context.user]);
@@ -85,21 +85,29 @@ const App = () => {
   </div>
 );
 
-const JWT = () => (
-  <React.Fragment>
-    <Helmet title="JSON Web Token" />
-    <Container fluid className="p-0">
-      <Row>
-        <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
-          <h1>JSON Web Token</h1>
-          <hr className="my-4" />
-          <Intro />
-          <QuickStart />
-          <HowToUse />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+const JWT = () => {
+  const Helmet = useHelmet();
+
+  if (!Helmet) {
+    return null; // Or a loading spinner, if desired
+  }
+
+  return (
+    <React.Fragment>
+      <Helmet title="JSON Web Token" />
+      <Container fluid className="p-0">
+        <Row>
+          <Col lg={10} xl={8} className="col-xxl-7 mx-auto">
+            <h1>JSON Web Token</h1>
+            <hr className="my-4" />
+            <Intro />
+            <QuickStart />
+            <HowToUse />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default JWT;

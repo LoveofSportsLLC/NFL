@@ -1,10 +1,10 @@
-import React from "react";
-import { Helmet } from "react-helmet-async";
-import { useTable, useRowSelect } from "react-table";
+import React from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { useTable, useRowSelect } from 'react-table';
 
-import { Card, Container, Table } from "react-bootstrap";
+import { Card, Container, Table } from 'react-bootstrap';
 
-import { tableData, tableColumns } from "./data.js";
+import { tableData, tableColumns } from './data.js';
 
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
@@ -20,7 +20,7 @@ const IndeterminateCheckbox = React.forwardRef(
         <input type="checkbox" ref={resolvedRef} {...rest} />
       </>
     );
-  }
+  },
 );
 
 const RowSelectionTable = ({ columns, data }) => {
@@ -35,7 +35,7 @@ const RowSelectionTable = ({ columns, data }) => {
         hooks.visibleColumns.push((columns) => [
           // Let's make a column for selection
           {
-            id: "selection",
+            id: 'selection',
             // The header can use the table's getToggleAllRowsSelectedProps method
             // to render a checkbox
             Header: ({ getToggleAllRowsSelectedProps }) => (
@@ -53,7 +53,7 @@ const RowSelectionTable = ({ columns, data }) => {
           },
           ...columns,
         ]);
-      }
+      },
     );
 
   return (
@@ -71,7 +71,7 @@ const RowSelectionTable = ({ columns, data }) => {
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
+                    {column.render('Header')}
                   </th>
                 ))}
               </tr>
@@ -84,7 +84,7 @@ const RowSelectionTable = ({ columns, data }) => {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
@@ -97,15 +97,22 @@ const RowSelectionTable = ({ columns, data }) => {
   );
 };
 
-const RowSelection = () => (
-  <React.Fragment>
-    <Helmet title="Row Selection" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Row Selection</h1>
+const RowSelection = () => {
+  const { Helmet } = useHelmet(); // Use the custom hook for HelmetLoader
 
-      <RowSelectionTable columns={tableColumns} data={tableData.slice(0, 10)} />
-    </Container>
-  </React.Fragment>
-);
+  return (
+    <React.Fragment>
+      <Helmet title="Row Selection" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Row Selection</h1>
+
+        <RowSelectionTable
+          columns={tableColumns}
+          data={tableData.slice(0, 10)}
+        />
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default RowSelection;

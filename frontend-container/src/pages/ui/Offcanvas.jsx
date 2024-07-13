@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
-
-import { Card, Col, Container, Row, Offcanvas, Button } from "react-bootstrap";
+import React, { useState } from 'react';
+import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import { Card, Col, Container, Row, Offcanvas, Button } from 'react-bootstrap';
 
 const OffcanvasDefault = () => {
   const [show, setShow] = useState(false);
@@ -71,7 +70,7 @@ const OffcanvasPlacement = () => (
       </h6>
     </Card.Header>
     <Card.Body className="text-center">
-      {["start", "end", "top", "bottom"].map((placement, idx) => (
+      {['start', 'end', 'top', 'bottom'].map((placement, idx) => (
         <OffcanvasPlacementSingle
           key={idx}
           placement={placement}
@@ -108,22 +107,22 @@ const OffcanvasBackdropSingle = ({ name, ...props }) => {
 
 const options = [
   {
-    name: "Enable backdrop (default)",
+    name: 'Enable backdrop (default)',
     scroll: false,
     backdrop: true,
   },
   {
-    name: "Disable backdrop",
+    name: 'Disable backdrop',
     scroll: false,
     backdrop: false,
   },
   {
-    name: "Enable body scrolling",
+    name: 'Enable body scrolling',
     scroll: true,
     backdrop: false,
   },
   {
-    name: "Enable both scrolling & backdrop",
+    name: 'Enable both scrolling & backdrop',
     scroll: true,
     backdrop: true,
   },
@@ -135,8 +134,8 @@ const OffcanvasBackdrop = () => (
       <Card.Title>Offcanvas backdrop</Card.Title>
       <h6 className="card-subtitle text-muted">
         Scrolling the <code>&#x3C;body&#x3E;</code> element is disabled when an
-        offcanvas and its backdrop are visible. Use the <code>scroll</code>{" "}
-        parameter to toggle <code>&#x3C;body&#x3E;</code> scrolling and{" "}
+        offcanvas and its backdrop are visible. Use the <code>scroll</code>{' '}
+        parameter to toggle <code>&#x3C;body&#x3E;</code> scrolling and{' '}
         <code>backdrop</code> parameter to toggle the backdrop.
       </h6>
     </Card.Header>
@@ -148,25 +147,27 @@ const OffcanvasBackdrop = () => (
   </Card>
 );
 
-const OffcanvasComponent = () => (
-  <React.Fragment>
-    <Helmet title="Offcanvas" />
-    <Container fluid className="p-0">
-      <h1 className="h3 mb-3">Offcanvas</h1>
+const OffcanvasComponent = () => {
+  useHelmet('Offcanvas');
+  return (
+    <React.Fragment>
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Offcanvas</h1>
 
-      <Row>
-        <Col lg="6">
-          <OffcanvasDefault />
-        </Col>
-        <Col lg="6">
-          <OffcanvasPlacement />
-        </Col>
-        <Col lg="6">
-          <OffcanvasBackdrop />
-        </Col>
-      </Row>
-    </Container>
-  </React.Fragment>
-);
+        <Row>
+          <Col lg="6">
+            <OffcanvasDefault />
+          </Col>
+          <Col lg="6">
+            <OffcanvasPlacement />
+          </Col>
+          <Col lg="6">
+            <OffcanvasBackdrop />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
+  );
+};
 
 export default OffcanvasComponent;
