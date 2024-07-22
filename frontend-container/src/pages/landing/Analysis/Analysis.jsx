@@ -65,7 +65,7 @@ const visImages = [
 const Analysis = () => {
   const handleImageError = (e) => {
     e.target.onerror = null; // Prevent infinite fallback loop
-    e.target.src = '/src/assets/img/Logo.png'; // Fallback image path
+    e.target.src = 'Logo.png'; // Fallback image path
   };
 
   return (

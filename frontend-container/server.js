@@ -2,42 +2,82 @@ import fs from 'node:fs/promises';
 import express from 'express';
 import { Transform } from 'node:stream';
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path from 'path';
 import { log } from './src/utils/logs.js';
 import dotenv from 'dotenv';
-import pkg from 'express-openid-connect';
 import mime from 'mime-types';
-import * as config from './src/config.js';
-
-const { auth, requiresAuth } = pkg;
+import {
+  baseURL,
+  newsApiKey,
+  HIGHLIGHTS_API_URL,
+  INJURIES_API_URL,
+  LATEST_NEWS_API_URL,
+  YOUTUBE_API_KEY,
+  YOUTUBE_CHANNEL_ID,
+  domain,
+  clientId,
+  audience,
+  YOUTUBE_CLIENT_ID,
+  AZURE_ML_ENDPOINT,
+  secret,
+  issuerBaseURL,
+  VITE_APP_INSIGHTS_CONNECTION_STRING,
+  VITE_APP_INSIGHTS_INSTRUMENTATION_KEY,
+} from './src/config.js';
 
 dotenv.config();
 
-log('VITE_AUTH0_ISSUER_BASE_URL:', config.issuerBaseURL);
-log('VITE_AUTH0_CLIENT_ID:', config.clientId);
-log('VITE_AUTH0_SECRET:', config.secret);
-log('AUTH0_CLIENT_ID:', config.clientId);
-log('AUTH0_SECRET:', config.secret);
-log('BASE_URL:', config.baseURL);
-log('All environment variables:', process.env);
-
-const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 3000;
-const base = process.env.BASE || '/';
-const ABORT_DELAY = 10000;
+log('Configuration Values:');
+log('baseURL:', baseURL);
+log('newsApiKey:', newsApiKey);
+log('HIGHLIGHTS_API_URL:', HIGHLIGHTS_API_URL);
+log('INJURIES_API_URL:', INJURIES_API_URL);
+log('LATEST_NEWS_API_URL:', LATEST_NEWS_API_URL);
+log('YOUTUBE_API_KEY:', YOUTUBE_API_KEY);
+log('YOUTUBE_CHANNEL_ID:', YOUTUBE_CHANNEL_ID);
+log('domain:', domain);
+log('clientId:', clientId);
+log('audience:', audience);
+log('YOUTUBE_CLIENT_ID:', YOUTUBE_CLIENT_ID);
+log('AZURE_ML_ENDPOINT:', AZURE_ML_ENDPOINT);
+log('secret:', secret);
+log('issuerBaseURL:', issuerBaseURL);
+log(
+  'VITE_APP_INSIGHTS_CONNECTION_STRING:',
+  VITE_APP_INSIGHTS_CONNECTION_STRING,
+);
+log(
+  'VITE_APP_INSIGHTS_INSTRUMENTATION_KEY:',
+  VITE_APP_INSIGHTS_INSTRUMENTATION_KEY,
+);
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 log('Server.js', 'Running Server.js script');
+
+const isProduction = process.env.NODE_ENV === 'production';
+const isInDocker = process.env.IN_DOCKER === 'true'; // Check if running in Docker
+const port = process.env.PORT || 3000;
+const base = process.env.BASE || './';
+const ABORT_DELAY = 10000;
+// Define base paths dynamically based on the environment
+const distBasePath = isInDocker ? '/app/dist' : path.join(__dirname, 'dist');
+const publicBasePath = isInDocker ? '/app/public' : path.join(__dirname, 'public');
 
 let templateHtml = '';
 let ssrManifest;
 
 if (isProduction) {
   try {
-    templateHtml = await fs.readFile('./dist/client/index.html', 'utf-8');
+    templateHtml = await fs.readFile(
+      path.join(distBasePath, 'client/index.html'),
+      'utf-8',
+    );
     ssrManifest = JSON.parse(
-      await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8'),
+      await fs.readFile(
+        path.join(distBasePath, 'client/.vite/ssr-manifest.json'),
+        'utf-8',
+      ),
     );
   } catch (error) {
     log('Server.js', 'Error loading production files:', error);
@@ -56,34 +96,6 @@ app.post('/log', (req, res) => {
   res.sendStatus(200);
 });
 
-const authConfig = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: config.secret,
-  baseURL: config.baseURL,
-  clientID: config.clientId,
-  issuerBaseURL: config.issuerBaseURL,
-  authorizationParams: {
-    redirect_uri: config.baseURL + '/dashboard/default',
-  },
-};
-log('Auth0 Config - authRequired:', authConfig.authRequired);
-log('Auth0 Config - auth0Logout:', authConfig.auth0Logout);
-log('Auth0 Config - secret:', authConfig.secret);
-log('Auth0 Config - baseURL:', authConfig.baseURL);
-log('Auth0 Config - clientID:', authConfig.clientID);
-log('Auth0 Config - issuerBaseURL:', authConfig.issuerBaseURL);
-log(
-  'Auth0 Config - authorizationParams.response_mode:',
-  authConfig.authorizationParams.response_mode,
-);
-log(
-  'Auth0 Config - authorizationParams.redirect_uri:',
-  authConfig.authorizationParams.redirect_uri,
-);
-
-app.use(auth(authConfig));
-
 // Middleware to handle correct MIME types
 app.use((req, res, next) => {
   const ext = path.extname(req.url);
@@ -91,28 +103,24 @@ app.use((req, res, next) => {
   if (mimeType) {
     res.setHeader('Content-Type', mimeType);
   }
+  log(`[MIME TYPE] [${req.method}] ${req.url} - ${mimeType}`);
   next();
 });
 
-// Middleware to serve static files
-app.use(
-  '/src/assets/img',
-  express.static(path.join(__dirname, 'src/assets/img')),
-);
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'dist/client')));
+// Middleware to serve static files from the 'public' directory
+app.use('/public', express.static(publicBasePath));
+
+// Middleware to serve static files from the 'dist/client' directory
+app.use(express.static(path.join(distBasePath, 'client')));
 
 app.get('/', (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    res.redirect('/dashboard/default');
-  } else {
-    res.redirect(config.baseURL);
-  }
+  res.redirect(baseURL);
 });
 
-// The /profile route will show the user profile as JSON
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
+// Log all incoming requests
+app.use((req, res, next) => {
+  log(`[LOG] [${req.method}] ${req.url}`);
+  next();
 });
 
 async function setupServer() {
@@ -128,11 +136,22 @@ async function setupServer() {
     const compression = (await import('compression')).default;
     const sirv = (await import('sirv')).default;
     app.use(compression());
-    app.use(base, sirv('./dist/client', { extensions: [] }));
+    app.use(
+      base,
+      sirv('./dist/client', {
+        extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg', 'svg'],
+      }),
+    );
   }
 
+  // Serve the main index.html for all routes except /api
   app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/client', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist/client', 'index.html'), (err) => {
+      if (err) {
+        log(`Error sending index.html: ${err}`);
+        res.status(500).send('Server Error');
+      }
+    });
   });
 
   app.use('*', async (req, res) => {
@@ -141,10 +160,7 @@ async function setupServer() {
 
       let template;
       let render;
-      const initialData = {
-        user: req.oidc.user || null,
-        authConfig: authConfig,
-      };
+      const initialData = {};
 
       if (!isProduction) {
         template = await fs.readFile('./index.html', 'utf-8');
@@ -203,14 +219,8 @@ async function setupServer() {
         initialData,
       );
 
-      // Log the server-rendered HTML chunk
       const htmlStream = new Transform({
         transform(chunk, encoding, callback) {
-          log(
-            'Server.js',
-            'Server rendered HTML chunk:',
-            chunk.toString().slice(0, 500) + '...[truncated]',
-          );
           callback(null, chunk);
         },
       });

@@ -26,10 +26,10 @@ if (container) {
 
   setTimeout(() => {
     const clientHTML = container.innerHTML;
-    log(
-      'Client rendered HTML (first 2000 chars):',
-      clientHTML.substring(0, 2000),
-    );
+    // log(
+    //   'Client rendered HTML (first 2000 chars):',
+    //   clientHTML.substring(0, 2000),
+    // );
 
     // Compare server and client HTML
     const serverHTML = document.documentElement.innerHTML;
@@ -47,11 +47,11 @@ if (container) {
     }, []);
 
     truncatedDiffs.forEach((part) => {
-      if (part.added) {
-        log('HTML Diff (added):', part.value);
-      } else if (part.removed) {
-        log('HTML Diff (removed):', part.value);
-      }
+      // if (part.added) {
+      //   log('HTML Diff (added):', part.value);
+      // } else if (part.removed) {
+      //   log('HTML Diff (removed):', part.value);
+      // }
     });
   }, 1000); // Wait a bit to ensure hydration is complete
 } else {

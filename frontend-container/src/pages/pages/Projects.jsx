@@ -13,13 +13,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
-import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
-import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
-
-import unsplash1 from '../../assets/img/photos/unsplash-1.jpg';
-import unsplash2 from '../../assets/img/photos/unsplash-2.jpg';
-import unsplash3 from '../../assets/img/photos/unsplash-3.jpg';
+import unsplash1 from '/photos/unsplash-1.jpg';
+import unsplash2 from '/photos/unsplash-2.jpg';
+import unsplash3 from '/photos/unsplash-3.jpg';
 
 const Project = ({ name, state, color, percentage, description, image }) => (
   <Card>
@@ -33,21 +29,21 @@ const Project = ({ name, state, color, percentage, description, image }) => (
     <Card.Body className="px-4 pt-2">
       <p>{description}</p>
       <img
-        src={avatar3}
+        src="/avatars/avatar-3.jpg"
         width="28"
         height="28"
         className="rounded-circle me-2"
         alt="Avatar"
       />
       <img
-        src={avatar2}
+        src="/avatars/avatar-2.jpg"
         width="28"
         height="28"
         className="rounded-circle me-2"
         alt="Avatar"
       />
       <img
-        src={avatar1}
+        src="/avatars/avatar.jpg"
         width="28"
         height="28"
         className="rounded-circle me-2"

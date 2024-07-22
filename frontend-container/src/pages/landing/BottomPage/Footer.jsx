@@ -1,10 +1,10 @@
 // src/pages/landing/Footer.jsx
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import FBIcon from "../../../assets/img/brands/faFacebook.svg";
-import INSTAIcon from "../../../assets/img/brands/faInstagram.svg";
-import TWIcon from "../../../assets/img/brands/faTwitter.svg";
-import LINKIcon from "../../../assets/img/brands/faLinkedin.svg";
+import FBIcon from '/brands/faFacebook.svg';
+import INSTAIcon from '/brands/faInstagram.svg';
+import TWIcon from '/brands/faTwitter.svg';
+import LINKIcon from '/brands/faLinkedin.svg';
 
 const Footer = () => (
   <section className="landing-footer py-6">

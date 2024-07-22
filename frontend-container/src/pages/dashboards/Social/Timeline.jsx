@@ -4,21 +4,16 @@ import { Row, Col, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
-import avatar1 from "../../../assets/img/avatars/avatar.jpg";
-import avatar2 from "../../../assets/img/avatars/avatar-2.jpg";
-import avatar4 from "../../../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../../../assets/img/avatars/avatar-5.jpg";
-
-import unsplash1 from "../../../assets/img/photos/unsplash-1.jpg";
-import unsplash2 from "../../../assets/img/photos/unsplash-2.jpg";
-import unsplash3 from "../../../assets/img/photos/unsplash-3.jpg";
+import unsplash1 from '/photos/unsplash-1.jpg';
+import unsplash2 from '/photos/unsplash-2.jpg';
+import unsplash3 from '/photos/unsplash-3.jpg';
 
 const Activity = () => (
   <Card className="flex-fill">
     <Card.Body>
       <div className="d-flex">
         <img
-          src={avatar5}
+          src="/avatars/avatar-5.jpg"
           width="56"
           height="56"
           className="rounded-circle me-3"
@@ -55,7 +50,7 @@ const Activity = () => (
           <div className="d-flex mt-3">
             <div className="pe-2">
               <img
-                src={avatar4}
+                src="/avatars/avatar-4.jpg"
                 width="36"
                 height="36"
                 className="rounded-circle me-2"
@@ -77,7 +72,7 @@ const Activity = () => (
       <hr />
       <div className="d-flex">
         <img
-          src={avatar1}
+          src="/avatars/avatar.jpg"
           width="56"
           height="56"
           className="rounded-circle me-3"
@@ -106,7 +101,7 @@ const Activity = () => (
       <hr />
       <div className="d-flex">
         <img
-          src={avatar2}
+          src="/avatars/avatar-2.jpg"
           width="56"
           height="56"
           className="rounded-circle me-3"
@@ -129,7 +124,7 @@ const Activity = () => (
           <div className="d-flex mt-3">
             <div className="pe-2">
               <img
-                src={avatar4}
+                src="/avatars/avatar-4.jpg"
                 width="36"
                 height="36"
                 className="rounded-circle me-2"
@@ -151,7 +146,7 @@ const Activity = () => (
       <hr />
       <div className="d-flex">
         <img
-          src={avatar5}
+          src="/avatars/avatar-5.jpg"
           width="56"
           height="56"
           className="rounded-circle me-3"

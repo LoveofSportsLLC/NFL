@@ -13,7 +13,7 @@ const users = [
     displayName: "Lucy Lavender",
     email: "demo@bootlab.io",
     password: "unsafepassword",
-    avatar: "/static/img/avatars/avatar-1.jpg",
+    avatar: "/avatars/avatar-1.jpg",
   },
 ];
 

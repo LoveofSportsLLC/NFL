@@ -12,24 +12,27 @@ const QuarterDetails = ({ scores }) => {
   ));
 };
 
+
 const NFLScoreCard = () => {
   const [gameData, setGameData] = useState({
-    date: "Feb 11, 2024",
+    date: 'Feb 11, 2024',
     games: [
       {
+        id: 'game1', // Assuming each game has a unique ID
         homeTeam: {
-          name: "SF 49ers",
+          name: 'SF 49ers',
           score: 22,
-          logoUrl: "https://placehold.co/50x50",
+          logoUrl: 'https://placehold.co/50x50',
         },
         awayTeam: {
-          name: "KC Chiefs",
+          name: 'KC Chiefs',
           score: 25,
-          logoUrl: "https://placehold.co/50x50",
+          logoUrl: 'https://placehold.co/50x50',
         },
         details: [0, 10, 3, 9, 0, 22], // Assuming these are quarter scores + total
         expanded: false,
       },
+      // Add more games as needed
     ],
   });
 
@@ -54,7 +57,9 @@ const NFLScoreCard = () => {
           <CardMenu /> {/* Positioned dynamically */}
         </Row>
         {gameData.games.map((game, index) => (
-          <Accordion defaultActiveKey="0" className="mb-3">
+          <Accordion defaultActiveKey="0" className="mb-3" key={game.id}>
+            {' '}
+            {/* Use game.id as a key */}
             <Accordion.Item eventKey={index.toString()}>
               <Accordion.Header onClick={() => toggleDetails(index)}>
                 {game.homeTeam.name} vs {game.awayTeam.name}

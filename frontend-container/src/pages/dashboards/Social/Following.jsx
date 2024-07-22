@@ -3,10 +3,6 @@ import { Button, Card, Dropdown } from "react-bootstrap";
 
 import { MoreHorizontal } from "react-feather";
 
-import avatar2 from "../../../assets/img/avatars/avatar-2.jpg";
-import avatar4 from "../../../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../../../assets/img/avatars/avatar-5.jpg";
-
 const Following = () => (
   <Card className="flex-fill mb-3">
     <Card.Header>
@@ -27,7 +23,7 @@ const Following = () => (
     <Card.Body>
       <div className="d-flex">
         <img
-          src={avatar5}
+          src="/avatars/avatar-5.jpg"
           width="56"
           height="56"
           className="rounded-circle me-2"
@@ -47,7 +43,7 @@ const Following = () => (
 
       <div className="d-flex">
         <img
-          src={avatar2}
+          src="/avatars/avatar-2.jpg"
           width="56"
           height="56"
           className="rounded-circle me-2"
@@ -67,7 +63,7 @@ const Following = () => (
 
       <div className="d-flex">
         <img
-          src={avatar4}
+          src="/avatars/avatar-4.jpg"
           width="56"
           height="56"
           className="rounded-circle me-2"

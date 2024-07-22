@@ -9,14 +9,23 @@ import Inspect from 'vite-plugin-inspect';
 import svgrPlugin from 'vite-plugin-svgr';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import { resolve } from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
   const isSSR = process.env.BUILD_TARGET === 'ssr';
+  const isDocker = process.env.DOCKER_ENV === 'true';
+
+  const rootPath = isDocker ? '/app' : './';
+  const outputDir = isDocker ? '/app/dist' : 'dist';
+  const publicDir = isDocker ? '/app/public' : 'public';
 
   return {
-    root: './', // Ensure this points to the directory containing index.html
-    publicDir: 'public',
+    base: './',
+    root: rootPath,
+    publicDir: publicDir,
     server: {
       historyApiFallback: true,
       proxy: {
@@ -30,9 +39,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
       },
-      hmr: {
-        overlay: true,
-      },
+      hmr: isProduction
+        ? false
+        : {
+            overlay: true,
+          },
     },
     plugins: [
       react({
@@ -73,32 +84,32 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '~/runtimeConfig': resolve(__dirname, './runtimeConfig.browser'),
+        '~/runtimeConfig': resolve(rootPath, './runtimeConfig.browser'),
         'react/jsx-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-runtime.js',
         ),
         'react/jsx-dev-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-dev-runtime.js',
         ),
-        '@': resolve(__dirname, 'src'),
+        '@': resolve(rootPath, './src'),
       },
     },
     build: {
       minify: isProduction ? 'terser' : false,
-      outDir: isSSR ? 'dist/server' : 'dist/client',
+      outDir: isSSR ? `${outputDir}/server` : `${outputDir}/client`,
       cssCodeSplit: true,
       chunkSizeWarningLimit: 300,
       ssrManifest: !isSSR,
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'), // Ensure this points to the correct file
-          'entry-client': resolve(__dirname, 'src/entry-client.jsx'),
-          'entry-server': resolve(__dirname, 'src/entry-server.jsx'),
-          light: resolve(__dirname, 'src/assets/scss/light.scss'),
-          dark: resolve(__dirname, 'src/assets/scss/dark.scss'),
-          team: resolve(__dirname, 'src/assets/scss/team-theme.scss'),
+          main: resolve(rootPath, 'index.html'),
+          'entry-client': resolve(rootPath, 'src/entry-client.jsx'),
+          'entry-server': resolve(rootPath, 'src/entry-server.jsx'),
+          light: resolve(rootPath, 'src/assets/scss/light.scss'),
+          dark: resolve(rootPath, 'src/assets/scss/dark.scss'),
+          team: resolve(rootPath, 'src/assets/scss/team-theme.scss'),
         },
         output: {
           assetFileNames: 'assets/[name][extname]',
@@ -144,7 +155,7 @@ export default defineConfig(({ mode }) => {
         'react-router-dom',
         'react-helmet-async',
         'react-apexcharts',
-        '@microsoft/applicationinsights-react-js',
+        '@microsoft.applicationinsights-react-js',
         'google-map-react',
         'apexcharts',
         'chart.js',

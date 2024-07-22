@@ -1,12 +1,10 @@
-#frontend-container/docker-compose.yml
+#frontend-container/docker-compose.uat.yml
 services:
   feuat:
     container_name: frontend-uat-container
     build:
       context: .
       dockerfile: Dockerfile.uat
-      args:
-        - NODE_ENV=development
     image: fe:uatlatest
     ports:
       - "3000:3000"

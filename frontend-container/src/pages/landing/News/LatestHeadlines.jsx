@@ -4,7 +4,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import CarouselComponent from "../../../components/CarouselComponent";
 import FilterComponent from "../../../components/FilterComponent";
 import { LATEST_NEWS_API_URL } from "../../../config";
-import placeholderImage from "/src/assets/img/logo.png";
+import placeholderImage from "/logo.png";
 import { log } from "../../../utils/logs";
 
 const LatestHeadlines = () => {

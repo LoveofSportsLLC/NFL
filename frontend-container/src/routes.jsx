@@ -86,18 +86,8 @@ const Support = lazy(() => import('./pages/docs/Support'));
 const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
 
-const RedirectToLogin = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
 
-  return null;
-};
 
 const routes = [
   {

@@ -1,4 +1,4 @@
-// src/pages/landing/Integrations.jsx
+// src/pages/landing/BottomPage/Integrations.jsx
 import React from "react";
 import {
   Container,
@@ -8,7 +8,7 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-import nflDataLogo from "../../../assets/img/photos/nfl-data-logo.png";
+import nflDataLogo from '/photos/nfl-data-logo.png';
 
 const Integrations = () => (
   <section className="pt-6">
