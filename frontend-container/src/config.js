@@ -47,6 +47,10 @@ export const VITE_APP_INSIGHTS_CONNECTION_STRING = getEnvVar(process.env.VITE_AP
 
 export const VITE_APP_INSIGHTS_INSTRUMENTATION_KEY = getEnvVar(process.env.VITE_APP_INSIGHTS_INSTRUMENTATION_KEY, import.meta.env?.VITE_APP_INSIGHTS_INSTRUMENTATION_KEY);
 
+export const buybuttonid = getEnvVar( process.env.VITE_BUY_BUTTON, import.meta.env.VITE_BUY_BUTTON );
+
+export const publishablekey = getEnvVar(process.env.VITE_PUBLISHABLE_KEY, import.meta.env.VITE_PUBLISHABLE_KEY);
+
 // Log statements for debugging
 console.log('Is server build:', isServer);
 console.log('Is local build:', isLocal);
