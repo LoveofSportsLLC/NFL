@@ -49,7 +49,7 @@ export const VITE_APP_INSIGHTS_INSTRUMENTATION_KEY = getEnvVar(process.env.VITE_
 
 export const buybuttonid = getEnvVar( process.env.VITE_BUY_BUTTON, import.meta.env?.VITE_BUY_BUTTON );
 
-export const publishablekey = getEnvVar(process.env.VITE_PUBLISHABLE_KEY, import.meta?.env.VITE_PUBLISHABLE_KEY);
+export const publishablekey = getEnvVar(process.env.VITE_PUBLISHABLE_KEY, import.meta.env?.VITE_PUBLISHABLE_KEY);
 
 // Log statements for debugging
 console.log('Is server build:', isServer);
