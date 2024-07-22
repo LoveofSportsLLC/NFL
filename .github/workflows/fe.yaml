@@ -95,6 +95,7 @@ jobs:
           VITE_SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
           VITE_APP_INSIGHTS_KEY: ${{ secrets.VITE_APP_INSIGHTS_KEY }}
           VITE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.VITE_APP_INSIGHTS_CONNECTION_STRING }}
+          VITE_APP_INSIGHTS_INSTRUMENTATION_KEY: ${{ secrets.VITE_APP_INSIGHTS_INSTRUMENTATION_KEY }}
           BASE_URL: ${{ secrets.BASE_URL }}
           API_URL: ${{ secrets.API_URL }}
           LOG_URL: ${{ secrets.LOG_URL }}
