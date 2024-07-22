@@ -19,6 +19,7 @@ services:
       - PUBLIC_ENV__NODE_ENV=development
       - SOURCE_PATH=/app
       - NODE_OPTIONS=--max-old-space-size=12288
+      - GIT_WORKFLOW=0 
     user: node
     stdin_open: true
     tty: true

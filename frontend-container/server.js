@@ -67,6 +67,26 @@ const publicBasePath = isInDocker ? '/app/public' : path.join(__dirname, 'public
 let templateHtml = '';
 let ssrManifest;
 
+// Determine if the code is running on the server (Node.js)
+const isServer = typeof process !== 'undefined' && process.env.NODE_ENV;
+
+// Determine if the build is local or in the cluster
+const isLocal = isServer && (process.env.GIT_WORKFLOW === '0' || process.env.DOCKER_ENV === 'false');
+const isCluster = isServer && process.env.GIT_WORKFLOW === '1';
+
+// Log statement to indicate the build environment
+if (isServer) {
+  if (isLocal) {
+    console.log('Running in local server environment (isLocal).');
+  } else if (isCluster) {
+    console.log('Running in cluster server environment (isCluster).');
+  } else {
+    console.log('Running in unknown server environment.');
+  }
+} else {
+  console.log('Running in client environment (browser).');
+}
+
 if (isProduction) {
   try {
     templateHtml = await fs.readFile(

@@ -98,6 +98,7 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           API_URL: ${{ secrets.API_URL }}
           LOG_URL: ${{ secrets.LOG_URL }}
+          GIT_WORKFLOW: "1"
         run: |
           az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f frontend-container/Dockerfile.Prod frontend-container
  
