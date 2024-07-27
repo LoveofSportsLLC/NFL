@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
   });
 
   return {
-    base: './',
+    base: rootPath,
     root: rootPath,
     publicDir: publicDir,
     server: {

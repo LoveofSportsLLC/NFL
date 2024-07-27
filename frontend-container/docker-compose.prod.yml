@@ -19,7 +19,7 @@ services:
       - PUBLIC_ENV__NODE_ENV=production
       - SOURCE_PATH=/app
       - NODE_OPTIONS=--max-old-space-size=12288
-      - GIT_WORKFLOW=0 8
+      - GIT_WORKFLOW=0
       - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
       - VITE_GOOGLE_APIKEY=${VITE_GOOGLE_APIKEY}
       - VITE_NEWS_API_KEY=${VITE_NEWS_API_KEY}
@@ -48,6 +48,7 @@ services:
       - BASE_URL=${BASE_URL}
       - API_URL=${API_URL}
       - LOG_URL=${LOG_URL}
+      - DOCKER_ENV=true
     user: node
     stdin_open: true
     tty: true

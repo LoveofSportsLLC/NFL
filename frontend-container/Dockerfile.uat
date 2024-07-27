@@ -107,6 +107,7 @@ USER node
 ENV PUBLIC_ENV__NODE_ENV=development
 ENV NODE_ENV=development
 ENV APOLLO_TELEMETRY_DISABLED=true
+ENV DOCKER_ENV=true
 
 # Expose the application port
 EXPOSE 3000
