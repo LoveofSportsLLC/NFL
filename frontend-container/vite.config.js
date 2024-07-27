@@ -10,6 +10,7 @@ import svgrPlugin from 'vite-plugin-svgr';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import { resolve } from 'path';
 
+// Exclude server-only modules from the client bundle
 const excludeModules = ['stream', 'readable-stream'];
 
 export default defineConfig(({ mode }) => {

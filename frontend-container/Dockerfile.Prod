@@ -73,7 +73,8 @@ ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID \
     VITE_APP_INSIGHTS_INSTRUMENTATION_KEY=$VITE_APP_INSIGHTS_INSTRUMENTATION_KEY
 
 # Build the application
-RUN npm run build:prod
+RUN npm run build:client:prod
+RUN npm run build:server:prod
 
 # Stage 2: Run
 FROM node:20-alpine
