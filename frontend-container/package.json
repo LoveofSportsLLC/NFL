@@ -20,8 +20,8 @@
     "build:server:prod": "echo 'Building server (production)' && BUILD_TARGET=ssr NODE_ENV=production NODE_OPTIONS=--max-old-space-size=12288 vite build --mode production --ssr --logLevel warn",
     "build:prod": "npm run build:client:prod && npm run build:server:prod",
     "dev:server": "NODE_DEBUG=http2,express NODE_ENV=development BUILD_TARGET=ssr node --trace-warnings server.js",
-    "build:dev:client": "DOCKER_ENV=false BUILD_TARGET=client vite build --mode development",
-    "build:dev:server": "DOCKER_ENV=false BUILD_TARGET=ssr vite build --mode development",
+    "build:dev:client": "DOCKER_ENV=false BUILD_TARGET=client vite build --mode development --outDir dist/client",
+    "build:dev:server": "DOCKER_ENV=false BUILD_TARGET=ssr vite build --mode development --outDir dist/server --ssr src/entry-server.jsx",
     "build:dev": "npm run build:dev:client && npm run build:dev:server",
     "check-circular-deps": "madge --circular --extensions js,jsx src",
     "webhint": "xvfb-run -a hint http://localhost:3000"
