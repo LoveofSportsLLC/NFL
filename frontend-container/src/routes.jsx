@@ -494,6 +494,24 @@ const routes = [
   },
 ];
 
-log('Routes defined:', routes);
-
+log(
+  'Routes defined:',
+  JSON.stringify(
+    JSON.parse(JSON.stringify(routes)), // Ensure the object is mutable
+    (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (value._depth === undefined) {
+          value._depth = 0;
+        }
+        if (value._depth > 2) {
+          // Adjust the depth as needed
+          return '[Object]';
+        }
+        value._depth++;
+      }
+      return value;
+    },
+    2,
+  ),
+);
 export default routes;

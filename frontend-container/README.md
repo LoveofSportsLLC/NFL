@@ -8,23 +8,58 @@ You'll need to have Node.js installed, downloadable at [https://nodejs.org/](htt
 
 ## Quick Start
 
-### `npm start`
+### Running the Application in Development Mode
 
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Without Docker
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+1. **Install Dependencies**:
+    ```sh
+    npm install
+    ```
 
-### `npm run build`
+2. **Start the Application**:
+    ```sh
+    npm run start:dev
+    ```
+    This will start the application in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. The page will reload if you make edits. You will also see any lint errors in the console.
 
-Builds the app for production to the `dist` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### With Docker
 
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+1. **Start the Application**:
+    ```sh
+    npm run uat:full
+    ```
+    This will build and start the application in a Docker container using the UAT configuration.
 
-See the section about [building for production](https://vitejs.dev/guide/build.html) for more information.
+### Running the Application in Production Mode
+
+#### Without Docker
+
+1. **Install Dependencies**:
+    ```sh
+    npm install
+    ```
+
+2. **Start the Application**:
+    ```sh
+    npm run start:prod
+    ```
+    This will start the application in production mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+#### With Docker
+
+1. **Start the Application**:
+    ```sh
+    npm run uat:prod
+    ```
+    This will build and start the application in a Docker container using the production configuration.
+
+## Scripts Explanation
+
+- **`npm run start:dev`**: Starts the application in development mode.
+- **`npm run start:prod`**: Starts the application in production mode.
+- **`npm run uat:full`**: Builds and starts the application in a Docker container using the UAT (User Acceptance Testing) environment.
+- **`npm run uat:prod`**: Builds and starts the application in a Docker container using the production environment.
 
 ## Learn More
 

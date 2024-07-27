@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
@@ -9,18 +9,26 @@ import Inspect from 'vite-plugin-inspect';
 import svgrPlugin from 'vite-plugin-svgr';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import { resolve } from 'path';
-import dotenv from 'dotenv';
 
-dotenv.config();
+const excludeModules = ['stream', 'readable-stream'];
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
-  const isSSR = process.env.BUILD_TARGET === 'ssr';
   const isDocker = process.env.DOCKER_ENV === 'true';
+  const isSSR = mode === 'ssr';
 
   const rootPath = isDocker ? '/app' : './';
   const outputDir = isDocker ? '/app/dist' : 'dist';
   const publicDir = isDocker ? '/app/public' : 'public';
+
+  console.log('Vite Configuration:', {
+    isProduction,
+    isDocker,
+    isSSR,
+    rootPath,
+    outputDir,
+    publicDir,
+  });
 
   return {
     base: './',
@@ -39,31 +47,28 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
       },
-      hmr: isProduction
-        ? false
-        : {
-            overlay: true,
-          },
+      hmr: isProduction ? false : { overlay: true },
     },
     plugins: [
-      react({
-        jsxRuntime: 'automatic',
-      }),
+      react({ jsxRuntime: 'automatic' }),
       commonjs({
         include: /node_modules/,
         transformMixedEsModules: true,
         requireReturnsDefault: 'auto',
       }),
       nodeResolve({
-        browser: true,
-        preferBuiltins: true,
+        browser: true, // ensures we're resolving browser-compatible modules
+        preferBuiltins: true, // prefers built-in modules (useful for SSR)
       }),
       nodePolyfills({
         protocolImports: true,
+        buffer: true,
+        process: true,
+        stream: true,
+        crypto: true,
       }),
-      splitVendorChunkPlugin(),
       replace({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.NODE_ENV': JSON.stringify(mode),
         preventAssignment: true,
       }),
       isProduction &&
@@ -71,17 +76,12 @@ export default defineConfig(({ mode }) => {
           compress: true,
           mangle: true,
           module: true,
-          format: {
-            comments: false,
-          },
+          format: { comments: false },
         }),
       Inspect({ build: true, outputDir: '.vite-inspect' }),
       svgrPlugin({ exportType: 'component', svgrOptions: { icon: true } }),
       ViteEjsPlugin(),
     ].filter(Boolean),
-    define: {
-      'process.env': process.env,
-    },
     resolve: {
       alias: {
         '~/runtimeConfig': resolve(rootPath, './runtimeConfig.browser'),
@@ -100,8 +100,8 @@ export default defineConfig(({ mode }) => {
       minify: isProduction ? 'terser' : false,
       outDir: isSSR ? `${outputDir}/server` : `${outputDir}/client`,
       cssCodeSplit: true,
-      chunkSizeWarningLimit: 300,
-      ssrManifest: !isSSR,
+      chunkSizeWarningLimit: 3000,
+      ssrManifest: isSSR,
       rollupOptions: {
         input: {
           main: resolve(rootPath, 'index.html'),
@@ -117,13 +117,20 @@ export default defineConfig(({ mode }) => {
           compact: true,
           entryFileNames: '[name].js',
         },
-        external: [],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+              .toString();
+          }
+        },
+        external: excludeModules,
       },
       target: 'esnext',
       sourcemap: true,
-      commonjsOptions: {
-        include: ['warning'],
-      },
+      commonjsOptions: { include: ['warning'] },
     },
     optimizeDeps: {
       include: [
@@ -146,7 +153,7 @@ export default defineConfig(({ mode }) => {
         '@restart/ui',
         'warning',
       ],
-      exclude: ['@react-bootstrap', '@restart'],
+      exclude: ['@react-bootstrap', '@restart', ...excludeModules],
     },
     ssr: {
       noExternal: [
@@ -155,7 +162,7 @@ export default defineConfig(({ mode }) => {
         'react-router-dom',
         'react-helmet-async',
         'react-apexcharts',
-        '@microsoft.applicationinsights-react-js',
+        '@microsoft/applicationinsights-react-js',
         'google-map-react',
         'apexcharts',
         'chart.js',

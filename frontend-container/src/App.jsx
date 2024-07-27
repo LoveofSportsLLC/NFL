@@ -25,7 +25,9 @@ import {
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
 
-log('App.jsx', 'Starting execution');
+// log('App.jsx', 'Starting execution');
+// log('App.jsx Client ID:', clientId);
+// log('App.jsx Domain:', domain);
 
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;

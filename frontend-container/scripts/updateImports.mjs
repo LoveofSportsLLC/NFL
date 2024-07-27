@@ -22,7 +22,7 @@ const replaceImports = async (filePath) => {
         'import $1 from "@img',
       );
     await fs.writeFile(filePath, result, 'utf8');
-    console.log(`Updated imports in ${filePath}`);
+    log(`Updated imports in ${filePath}`);
   } catch (err) {
     console.error(`Error updating imports in ${filePath}: ${err}`);
   }
