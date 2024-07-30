@@ -102,7 +102,6 @@ input[type="button"] {
   cursor: pointer;
 }
 input,
-select,
 textarea,
 button {
   outline: none;
