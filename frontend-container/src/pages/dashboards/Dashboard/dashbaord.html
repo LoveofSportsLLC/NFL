@@ -19,9 +19,9 @@
     <!-- Include Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  
+
 <style>
-  .country-dropdown ul {
+.country-dropdown ul {
       width: 120px;
       list-style: none;
       padding: 6px;
@@ -51,7 +51,7 @@
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
 });
 
-document.getElementById('countryIconUSA').addEventListener('click', function(e) {
+  document.getElementById('countryIconUSA').addEventListener('click', function(e) {
     e.stopPropagation(); // Prevent event from propagating to window
     var dropdown = document.querySelector('.country-dropdown');
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -128,56 +128,56 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
          <ul class="submenu"  style="display:none;">
           <li>
             <a href="">
-              <i class="myProfile"></i>
+              <i class="rightArrow"></i>
               <span>My Profile</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="settings"></i>
+              <i class="rightArrow"></i>
               <span>Settings</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="analytics"></i>
+              <i class="rightArrow"></i>
               <span>Analytics</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="fantasyDraft"></i>
+              <i class="rightArrow"></i>
               <span>Fantasy Draft</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="predictions"></i>
+              <i class="rightArrow"></i>
               <span>Predictions</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="aboutUs"></i>
+              <i class="rightArrow"></i>
               <span>About Us</span>
             </a>
           </li>
   
           <li>
             <a href="">
-              <i class="Support"></i>
+              <i class="rightArrow"></i>
               <span>Support</span>
             </a>
           </li>
           
           <li>
             <a href="">
-              <i class="blankPage"></i>
+              <i class="rightArrow"></i>
               <span>Blank Page</span>
             </a>
           </li>
@@ -1331,11 +1331,11 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
     ===================
     Header
     ===================
--->
+  -->
   <header>
   <!--Menu Icon-->
   <a href="javascript:;" class="menuIcon" onclick="openMenu()">
-		<span></span><span></span><span></span>
+		<img src="images/menu-icon.svg" alt="menu-icon">
 	</a>
 
 <!--Page Title-->
@@ -1356,17 +1356,30 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
         </span>
       </div>
 
-      <div class="notification topbarRightIcon" style="top:-35px;">
+      <div class="notification topbarRightIcon tooltip" style="top:-35px;">
         <a href="javascript:;">
           <i class="notificationIcon"><img src="images/notification-icon.svg"></i>
         </a>
+        <span class="tooltiptext">
+            <label>->First Notifications Message</label>
+            <label>->Second Notifications Message</label>
+            <label>->Third Notifications Message</label>
+        </span>
       </div>
-
-      <div class="topbarRightIcon messageIcon" style="top:-35px;">
+      <!--
+       <div class="topbarRightIcon messageIcon tooltip" style="top:-35px;">
         <a href="javascript:;">
           <i class="messageIcon"><img src="images/message-icon.svg"></i>
+          <span class="tooltiptext">New Notifications New Notifications</span>
         </a>
       </div>
+
+      <div class="tooltip">
+        <a href="javascript:;" class="tooltiptext">
+          <i class="notificationIcon"><img src="images/notification-icon.svg"></i>
+          <span class="tooltiptext ">New Notifications</span>
+        </a>
+      </div> -->
       
       <!--
       <div class="topbarRightIcon contryIcon" style="top:-35px;">
@@ -1378,7 +1391,7 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
      <div class="country-selector topbarRightIcon contryIcon" style="top:-30px;">
         <a href="javascript:void(0);" class="country-toggle">
             <!-- <i class="countryIcon"><img src="images/usa-logo.svg" style="max-width:26px;"></i> -->
-            <img src="images/usa-logo.svg" id="countryIcon" style="max-width:26px; cursor:pointer;">
+            <img src="images/usa-logo.svg" id="countryIcon" style="max-width:26px; cursor:pointer; top:-3px;">
         </a>
         <div class="country-dropdown" style="display:none;">
           <ul>
@@ -1445,29 +1458,53 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
     Page Content
     ===================
 -->
+  <!-- header content inner-->
+<!--    
+  <div class="header-content-inner">
+    <div class="frame-parent32">
+      <div class="rectangle-group">
+        <div class="rectangle-div"></div>
+        <div class="date-icon-container">
+          <img class="formkitdate-icon" alt="" src="./public/formkitdate.svg">
+        </div>
+        
+        <img class="iconamoonarrow-down-2-fill" alt="" src="./public/iconamoonarrowdown2fill.svg">
+      </div>
+      <div>
+        <img src="images/filter-bg-icon.svg" alt="">
+      </div>
+      <div>
+        <img src="images/tablerrefresh.svg" alt="">
+      </div>
+
+    </div>
+  </div> -->
+
     <div class="topRightFilter">
-      <div class="container" style="">
+      <div class="container">
         <div class="today-selector">
+          <i class="fas fa-calendar-alt"></i>
+          
           <select name="country" id="country">
-            <i class="fas fa-calendar-alt"></i>
-            <option value="">Today</option>
-            <option value="us">Tomorrow</option>
-            <option value="ca">Yesteraday</option>
+            <img src="images/formkitdate.svg">
+            <option value="Today">Today</option>
+            <option value="Tomorrow">Tomorrow</option>
+            <option value="Yesteraday">Yesteraday</option>
             <!-- Add more countries as needed -->
           </select>
+  
         </div>
       
         <div>
           <div id="filterMenu">
-            <!-- Filter options go here -->
-            <img src="images/filter-white-icon.svg" alt="">
+            <img src="images/filter-bg-icon.svg" alt="">
             <!-- Add more filter options as needed -->
           </div>
         </div>
 
         <div>
           <div id="filterMenu">
-            <img src="images/refresh-icon.svg" alt="">
+            <img src="images/tablerrefresh.svg" alt="">
             <!-- Add more filter options as needed -->
           </div>
         </div>
@@ -1709,6 +1746,95 @@ document.getElementById('countryIconUSA').addEventListener('click', function(e) 
     <td>Bertha Martine</td>
   </tr>
 </table>
+<div class="daily-feed" style="display: none;">
+  <!-- <div class="base"></div>
+  <div class="base1"></div> -->
+  <div class="daily-feed-wrapper">
+    <div class="daily-feed-container">
+      <div class="daily-feed-content">
+        <div class="daily-feed-title-container">
+          <div class="daily-feed1">Daily Feed</div>
+          <div class="current-day-wrapper">
+            <div class="today7">Today</div>
+          </div>
+        </div>
+      </div>
+      <div class="header-1">
+        <div class="header-1-child"></div>
+        <div class="components5-avatar-wrapper">
+          <img class="components5-avatar-icon" alt="" src="images\default_user_avtar.png">
+        </div>
+        <div class="hallie-jennings-parent">
+          <div class="hallie-jennings">
+            <p class="ashley-briggs-started-followin">
+              <span class="ashley-briggs-started-followin1">Ashley Briggs&nbsp;started following&nbsp;Stacie Hall</span>
+            </p>
+          </div>
+          <div class="days-ago-wrapper">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-2">
+      <div class="header-2-child"></div>
+      <div class="components5-avatar-parent">
+        <img class="components5-avatar-icon1" alt="" src="images\default_user_avtar.png">
+
+        <div class="frame-wrapper31">
+          <div class="hallie-jennings-group">
+            <div class="hallie-jennings1">
+              <span class="chris-wood-posted-something">Chris Wood&nbsp;posted something on&nbsp;Sta
+              </span><span class="m-ago1">30m ago</span>
+            </div>
+            <div class="days-ago-container">
+              <div class="days-ago1">Today 7:21 pm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="the-collapse-of-the-wrapper">
+        <div class="the-collapse-of">
+          Etiam rhoncus. Maecenas tempus, tellus eget
+          condimentum rhoncus, sem quam semper libero, sit amet
+          adipiscing...
+        </div>
+      </div>
+    </div>
+    <div class="header-3">
+      <div class="header-3-child"></div>
+      <div class="wrapper-components5-avatar-wrapper">
+        <div class="wrapper-components5-avatar">
+          <img class="components5-avatar-icon2" alt="" src="images\default_user_avtar.png">
+        </div>
+      </div>
+      <div class="hallie-jennings-container">
+        <div class="hallie-jennings2">
+          <span class="stacie-hall-posted-a">Stacie Hall&nbsp;posted a new blog
+          </span>
+          <span class="m-ago2">45m ago</span>
+        </div>
+        <div class="days-ago2">Today 7:21 pm</div>
+      </div>
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <div class="btn">
+      <div class="btn1">
+        <b class="next-gen-console">NEXT GEN CONSOLE COMPATIBLE</b>
+        <div class="r25">R25</div>
+        <!-- <div class="wrapper-glitch">
+          <img class="glitch-icon" alt="" src="./public/glitch.svg">
+        </div> -->
+        <img class="subtract-icon" alt="" src="./images/load-btn.svg">
+
+        <!-- <div class="available-now">
+          <b>LOAD MORE</b>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- pageContent Ends -->
 </main>
