@@ -9,6 +9,7 @@ import LandingLayout from './layouts/Landing';
 import AuthGuard from './components/guards/AuthGuard';
 import DonatePage from './pages/auth/Donate';
 import { log } from './utils/logs';
+import Dashboard from "./pages/dashboards/Static-Dashboard/StaticDashboard.jsx";
 
 const Landing = lazy(() => import('./pages/landing/Landing'));
 const AboutUs = lazy(() => import('./pages/landing/Aboutus/AboutUs'));
@@ -85,6 +86,7 @@ const MigratingToNextJS = lazy(() => import('./pages/docs/MigratingToNextJS'));
 const Support = lazy(() => import('./pages/docs/Support'));
 const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
+const StaticDashboard = lazy(() => import('./pages/dashboards/Static-Dashboard/StaticDashboard'));
 
 
 
@@ -103,6 +105,10 @@ const routes = [
         element: <AboutUs />,
       },
     ],
+  },
+  {
+    path: '/static-dashboard',
+    element: <StaticDashboard />
   },
   {
     path: 'dashboard',
