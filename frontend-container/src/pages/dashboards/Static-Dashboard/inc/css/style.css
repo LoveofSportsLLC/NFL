@@ -126,9 +126,7 @@ pre {	/* To word wrap the text in pre tag if that is very long */
 	background: rgba(0, 4, 49, 0.8);
 	box-shadow: inset 7.56667px -7.56667px 7.56667px rgba(0, 3, 41, 0.432), inset -7.56667px 7.56667px 7.56667px rgba(255, 255, 255, 0.432);
 	backdrop-filter: blur(54.48px);
-	/* Note: backdrop-filter has minimal browser support */
 	border-radius: 10px;
-	/* box-shadow:0px 0px 8px 0px rgba(0, 0, 0, 0.1);  */
 	z-index:2;
 	padding-bottom:120px;
 }
@@ -328,8 +326,6 @@ Custom Icon
 .navMenu nav li:hover ul a{color: #62627a;}
 .navMenu nav li:hover ul a:hover{color: #635ebe;}
 
-
-
 /*
 	======================
 	#Section = Footer Main
@@ -350,14 +346,8 @@ Custom Icon
 	bottom:10px; right:20px;
 }
 
-/*
-	======================
-	#Section = Page Title
-	======================
-*/
 .pageTitle span{color:#00D8FF; margin-right:15px;}
 .pageTitle {
-	background:#fff;
 	box-shadow:5px 0px 13px 0px rgba(0, 0, 0, 0.06);
 	height:70px;
 	z-index:1;
