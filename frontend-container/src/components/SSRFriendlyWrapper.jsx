@@ -9,6 +9,15 @@ const SSRFriendlyWrapper = ({ children, onClientLoad }) => {
       if (onClientLoad) {
         onClientLoad();
       }
+
+      // Example module check using dynamic import
+      //   import('some-module')
+      //     .then((someModule) => {
+      //       logger.debug('Module loaded:', someModule);
+      //     })
+      //     .catch((error) => {
+      //       console.error('Module not found:', error);
+      //     });
     }
   }, [onClientLoad]);
 

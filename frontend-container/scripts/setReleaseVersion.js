@@ -2,12 +2,12 @@ import { execSync } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { log } from '../src/utils/logs.js';
+import logger from '../src/utils/logger.js';
 
 // Determine __dirname in an ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-log('Running predev script');
+logger.debug('Running predev script');
 
 // Get the current Git commit hash
 let commitHash;
@@ -15,7 +15,7 @@ let commitHash;
 try {
   commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 } catch (error) {
-  log('Error fetching git commit hash', error);
+  logger.debug('Error fetching git commit hash', error);
   process.exit(1);
 }
 
@@ -27,7 +27,7 @@ log(`__dirname: ${__dirname}`);
 // Function to write to .env file
 async function writeEnvFile() {
   const envFilePath = path.join(__dirname, '../.env');
-  log(`Writing to .env file at path: ${envFilePath}`);
+  logger.debug(`Writing to .env file at path: ${envFilePath}`);
 
   let envConfig = {};
 
@@ -47,7 +47,7 @@ async function writeEnvFile() {
       });
     }
   } catch (error) {
-    log('Error reading .env file', error);
+    logger.debug('Error reading .env file', error);
     process.exit(1);
   }
 
@@ -61,10 +61,12 @@ async function writeEnvFile() {
     await fs.writeFile(envFilePath, newEnvContent, {
       flag: 'w',
     });
-    log(`SENTRY_RELEASE set to ${releaseVersion}`);
-    log(`Type of SENTRY_RELEASE after setting: ${typeof releaseVersion}`);
+    logger.debug(`SENTRY_RELEASE set to ${releaseVersion}`);
+    logger.debug(
+      `Type of SENTRY_RELEASE after setting: ${typeof releaseVersion}`,
+    );
   } catch (error) {
-    log('Error writing to .env file', error);
+    logger.debug('Error writing to .env file', error);
     process.exit(1);
   }
 }

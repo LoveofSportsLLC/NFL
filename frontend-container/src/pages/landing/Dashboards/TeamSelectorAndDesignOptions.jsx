@@ -1,107 +1,107 @@
 // src/pages/landing/Dashboards/TeamSelectorAndDesignOptions.jsx
-import React, { useState } from "react";
-import { Container, Row, Col, Carousel, Badge } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
-import LazyImage from "../../../components/LazyImage"; // Import LazyImage component
-import { TEAMS } from "../../../constants";
-import { Link } from "react-router-dom";
-import Packers1 from "/scheme/packers1.webp";
-import Packers2 from "/scheme/packers2.webp";
-import Packers3 from "/scheme/packers3.webp";
-import Bears1 from "/scheme/bears1.webp";
-import Bears2 from "/scheme/bears2.webp";
-import Bears3 from "/scheme/bears3.webp";
-import Lions1 from "/scheme/lions1.webp";
-import Lions2 from "/scheme/lions2.webp";
-import Lions3 from "/scheme/lions3.webp";
-import Vikings1 from "/scheme/vikings1.webp";
-import Vikings2 from "/scheme/vikings2.webp";
-import Vikings3 from "/scheme/vikings3.webp";
-import Cowboys1 from "/scheme/cowboys1.webp";
-import Cowboys2 from "/scheme/cowboys2.webp";
-import Cowboys3 from "/scheme/cowboys3.webp";
-import Giants1 from "/scheme/giants1.webp";
-import Giants2 from "/scheme/giants2.webp";
-import Giants3 from "/scheme/giants3.webp";
-import Eagles1 from "/scheme/eagles1.webp";
-import Eagles2 from "/scheme/eagles2.webp";
-import Eagles3 from "/scheme/eagles3.webp";
-import Commanders1 from "/scheme/commanders1.webp";
-import Commanders2 from "/scheme/commanders2.webp";
-import Commanders3 from "/scheme/commanders3.webp";
-import Buccaneers1 from "/scheme/buccaneers1.webp";
-import Buccaneers2 from "/scheme/buccaneers2.webp";
-import Buccaneers3 from "/scheme/buccaneers3.webp";
-import Saints1 from "/scheme/saints1.webp";
-import Saints2 from "/scheme/saints2.webp";
-import Saints3 from "/scheme/saints3.webp";
-import Panthers1 from "/scheme/panthers1.webp";
-import Panthers2 from "/scheme/panthers2.webp";
-import Panthers3 from "/scheme/panthers3.webp";
-import Falcons1 from "/scheme/falcons1.webp";
-import Falcons2 from "/scheme/falcons2.webp";
-import Falcons3 from "/scheme/falcons3.webp";
-import Seahawks1 from "/scheme/seahawks1.webp";
-import Seahawks2 from "/scheme/seahawks2.webp";
-import Seahawks3 from "/scheme/seahawks3.webp";
-import Niners1 from "/scheme/niners1.webp";
-import Niners2 from "/scheme/niners2.webp";
-import Niners3 from "/scheme/niners3.webp";
-import Rams1 from "/scheme/rams1.webp";
-import Rams2 from "/scheme/rams2.webp";
-import Rams3 from "/scheme/rams3.webp";
-import Cardinals1 from "/scheme/cardinals1.webp";
-import Cardinals2 from "/scheme/cardinals2.webp";
-import Cardinals3 from "/scheme/cardinals3.webp";
-import Bengals1 from "/scheme/bengals1.webp";
-import Bengals2 from "/scheme/bengals2.webp";
-import Bengals3 from "/scheme/bengals3.webp";
-import Steelers1 from "/scheme/steelers1.webp";
-import Steelers2 from "/scheme/steelers2.webp";
-import Steelers3 from "/scheme/steelers3.webp";
-import Ravens1 from "/scheme/ravens1.webp";
-import Ravens2 from "/scheme/ravens2.webp";
-import Ravens3 from "/scheme/ravens3.webp";
-import Browns1 from "/scheme/browns1.webp";
-import Browns2 from "/scheme/browns2.webp";
-import Browns3 from "/scheme/browns3.webp";
-import Bills1 from "/scheme/bills1.webp";
-import Bills2 from "/scheme/bills2.webp";
-import Bills3 from "/scheme/bills3.webp";
-import Patriots1 from "/scheme/patriots1.webp";
-import Patriots2 from "/scheme/patriots2.webp";
-import Patriots3 from "/scheme/patriots3.webp";
-import Dolphins1 from "/scheme/dolphins1.webp";
-import Dolphins2 from "/scheme/dolphins2.webp";
-import Dolphins3 from "/scheme/dolphins3.webp";
-import Jets1 from "/scheme/jets1.webp";
-import Jets2 from "/scheme/jets2.webp";
-import Jets3 from "/scheme/jets3.webp";
-import Chiefs1 from "/scheme/chiefs1.webp";
-import Chiefs2 from "/scheme/chiefs2.webp";
-import Chiefs3 from "/scheme/chiefs3.webp";
-import Raiders1 from "/scheme/raiders1.webp";
-import Raiders2 from "/scheme/raiders2.webp";
-import Raiders3 from "/scheme/raiders3.webp";
-import Chargers1 from "/scheme/chargers1.webp";
-import Chargers2 from "/scheme/chargers2.webp";
-import Chargers3 from "/scheme/chargers3.webp";
-import Broncos1 from "/scheme/broncos1.webp";
-import Broncos2 from "/scheme/broncos2.webp";
-import Broncos3 from "/scheme/broncos3.webp";
-import Colts1 from "/scheme/colts1.webp";
-import Colts2 from "/scheme/colts2.webp";
-import Colts3 from "/scheme/colts3.webp";
-import Titans1 from "/scheme/titans1.webp";
-import Titans2 from "/scheme/titans2.webp";
-import Titans3 from "/scheme/titans3.webp";
-import Jaguars1 from "/scheme/jaguars1.webp";
-import Jaguars2 from "/scheme/jaguars2.webp";
-import Jaguars3 from "/scheme/jaguars3.webp";
-import Texans1 from "/scheme/texans1.webp";
-import Texans2 from "/scheme/texans2.webp";
-import Texans3 from "/scheme/texans3.webp";
+import React, { useState } from 'react';
+import { Container, Row, Col, Carousel, Badge } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPalette } from '@fortawesome/free-solid-svg-icons';
+import LazyImage from '../../../components/LazyImage'; // Import LazyImage component
+import { TEAMS } from '../../../constants';
+import { Link } from 'react-router-dom';
+import Packers1 from '/scheme/packers1.webp';
+import Packers2 from '/scheme/packers2.webp';
+import Packers3 from '/scheme/packers3.webp';
+import Bears1 from '/scheme/bears1.webp';
+import Bears2 from '/scheme/bears2.webp';
+import Bears3 from '/scheme/bears3.webp';
+import Lions1 from '/scheme/lions1.webp';
+import Lions2 from '/scheme/lions2.webp';
+import Lions3 from '/scheme/lions3.webp';
+import Vikings1 from '/scheme/vikings1.webp';
+import Vikings2 from '/scheme/vikings2.webp';
+import Vikings3 from '/scheme/vikings3.webp';
+import Cowboys1 from '/scheme/cowboys1.webp';
+import Cowboys2 from '/scheme/cowboys2.webp';
+import Cowboys3 from '/scheme/cowboys3.webp';
+import Giants1 from '/scheme/giants1.webp';
+import Giants2 from '/scheme/giants2.webp';
+import Giants3 from '/scheme/giants3.webp';
+import Eagles1 from '/scheme/eagles1.webp';
+import Eagles2 from '/scheme/eagles2.webp';
+import Eagles3 from '/scheme/eagles3.webp';
+import Commanders1 from '/scheme/commanders1.webp';
+import Commanders2 from '/scheme/commanders2.webp';
+import Commanders3 from '/scheme/commanders3.webp';
+import Buccaneers1 from '/scheme/buccaneers1.webp';
+import Buccaneers2 from '/scheme/buccaneers2.webp';
+import Buccaneers3 from '/scheme/buccaneers3.webp';
+import Saints1 from '/scheme/saints1.webp';
+import Saints2 from '/scheme/saints2.webp';
+import Saints3 from '/scheme/saints3.webp';
+import Panthers1 from '/scheme/panthers1.webp';
+import Panthers2 from '/scheme/panthers2.webp';
+import Panthers3 from '/scheme/panthers3.webp';
+import Falcons1 from '/scheme/falcons1.webp';
+import Falcons2 from '/scheme/falcons2.webp';
+import Falcons3 from '/scheme/falcons3.webp';
+import Seahawks1 from '/scheme/seahawks1.webp';
+import Seahawks2 from '/scheme/seahawks2.webp';
+import Seahawks3 from '/scheme/seahawks3.webp';
+import Niners1 from '/scheme/niners1.webp';
+import Niners2 from '/scheme/niners2.webp';
+import Niners3 from '/scheme/niners3.webp';
+import Rams1 from '/scheme/rams1.webp';
+import Rams2 from '/scheme/rams2.webp';
+import Rams3 from '/scheme/rams3.webp';
+import Cardinals1 from '/scheme/cardinals1.webp';
+import Cardinals2 from '/scheme/cardinals2.webp';
+import Cardinals3 from '/scheme/cardinals3.webp';
+import Bengals1 from '/scheme/bengals1.webp';
+import Bengals2 from '/scheme/bengals2.webp';
+import Bengals3 from '/scheme/bengals3.webp';
+import Steelers1 from '/scheme/steelers1.webp';
+import Steelers2 from '/scheme/steelers2.webp';
+import Steelers3 from '/scheme/steelers3.webp';
+import Ravens1 from '/scheme/ravens1.webp';
+import Ravens2 from '/scheme/ravens2.webp';
+import Ravens3 from '/scheme/ravens3.webp';
+import Browns1 from '/scheme/browns1.webp';
+import Browns2 from '/scheme/browns2.webp';
+import Browns3 from '/scheme/browns3.webp';
+import Bills1 from '/scheme/bills1.webp';
+import Bills2 from '/scheme/bills2.webp';
+import Bills3 from '/scheme/bills3.webp';
+import Patriots1 from '/scheme/patriots1.webp';
+import Patriots2 from '/scheme/patriots2.webp';
+import Patriots3 from '/scheme/patriots3.webp';
+import Dolphins1 from '/scheme/dolphins1.webp';
+import Dolphins2 from '/scheme/dolphins2.webp';
+import Dolphins3 from '/scheme/dolphins3.webp';
+import Jets1 from '/scheme/jets1.webp';
+import Jets2 from '/scheme/jets2.webp';
+import Jets3 from '/scheme/jets3.webp';
+import Chiefs1 from '/scheme/chiefs1.webp';
+import Chiefs2 from '/scheme/chiefs2.webp';
+import Chiefs3 from '/scheme/chiefs3.webp';
+import Raiders1 from '/scheme/raiders1.webp';
+import Raiders2 from '/scheme/raiders2.webp';
+import Raiders3 from '/scheme/raiders3.webp';
+import Chargers1 from '/scheme/chargers1.webp';
+import Chargers2 from '/scheme/chargers2.webp';
+import Chargers3 from '/scheme/chargers3.webp';
+import Broncos1 from '/scheme/broncos1.webp';
+import Broncos2 from '/scheme/broncos2.webp';
+import Broncos3 from '/scheme/broncos3.webp';
+import Colts1 from '/scheme/colts1.webp';
+import Colts2 from '/scheme/colts2.webp';
+import Colts3 from '/scheme/colts3.webp';
+import Titans1 from '/scheme/titans1.webp';
+import Titans2 from '/scheme/titans2.webp';
+import Titans3 from '/scheme/titans3.webp';
+import Jaguars1 from '/scheme/jaguars1.webp';
+import Jaguars2 from '/scheme/jaguars2.webp';
+import Jaguars3 from '/scheme/jaguars3.webp';
+import Texans1 from '/scheme/texans1.webp';
+import Texans2 from '/scheme/texans2.webp';
+import Texans3 from '/scheme/texans3.webp';
 
 // Add an array for team images to easily access them
 const teamImages = {
@@ -148,8 +148,8 @@ const TeamSelectorAndDesignOptions = () => {
 
   const handleImageError = (e, teamName, type) => {
     e.target.onerror = null; // Prevent infinite fallback loop
-    log(`Failed to load image for ${teamName} (${type})`);
-    e.target.src = "/src/assets/img/Logo.png"; // Fallback image path
+    logger.debug(`Failed to load image for ${teamName} (${type})`);
+    e.target.src = 'Logo.png'; // Fallback image path
   };
 
   return (
@@ -170,7 +170,7 @@ const TeamSelectorAndDesignOptions = () => {
                       className="d-block w-100 img-lazy"
                       src={`/teamlogos/${teamName.toLowerCase()}.png`}
                       alt={`${teamName} logo`}
-                      onError={(e) => handleImageError(e, teamName, "logo")}
+                      onError={(e) => handleImageError(e, teamName, 'logo')}
                     />
                   </Col>
                   <Col md={6}>
@@ -178,7 +178,7 @@ const TeamSelectorAndDesignOptions = () => {
                       className="d-block w-100 img-lazy"
                       src={`/fans/${teamName.toLowerCase()}fans.png`}
                       alt={`${teamName} fans`}
-                      onError={(e) => handleImageError(e, teamName, "fans")}
+                      onError={(e) => handleImageError(e, teamName, 'fans')}
                     />
                   </Col>
                 </Row>
@@ -222,7 +222,7 @@ const TeamSelectorAndDesignOptions = () => {
                             className="img-fluid rounded-lg landing-img img-lazy"
                             alt={`${teamName} Color Scheme ${idx + 1}`}
                             onError={(e) =>
-                              handleImageError(e, teamName, "colorScheme")
+                              handleImageError(e, teamName, 'colorScheme')
                             }
                           />
                         </Link>

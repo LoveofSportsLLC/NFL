@@ -8,7 +8,7 @@ import DocLayout from './layouts/Doc';
 import LandingLayout from './layouts/Landing';
 import AuthGuard from './components/guards/AuthGuard';
 import DonatePage from './pages/auth/Donate';
-import { log } from './utils/logs';
+import logger from './utils/logger.js';
 
 const Landing = lazy(() => import('./pages/landing/Landing'));
 const AboutUs = lazy(() => import('./pages/landing/Aboutus/AboutUs'));
@@ -85,19 +85,6 @@ const MigratingToNextJS = lazy(() => import('./pages/docs/MigratingToNextJS'));
 const Support = lazy(() => import('./pages/docs/Support'));
 const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
-
-const RedirectToLogin = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated, navigate]);
-
-  return null;
-};
 
 const routes = [
   {
@@ -504,6 +491,24 @@ const routes = [
   },
 ];
 
-log('Routes defined:', routes);
-
+logger.debug(
+  'Routes defined:',
+  JSON.stringify(
+    JSON.parse(JSON.stringify(routes)), // Ensure the object is mutable
+    (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (value._depth === undefined) {
+          value._depth = 0;
+        }
+        if (value._depth > 2) {
+          // Adjust the depth as needed
+          return '[Object]';
+        }
+        value._depth++;
+      }
+      return value;
+    },
+    2,
+  ),
+);
 export default routes;

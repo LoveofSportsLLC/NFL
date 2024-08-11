@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import CarouselComponent from "../../../components/CarouselComponent";
-import FilterComponent from "../../../components/FilterComponent";
-import { LATEST_NEWS_API_URL } from "../../../config";
-import placeholderImage from "/src/assets/img/logo.png";
-import { log } from "../../../utils/logs";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import CarouselComponent from '../../../components/CarouselComponent';
+import FilterComponent from '../../../components/FilterComponent';
+import { LATEST_NEWS_API_URL } from '../../../config';
+import placeholderImage from '/logo.png';
+import logger from '../../../utils/logger.js';
 
 const LatestHeadlines = () => {
   const [news, setNews] = useState([]);
   const [filteredNews, setFilteredNews] = useState([]);
-  const [filter, setFilter] = useState("7days");
-  const [team, setTeam] = useState("all");
+  const [filter, setFilter] = useState('7days');
+  const [team, setTeam] = useState('all');
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await axios.get(LATEST_NEWS_API_URL);
-        if (response.headers["content-type"].includes("application/json")) {
+        if (response.headers['content-type'].includes('application/json')) {
           const articles = response.data.articles;
           setNews(articles);
           filterNews(articles, filter, team);
         } else {
-          log("Invalid response data:", response.data);
+          logger.debug('Invalid response data:', response.data);
         }
       } catch (error) {
-        log("Error fetching news:", error);
+        logger.debug('Error fetching news:', error);
       }
     };
     fetchNews();
@@ -35,31 +35,31 @@ const LatestHeadlines = () => {
     const now = new Date();
     let filtered;
     switch (filter) {
-      case "24hrs":
+      case '24hrs':
         filtered = articles.filter(
           (article) =>
             (now - new Date(article.publishedAt)) / (1000 * 60 * 60) <= 24,
         );
         break;
-      case "2days":
+      case '2days':
         filtered = articles.filter(
           (article) =>
             (now - new Date(article.publishedAt)) / (1000 * 60 * 60) <= 48,
         );
         break;
-      case "7days":
+      case '7days':
         filtered = articles.filter(
           (article) =>
             (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 7,
         );
         break;
-      case "1month":
+      case '1month':
         filtered = articles.filter(
           (article) =>
             (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 30,
         );
         break;
-      case "2months":
+      case '2months':
         filtered = articles.filter(
           (article) =>
             (now - new Date(article.publishedAt)) / (1000 * 60 * 60 * 24) <= 60,
@@ -69,7 +69,7 @@ const LatestHeadlines = () => {
         filtered = articles;
     }
 
-    if (team !== "all") {
+    if (team !== 'all') {
       filtered = filtered.filter((article) =>
         article.title.toLowerCase().includes(team.toLowerCase()),
       );
@@ -109,7 +109,7 @@ const LatestHeadlines = () => {
       {filteredNews.length <= 3 ? (
         <div className="d-flex justify-content-around">
           {filteredNews.map((item, idx) => (
-            <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
+            <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
               <Card.Img
                 variant="top"
                 src={item.urlToImage || placeholderImage}
@@ -117,7 +117,7 @@ const LatestHeadlines = () => {
               />
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
-                <Card.Text>{item.description?.slice(0, 100) + "..."}</Card.Text>
+                <Card.Text>{item.description?.slice(0, 100) + '...'}</Card.Text>
                 <Card.Text>
                   <small>{new Date(item.publishedAt).toLocaleString()}</small>
                 </Card.Text>

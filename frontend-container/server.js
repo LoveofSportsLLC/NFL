@@ -8,18 +8,19 @@ import dotenv from 'dotenv';
 import pkg from 'express-openid-connect';
 import mime from 'mime-types';
 import * as config from './src/config.js';
+import logger from './src/utils/logger.js'; // Import the log function
 
 const { auth, requiresAuth } = pkg;
 
 dotenv.config();
 
-log('VITE_AUTH0_ISSUER_BASE_URL:', config.issuerBaseURL);
-log('VITE_AUTH0_CLIENT_ID:', config.clientId);
-log('VITE_AUTH0_SECRET:', config.secret);
-log('AUTH0_CLIENT_ID:', config.clientId);
-log('AUTH0_SECRET:', config.secret);
-log('BASE_URL:', config.baseURL);
-log('All environment variables:', process.env);
+logger.debug('VITE_AUTH0_ISSUER_BASE_URL:', config.issuerBaseURL);
+logger.debug('VITE_AUTH0_CLIENT_ID:', config.clientId);
+logger.debug('VITE_AUTH0_SECRET:', config.secret);
+logger.debug('AUTH0_CLIENT_ID:', config.clientId);
+logger.debug('AUTH0_SECRET:', config.secret);
+logger.debug('BASE_URL:', config.baseURL);
+logger.debug('All environment variables:', process.env);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const port = process.env.PORT || 3000;
@@ -28,7 +29,7 @@ const ABORT_DELAY = 10000;
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-log('Server.js', 'Running Server.js script');
+logger.debug('Server.js', 'Running Server.js script');
 
 let templateHtml = '';
 let ssrManifest;
@@ -40,7 +41,7 @@ if (isProduction) {
       await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8'),
     );
   } catch (error) {
-    log('Server.js', 'Error loading production files:', error);
+    logger.debug('Server.js', 'Error loading production files:', error);
   }
 }
 
@@ -49,10 +50,9 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.post('/log', (req, res) => {
-  const { fileName, functionName, messages, logCount } = req.body;
-  console.log(
-    `[LOG] [${fileName}:${functionName}] ${messages.join(' ')} (Log Count: ${logCount}) [CLIENT]`,
-  );
+  logger.debug('Received log:', req.body);
+  const { fileName, functionName, messages, logCount, logType } = req.body;
+  logger.debug(fileName, functionName, '', ...messages);
   res.sendStatus(200);
 });
 
@@ -67,17 +67,17 @@ const authConfig = {
     redirect_uri: config.baseURL + '/dashboard/default',
   },
 };
-log('Auth0 Config - authRequired:', authConfig.authRequired);
-log('Auth0 Config - auth0Logout:', authConfig.auth0Logout);
-log('Auth0 Config - secret:', authConfig.secret);
-log('Auth0 Config - baseURL:', authConfig.baseURL);
-log('Auth0 Config - clientID:', authConfig.clientID);
-log('Auth0 Config - issuerBaseURL:', authConfig.issuerBaseURL);
-log(
+logger.debug('Auth0 Config - authRequired:', authConfig.authRequired);
+logger.debug('Auth0 Config - auth0Logout:', authConfig.auth0Logout);
+logger.debug('Auth0 Config - secret:', authConfig.secret);
+logger.debug('Auth0 Config - baseURL:', authConfig.baseURL);
+logger.debug('Auth0 Config - clientID:', authConfig.clientID);
+logger.debug('Auth0 Config - issuerBaseURL:', authConfig.issuerBaseURL);
+logger.debug(
   'Auth0 Config - authorizationParams.response_mode:',
   authConfig.authorizationParams.response_mode,
 );
-log(
+logger.debug(
   'Auth0 Config - authorizationParams.redirect_uri:',
   authConfig.authorizationParams.redirect_uri,
 );
@@ -158,7 +158,7 @@ async function setupServer() {
       let didError = false;
 
       const onShellReady = (pipe) => {
-        log('Server.js', 'onShellReady called');
+        logger.debug('Server.js', 'onShellReady called');
         res.status(didError ? 500 : 200);
         res.set({ 'Content-Type': 'text/html' });
 
@@ -175,7 +175,7 @@ async function setupServer() {
         res.write(htmlStart + initialStateScript);
 
         transformStream.on('finish', () => {
-          log('Server.js', 'HTML fully sent');
+          logger.debug('Server.js', 'HTML fully sent');
           res.end(htmlEnd);
         });
 
@@ -183,7 +183,7 @@ async function setupServer() {
       };
 
       const onShellError = () => {
-        log('Server.js', 'onShellError called');
+        logger.debug('Server.js', 'onShellError called');
         res.status(500);
         res.set({ 'Content-Type': 'text/html' });
         res.send('<h1>Something went wrong</h1>');
@@ -191,7 +191,7 @@ async function setupServer() {
 
       const onError = (error) => {
         didError = true;
-        log('Server.js', 'Render error:', error);
+        logger.debug('Server.js', 'Render error:', error);
       };
 
       const { pipe, abort } = render(
@@ -206,7 +206,7 @@ async function setupServer() {
       // Log the server-rendered HTML chunk
       const htmlStream = new Transform({
         transform(chunk, encoding, callback) {
-          log(
+          logger.debug(
             'Server.js',
             'Server rendered HTML chunk:',
             chunk.toString().slice(0, 500) + '...[truncated]',
@@ -216,7 +216,7 @@ async function setupServer() {
       });
 
       htmlStream.on('finish', () => {
-        log('Server.js', 'Server rendered HTML fully sent');
+        logger.debug('Server.js', 'Server rendered HTML fully sent');
       });
 
       pipe(htmlStream);
@@ -228,13 +228,13 @@ async function setupServer() {
       if (vite) {
         vite.ssrFixStacktrace(e);
       }
-      log('Server.js', e.stack);
+      logger.debug('Server.js', e.stack);
       res.status(500).end(e.stack);
     }
   });
 
   app.listen(port, () => {
-    log('Server.js', `Server started at http://localhost:${port}`);
+    logger.debug('Server.js', `Server started at http://localhost:${port}`);
   });
 }
 

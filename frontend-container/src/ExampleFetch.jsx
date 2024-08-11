@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './utils/axios'; // Adjust the path as needed
-import { log } from './utils/logs';
+import logger from './utils/logger.js';
 
 const FetchDataComponent = () => {
   const [data, setData] = useState(null);
@@ -11,7 +11,7 @@ const FetchDataComponent = () => {
         const response = await axiosInstance.get('/some-endpoint');
         setData(response.data);
       } catch (error) {
-        log('ExampleFetch.jsx', 'Error fetching data:', error);
+        logger.debug('ExampleFetch.jsx', 'Error fetching data:', error);
       }
     };
     fetchData();
