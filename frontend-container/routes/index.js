@@ -1,19 +1,27 @@
-import express from 'express';
-const router = express.Router();
-import { requiresAuth } from 'express-openid-connect';
+// import express from 'express';
+// import pkg from 'express-openid-connect';
 
-router.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Auth0 Webapp sample Nodejs',
-    isAuthenticated: req.oidc.isAuthenticated(),
-  });
-});
+// const { requiresAuth } = pkg;
+// const router = express.Router();
 
-router.get('/profile', requiresAuth(), (req, res) => {
-  res.render('profile', {
-    userProfile: JSON.stringify(req.oidc.user, null, 2),
-    title: 'Profile page',
-  });
-});
+// router.get('/', (req, res) => {
+//   res.send(
+//     req.oidc.isAuthenticated()
+// /      ? res.redirect('/dashboard/default')
+//       : res.redirect('/'),
+//   );
+// });
 
-export default router;
+// router.get('/profile', requiresAuth(), (req, res) => {
+//   res.send(JSON.stringify(req.oidc.user, null, 2));
+// });
+
+// router.post('/log', (req, res) => {
+//   const { fileName, functionName, messages, logCount } = req.body;
+//   log(
+//     `[LOG] [${fileName}:${functionName}] ${messages.join(' ')} (Log Count: ${logCount}) [CLIENT]`,
+//   );
+//   res.sendStatus(200);
+// });
+
+// export default router;

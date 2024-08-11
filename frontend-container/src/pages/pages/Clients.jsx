@@ -3,12 +3,6 @@ import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 
 import { Badge, Card, Col, Container, Row, Table } from 'react-bootstrap';
 
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
-import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
-import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
-import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
-import avatar5 from '../../assets/img/avatars/avatar-5.jpg';
-
 const ClientsList = () => (
   <Card>
     <Card.Header>
@@ -29,7 +23,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar3}
+                src="/avatars/avatar-3.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -46,7 +40,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar1}
+                src="/avatars/avatar.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -63,7 +57,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar4}
+                src="/avatars/avatar-4.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -80,7 +74,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar2}
+                src="/avatars/avatar-2.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -97,7 +91,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar3}
+                src="/avatars/avatar-3.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -114,7 +108,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar4}
+                src="/avatars/avatar-4.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -131,7 +125,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar1}
+                src="/avatars/avatar.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -148,7 +142,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar5}
+                src="/avatars/avatar-5.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -165,7 +159,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar2}
+                src="/avatars/avatar-2.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -182,7 +176,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar5}
+                src="/avatars/avatar-5.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -199,7 +193,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar1}
+                src="/avatars/avatar.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -216,7 +210,7 @@ const ClientsList = () => (
           <tr>
             <td>
               <img
-                src={avatar4}
+                src="/avatars/avatar-4.jpg"
                 width="32"
                 height="32"
                 className="rounded-circle my-n1"
@@ -245,7 +239,7 @@ const Single = () => (
       <Row className="g-0">
         <Col sm="3" xl="12" className="col-xxl-3 text-center">
           <img
-            src={avatar3}
+            src="/avatars/avatar-3.jpg"
             width="64"
             height="64"
             className="rounded-circle mt-2"

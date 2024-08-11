@@ -2,45 +2,83 @@ import fs from 'node:fs/promises';
 import express from 'express';
 import { Transform } from 'node:stream';
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
-import { log } from './src/utils/logs.js';
+import path from 'path';
 import dotenv from 'dotenv';
-import pkg from 'express-openid-connect';
 import mime from 'mime-types';
-import * as config from './src/config.js';
+import { log } from './src/utils/logs.js'; // Import the log function
 
-const { auth, requiresAuth } = pkg;
-
+// Load environment variables from .env file
 dotenv.config();
 
-log('VITE_AUTH0_ISSUER_BASE_URL:', config.issuerBaseURL);
-log('VITE_AUTH0_CLIENT_ID:', config.clientId);
-log('VITE_AUTH0_SECRET:', config.secret);
-log('AUTH0_CLIENT_ID:', config.clientId);
-log('AUTH0_SECRET:', config.secret);
-log('BASE_URL:', config.baseURL);
-log('All environment variables:', process.env);
-
 const isProduction = process.env.NODE_ENV === 'production';
+const isInDocker = process.env.IN_DOCKER === 'true';
 const port = process.env.PORT || 3000;
-const base = process.env.BASE || '/';
+const base = process.env.BASE || './';
 const ABORT_DELAY = 10000;
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-log('Server.js', 'Running Server.js script');
+// log('Server.js', 'Configuration Values:', '', {
+//   baseURL: process.env.BASE_URL,
+//   newsApiKey: process.env.NEWS_API_KEY,
+//   HIGHLIGHTS_API_URL: process.env.HIGHLIGHTS_API_URL,
+//   INJURIES_API_URL: process.env.INJURIES_API_URL,
+//   LATEST_NEWS_API_URL: process.env.LATEST_NEWS_API_URL,
+//   YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+//   YOUTUBE_CHANNEL_ID: process.env.YOUTUBE_CHANNEL_ID,
+//   domain: process.env.AUTH0_DOMAIN,
+//   clientId: process.env.AUTH0_CLIENT_ID,
+//   audience: process.env.API_AUDIENCE,
+//   YOUTUBE_CLIENT_ID: process.env.YOUTUBE_CLIENT_ID,
+//   AZURE_ML_ENDPOINT: process.env.AZURE_ML_ENDPOINT,
+//   secret: process.env.AUTH0_SECRET,
+//   issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+//   VITE_APP_INSIGHTS_CONNECTION_STRING:
+//     process.env.VITE_APP_INSIGHTS_CONNECTION_STRING,
+//   VITE_APP_INSIGHTS_INSTRUMENTATION_KEY:
+//     process.env.VITE_APP_INSIGHTS_INSTRUMENTATION_KEY,
+// });
+
+// log('Server.js', 'Running Server.js script', '');
+
+// Environment checks
+const isSSR = process.env.SSR === 'true';
+const isServer = typeof process !== 'undefined' && process.env.NODE_ENV;
+const isLocal =
+  isServer &&
+  (process.env.GIT_WORKFLOW === '0' || process.env.DOCKER_ENV === 'false');
+const isCluster = isServer && process.env.GIT_WORKFLOW === '1';
+
+// if (isServer) {
+//   if (isLocal) {
+//     log('', 'Running in local server environment (isLocal).', '');
+//   } else if (isCluster) {
+//     log('', 'Running in cluster server environment (isCluster).', '');
+//   } else {
+//     log('', 'Running in unknown server environment.', '');
+//   }
+// } else {
+//   log('', 'Running in client environment (browser).', '');
+// }
 
 let templateHtml = '';
 let ssrManifest;
 
 if (isProduction) {
   try {
-    templateHtml = await fs.readFile('./dist/client/index.html', 'utf-8');
+    templateHtml = await fs.readFile(
+      path.join(__dirname, 'dist/client/index.html'),
+      'utf-8',
+    );
     ssrManifest = JSON.parse(
-      await fs.readFile('./dist/client/.vite/ssr-manifest.json', 'utf-8'),
+      await fs.readFile(
+        path.join(__dirname, 'dist/client/.vite/ssr-manifest.json'),
+        'utf-8',
+      ),
     );
   } catch (error) {
-    log('Server.js', 'Error loading production files:', error);
+    log('Server.js', 'Error loading production files:', '', error);
+    process.exit(1);
   }
 }
 
@@ -48,43 +86,6 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-app.post('/log', (req, res) => {
-  const { fileName, functionName, messages, logCount } = req.body;
-  console.log(
-    `[LOG] [${fileName}:${functionName}] ${messages.join(' ')} (Log Count: ${logCount}) [CLIENT]`,
-  );
-  res.sendStatus(200);
-});
-
-const authConfig = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: config.secret,
-  baseURL: config.baseURL,
-  clientID: config.clientId,
-  issuerBaseURL: config.issuerBaseURL,
-  authorizationParams: {
-    redirect_uri: config.baseURL + '/dashboard/default',
-  },
-};
-log('Auth0 Config - authRequired:', authConfig.authRequired);
-log('Auth0 Config - auth0Logout:', authConfig.auth0Logout);
-log('Auth0 Config - secret:', authConfig.secret);
-log('Auth0 Config - baseURL:', authConfig.baseURL);
-log('Auth0 Config - clientID:', authConfig.clientID);
-log('Auth0 Config - issuerBaseURL:', authConfig.issuerBaseURL);
-log(
-  'Auth0 Config - authorizationParams.response_mode:',
-  authConfig.authorizationParams.response_mode,
-);
-log(
-  'Auth0 Config - authorizationParams.redirect_uri:',
-  authConfig.authorizationParams.redirect_uri,
-);
-
-app.use(auth(authConfig));
-
-// Middleware to handle correct MIME types
 app.use((req, res, next) => {
   const ext = path.extname(req.url);
   const mimeType = mime.lookup(ext);
@@ -94,25 +95,29 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware to serve static files
-app.use(
-  '/src/assets/img',
-  express.static(path.join(__dirname, 'src/assets/img')),
-);
-app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'dist/client')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  if (req.oidc.isAuthenticated()) {
-    res.redirect('/dashboard/default');
-  } else {
-    res.redirect(config.baseURL);
-  }
+  log('Server.js', 'Incoming request', '/');
+  res.redirect(baseURL);
 });
 
-// The /profile route will show the user profile as JSON
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
+app.use((req, res, next) => {
+  log('Server.js', 'Incoming request', req.url);
+  next();
+});
+
+app.post('/log', (req, res) => {
+  console.log('Received log:', req.body);
+  const { fileName, functionName, messages, logCount, logType } = req.body;
+  log(fileName, functionName, '', ...messages);
+  res.sendStatus(200);
+});
+
+app.use((err, req, res, next) => {
+  log('Server.js', 'Unhandled error:', '', err);
+  res.status(500).send('Internal Server Error');
 });
 
 async function setupServer() {
@@ -128,11 +133,21 @@ async function setupServer() {
     const compression = (await import('compression')).default;
     const sirv = (await import('sirv')).default;
     app.use(compression());
-    app.use(base, sirv('./dist/client', { extensions: [] }));
+    app.use(
+      base,
+      sirv('./dist/client', {
+        extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg', 'svg'],
+      }),
+    );
   }
 
   app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/client', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist/client/index.html'), (err) => {
+      if (err) {
+        log('Server.js', 'Error sending index.html:', '', err);
+        res.status(500).send('Server Error');
+      }
+    });
   });
 
   app.use('*', async (req, res) => {
@@ -141,10 +156,7 @@ async function setupServer() {
 
       let template;
       let render;
-      const initialData = {
-        user: req.oidc.user || null,
-        authConfig: authConfig,
-      };
+      const initialData = {};
 
       if (!isProduction) {
         template = await fs.readFile('./index.html', 'utf-8');
@@ -158,7 +170,7 @@ async function setupServer() {
       let didError = false;
 
       const onShellReady = (pipe) => {
-        log('Server.js', 'onShellReady called');
+        log('Server.js', 'onShellReady called', '');
         res.status(didError ? 500 : 200);
         res.set({ 'Content-Type': 'text/html' });
 
@@ -175,7 +187,7 @@ async function setupServer() {
         res.write(htmlStart + initialStateScript);
 
         transformStream.on('finish', () => {
-          log('Server.js', 'HTML fully sent');
+          log('Server.js', 'HTML fully sent', '');
           res.end(htmlEnd);
         });
 
@@ -183,7 +195,7 @@ async function setupServer() {
       };
 
       const onShellError = () => {
-        log('Server.js', 'onShellError called');
+        log('Server.js', 'onShellError called', '');
         res.status(500);
         res.set({ 'Content-Type': 'text/html' });
         res.send('<h1>Something went wrong</h1>');
@@ -191,7 +203,7 @@ async function setupServer() {
 
       const onError = (error) => {
         didError = true;
-        log('Server.js', 'Render error:', error);
+        log('Server.js', 'Render error:', '', error);
       };
 
       const { pipe, abort } = render(
@@ -203,20 +215,14 @@ async function setupServer() {
         initialData,
       );
 
-      // Log the server-rendered HTML chunk
       const htmlStream = new Transform({
         transform(chunk, encoding, callback) {
-          log(
-            'Server.js',
-            'Server rendered HTML chunk:',
-            chunk.toString().slice(0, 500) + '...[truncated]',
-          );
           callback(null, chunk);
         },
       });
 
       htmlStream.on('finish', () => {
-        log('Server.js', 'Server rendered HTML fully sent');
+        log('Server.js', 'Server rendered HTML fully sent', '');
       });
 
       pipe(htmlStream);
@@ -228,13 +234,13 @@ async function setupServer() {
       if (vite) {
         vite.ssrFixStacktrace(e);
       }
-      log('Server.js', e.stack);
+      log('Server.js', e.stack, '');
       res.status(500).end(e.stack);
     }
   });
 
   app.listen(port, () => {
-    log('Server.js', `Server started at http://localhost:${port}`);
+    log('Server.js', `Server started at http://localhost:${port}`, '');
   });
 }
 

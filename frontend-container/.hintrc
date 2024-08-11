@@ -1,0 +1,9 @@
+{
+  "extends": ["web-recommended"],
+  "connector": {
+    "name": "puppeteer",
+    "options": {
+      "waitUntil": "networkidle0"
+    }
+  }
+}

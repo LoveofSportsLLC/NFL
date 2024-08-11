@@ -4,11 +4,6 @@ import { Card, Col, Container, Row, Table } from 'react-bootstrap';
 
 import { Edit2, Trash } from 'react-feather';
 
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
-import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
-import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
-import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
-
 const BasicTable = () => (
   <Card>
     <Card.Header>
@@ -240,7 +235,7 @@ const HoverableRows = () => (
         <tr>
           <td>
             <img
-              src={avatar4}
+              src="/avatars/avatar-4.jpg"
               width="48"
               height="48"
               className="rounded-circle me-2"
@@ -254,7 +249,7 @@ const HoverableRows = () => (
         <tr>
           <td>
             <img
-              src={avatar1}
+              src="/avatars/avatar.jpg"
               width="48"
               height="48"
               className="rounded-circle me-2"
@@ -268,7 +263,7 @@ const HoverableRows = () => (
         <tr>
           <td>
             <img
-              src={avatar2}
+              src="/avatars/avatar-2.jpg"
               width="48"
               height="48"
               className="rounded-circle me-2"
@@ -282,7 +277,7 @@ const HoverableRows = () => (
         <tr>
           <td>
             <img
-              src={avatar3}
+              src="/avatars/avatar-3.jpg"
               width="48"
               height="48"
               className="rounded-circle me-2"

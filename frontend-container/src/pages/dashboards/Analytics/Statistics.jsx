@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Badge, Col, Card, Row } from "react-bootstrap";
 import { ArrowUpRight, Clock, Users } from "react-feather";
 
-import illustration from "../../../assets/img/illustrations/searching.png";
+import illustration from '/illustrations/searching.png';
 
 const Statistics = () => {
   const { t } = useTranslation();

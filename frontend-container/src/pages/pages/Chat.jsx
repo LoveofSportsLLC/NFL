@@ -12,11 +12,7 @@ import {
   ListGroup,
   Row,
 } from 'react-bootstrap';
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
-import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
-import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
-import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
-import avatar5 from '../../assets/img/avatars/avatar-5.jpg';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { Phone, Video, MoreHorizontal } from 'react-feather';
@@ -25,7 +21,7 @@ const ChatMessage = ({ position, avatar, name, children, time }) => (
   <div className={`chat-message-${position} pb-4`}>
     <div>
       <img
-        src={avatar}
+        src="/avatars/avatar.jpg"
         className="rounded-circle me-1"
         alt={name}
         width="40"
@@ -85,7 +81,7 @@ const Chat = () => {
                 </Badge>
                 <div className="d-flex">
                   <img
-                    src={avatar5}
+                    src="/avatars/avatar-5.jpg"
                     className="rounded-circle me-1"
                     alt="Ashley Briggs"
                     width="40"
@@ -109,7 +105,7 @@ const Chat = () => {
                 </Badge>
                 <div className="d-flex">
                   <img
-                    src={avatar2}
+                    src="/avatars/avatar-2.jpg"
                     className="rounded-circle me-1"
                     alt="Carl Jenkins"
                     width="40"
@@ -130,7 +126,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar3}
+                    src="/avatars/avatar-3.jpg"
                     className="rounded-circle me-1"
                     alt="Bertha Martin"
                     width="40"
@@ -151,7 +147,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar4}
+                    src="/avatars/avatar-4.jpg"
                     className="rounded-circle me-1"
                     alt="Stacie Hall"
                     width="40"
@@ -172,7 +168,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar5}
+                    src="/avatars/avatar-5.jpg"
                     className="rounded-circle me-1"
                     alt="Fiona Green"
                     width="40"
@@ -193,7 +189,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar2}
+                    src="/avatars/avatar-2.jpg"
                     className="rounded-circle me-1"
                     alt="Doris Wilder"
                     width="40"
@@ -214,7 +210,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar4}
+                    src="/avatars/avatar-4.jpg"
                     className="rounded-circle me-1"
                     alt="Haley Kennedy"
                     width="40"
@@ -235,7 +231,7 @@ const Chat = () => {
               <ListGroup.Item action tag="a" href="#" className="border-0">
                 <div className="d-flex">
                   <img
-                    src={avatar3}
+                    src="/avatars/avatar-3.jpg"
                     className="rounded-circle me-1"
                     alt="Jennifer Chang"
                     width="40"
@@ -261,7 +257,7 @@ const Chat = () => {
                 <div className="d-flex align-items-center py-1">
                   <div className="position-relative">
                     <img
-                      src={avatar3}
+                      src="/avatars/avatar-3.jpg"
                       className="rounded-circle me-1"
                       alt="Bertha Martin"
                       width="40"
@@ -297,7 +293,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:33 am"
                   >
                     Lorem ipsum dolor sit amet, vis erat denique in, dicunt
@@ -307,7 +303,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:34 am"
                   >
                     Sit meis deleniti eu, pri vidit meliore docendi ut, an eum
@@ -317,7 +313,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:35 am"
                   >
                     Cum ea graeci tractatos.
@@ -326,7 +322,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:36 am"
                   >
                     Sed pulvinar, massa vitae interdum pulvinar, risus lectus
@@ -338,7 +334,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:37 am"
                   >
                     Cras pulvinar, sapien id vehicula aliquet, diam velit
@@ -348,7 +344,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:38 am"
                   >
                     Lorem ipsum dolor sit amet, vis erat denique in, dicunt
@@ -358,7 +354,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:39 am"
                   >
                     Sit meis deleniti eu, pri vidit meliore docendi ut, an eum
@@ -368,7 +364,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:40 am"
                   >
                     Cum ea graeci tractatos.
@@ -377,7 +373,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:41 am"
                   >
                     Morbi finibus, lorem id placerat ullamcorper, nunc enim
@@ -387,7 +383,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:42 am"
                   >
                     Sed pulvinar, massa vitae interdum pulvinar, risus lectus
@@ -399,7 +395,7 @@ const Chat = () => {
                   <ChatMessage
                     position="right"
                     name="You"
-                    avatar={avatar1}
+                    avatar="/avatars/avatar.jpg"
                     time="2:43 am"
                   >
                     Lorem ipsum dolor sit amet, vis erat denique in, dicunt
@@ -409,7 +405,7 @@ const Chat = () => {
                   <ChatMessage
                     position="left"
                     name="Bertha Martin"
-                    avatar={avatar3}
+                    avatar="/avatars/avatar-3.jpg"
                     time="2:44 am"
                   >
                     Sit meis deleniti eu, pri vidit meliore docendi ut, an eum

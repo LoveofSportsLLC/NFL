@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import screenshotFootballAnalytics from '../../../assets/img/photos/screenshot-football-analytics.png';
+import screenshotFootballAnalytics from '/photos/screenshot-football-analytics.png';
 
 const Intro = ({ handleDonateClick }) => (
   <section className="landing-intro pt-5 pt-lg-6 pb-5 pb-lg-7">

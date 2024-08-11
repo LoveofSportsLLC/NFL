@@ -1,14 +1,13 @@
-import React from "react";
-import { Dropdown } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook
-import { PieChart, Settings, User } from "react-feather";
-import { useAuth0 } from "@auth0/auth0-react";
-import avatar1 from "../../assets/img/avatars/avatar.jpg";
-import LogoutButton from "../LogoutButton";
+import React from 'react';
+import { Dropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Settings, User } from 'react-feather';
+import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from '../LogoutButton';
 
 const NavbarUser = () => {
   const { user, isAuthenticated, logout } = useAuth0();
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   return (
     <Dropdown className="nav-item" align="end">
@@ -19,7 +18,7 @@ const NavbarUser = () => {
       </span>
       <span className="d-none d-sm-inline-block">
         <Dropdown.Toggle as="a" className="nav-link">
-          {isAuthenticated ? ( // Check if user is authenticated
+          {isAuthenticated ? (
             <>
               {user.picture && (
                 <img
@@ -31,16 +30,16 @@ const NavbarUser = () => {
               <span className="text-dark">{user.name}</span>
             </>
           ) : (
-            "Guest" // Display "Guest" if not authenticated
+            'Guest'
           )}
         </Dropdown.Toggle>
       </span>
       <Dropdown.Menu drop="end">
-        <Dropdown.Item onClick={() => navigate("/pages/profile")}>
+        <Dropdown.Item onClick={() => navigate('/pages/profile')}>
           <User size={18} className="align-middle me-2" />
           Profile
         </Dropdown.Item>
-        <Dropdown.Item onClick={() => navigate("/pages/settings")}>
+        <Dropdown.Item onClick={() => navigate('/pages/settings')}>
           <Settings size={18} className="align-middle me-2" />
           Settings & Privacy
         </Dropdown.Item>

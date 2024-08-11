@@ -1,4 +1,4 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
@@ -10,13 +10,31 @@ import svgrPlugin from 'vite-plugin-svgr';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import { resolve } from 'path';
 
+// Exclude server-only modules from the client bundle
+const excludeModules = ['stream', 'readable-stream'];
+
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
-  const isSSR = process.env.BUILD_TARGET === 'ssr';
+  const isDocker = process.env.DOCKER_ENV === 'true';
+  const isSSR = mode === 'ssr';
+
+  const rootPath = isDocker ? '/app' : './';
+  const outputDir = isDocker ? '/app/dist' : 'dist';
+  const publicDir = isDocker ? '/app/public' : 'public';
+
+  console.log('Vite Configuration:', {
+    isProduction,
+    isDocker,
+    isSSR,
+    rootPath,
+    outputDir,
+    publicDir,
+  });
 
   return {
-    root: './', // Ensure this points to the directory containing index.html
-    publicDir: 'public',
+    base: rootPath,
+    root: rootPath,
+    publicDir: publicDir,
     server: {
       historyApiFallback: true,
       proxy: {
@@ -30,29 +48,28 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
       },
-      hmr: {
-        overlay: true,
-      },
+      hmr: isProduction ? false : { overlay: true },
     },
     plugins: [
-      react({
-        jsxRuntime: 'automatic',
-      }),
+      react({ jsxRuntime: 'automatic' }),
       commonjs({
         include: /node_modules/,
         transformMixedEsModules: true,
         requireReturnsDefault: 'auto',
       }),
       nodeResolve({
-        browser: true,
-        preferBuiltins: true,
+        browser: true, // ensures we're resolving browser-compatible modules
+        preferBuiltins: true, // prefers built-in modules (useful for SSR)
       }),
       nodePolyfills({
         protocolImports: true,
+        buffer: true,
+        process: true,
+        stream: true,
+        crypto: true,
       }),
-      splitVendorChunkPlugin(),
       replace({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'process.env.NODE_ENV': JSON.stringify(mode),
         preventAssignment: true,
       }),
       isProduction &&
@@ -60,45 +77,40 @@ export default defineConfig(({ mode }) => {
           compress: true,
           mangle: true,
           module: true,
-          format: {
-            comments: false,
-          },
+          format: { comments: false },
         }),
       Inspect({ build: true, outputDir: '.vite-inspect' }),
       svgrPlugin({ exportType: 'component', svgrOptions: { icon: true } }),
       ViteEjsPlugin(),
     ].filter(Boolean),
-    define: {
-      'process.env': process.env,
-    },
     resolve: {
       alias: {
-        '~/runtimeConfig': resolve(__dirname, './runtimeConfig.browser'),
+        '~/runtimeConfig': resolve(rootPath, './runtimeConfig.browser'),
         'react/jsx-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-runtime.js',
         ),
         'react/jsx-dev-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-dev-runtime.js',
         ),
-        '@': resolve(__dirname, 'src'),
+        '@': resolve(rootPath, './src'),
       },
     },
     build: {
       minify: isProduction ? 'terser' : false,
-      outDir: isSSR ? 'dist/server' : 'dist/client',
+      outDir: isSSR ? `${outputDir}/server` : `${outputDir}/client`,
       cssCodeSplit: true,
-      chunkSizeWarningLimit: 300,
-      ssrManifest: !isSSR,
+      chunkSizeWarningLimit: 3000,
+      ssrManifest: isSSR,
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'), // Ensure this points to the correct file
-          'entry-client': resolve(__dirname, 'src/entry-client.jsx'),
-          'entry-server': resolve(__dirname, 'src/entry-server.jsx'),
-          light: resolve(__dirname, 'src/assets/scss/light.scss'),
-          dark: resolve(__dirname, 'src/assets/scss/dark.scss'),
-          team: resolve(__dirname, 'src/assets/scss/team-theme.scss'),
+          main: resolve(rootPath, 'index.html'),
+          'entry-client': resolve(rootPath, 'src/entry-client.jsx'),
+          'entry-server': resolve(rootPath, 'src/entry-server.jsx'),
+          light: resolve(rootPath, 'src/assets/scss/light.scss'),
+          dark: resolve(rootPath, 'src/assets/scss/dark.scss'),
+          team: resolve(rootPath, 'src/assets/scss/team-theme.scss'),
         },
         output: {
           assetFileNames: 'assets/[name][extname]',
@@ -106,13 +118,20 @@ export default defineConfig(({ mode }) => {
           compact: true,
           entryFileNames: '[name].js',
         },
-        external: [],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+              .toString();
+          }
+        },
+        external: excludeModules,
       },
       target: 'esnext',
       sourcemap: true,
-      commonjsOptions: {
-        include: ['warning'],
-      },
+      commonjsOptions: { include: ['warning'] },
     },
     optimizeDeps: {
       include: [
@@ -135,7 +154,7 @@ export default defineConfig(({ mode }) => {
         '@restart/ui',
         'warning',
       ],
-      exclude: ['@react-bootstrap', '@restart'],
+      exclude: ['@react-bootstrap', '@restart', ...excludeModules],
     },
     ssr: {
       noExternal: [

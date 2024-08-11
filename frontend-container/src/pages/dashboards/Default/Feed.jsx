@@ -2,10 +2,6 @@ import React from "react";
 
 import { Badge, Button, Card } from "react-bootstrap";
 
-import avatar1 from "../../../assets/img/avatars/avatar.jpg";
-import avatar4 from "../../../assets/img/avatars/avatar-4.jpg";
-import avatar5 from "../../../assets/img/avatars/avatar-5.jpg";
-
 const Feed = () => (
   <Card className="flex-fill w-100">
     <Card.Header>
@@ -17,7 +13,7 @@ const Feed = () => (
     <Card.Body>
       <div className="d-flex">
         <img
-          src={avatar5}
+          src="/avatars/avatar-5.jpg"
           width="36"
           height="36"
           className="rounded-circle me-2"
@@ -36,7 +32,7 @@ const Feed = () => (
       <hr />
       <div className="d-flex">
         <img
-          src={avatar1}
+          src="/avatars/avatar.jpg"
           width="36"
           height="36"
           className="rounded-circle me-2"
@@ -58,7 +54,7 @@ const Feed = () => (
       <hr />
       <div className="d-flex">
         <img
-          src={avatar4}
+          src="/avatars/avatar-4.jpg"
           width="36"
           height="36"
           className="rounded-circle me-2"

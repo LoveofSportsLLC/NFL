@@ -3,7 +3,7 @@ import { Col, Card, Badge, Row } from "react-bootstrap";
 
 import { Activity, ShoppingBag, ShoppingCart } from "react-feather";
 
-import illustration from "../../../assets/img/illustrations/social.png";
+import illustration from '/illustrations/social.png';
 
 const Statistics = () => (
   <Row>

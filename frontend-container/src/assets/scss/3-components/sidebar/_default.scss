@@ -160,9 +160,15 @@ a.sidebar-link {
 
   svg {
     @include theme("fill", $sidebar-brand-icon-color);
+    & {
     height: 24px;
+    }
+    & {
     width: 24px;
+    }
+    & {
     margin-right: 0.15rem;
+    }
 
     path:first-child {
       @include theme("fill", $sidebar-brand-icon-top-color);
@@ -231,10 +237,8 @@ body:not([data-sidebar-position="right"]) {
     // Workaround for IE bug, more info:
     // https://stackoverflow.com/a/25850649
     @media (min-width: 1px) and (max-width: #{map-get($grid-breakpoints, 'lg') - .02px}) {
-      // Sidebar default state (on mobile)
       margin-left: -$sidebar-width;
 
-      // Sidebar collapsed state (on mobile)
       &.collapsed {
         margin-left: 0;
       }
@@ -256,10 +260,8 @@ body[data-sidebar-position="right"] {
     // Workaround for IE bug, more info:
     // https://stackoverflow.com/a/25850649
     @media (min-width: 1px) and (max-width: #{map-get($grid-breakpoints, 'lg') - .02px}) {
-      // Sidebar default state (on mobile)
       margin-right: -$sidebar-width;
 
-      // Sidebar collapsed state (on mobile)
       &.collapsed {
         margin-right: 0;
       }
@@ -286,5 +288,18 @@ body[data-sidebar-position="right"] {
   &,
   strong {
     @include theme("color", $sidebar-cta-color);
+  }
+}
+
+// Sidebar default state (on mobile)
+@media (min-width: 1px) and (max-width: #{map-get($grid-breakpoints, 'lg') - .02px}) {
+  .sidebar {
+    margin-left: -$sidebar-width;
+    margin-right: -$sidebar-width;
+
+    &.collapsed {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }

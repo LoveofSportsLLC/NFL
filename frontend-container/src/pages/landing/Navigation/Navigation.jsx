@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
-import logo from "../../../assets/img/logo.svg";
+import logo from '/logo.svg';
 import AboutUsModal from "../Aboutus/AboutUs";
 import SupportModal from "../Aboutus/SupportModal";
 import DonateModal from "../../auth/DonateModal";

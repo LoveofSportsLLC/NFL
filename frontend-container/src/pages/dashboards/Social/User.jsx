@@ -3,13 +3,11 @@ import { Button, Card } from "react-bootstrap";
 
 import { MessageSquare } from "react-feather";
 
-import avatar1 from "../../../assets/img/avatars/avatar.jpg";
-
 const User = () => (
   <Card className="flex-fill mb-3">
     <Card.Body className="text-center">
       <img
-        src={avatar1}
+        src="/avatars/avatar.jpg"
         alt="Chris Wood"
         className="img-fluid rounded-circle mb-2"
         width="128"
@@ -20,7 +18,7 @@ const User = () => (
       <div>
         <Button variant="primary" size="sm">
           Follow
-        </Button>{" "}
+        </Button>{' '}
         <Button variant="primary" size="sm">
           <MessageSquare width={16} height={16} /> Message
         </Button>

@@ -6,7 +6,7 @@ import FilterComponent from "../../../components/FilterComponent";
 import CarouselComponent from "../../../components/CarouselComponent";
 import { HIGHLIGHTS_API_URL } from "../../../config";
 import { axiosRetry } from "../../../utils/retry";
-import placeholderImage from "/src/assets/img/logo.png";
+import placeholderImage from "/logo.png";
 import { log } from "../../../utils/logs";
 
 const FeaturedHighlights = () => {

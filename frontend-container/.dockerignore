@@ -13,3 +13,10 @@ pnpm-debug.log*
 !.env.project
 !.env.vault
 .env.me
+.hintrc
+.history/
+.vite-inspect/
+hint-report/
+.vscode/
+__azurite_db_queue__.json
+__azurite_db_queue_extent__.json

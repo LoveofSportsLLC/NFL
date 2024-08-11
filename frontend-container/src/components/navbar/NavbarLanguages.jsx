@@ -1,28 +1,23 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Dropdown } from "react-bootstrap";
-
-import usFlag from "../../assets/img/flags/us.png";
-import frFlag from "../../assets/img/flags/fr.png";
-import deFlag from "../../assets/img/flags/de.png";
-import nlFlag from "../../assets/img/flags/nl.png";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Dropdown } from 'react-bootstrap';
 
 const languageOptions = {
   en: {
-    icon: usFlag,
-    name: "English",
+    icon: '/flags/us.png',
+    name: 'English',
   },
   fr: {
-    icon: frFlag,
-    name: "French",
+    icon: '/flags/fr.png',
+    name: 'French',
   },
   de: {
-    icon: deFlag,
-    name: "German",
+    icon: '/flags/de.png',
+    name: 'German',
   },
   nl: {
-    icon: nlFlag,
-    name: "Dutch",
+    icon: '/flags/nl.png',
+    name: 'Dutch',
   },
 };
 
@@ -44,7 +39,7 @@ const NavbarLanguages = () => {
           >
             <img
               src={languageOptions[language].icon}
-              alt="English"
+              alt={languageOptions[language].name}
               width="20"
               className="align-middle me-1"
             />
