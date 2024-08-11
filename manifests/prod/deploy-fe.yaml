@@ -27,6 +27,8 @@ spec:
           image: loveofsports.azurecr.io/fe:prodlatest
           imagePullPolicy: Always
           env:
+            - name: GIT_WORKFLOW
+              value: "1"
             - name: FRONTEND_SERVICE_HOST
               value: frontend
             - name: FRONTEND_SERVICE_PORT
@@ -63,6 +65,8 @@ spec:
               value: "redis-service"
             - name: BACKEND_HOST
               value: "backend-service"
+            - name: DOCKER_ENV
+              value: "true"
             - name: AUTH0_DOMAIN
               valueFrom:
                 secretKeyRef:
