@@ -51,7 +51,7 @@ amplifytools.xcconfig
 # Misc
 NFL-Stats/
 **.idea
-**.vite-inspect
+
 
 # Sentry Config File
 .env.sentry-build-plugin

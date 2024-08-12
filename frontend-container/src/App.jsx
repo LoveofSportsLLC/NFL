@@ -11,7 +11,7 @@ import SidebarProvider from './contexts/SidebarProvider';
 import LayoutProvider from './contexts/LayoutProvider';
 import ChartJsDefaults from './utils/ChartJsDefaults';
 import ErrorBoundary from './components/ErrorBoundary';
-import { log, compareHtml } from './utils/logs';
+import logger from './utils/logger.js';
 import 'custom-event-polyfill';
 import useHelmet from './utils/HelmetLoader';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
@@ -25,9 +25,9 @@ import {
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
 
-// log('App.jsx', 'Starting execution');
-// log('App.jsx Client ID:', clientId);
-// log('App.jsx Domain:', domain);
+// logger.debug('App.jsx', 'Starting execution');
+// logger.debug('App.jsx Client ID:', clientId);
+// logger.debug('App.jsx Domain:', domain);
 
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
@@ -36,7 +36,7 @@ let appInsights;
 const reactPlugin = new ReactPlugin();
 
 const initializeAppInsights = () => {
-  log('App.jsx', 'Initializing Application Insights');
+  logger.debug('App.jsx', 'Initializing Application Insights');
   import('history').then(({ createBrowserHistory }) => {
     const browserHistory = createBrowserHistory({ basename: '' });
     appInsights = new ApplicationInsights({
@@ -51,7 +51,7 @@ const initializeAppInsights = () => {
       },
     });
     appInsights.loadAppInsights();
-    log('App.jsx', 'Application Insights initialized');
+    logger.debug('App.jsx', 'Application Insights initialized');
   });
 };
 
@@ -61,10 +61,12 @@ function App({ initialData }) {
   const Helmet = useHelmet();
 
   useEffect(() => {
-    log('App.jsx', 'App component mounted', { initialData });
+    logger.debug('App.jsx', 'App component mounted', { initialData });
   }, [initialData]);
 
-  log('App.jsx', 'Rendering Application with routeContent:', { routeContent });
+  logger.debug('App.jsx', 'Rendering Application with routeContent:', {
+    routeContent,
+  });
   return (
     <Wrapper>
       <React.Fragment>
@@ -93,12 +95,12 @@ function App({ initialData }) {
 
 export default function WrappedApp({ initialData }) {
   useEffect(() => {
-    log('App.jsx', 'WrappedApp component mounted', { initialData });
+    logger.debug('App.jsx', 'WrappedApp component mounted', { initialData });
     const serverHTML = document.documentElement.innerHTML;
 
     setTimeout(() => {
       const clientHTML = document.documentElement.innerHTML;
-      compareHtml(serverHTML, clientHTML);
+      //compareHtml(serverHTML, clientHTML);
     }, 1000); // Wait a bit to ensure hydration is complete
   }, [initialData]);
 

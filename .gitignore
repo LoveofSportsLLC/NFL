@@ -160,8 +160,18 @@ MANIFEST
 *.manifest
 *.spec
 
-.history/
-
+# Installer logs
+/.history/
+/.vs/
+/.vscode/
+/frontend-container/.history/
+/frontend-container/.vite-inspect/
+/frontend-container/.vscode/
+/frontend-container/hint-report/
+/frontend-container/log/
+hint-report/
+log/
+.vscode/
 
 # Installer logs
 pip-log.txt
@@ -351,5 +361,8 @@ activate_conda.sh
 59db6113-3c92-4909-8abe-0637206250d7:Zone.Identifier
 AML/
 WSL2-Linux-Kernal/
-.history/
-.vite-insptect/
+
+
+
+
+

@@ -3,7 +3,7 @@ import React from 'react';
 import useHelmet from '../../utils/HelmetLoader';
 import { Col, Container, Row } from 'react-bootstrap';
 import Code from '../../components/Code';
-import { log } from '../../utils/logs'; // Import the log utility
+import logger from '../../utils/logger.js'; // Import the log utility
 
 const Intro = () => (
   <div className="mb-5">
@@ -46,11 +46,11 @@ const Axios = () => (
     <Code>{`axios.get('/api/user?id=12345')
 .then(function (response) {
   // handle success
-  log("APICalls.jsx", "Axios.GET", "response", response);
+  logger.debug("APICalls.jsx", "Axios.GET", "response", response);
 })
 .catch(function (error) {
   // handle error
-  log("APICalls.jsx", "Axios.GET", "error", error);
+  logger.debug("APICalls.jsx", "Axios.GET", "error", error);
 });`}</Code>
     <p className="text-lg">Performing a POST request:</p>
     <Code>{`axios.post('/api/user', {
@@ -59,11 +59,11 @@ const Axios = () => (
 })
 .then(function (response) {
   // handle success
-  log("APICalls.jsx", "Axios.POST", "response", response);
+  logger.debug("APICalls.jsx", "Axios.POST", "response", response);
 })
 .catch(function (error) {
   // handle error
-  log("APICalls.jsx", "Axios.POST", "error", error);
+  logger.debug("APICalls.jsx", "Axios.POST", "error", error);
 });`}</Code>
   </div>
 );

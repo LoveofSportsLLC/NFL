@@ -14,7 +14,7 @@
 // import axios from "../utils/axios";
 // import AuthContext from "./CognitoContext";
 // import Loader from "../components/Loader";
-// import { log } from "../utils/logs.js"; // Import the log utility
+// import logger  from "../utils/logger.js"; // Import the log utility
 
 // const INITIALIZE = "INITIALIZE";
 // const SIGN_OUT = "SIGN_OUT";
@@ -125,7 +125,7 @@
 //   useEffect(() => {
 //     if (cognitoConfig) {
 //       getSession().catch((error) => {
-//         log("CognitoProvider.jsx", "getSession", "Error:", error.message);
+//         logger.debug("CognitoProvider.jsx", "getSession", "Error:", error.message);
 //       });
 //     }
 //   }, [getSession, cognitoConfig]);
@@ -192,7 +192,7 @@
 //   );
 
 //   const resetPassword = useCallback((email) => {
-//     log("CognitoProvider.jsx", "resetPassword", "Email:", email);
+//     logger.debug("CognitoProvider.jsx", "resetPassword", "Email:", email);
 //   }, []);
 
 //   if (!cognitoConfig) {

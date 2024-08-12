@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import { log } from '../../utils/logs'; // Import the log utility
+import logger from '../../utils/logger.js'; // Import the log utility
 
 // Navigation Component to switch between settings
 const Navigation = ({ setActiveSection }) => (
@@ -60,7 +60,7 @@ const PublicInfo = ({ userData, setUserData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    log(
+    logger.debug(
       'Settings.jsx',
       'PublicInfo.handleSubmit',
       'Saving Public Info',
@@ -214,7 +214,11 @@ const YourDataSettings = () => (
       <Button
         variant="primary"
         onClick={() =>
-          log('Settings.jsx', 'YourDataSettings', 'User data requested')
+          logger.debug(
+            'Settings.jsx',
+            'YourDataSettings',
+            'User data requested',
+          )
         }
       >
         Download My Data
@@ -231,7 +235,11 @@ const DeleteAccount = () => {
         'Are you sure you want to delete your account permanently?',
       )
     ) {
-      log('Settings.jsx', 'DeleteAccount', 'Account deletion process started.');
+      logger.debug(
+        'Settings.jsx',
+        'DeleteAccount',
+        'Account deletion process started.',
+      );
       // Implement deletion logic here
     }
   };
@@ -264,7 +272,7 @@ const Settings = () => {
       });
       setUserData(response.data);
     } catch (error) {
-      log(
+      logger.debug(
         'Settings.jsx',
         'fetchUserData',
         'Failed to fetch user data:',

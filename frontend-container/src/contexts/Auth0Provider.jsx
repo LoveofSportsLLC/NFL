@@ -1,7 +1,7 @@
 // Import necessary dependencies from @auth0/auth0-react
 import React, { useEffect, useReducer } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { log } from '../utils/logs';
+import logger from '../utils/logger.js';
 import { domain, clientId, audience } from '../config';
 
 // Define action types
@@ -55,7 +55,7 @@ function AuthProvider({ children }) {
         type: INITIALIZE,
         payload: { isAuthenticated, user },
       });
-      log('AuthProvider.jsx', 'initializeAuth0', 'User:', user);
+      logger.debug('AuthProvider.jsx', 'initializeAuth0', 'User:', user);
     }
   }, [isLoading, isAuthenticated, user]);
 

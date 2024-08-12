@@ -1,16 +1,19 @@
-import { log } from './utils/logs.js';
+import logger from './utils/logger.js';
 
 // Determine if the code is running on the server (Node.js) or client (browser)
-const isSSR = import.meta.env.SSR;
+const isSSR =
+  typeof import.meta !== 'undefined' && import.meta.env
+    ? import.meta.env.SSR === 'true'
+    : process.env.SSR === 'true';
 
 // if (isSSR) {
-//   log('', 'Loaded Server environment variables', '', process.env);
-//   log('', 'Build target is (server):', 'ssr');
+//   logger.debug('', 'Loaded Server environment variables', '', process.env);
+//   logger.debug('', 'Build target is (server):', 'ssr');
 // } else if (typeof import.meta !== 'undefined' && import.meta.env) {
-//   log('', 'Loaded Client environment variables', '', import.meta.env);
+//   logger.debug('', 'Loaded Client environment variables', '', import.meta.env);
 // } else {
-//   log('', 'Loaded Client environment variables', '', {});
-//   log('', 'Build target is (client):', 'unknown');
+//   logger.debug('', 'Loaded Client environment variables', '', {});
+//   logger.debug('', 'Build target is (client):', 'unknown');
 // }
 
 // Helper function to get environment variable based on the environment
@@ -53,21 +56,21 @@ export const buybuttonid = getEnvVar('VITE_BUY_BUTTON', '');
 export const publishablekey = getEnvVar('VITE_PUBLISHABLE_KEY', '');
 
 // Debugging logs
-// log('Is SSR build:', isSSR);
-// log(
+// logger.debug('Is SSR build:', isSSR);
+// logger.debug(
 //   'Is local build:',
 //   process.env.GIT_WORKFLOW === '0' || process.env.GIT_WORKFLOW === undefined,
 // );
-// log('Is cluster build:', process.env.GIT_WORKFLOW === '1');
-// log('Client ID:', clientId);
-// log('Domain:', domain);
-// log('Audience:', audience);
-// log(
+// logger.debug('Is cluster build:', process.env.GIT_WORKFLOW === '1');
+// logger.debug('Client ID:', clientId);
+// logger.debug('Domain:', domain);
+// logger.debug('Audience:', audience);
+// logger.debug(
 //   'VITE_APP_INSIGHTS_CONNECTION_STRING:',
 //   VITE_APP_INSIGHTS_CONNECTION_STRING,
 // );
-// log(
+// logger.debug(
 //   'VITE_APP_INSIGHTS_INSTRUMENTATION_KEY:',
 //   VITE_APP_INSIGHTS_INSTRUMENTATION_KEY,
 // );
-// log('VITE_APP_INSIGHTS_KEY:', VITE_APP_INSIGHTS_KEY);
+// logger.debug('VITE_APP_INSIGHTS_KEY:', VITE_APP_INSIGHTS_KEY);

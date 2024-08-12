@@ -11,7 +11,7 @@ import {
   Form,
   InputGroup,
 } from 'react-bootstrap';
-import { log } from '../../utils/logs'; // Import the log utility
+import logger from '../../utils/logger.js'; // Import the log utility
 
 const schema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -34,7 +34,7 @@ const FormikExample = () => (
       <Formik
         validationSchema={schema}
         onSubmit={(values) =>
-          log('Formik.jsx', 'FormikExample', 'Form submitted', values)
+          logger.debug('Formik.jsx', 'FormikExample', 'Form submitted', values)
         }
         initialValues={{
           firstName: 'Mark',

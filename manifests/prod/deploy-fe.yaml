@@ -65,6 +65,8 @@ spec:
               value: "redis-service"
             - name: BACKEND_HOST
               value: "backend-service"
+            - name: DOCKER_ENV
+              value: "true"
             - name: AUTH0_DOMAIN
               valueFrom:
                 secretKeyRef:
