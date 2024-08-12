@@ -1,10 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Badge, Col, Card, Row } from "react-bootstrap";
-
 import { DollarSign, ShoppingBag } from "react-feather";
-
-import illustration from "../../../assets/img/illustrations/customer-support.png";
 
 const Statistics = () => {
   const { t } = useTranslation();
@@ -18,14 +15,14 @@ const Statistics = () => {
               <Col xs="6">
                 <div className="illustration-text p-3 m-1">
                   <h4 className="illustration-text">
-                    {t("Welcome back")}, Chris!
+                    {t('Welcome back')}, Chris!
                   </h4>
                   <p className="mb-0">AppStack Dashboard</p>
                 </div>
               </Col>
               <Col xs={6} className="align-self-end text-end">
                 <img
-                  src={illustration}
+                  src="/illustrations/customer-support.png"
                   alt="Customer Support"
                   className="img-fluid illustration-img"
                 />

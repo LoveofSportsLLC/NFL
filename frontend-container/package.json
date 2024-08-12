@@ -80,6 +80,7 @@
     "dragula": "^3.7.3",
     "eitherx": "^1.0.3",
     "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react": "^7.35.0",
     "esm": "^3.2.25",
     "express": "^4.19.2",
     "faker": "^6.6.6",

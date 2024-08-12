@@ -3,7 +3,6 @@ import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import userAvatar1 from "../../../assets/img/avatars/avatar-1.jpg";
 
 const Testimonials = () => (
   <section className="py-6">
@@ -24,7 +23,12 @@ const Testimonials = () => (
             <Card.Body className="p-4">
               <div className="d-flex align-items-center mb-3">
                 <div>
-                  <img src={userAvatar1} width="48" height="48" alt="User 1" />
+                  <img
+                    src="/avatars/avatar-1.jpg"
+                    width="48"
+                    height="48"
+                    alt="User 1"
+                  />
                 </div>
                 <div className="ps-3">
                   <h5 className="mb-1 mt-2">John Doe</h5>

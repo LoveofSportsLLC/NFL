@@ -20,15 +20,18 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-      - name: Set image tag based on branch
+      - name: Set image tag and Dockerfile based on branch
         run: |
           BRANCH_NAME="${{ github.ref_name }}"
           if [[ "$BRANCH_NAME" == "main" ]]; then
             IMAGE_TAG="prodlatest"
+            DOCKERFILE="frontend-container/Dockerfile.Prod"
           else
             IMAGE_TAG="uatlatest"
+            DOCKERFILE="frontend-container/Dockerfile.uat"
           fi
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "DOCKERFILE=$DOCKERFILE" >> $GITHUB_ENV
 
       - name: Generate Sentry release
         run: |
@@ -95,11 +98,14 @@ jobs:
           VITE_SENTRY_AUTH_TOKEN: ${{ secrets.VITE_SENTRY_AUTH_TOKEN }}
           VITE_APP_INSIGHTS_KEY: ${{ secrets.VITE_APP_INSIGHTS_KEY }}
           VITE_APP_INSIGHTS_CONNECTION_STRING: ${{ secrets.VITE_APP_INSIGHTS_CONNECTION_STRING }}
+          VITE_APP_INSIGHTS_INSTRUMENTATION_KEY: ${{ secrets.VITE_APP_INSIGHTS_INSTRUMENTATION_KEY }}
           BASE_URL: ${{ secrets.BASE_URL }}
           API_URL: ${{ secrets.API_URL }}
           LOG_URL: ${{ secrets.LOG_URL }}
+          DOCKER_ENV: true
+          GIT_WORKFLOW: "1"
         run: |
-          az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f frontend-container/Dockerfile.Prod frontend-container
+          az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f $DOCKERFILE frontend-container
  
   deploy:
     permissions:

@@ -2,9 +2,9 @@ import React from 'react';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 
-import unsplash1 from '../../assets/img/photos/unsplash-1.jpg';
-import unsplash2 from '../../assets/img/photos/unsplash-2.jpg';
-import unsplash3 from '../../assets/img/photos/unsplash-3.jpg';
+import unsplash1 from '/photos/unsplash-1.jpg';
+import unsplash2 from '/photos/unsplash-2.jpg';
+import unsplash3 from '/photos/unsplash-3.jpg';
 
 const CardWithImageAndLinks = () => (
   <Card>

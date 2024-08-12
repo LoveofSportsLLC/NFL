@@ -116,7 +116,7 @@ body[data-sidebar-behavior=compact] {
 // Collapse behavior if compact sidebar is on left side
 body[data-sidebar-behavior=compact]:not([data-sidebar-position=right]) {
   .sidebar-nav > .sidebar-item > .sidebar-dropdown {
-    left: $sidebar-compact-width + 12px;;
+    left: $sidebar-compact-width + 12px;
 
     &:before {
       left: -16px;
@@ -132,13 +132,14 @@ body[data-sidebar-behavior=compact]:not([data-sidebar-position=right]) {
     // Workaround for IE bug, more info:
     // https://stackoverflow.com/a/25850649
     @media (min-width: 1px) and (max-width: #{map-get($grid-breakpoints, 'lg') - .02px}) {
+      & {
+        // Sidebar default state (on mobile)
+        margin-left: -$sidebar-compact-width;
 
-      // Sidebar default state (on mobile)
-      margin-left: -$sidebar-compact-width;
-
-      // Sidebar collapsed state (on mobile)
-      &.collapsed {
-        margin-left: 0;
+        // Sidebar collapsed state (on mobile)
+        &.collapsed {
+          margin-left: 0;
+        }
       }
     }
   }
@@ -163,13 +164,14 @@ body[data-sidebar-behavior=compact][data-sidebar-position=right] {
     // Workaround for IE bug, more info:
     // https://stackoverflow.com/a/25850649
     @media (min-width: 1px) and (max-width: #{map-get($grid-breakpoints, 'lg') - .02px}) {
+      & {
+        // Sidebar default state (on mobile)
+        margin-right: -$sidebar-compact-width;
 
-      // Sidebar default state (on mobile)
-      margin-right: -$sidebar-compact-width;
-
-      // Sidebar collapsed state (on mobile)
-      &.collapsed {
-        margin-right: 0;
+        // Sidebar collapsed state (on mobile)
+        &.collapsed {
+          margin-right: 0;
+        }
       }
     }
   }

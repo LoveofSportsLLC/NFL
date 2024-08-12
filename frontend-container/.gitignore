@@ -58,3 +58,9 @@ NFL-Stats/
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+.history/
+.vite-inspect/
+hint-report/
+__azurite_db_queue__.json
+__azurite_db_queue_extent__.json

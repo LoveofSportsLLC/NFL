@@ -7,11 +7,6 @@ import dragula from 'react-dragula';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
-import avatar2 from '../../assets/img/avatars/avatar-2.jpg';
-import avatar3 from '../../assets/img/avatars/avatar-3.jpg';
-import avatar4 from '../../assets/img/avatars/avatar-4.jpg';
-
 const Lane = ({ name, children, onContainerLoaded }) => {
   const handleContainerLoaded = (container) => {
     if (container) {
@@ -50,7 +45,7 @@ const Task = ({ id, checked, text, avatar }) => (
       <p>{text}</p>
       <div className="float-end mt-n1">
         <img
-          src={avatar}
+          src="/avatars/avatar.jpg"
           width="32"
           height="32"
           className="rounded-circle"
@@ -91,29 +86,29 @@ const Tasks = () => {
             <Lane name="Upcoming" onContainerLoaded={onContainerReady}>
               <Task
                 id="1"
-                avatar={avatar1}
+                avatar="/avatars/avatar.jpg"
                 text="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."
                 checked
               />
               <Task
                 id="2"
-                avatar={avatar2}
+                avatar="/avatars/avatar-2.jpg"
                 text="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."
                 checked
               />
               <Task
                 id="3"
-                avatar={avatar3}
+                avatar="/avatars/avatar-3.jpg"
                 text="Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis."
               />
               <Task
                 id="4"
-                avatar={avatar4}
+                avatar="/avatars/avatar-4.jpg"
                 text="In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique."
               />
               <Task
                 id="5"
-                avatar={avatar2}
+                avatar="/avatars/avatar-2.jpg"
                 text="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."
               />
             </Lane>
@@ -122,17 +117,17 @@ const Tasks = () => {
             <Lane name="In Progress" onContainerLoaded={onContainerReady}>
               <Task
                 id="6"
-                avatar={avatar1}
+                avatar="/avatars/avatar.jpg"
                 text="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."
               />
               <Task
                 id="7"
-                avatar={avatar3}
+                avatar="/avatars/avatar-3.jpg"
                 text="Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis."
               />
               <Task
                 id="8"
-                avatar={avatar2}
+                avatar="/avatars/avatar-2.jpg"
                 text="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."
               />
             </Lane>
@@ -141,27 +136,27 @@ const Tasks = () => {
             <Lane name="Completed" onContainerLoaded={onContainerReady}>
               <Task
                 id="13"
-                avatar={avatar2}
+                avatar="/avatars/avatar-2.jpg"
                 text="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."
               />
               <Task
                 id="14"
-                avatar={avatar4}
+                avatar="/avatars/avatar-4.jpg"
                 text="In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique."
               />
               <Task
                 id="15"
-                avatar={avatar3}
+                avatar="/avatars/avatar-3.jpg"
                 text="Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis."
               />
               <Task
                 id="16"
-                avatar={avatar1}
+                avatar="/avatars/avatar.jpg"
                 text="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."
               />
               <Task
                 id="17"
-                avatar={avatar3}
+                avatar="/avatars/avatar-3.jpg"
                 text="Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis."
               />
             </Lane>

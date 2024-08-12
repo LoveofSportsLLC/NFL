@@ -130,6 +130,7 @@ export default defineConfig(({ command, mode }) => {
           compress: true,
           mangle: true,
           format: { comments: false },
+          module: true,
         }),
       Inspect({ build: true, outputDir: '.vite-inspect' }),
       svgrPlugin({ exportType: 'component', svgrOptions: { icon: true } }),
@@ -144,13 +145,13 @@ export default defineConfig(({ command, mode }) => {
     ].filter(Boolean),
     resolve: {
       alias: {
-        '~/runtimeConfig': resolve(__dirname, './runtimeConfig.browser'),
+        '~/runtimeConfig': resolve(rootPath, './runtimeConfig.browser'),
         'react/jsx-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-runtime.js',
         ),
         'react/jsx-dev-runtime': resolve(
-          __dirname,
+          rootPath,
           './node_modules/react/jsx-dev-runtime.js',
         ),
         warning: resolve(__dirname, 'src/shims/warning.js'),

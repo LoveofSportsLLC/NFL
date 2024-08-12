@@ -17,7 +17,7 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 
-import avatar1 from '../../assets/img/avatars/avatar.jpg';
+
 
 const colors = [
   {
@@ -180,21 +180,21 @@ const Images = () => (
     <Card.Body className="text-center">
       <img
         className="rounded me-2 mb-2"
-        src={avatar1}
+        src="/avatars/avatar.jpg"
         alt="Placeholder"
         width="140"
         height="140"
       />
       <img
         className="rounded-circle rounded me-2 mb-2"
-        src={avatar1}
+        src="/avatars/avatar.jpg"
         alt="Placeholder"
         width="140"
         height="140"
       />
       <img
         className="img-thumbnail rounded me-2 mb-2"
-        src={avatar1}
+        src="/avatars/avatar.jpg"
         alt="Placeholder"
         width="140"
         height="140"
