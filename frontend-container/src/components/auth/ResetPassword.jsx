@@ -16,7 +16,7 @@ function ResetPassword() {
   const resetPassword = async (email) => {
     // Custom logic to trigger password reset or redirect to Auth0 hosted password reset page
     // This is a placeholder function. You need to replace it with actual logic.
-    console.log(`Reset password for: ${email}`);
+    logger.debug(`Reset password for: ${email}`);
     // Redirect to login page or password reset page
     loginWithRedirect({
       screen_hint: 'reset_password',

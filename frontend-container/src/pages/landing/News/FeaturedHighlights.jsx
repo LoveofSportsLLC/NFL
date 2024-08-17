@@ -1,43 +1,43 @@
 // frontend-container/src/pages/landing/News/FeaturedHighlights.jsx
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import FilterComponent from "../../../components/FilterComponent";
-import CarouselComponent from "../../../components/CarouselComponent";
-import { HIGHLIGHTS_API_URL } from "../../../config";
-import { axiosRetry } from "../../../utils/retry";
-import placeholderImage from "/logo.png";
-import { log } from "../../../utils/logs";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import FilterComponent from '../../../components/FilterComponent';
+import CarouselComponent from '../../../components/CarouselComponent';
+import { HIGHLIGHTS_API_URL } from '../../../config';
+import { axiosRetry } from '../../../utils/retry';
+import placeholderImage from '/logo.png';
+import logger from '../../../utils/logger.js';
 
 const FeaturedHighlights = () => {
   const [highlights, setHighlights] = useState([]);
   const [filteredHighlights, setFilteredHighlights] = useState([]);
-  const [filter, setFilter] = useState("7days");
-  const [team, setTeam] = useState("all");
+  const [filter, setFilter] = useState('7days');
+  const [team, setTeam] = useState('all');
 
   useEffect(() => {
     const fetchHighlights = async () => {
       try {
         const response = await axiosRetry(axios, {
-          method: "get",
+          method: 'get',
           url: HIGHLIGHTS_API_URL,
         });
-        if (response.headers["content-type"].includes("application/json")) {
+        if (response.headers['content-type'].includes('application/json')) {
           const articles = response.data.articles.map((article) => ({
             ...article,
             urlToImage: article.urlToImage || placeholderImage,
-            url: article.url || "",
-            title: article.title || "No Title",
-            description: article.description || "No Description",
+            url: article.url || '',
+            title: article.title || 'No Title',
+            description: article.description || 'No Description',
             publishedAt: article.publishedAt || new Date().toISOString(),
           }));
           setHighlights(articles);
           filterHighlights(articles, filter, team);
         } else {
-          log("Invalid response data:", response.data);
+          logger.debug('Invalid response data:', response.data);
         }
       } catch (error) {
-        log("Error fetching highlights:", error);
+        logger.debug('Error fetching highlights:', error);
       }
     };
     fetchHighlights();
@@ -47,31 +47,31 @@ const FeaturedHighlights = () => {
     const now = new Date();
     let filtered;
     switch (filter) {
-      case "24hrs":
+      case '24hrs':
         filtered = videos.filter((video) => {
           const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 24;
         });
         break;
-      case "2days":
+      case '2days':
         filtered = videos.filter((video) => {
           const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 48;
         });
         break;
-      case "7days":
+      case '7days':
         filtered = videos.filter((video) => {
           const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 7;
         });
         break;
-      case "1month":
+      case '1month':
         filtered = videos.filter((video) => {
           const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 30;
         });
         break;
-      case "2months":
+      case '2months':
         filtered = videos.filter((video) => {
           const date = new Date(video.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 60;
@@ -81,7 +81,7 @@ const FeaturedHighlights = () => {
         filtered = videos;
     }
 
-    if (team !== "all") {
+    if (team !== 'all') {
       filtered = filtered.filter((video) =>
         video.title.toLowerCase().includes(team.toLowerCase()),
       );
@@ -121,7 +121,7 @@ const FeaturedHighlights = () => {
         </Col>
         <Col md={4} className="text-end">
           <span>
-            Showing {Math.min(filteredHighlights.length, 3)} of{" "}
+            Showing {Math.min(filteredHighlights.length, 3)} of{' '}
             {highlights.length} videos
           </span>
         </Col>
@@ -129,7 +129,7 @@ const FeaturedHighlights = () => {
       {filteredHighlights.length <= 3 ? (
         <div className="d-flex justify-content-around">
           {filteredHighlights.map((item, idx) => (
-            <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
+            <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
               {getYoutubeVideoId(item.url) ? (
                 <div className="ratio ratio-16x9 mb-3">
                   <iframe
@@ -144,7 +144,7 @@ const FeaturedHighlights = () => {
               )}
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
-                <Card.Text>{item.description?.slice(0, 100) + "..."}</Card.Text>
+                <Card.Text>{item.description?.slice(0, 100) + '...'}</Card.Text>
                 <Card.Text>
                   <small>{new Date(item.publishedAt).toLocaleString()}</small>
                 </Card.Text>

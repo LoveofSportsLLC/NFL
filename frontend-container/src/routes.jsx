@@ -8,8 +8,7 @@ import DocLayout from './layouts/Doc';
 import LandingLayout from './layouts/Landing';
 import AuthGuard from './components/guards/AuthGuard';
 import DonatePage from './pages/auth/Donate';
-import { log } from './utils/logs';
-import Dashboard from "./pages/dashboards/Static-Dashboard/StaticDashboard.jsx";
+import logger from './utils/logger.js';
 
 const Landing = lazy(() => import('./pages/landing/Landing'));
 const AboutUs = lazy(() => import('./pages/landing/Aboutus/AboutUs'));
@@ -497,7 +496,7 @@ const routes = [
   },
 ];
 
-log(
+logger.debug(
   'Routes defined:',
   JSON.stringify(
     JSON.parse(JSON.stringify(routes)), // Ensure the object is mutable

@@ -37,6 +37,8 @@ spec:
               value: development  
             - name: NODE_ENV
               value: development
+            - name: DOCKER_ENV
+              value: "true"
             - name: BASE_URL
               valueFrom:
                 secretKeyRef:

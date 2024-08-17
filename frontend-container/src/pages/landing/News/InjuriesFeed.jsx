@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Row, Col, Card, Form } from "react-bootstrap";
-import CarouselComponent from "../../../components/CarouselComponent";
-import FilterComponent from "../../../components/FilterComponent";
-import { INJURIES_API_URL } from "../../../config";
-import placeholderImage from "/logo.png";
-import { log } from "../../../utils/logs";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
+import CarouselComponent from '../../../components/CarouselComponent';
+import FilterComponent from '../../../components/FilterComponent';
+import { INJURIES_API_URL } from '../../../config';
+import placeholderImage from '/logo.png';
+import logger from '../../../utils/logger.js';
 
 const InjuriesFeed = () => {
   const [injuries, setInjuries] = useState([]);
   const [filteredInjuries, setFilteredInjuries] = useState([]);
-  const [filter, setFilter] = useState("2months");
-  const [team, setTeam] = useState("all");
+  const [filter, setFilter] = useState('2months');
+  const [team, setTeam] = useState('all');
 
   useEffect(() => {
     const fetchInjuries = async () => {
       try {
         const response = await axios.get(INJURIES_API_URL);
-        if (response.headers["content-type"].includes("application/json")) {
+        if (response.headers['content-type'].includes('application/json')) {
           const articles = response.data.articles;
           setInjuries(articles);
           filterInjuries(articles, filter, team);
         } else {
-          log("Invalid response data:", response.data);
+          logger.debug('Invalid response data:', response.data);
         }
       } catch (error) {
-        log("Error fetching injuries:", error);
+        logger.debug('Error fetching injuries:', error);
       }
     };
     fetchInjuries();
@@ -35,31 +35,31 @@ const InjuriesFeed = () => {
     const now = new Date();
     let filtered;
     switch (filter) {
-      case "24hrs":
+      case '24hrs':
         filtered = articles.filter((article) => {
           const date = new Date(article.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 24;
         });
         break;
-      case "2days":
+      case '2days':
         filtered = articles.filter((article) => {
           const date = new Date(article.publishedAt);
           return (now - date) / (1000 * 60 * 60) <= 48;
         });
         break;
-      case "7days":
+      case '7days':
         filtered = articles.filter((article) => {
           const date = new Date(article.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 7;
         });
         break;
-      case "1month":
+      case '1month':
         filtered = articles.filter((article) => {
           const date = new Date(article.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 30;
         });
         break;
-      case "2months":
+      case '2months':
         filtered = articles.filter((article) => {
           const date = new Date(article.publishedAt);
           return (now - date) / (1000 * 60 * 60 * 24) <= 60;
@@ -69,7 +69,7 @@ const InjuriesFeed = () => {
         filtered = articles;
     }
 
-    if (team !== "all") {
+    if (team !== 'all') {
       filtered = filtered.filter((article) =>
         article.title.toLowerCase().includes(team.toLowerCase()),
       );
@@ -102,7 +102,7 @@ const InjuriesFeed = () => {
         </Col>
         <Col md={4} className="text-end">
           <span>
-            Showing {Math.min(filteredInjuries.length, 3)} of {injuries.length}{" "}
+            Showing {Math.min(filteredInjuries.length, 3)} of {injuries.length}{' '}
             articles
           </span>
         </Col>
@@ -110,7 +110,7 @@ const InjuriesFeed = () => {
       {filteredInjuries.length <= 3 ? (
         <div className="d-flex justify-content-around">
           {filteredInjuries.map((item, idx) => (
-            <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
+            <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
               <Card.Img
                 variant="top"
                 src={item.urlToImage || placeholderImage}
@@ -118,7 +118,7 @@ const InjuriesFeed = () => {
               />
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
-                <Card.Text>{item.description?.slice(0, 100) + "..."}</Card.Text>
+                <Card.Text>{item.description?.slice(0, 100) + '...'}</Card.Text>
                 <Card.Link href={item.url} target="_blank">
                   Read more
                 </Card.Link>

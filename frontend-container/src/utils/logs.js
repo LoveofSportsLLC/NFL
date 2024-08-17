@@ -15,7 +15,11 @@ const colors = {
   filename: chalk.hex('#FFD700'), // Light orange color
 };
 
-const isSSR = typeof process !== 'undefined' && process.env.SSR === 'true';
+// Determine if the code is running on the server (Node.js) or client (browser)
+const isSSR =
+  typeof import.meta !== 'undefined' && import.meta.env
+    ? import.meta.env.SSR
+    : process.env.SSR === 'true';
 
 function safeStringify(obj, replacer = null, space = 0) {
   const seen = new WeakSet();
@@ -94,7 +98,9 @@ export function log(fileName, functionName, route = '', ...messages) {
     .replace(/^(\[\d+\])/g, color('$1'))
     .replace(/\[([^]]+)\]$/, chalk.white('[$1]'));
 
-  console.log(color(`[${logType === 'server' ? 'S' : 'C'}] `) + coloredMessage);
+  logger.debug(
+    color(`[${logType === 'server' ? 'S' : 'C'}] `) + coloredMessage,
+  );
 }
 
 export function compareHtml(serverHtml, clientHtml) {
@@ -105,9 +111,9 @@ export function compareHtml(serverHtml, clientHtml) {
   // Uncomment and adjust the following code as needed for your application
   // diffResult.forEach((part) => {
   //   if (part.added) {
-  //     log('HTML Diff', 'added', '', part.value);
+  //     logger.debug('HTML Diff', 'added', '', part.value);
   //   } else if (part.removed) {
-  //     log('HTML Diff', 'removed', '', part.value);
+  //     logger.debug('HTML Diff', 'removed', '', part.value);
   //   }
   // });
 }
@@ -122,7 +128,7 @@ export function logDiff(oldStr, newStr) {
         : chalk.gray;
     process.stderr.write(color(part.value));
   });
-  console.log();
+  logger.debug();
 }
 
 export function resetLogs() {

@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const useHelmet = () => {
-  const [Helmet, setHelmet] = useState(null);
+  const [HelmetComponent, setHelmetComponent] = useState(null);
 
   useEffect(() => {
-    import('react-helmet-async').then((module) => {
-      setHelmet(() => module.Helmet);
-    });
+    setHelmetComponent(() => Helmet);
   }, []);
 
-  return Helmet;
+  return HelmetComponent;
 };
 
 export default useHelmet;

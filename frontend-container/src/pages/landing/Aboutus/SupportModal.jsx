@@ -1,46 +1,46 @@
 ///NFL/frontend-container/src/pages/landing/Aboutus/SupportModal.jsx
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
-import { log } from "../../../utils/logs"; // Import the log utility
+import React, { useState } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
+import logger from '../../../utils/logger.js'; // Import the log utility
 
 const apiUrlSubmitSupport =
-  process.env.PUBLIC_ENV__NODE_ENV === "development"
-    ? "http://localhost:5000/api/submit-support"
-    : "https://loveoffootball.io/api/submit-support";
+  process.env.PUBLIC_ENV__NODE_ENV === 'development'
+    ? 'http://localhost:5000/api/submit-support'
+    : 'https://loveoffootball.io/api/submit-support';
 
 const SupportModal = ({ show, onHide, emailAddress }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // To store error messages
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // To store error messages
   const [rateLimited, setRateLimited] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
 
-  log(
-    "SupportModal.jsx",
-    "SupportModal",
-    "API URL for submitting support:",
+  logger.debug(
+    'SupportModal.jsx',
+    'SupportModal',
+    'API URL for submitting support:',
     apiUrlSubmitSupport,
   );
 
   const sendEmail = async () => {
-    setErrorMessage("");
-    setSuccessMessage("");
+    setErrorMessage('');
+    setSuccessMessage('');
     setRateLimited(false);
     if (!name || !email || !phone || !message) {
-      setErrorMessage("All fields are required.");
+      setErrorMessage('All fields are required.');
       return;
     }
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
     if (!email.match(emailRegex)) {
-      setErrorMessage("Invalid email address.");
+      setErrorMessage('Invalid email address.');
       return;
     }
     const phoneRegex = /^\d{10}$/;
     if (!phone.match(phoneRegex)) {
-      setErrorMessage("Invalid phone number.");
+      setErrorMessage('Invalid phone number.');
       return;
     }
     try {
@@ -52,17 +52,17 @@ const SupportModal = ({ show, onHide, emailAddress }) => {
       });
 
       if (response.status === 200) {
-        setSuccessMessage("Email sent successfully.");
+        setSuccessMessage('Email sent successfully.');
       }
     } catch (error) {
       if (error.response && error.response.status === 429) {
         setRateLimited(true);
         setErrorMessage(
-          "You have reached the rate limit. Please try again later.",
+          'You have reached the rate limit. Please try again later.',
         );
       } else {
         setErrorMessage(
-          "An unexpected error occurred. Please try again later.",
+          'An unexpected error occurred. Please try again later.',
         );
       }
     }
