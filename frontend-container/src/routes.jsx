@@ -88,9 +88,6 @@ const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
 const StaticDashboard = lazy(() => import('./pages/dashboards/Static-Dashboard/StaticDashboard'));
 
-
-
-
 const routes = [
   {
     path: '/',
