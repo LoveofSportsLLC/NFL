@@ -1,5 +1,7 @@
 // src/controllers/dataController.js
 const dataService = require('../services/dataService');
+const { ClientSecretCredential } = require('@azure/identity');
+const { BlobServiceClient } = require('@azure/storage-blob');
 
 exports.createData = (req, res) => {
   const data = req.body;
