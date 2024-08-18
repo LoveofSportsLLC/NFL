@@ -5,9 +5,9 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 
 
 // Azure AD credentials
-const tenantId = "364661e2-3ab8-4544-a3ae-fc0b5adb4aaf";
-const clientId = "d9e5bd31-3513-48e3-a767-6ef1d485999a";
-const clientSecret = "d83d70d0-7e79-4c88-add6-41abe3ce2526";
+const tenantId = "your-tenant-id";
+const clientId = "your-client-id";
+const clientSecret = "your=client-secret";
 
 // Storage account details
 const accountName = "nflake";
