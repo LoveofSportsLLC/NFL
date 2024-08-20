@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import logger from '../../../utils/logger.js'; // Import the log utility
 
 const apiUrlSubmitSupport =
   process.env.PUBLIC_ENV__NODE_ENV === 'development'
@@ -18,7 +17,7 @@ const SupportModal = ({ show, onHide, emailAddress }) => {
   const [rateLimited, setRateLimited] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
-  logger.debug(
+  console.log(
     'SupportModal.jsx',
     'SupportModal',
     'API URL for submitting support:',

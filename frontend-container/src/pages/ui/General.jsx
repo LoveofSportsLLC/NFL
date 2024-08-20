@@ -17,8 +17,6 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 
-
-
 const colors = [
   {
     name: 'Primary',

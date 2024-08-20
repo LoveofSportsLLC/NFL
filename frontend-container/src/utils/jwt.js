@@ -2,7 +2,6 @@
 import jwtDecode from 'jwt-decode';
 import { verify, sign } from 'jsonwebtoken';
 import axios from './axios';
-import logger from './logger.js'; // Import the log utility
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -20,9 +19,9 @@ const isValidToken = (accessToken) => {
 //  window.clearTimeout(expiredTimer);
 //  const currentTime = Date.now();
 //  const timeLeft = exp * 1000 - currentTime;
-//  logger.debug("jwt.js", "handleTokenExpired", timeLeft);
+//  console.log("jwt.js", "handleTokenExpired", timeLeft);
 //  expiredTimer = window.setTimeout(() => {
-//    logger.debug("jwt.js", "handleTokenExpired", "expired");
+//    console.log("jwt.js", "handleTokenExpired", "expired");
 //  }, timeLeft);
 //};
 

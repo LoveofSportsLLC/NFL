@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import fs from 'vite-plugin-fs/browser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -22,7 +22,7 @@ const replaceImports = async (filePath) => {
         'import $1 from "@img',
       );
     await fs.writeFile(filePath, result, 'utf8');
-    log(`Updated imports in ${filePath}`);
+    console.log(`Updated imports in ${filePath}`);
   } catch (err) {
     console.error(`Error updating imports in ${filePath}: ${err}`);
   }

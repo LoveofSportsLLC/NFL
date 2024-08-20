@@ -1,6 +1,6 @@
-import React from "react";
-import { Form } from "react-bootstrap";
-import { TEAMS } from "../constants";
+import React from 'react';
+import { Form } from 'react-bootstrap';
+import { TEAMS } from '../constants';
 
 const FilterComponent = ({ filter, team, onFilterChange, onTeamChange }) => (
   <div className="text-left mb-4">

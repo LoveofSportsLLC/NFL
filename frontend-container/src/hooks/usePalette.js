@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import * as Constants from "../constants";
-import { useTheme } from "./useTheme";
+import { useState, useEffect } from 'react';
+import * as Constants from '../constants';
+import { useTheme } from './useTheme';
 
 const usePalette = () => {
   const { theme } = useTheme();

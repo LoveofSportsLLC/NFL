@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "target": "ES2020",
-    "jsx": "react",
-    "allowImportingTsExtensions": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@styles/*": ["styles/*"]
+    }
   },
-  "exclude": ["node_modules", "**/node_modules/*"]
+  "exclude": ["node_modules", "dist", "**/node_modules/*"]
 }

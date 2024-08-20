@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Badge, Card, Dropdown, Table } from "react-bootstrap";
+import { Badge, Card, Dropdown, Table } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const Products = () => (
   <Card className="flex-fill w-100">

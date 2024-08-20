@@ -217,7 +217,7 @@ const RealLifeExample = () => (
         The counter slice reducer will see the actions and update its state
       </li>
       <li>
-        The <code>{`<Counter>`}</code> component will see the new state value
+        The <code>{'<Counter>'}</code> component will see the new state value
         from the store and re-render itself with the new data
       </li>
     </ul>

@@ -11,8 +11,8 @@ const Intro = () => (
       <code>npm run build</code> creates a build directory with a production
       build of your app. Set up your favorite HTTP server so that a visitor to
       your site is served index.html, and requests to static paths like{' '}
-      <code>{`/static/js/main.<hash>.js`}</code> are served with the contents of
-      the <code>{`/static/js/main.<hash>.js`}</code> file.
+      <code>{'/static/js/main.<hash>.js'}</code> are served with the contents of
+      the <code>{'/static/js/main.<hash>.js'}</code> file.
     </p>
   </div>
 );

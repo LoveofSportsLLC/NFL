@@ -1,9 +1,9 @@
-import React from "react";
-import { Card, Dropdown } from "react-bootstrap";
+import React from 'react';
+import { Card, Dropdown } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
-import DT from "react-datetime";
+import DT from 'react-datetime';
 
 const DateTime = DT.default || DT;
 

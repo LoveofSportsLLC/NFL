@@ -1,5 +1,6 @@
 import React from 'react';
-import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import PropTypes from 'prop-types'; // Import PropTypes
+import useHelmet from '../../utils/HelmetLoader';
 import { Col, Container, Nav, Row, Tab } from 'react-bootstrap';
 import { Home, Settings, MessageSquare } from 'react-feather';
 
@@ -67,6 +68,12 @@ const TabsWithTextLabel = ({ name, className }) => (
     </Tab.Container>
   </div>
 );
+
+// Define PropTypes for TabsWithTextLabel
+TabsWithTextLabel.propTypes = {
+  name: PropTypes.string.isRequired,  // Assuming name is required
+  className: PropTypes.string,        // Optional className
+};
 
 const TabsWithIconLabel = ({ name, className }) => (
   <div className={'tab ' + className}>
@@ -138,6 +145,12 @@ const TabsWithIconLabel = ({ name, className }) => (
     </Tab.Container>
   </div>
 );
+
+// Define PropTypes for TabsWithIconLabel
+TabsWithIconLabel.propTypes = {
+  name: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
 
 const TabsComponent = () => {
   useHelmet('Tabs');

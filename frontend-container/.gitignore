@@ -33,6 +33,7 @@ amplify/backend/amplify-meta.json
 amplify/backend/.temp
 build/
 dist/
+scripts/
 node_modules/
 aws-exports.js
 awsconfiguration.json
@@ -64,3 +65,13 @@ NFL-Stats/
 hint-report/
 __azurite_db_queue__.json
 __azurite_db_queue_extent__.json
+MIGRATED_PROJECT.esproj
+NFL.njsproj
+NFL.njsproj.user
+NFL.sln
+nuget.config
+PROJECT_MIGRATION_LOG.txt
+**/copilot-chat/**
+**/.vs/**
+
+

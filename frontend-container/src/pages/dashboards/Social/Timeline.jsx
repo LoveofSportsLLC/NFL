@@ -1,8 +1,8 @@
-import React from "react";
-import { Row, Col, Button, Card } from "react-bootstrap";
+import React from 'react';
+import { Row, Col, Button, Card } from 'react-bootstrap';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
 
 import unsplash1 from '/photos/unsplash-1.jpg';
 import unsplash2 from '/photos/unsplash-2.jpg';

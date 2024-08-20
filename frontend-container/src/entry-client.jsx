@@ -3,16 +3,15 @@ import { hydrateRoot } from 'react-dom/client';
 import WrappedApp from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import logger from './utils/logger.js';
 import * as diff from 'diff';
 
-logger.debug('Initializing Client Application');
+console.log('Initializing Client Application');
 
 const container = document.getElementById('app');
 const initialData = window.__INITIAL_DATA__;
 
 if (container) {
-  logger.debug('Container found, hydrating app with initialData:', initialData);
+  console.log('Container found, hydrating app with initialData:', initialData);
   hydrateRoot(
     container,
     <React.StrictMode>
@@ -26,10 +25,10 @@ if (container) {
 
   setTimeout(() => {
     const clientHTML = container.innerHTML;
-    // logger.debug(
-    //   'Client rendered HTML (first 2000 chars):',
-    //   clientHTML.substring(0, 2000),
-    // );
+    console.log(
+      'Client rendered HTML (first 2000 chars):',
+      clientHTML.substring(0, 2000),
+    );
 
     // Compare server and client HTML
     const serverHTML = document.documentElement.innerHTML;
@@ -47,14 +46,13 @@ if (container) {
     }, []);
 
     truncatedDiffs.forEach((part) => {
-      // if (part.added) {
-      //   logger.debug('HTML Diff (added):', part.value);
-      // } else if (part.removed) {
-      //   logger.debug('HTML Diff (removed):', part.value);
-      // }
+      if (part.added) {
+        console.log('HTML Diff (added):', part.value);
+      } else if (part.removed) {
+        console.log('HTML Diff (removed):', part.value);
+      }
     });
   }, 1000); // Wait a bit to ensure hydration is complete
 } else {
   console.error("Root container 'app' not found for hydration.");
-  logger.debug("Root container 'app' not found for hydration.");
 }

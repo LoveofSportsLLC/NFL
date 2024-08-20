@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Card, Dropdown, Table } from "react-bootstrap";
+import { Card, Dropdown, Table } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const Traffic = () => (
   <Card className="flex-fill w-100">

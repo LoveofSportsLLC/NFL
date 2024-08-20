@@ -1,31 +1,31 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
 
-import { Card } from "react-bootstrap";
+import { Card } from 'react-bootstrap';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const BarChart = () => {
   const palette = usePalette();
 
   const data = {
     labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
     datasets: [
       {
-        label: "Last year",
+        label: 'Last year',
         backgroundColor: palette.primary,
         borderColor: palette.primary,
         hoverBackgroundColor: palette.primary,
@@ -35,11 +35,11 @@ const BarChart = () => {
         categoryPercentage: 0.5,
       },
       {
-        label: "This year",
-        backgroundColor: "#E8EAED",
-        borderColor: "#E8EAED",
-        hoverBackgroundColor: "#E8EAED",
-        hoverBorderColor: "#E8EAED",
+        label: 'This year',
+        backgroundColor: '#E8EAED',
+        borderColor: '#E8EAED',
+        hoverBackgroundColor: '#E8EAED',
+        hoverBorderColor: '#E8EAED',
         data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
         barPercentage: 0.75,
         categoryPercentage: 0.5,
@@ -67,7 +67,7 @@ const BarChart = () => {
       x: {
         stacked: false,
         grid: {
-          color: "transparent",
+          color: 'transparent',
         },
       },
     },

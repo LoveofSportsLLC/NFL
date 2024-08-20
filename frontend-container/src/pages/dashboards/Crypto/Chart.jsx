@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect } from "react";
-import { Card, Dropdown } from "react-bootstrap";
-import { MoreHorizontal } from "react-feather";
+import React, { Suspense, useEffect } from 'react';
+import { Card, Dropdown } from 'react-bootstrap';
+import { MoreHorizontal } from 'react-feather';
 
 const LazyApexCharts = R;
 const data = [
@@ -152,13 +152,13 @@ const data = [
 
 const options = {
   stroke: { width: 1 },
-  xaxis: { type: "datetime" },
-  colors: ["#0cc2aa", "#5fc27e", "#fcc100", "#f44455", "#5b7dff"],
+  xaxis: { type: 'datetime' },
+  colors: ['#0cc2aa', '#5fc27e', '#fcc100', '#f44455', '#5b7dff'],
 };
 
 const LTCBTCChart = () => {
   useEffect(() => {
-    window.dispatchEvent(new Event("resize"));
+    window.dispatchEvent(new Event('resize'));
   }, []);
 
   return (

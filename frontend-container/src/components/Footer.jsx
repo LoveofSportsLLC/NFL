@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import SupportModal from "../pages/landing/Aboutus/SupportModal";
+import React, { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import SupportModal from '../pages/landing/Aboutus/SupportModal';
 
 const Footer = () => {
   const [showSupportModal, setShowSupportModal] = useState(false);
@@ -31,7 +31,7 @@ const Footer = () => {
               <li className="list-inline-item">
                 <button
                   className="btn btn-link p-0 text-decoration-none text-muted"
-                  onClick={() => (window.location.href = "/help-center")}
+                  onClick={() => (window.location.href = '/help-center')}
                 >
                   Help Center
                 </button>
@@ -39,7 +39,7 @@ const Footer = () => {
               <li className="list-inline-item">
                 <button
                   className="btn btn-link p-0 text-decoration-none text-muted"
-                  onClick={() => (window.location.href = "/auth/privacypolicy")}
+                  onClick={() => (window.location.href = '/auth/privacypolicy')}
                 >
                   Privacy
                 </button>
@@ -48,7 +48,7 @@ const Footer = () => {
                 <button
                   className="btn btn-link p-0 text-decoration-none text-muted"
                   onClick={() =>
-                    (window.location.href = "/auth/termsofservice")
+                    (window.location.href = '/auth/termsofservice')
                   }
                 >
                   Terms of Service
@@ -58,7 +58,7 @@ const Footer = () => {
           </Col>
           <Col xs="6" className="text-end">
             <p className="mb-0">
-              &copy; {new Date().getFullYear()} -{" "}
+              &copy; {new Date().getFullYear()} -{' '}
               <Link to="/" className="text-muted">
                 AppStack
               </Link>

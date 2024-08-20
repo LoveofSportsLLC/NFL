@@ -1,6 +1,6 @@
 // src/pages/landing/Footer.jsx
-import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import FBIcon from '/brands/faFacebook.svg';
 import INSTAIcon from '/brands/faInstagram.svg';
 import TWIcon from '/brands/faTwitter.svg';
@@ -43,7 +43,7 @@ const Footer = () => (
           >
             Privacy Policy
           </a>
-          {" | "}
+          {' | '}
           <a
             href="https://loveoffootball.io/auth/termsofservice"
             target="_blank"

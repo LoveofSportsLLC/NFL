@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Badge, Button, Card } from "react-bootstrap";
+import { Badge, Button, Card } from 'react-bootstrap';
 
 const Feed = () => (
   <Card className="flex-fill w-100">
@@ -21,7 +21,7 @@ const Feed = () => (
         />
         <div className="flex-grow-1">
           <small className="float-end text-navy">5m ago</small>
-          <strong>Ashley Briggs</strong> started following{" "}
+          <strong>Ashley Briggs</strong> started following{' '}
           <strong>Stacie Hall</strong>
           <br />
           <small className="text-muted">Today 7:51 pm</small>
@@ -40,7 +40,7 @@ const Feed = () => (
         />
         <div className="flex-grow-1">
           <small className="float-end text-navy">30m ago</small>
-          <strong>Chris Wood</strong> posted something on{" "}
+          <strong>Chris Wood</strong> posted something on{' '}
           <strong>Stacie Hall</strong>'s timeline
           <br />
           <small className="text-muted">Today 7:21 pm</small>

@@ -46,7 +46,7 @@ const Accessing = () => (
   // do something
 }`}</Code>
 
-    <Code>{`<title>{import.meta.env.VITE_WEBSITE_NAME}</title>`}</Code>
+    <Code>{'<title>{import.meta.env.VITE_WEBSITE_NAME}</title>'}</Code>
 
     <p className="text-lg">
       Note: You need to restart the development server after changing{' '}

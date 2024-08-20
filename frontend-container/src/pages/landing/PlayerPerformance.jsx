@@ -1,6 +1,6 @@
 // src/pages/landing/PlayerPerformance.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const PlayerPerformance = ({ playerPerformance }) => (
   <section className="py-6">

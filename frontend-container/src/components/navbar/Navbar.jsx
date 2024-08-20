@@ -61,8 +61,7 @@ const NavbarComponent = () => {
         token = await getAccessTokenSilently({
           authorizationParams: {
             audience: audience,
-            scope: 'openid profile emaail',
-
+            scope: 'openid profile email',
           },
         });
         sessionStorage.setItem('authToken', token); // Changed to sessionStorage
@@ -76,23 +75,24 @@ const NavbarComponent = () => {
       }
       return null;
     }
-  }, [getAccessTokenSilently, loginWithRedirect]);
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
     const fetchData = async () => {
       const token = await getToken();
       if (token) {
-        const fetchNotificationsPromise = await fetch('/api/notifications', {
+        const fetchNotificationsPromise = fetch('/api/notifications', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const fetchMessagesPromise = await fetch('/api/messages', {
+        const fetchMessagesPromise = fetch('/api/messages', {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         try {
-          const [notificationsResponse, messagesResponse] = await Promise.all(
-            [fetchNotificationsPromise, fetchMessagesPromise],
-          );
+          const [notificationsResponse, messagesResponse] = await Promise.all([
+            fetchNotificationsPromise,
+            fetchMessagesPromise,
+          ]);
           setNotifications(await notificationsResponse.json());
           setInboxMessages(await messagesResponse.json());
         } catch (e) {

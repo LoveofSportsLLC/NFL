@@ -1,5 +1,5 @@
 // src/pages/landing/ai/PredictionsAccuracy.jsx
-import React from "react";
+import React from 'react';
 import {
   Container,
   Row,
@@ -8,18 +8,18 @@ import {
   Accordion,
   Tooltip,
   OverlayTrigger,
-} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartLine, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { Chart } from "react-google-charts";
+} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Chart } from 'react-google-charts';
 
 const PredictionsAccuracy = () => {
   const accuracyData = {
-    explainedVariance: "85%", // Sample data
-    meanAbsoluteError: "0.5", // Sample data
-    r2Score: "0.9", // Sample data
-    spearmanCorrelation: "0.95", // Sample data
-    confidenceInterval: "± 0.05", // Sample data
+    explainedVariance: '85%', // Sample data
+    meanAbsoluteError: '0.5', // Sample data
+    r2Score: '0.9', // Sample data
+    spearmanCorrelation: '0.95', // Sample data
+    confidenceInterval: '± 0.05', // Sample data
   };
 
   const renderTooltip = (props) => (
@@ -29,18 +29,18 @@ const PredictionsAccuracy = () => {
   );
 
   const data = [
-    ["Play", "Predicted Score", "Actual Score"],
-    ["Play 1", 14, 13],
-    ["Play 2", 21, 20],
-    ["Play 3", 28, 26],
-    ["Play 4", 35, 32],
+    ['Play', 'Predicted Score', 'Actual Score'],
+    ['Play 1', 14, 13],
+    ['Play 2', 21, 20],
+    ['Play 3', 28, 26],
+    ['Play 4', 35, 32],
   ];
 
   const options = {
-    title: "Example of Model Predictions vs Actual Scores",
-    hAxis: { title: "Play Number", minValue: 0, maxValue: 4 },
-    vAxis: { title: "Score", minValue: 0, maxValue: 40 },
-    legend: "bottom",
+    title: 'Example of Model Predictions vs Actual Scores',
+    hAxis: { title: 'Play Number', minValue: 0, maxValue: 4 },
+    vAxis: { title: 'Score', minValue: 0, maxValue: 40 },
+    legend: 'bottom',
   };
 
   return (
@@ -163,7 +163,7 @@ const PredictionsAccuracy = () => {
                     <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="1">
                         <Accordion.Header>
-                          Mean Absolute Error (MAE):{" "}
+                          Mean Absolute Error (MAE):{' '}
                           {accuracyData.meanAbsoluteError}
                           <OverlayTrigger
                             placement="top"
@@ -220,7 +220,7 @@ const PredictionsAccuracy = () => {
                     <Accordion defaultActiveKey={null}>
                       <Accordion.Item eventKey="3">
                         <Accordion.Header>
-                          Spearman Correlation:{" "}
+                          Spearman Correlation:{' '}
                           {accuracyData.spearmanCorrelation}
                           <OverlayTrigger
                             placement="top"

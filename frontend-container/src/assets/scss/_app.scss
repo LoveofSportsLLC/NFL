@@ -3,7 +3,6 @@
 @import '1-variables/_dark';
 @import '1-variables/_team-colors';
 
-
 // Bootstrap
 @import "bootstrap/scss/bootstrap";
 
@@ -51,6 +50,7 @@
 @import "3-components/wizard";
 @import "3-components/wrapper";
 @import "3-components/team-option";
+@import '3-components/stickyCTA'; // Import the new partial
 // Theme utilities
 @import "4-utilities/background";
 @import "4-utilities/borders";

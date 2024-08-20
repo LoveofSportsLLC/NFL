@@ -1,23 +1,23 @@
 // src/pages/landing/Statistics/Teams/TeamProfile.jsx
-import React from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import React from 'react';
+import { Card, ListGroup } from 'react-bootstrap';
 
 const TeamProfile = () => {
-  const teamName = "Kansas City Chiefs";
+  const teamName = 'Kansas City Chiefs';
   const statistics = [
-    "Passing: Patrick Mahomes, 34/46, 333 yards, 2 TDs, 1 INT",
-    "Rushing: Patrick Mahomes, 9 carries, 66 yards",
-    "Receiving: Travis Kelce, 9 receptions, 93 yards",
+    'Passing: Patrick Mahomes, 34/46, 333 yards, 2 TDs, 1 INT',
+    'Rushing: Patrick Mahomes, 9 carries, 66 yards',
+    'Receiving: Travis Kelce, 9 receptions, 93 yards',
   ];
   const recentGames = [
-    "Super Bowl LVIII: Kansas City Chiefs 25, San Francisco 49ers 22",
+    'Super Bowl LVIII: Kansas City Chiefs 25, San Francisco 49ers 22',
   ];
   const news = [
-    "Kansas City Chiefs win Super Bowl LVIII in dramatic overtime fashion",
-    "Patrick Mahomes named Super Bowl LVIII MVP",
+    'Kansas City Chiefs win Super Bowl LVIII in dramatic overtime fashion',
+    'Patrick Mahomes named Super Bowl LVIII MVP',
     "Super Bowl parade celebrates Chiefs' victory",
   ];
-  const keyPlayers = ["Patrick Mahomes", "Travis Kelce", "Isiah Pacheco"];
+  const keyPlayers = ['Patrick Mahomes', 'Travis Kelce', 'Isiah Pacheco'];
 
   return (
     <Card>

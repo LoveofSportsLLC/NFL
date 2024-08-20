@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Button, Col, Dropdown, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 
-import { Calendar, Filter, RefreshCw } from "react-feather";
+import { Calendar, Filter, RefreshCw } from 'react-feather';
 
 const Header = () => {
   return (

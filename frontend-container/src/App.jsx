@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
@@ -11,10 +12,9 @@ import SidebarProvider from './contexts/SidebarProvider';
 import LayoutProvider from './contexts/LayoutProvider';
 import ChartJsDefaults from './utils/ChartJsDefaults';
 import ErrorBoundary from './components/ErrorBoundary';
-import logger from './utils/logger.js';
 import 'custom-event-polyfill';
 import useHelmet from './utils/HelmetLoader';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import {
   domain,
   clientId,
@@ -24,10 +24,10 @@ import {
 } from './config';
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
-
-// logger.debug('App.jsx', 'Starting execution');
-// logger.debug('App.jsx Client ID:', clientId);
-// logger.debug('App.jsx Domain:', domain);
+import authConfig from './components/auth/auth0';
+// console.log('App.jsx', 'Starting execution');
+// console.log('App.jsx Client ID:', clientId);
+// console.log('App.jsx Domain:', domain);
 
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
@@ -35,72 +35,99 @@ const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 let appInsights;
 const reactPlugin = new ReactPlugin();
 
-const initializeAppInsights = () => {
-  logger.debug('App.jsx', 'Initializing Application Insights');
-  import('history').then(({ createBrowserHistory }) => {
-    const browserHistory = createBrowserHistory({ basename: '' });
-    appInsights = new ApplicationInsights({
-      config: {
-        connectionString,
-        instrumentationKey,
-        enableAutoRouteTracking: true,
-        extensions: [reactPlugin],
-        extensionConfig: {
-          [reactPlugin.identifier]: { history: browserHistory },
+const initializeAppInsights = () =>{
+  if ( typeof window !== 'undefined' )
+  {
+    console.log( 'App.jsx', 'Initializing Application Insights' );
+    import( 'history' ).then( ( { createBrowserHistory } ) =>
+    {
+      const browserHistory = createBrowserHistory( { basename: '' } );
+      appInsights = new ApplicationInsights( {
+        config: {
+          connectionString,
+          instrumentationKey,
+          enableAutoRouteTracking: true,
+          extensions: [ reactPlugin ],
+          extensionConfig: {
+            [ reactPlugin.identifier ]: { history: browserHistory },
+          },
         },
-      },
-    });
-    appInsights.loadAppInsights();
-    logger.debug('App.jsx', 'Application Insights initialized');
-  });
+      });
+      appInsights.loadAppInsights();
+      console.log( 'App.jsx', 'Application Insights initialized' );
+    } );
+  }
 };
 
 function App({ initialData }) {
-  const navigate = useNavigate();
   const routeContent = useRoutes(routes);
   const Helmet = useHelmet();
 
   useEffect(() => {
-    logger.debug('App.jsx', 'App component mounted', { initialData });
+    console.log('App.jsx', 'App component mounted', { initialData });
   }, [initialData]);
 
-  logger.debug('App.jsx', 'Rendering Application with routeContent:', {
+  console.log('App.jsx', 'Rendering Application with routeContent:', {
     routeContent,
   });
   return (
-    <Wrapper>
-      <React.Fragment>
-        {Helmet && (
-          <Helmet
-            titleTemplate="%s | Love of Football - NFL Stats & Analytics"
-            defaultTitle="Love of Football - NFL Stats & Analytics"
-          >
-            <link rel="shortcut icon" href="/favicon.ico" />
-          </Helmet>
-        )}
-        <ReduxProvider store={store}>
-          <ThemeProvider>
-            <SidebarProvider>
-              <LayoutProvider>
-                <ChartJsDefaults />
-                <div id="routeContent">{routeContent}</div>
-              </LayoutProvider>
-            </SidebarProvider>
-          </ThemeProvider>
-        </ReduxProvider>
-      </React.Fragment>
-    </Wrapper>
+    <ReduxProvider store={store}>
+      <Auth0Provider
+        domain={domain}
+        clientId={clientId}
+        audience={audience}
+                  authorizationParams={{
+            redirect_uri:
+              typeof window !== 'undefined'
+                ? window.location.origin + '/dashboard/default'
+                : '',
+          }}
+      >
+        <ThemeProvider>
+          <SidebarProvider>
+            <LayoutProvider>
+              <ChartJsDefaults />
+              <ErrorBoundary>
+                <SSRFriendlyWrapper>
+                  <Wrapper>
+                    {Helmet}
+                    {routeContent}
+                  </Wrapper>
+                </SSRFriendlyWrapper>
+              </ErrorBoundary>
+            </LayoutProvider>
+          </SidebarProvider>
+        </ThemeProvider>
+      </Auth0Provider>
+    </ReduxProvider>
   );
 }
 
+App.propTypes = {
+  initialData: PropTypes.object,
+};
+
+WrappedApp.propTypes = {
+  initialData: PropTypes.object,
+};
+
 export default function WrappedApp({ initialData }) {
   useEffect(() => {
-    logger.debug('App.jsx', 'WrappedApp component mounted', { initialData });
+    console.log('App.jsx', 'WrappedApp component mounted', { initialData });
     const serverHTML = document.documentElement.innerHTML;
 
     setTimeout(() => {
       const clientHTML = document.documentElement.innerHTML;
-      //compareHtml(serverHTML, clientHTML);
+      // Define compareHtml function
+      const compareHtml = (serverHTML, clientHTML) => {
+        if (serverHTML !== clientHTML) {
+          console.warn('HTML content mismatch between server and client');
+        } else {
+          console.log('HTML content matches between server and client');
+        }
+      };
+
+      compareHtml(serverHTML, clientHTML);
     }, 1000); // Wait a bit to ensure hydration is complete
   }, [initialData]);
 

@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Coaches/ComparativeAnalysis.jsx
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const ComparativeAnalysis = () => {
   // Dummy comparative analysis data
-  const analysis = "Compare statistics and performance between coaches.";
+  const analysis = 'Compare statistics and performance between coaches.';
 
   return (
     <Card className="mt-3">

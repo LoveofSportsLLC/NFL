@@ -13,9 +13,7 @@ import {
 } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import logger from '../../utils/logger.js'; // Import the log utility
 
-// Navigation Component to switch between settings
 const Navigation = ({ setActiveSection }) => (
   <Card>
     <Card.Header>Profile Settings</Card.Header>
@@ -54,12 +52,12 @@ const Navigation = ({ setActiveSection }) => (
 const PublicInfo = ({ userData, setUserData }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    logger.debug(
+    console.log(
       'Settings.jsx',
       'PublicInfo.handleSubmit',
       'Saving Public Info',
@@ -83,18 +81,9 @@ const PublicInfo = ({ userData, setUserData }) => {
               onChange={handleChange}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Biography</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              name="bio"
-              value={userData.bio || ''}
-              onChange={handleChange}
-            />
-          </Form.Group>
+          {/* Add other form fields as needed */}
           <Button variant="primary" type="submit">
-            Save Changes
+            Save
           </Button>
         </Form>
       </Card.Body>
@@ -102,7 +91,6 @@ const PublicInfo = ({ userData, setUserData }) => {
   );
 };
 
-// Form Component for Private Info
 const PrivateInfo = ({ userData }) => (
   <Card>
     <Card.Header>Private Info</Card.Header>
@@ -125,7 +113,6 @@ const PrivateInfo = ({ userData }) => (
   </Card>
 );
 
-// Example of Password Settings
 const PasswordSettings = ({ isSocialLogin }) => (
   <Card>
     <Card.Header>Password</Card.Header>
@@ -213,11 +200,7 @@ const YourDataSettings = () => (
       <Button
         variant="primary"
         onClick={() =>
-          logger.debug(
-            'Settings.jsx',
-            'YourDataSettings',
-            'User data requested',
-          )
+          console.log('Settings.jsx', 'YourDataSettings', 'User data requested')
         }
       >
         Download My Data
@@ -234,7 +217,7 @@ const DeleteAccount = () => {
         'Are you sure you want to delete your account permanently?',
       )
     ) {
-      logger.debug(
+      console.log(
         'Settings.jsx',
         'DeleteAccount',
         'Account deletion process started.',
@@ -262,25 +245,25 @@ const Settings = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const Helmet = useHelmet(); // Use the custom hook
 
-  const fetchUserData = async () => {
-    if (!isAuthenticated) return;
-    try {
-      const accessToken = await getAccessTokenSilently();
-      const response = await axios.get('/api/user-data', {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      setUserData(response.data);
-    } catch (error) {
-      logger.debug(
-        'Settings.jsx',
-        'fetchUserData',
-        'Failed to fetch user data:',
-        error.message,
-      );
-    }
-  };
-
   useEffect(() => {
+    const fetchUserData = async () => {
+      if (!isAuthenticated) return;
+      try {
+        const accessToken = await getAccessTokenSilently();
+        const response = await axios.get('/api/user-data', {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        setUserData(response.data);
+      } catch (error) {
+        console.log(
+          'Settings.jsx',
+          'fetchUserData',
+          'Failed to fetch user data:',
+          error.message,
+        );
+      }
+    };
+
     fetchUserData();
   }, [isAuthenticated, getAccessTokenSilently]);
 

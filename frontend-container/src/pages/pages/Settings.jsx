@@ -1,5 +1,4 @@
-// src/pages/pages/Settings.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Button,
@@ -14,7 +13,6 @@ import {
 } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import logger from '../../utils/logger.js'; // Import the log utility
 
 // Navigation Component to switch between settings
 const Navigation = ({ setActiveSection }) => (
@@ -43,6 +41,13 @@ const Navigation = ({ setActiveSection }) => (
           key={section}
           action
           onClick={() => setActiveSection(section)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              setActiveSection(section);
+            }
+          }}
+          tabIndex={0}
+          role="button"
         >
           {section}
         </ListGroup.Item>
@@ -53,21 +58,27 @@ const Navigation = ({ setActiveSection }) => (
 
 // Form Component for Public Info
 const PublicInfo = ({ userData, setUserData }) => {
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setUserData((prevData) => ({ ...prevData, [name]: value }));
+    },
+    [setUserData],
+  );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    logger.debug(
-      'Settings.jsx',
-      'PublicInfo.handleSubmit',
-      'Saving Public Info',
-      userData,
-    );
-    // Here you would typically make an API call to save the data
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(
+        'Settings.jsx',
+        'PublicInfo.handleSubmit',
+        'Saving Public Info',
+        userData,
+      );
+      // Here you would typically make an API call to save the data
+    },
+    [userData],
+  );
 
   return (
     <Card>
@@ -75,21 +86,23 @@ const PublicInfo = ({ userData, setUserData }) => {
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Username</Form.Label>
+            <Form.Label htmlFor="username">Username</Form.Label>
             <Form.Control
               type="text"
               placeholder="Username"
               name="username"
+              id="username"
               value={userData.username || ''}
               onChange={handleChange}
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Biography</Form.Label>
+            <Form.Label htmlFor="bio">Biography</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
               name="bio"
+              id="bio"
               value={userData.bio || ''}
               onChange={handleChange}
             />
@@ -110,12 +123,13 @@ const PrivateInfo = ({ userData }) => (
     <Card.Body>
       <Form>
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Email"
             defaultValue={userData.email}
             readOnly
+            id="email"
           />
         </Form.Group>
         <Button variant="primary" type="submit">
@@ -144,16 +158,30 @@ const PasswordSettings = ({ isSocialLogin }) => (
       ) : (
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Current Password</Form.Label>
-            <Form.Control type="password" placeholder="Current Password" />
+            <Form.Label htmlFor="current-password">Current Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Current Password"
+              id="current-password"
+            />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>New Password</Form.Label>
-            <Form.Control type="password" placeholder="New Password" />
+            <Form.Label htmlFor="new-password">New Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="New Password"
+              id="new-password"
+            />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Confirm New Password</Form.Label>
-            <Form.Control type="password" placeholder="Confirm New Password" />
+            <Form.Label htmlFor="confirm-new-password">
+              Confirm New Password
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm New Password"
+              id="confirm-new-password"
+            />
           </Form.Group>
           <Button variant="primary" type="submit">
             Update Password
@@ -214,11 +242,7 @@ const YourDataSettings = () => (
       <Button
         variant="primary"
         onClick={() =>
-          logger.debug(
-            'Settings.jsx',
-            'YourDataSettings',
-            'User data requested',
-          )
+          console.log('Settings.jsx', 'YourDataSettings', 'User data requested')
         }
       >
         Download My Data
@@ -235,7 +259,7 @@ const DeleteAccount = () => {
         'Are you sure you want to delete your account permanently?',
       )
     ) {
-      logger.debug(
+      console.log(
         'Settings.jsx',
         'DeleteAccount',
         'Account deletion process started.',
@@ -263,7 +287,7 @@ const Settings = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const Helmet = useHelmet(); // Use the custom hook
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!isAuthenticated) return;
     try {
       const accessToken = await getAccessTokenSilently();
@@ -272,18 +296,18 @@ const Settings = () => {
       });
       setUserData(response.data);
     } catch (error) {
-      logger.debug(
+      console.log(
         'Settings.jsx',
         'fetchUserData',
         'Failed to fetch user data:',
         error.message,
       );
     }
-  };
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   useEffect(() => {
     fetchUserData();
-  }, [isAuthenticated, getAccessTokenSilently]);
+  }, [isAuthenticated, getAccessTokenSilently, fetchUserData]);
 
   if (!Helmet) return null;
 

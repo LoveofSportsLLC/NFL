@@ -1,6 +1,6 @@
 // src/pages/landing/MatchAnalysis.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const MatchAnalysis = ({ matchAnalysis }) => (
   <section className="py-6 bg-light">

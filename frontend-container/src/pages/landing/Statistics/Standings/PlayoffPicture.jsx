@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Standings/PlayoffPicture.jsx
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const PlayoffPicture = () => {
   // Dummy playoff data
-  const playoffPicture = "Current playoff standings and projections.";
+  const playoffPicture = 'Current playoff standings and projections.';
 
   return (
     <Card>

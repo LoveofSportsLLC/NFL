@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import jsVectorMap from "jsvectormap";
-import { Card } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import jsVectorMap from 'jsvectormap';
+import { Card } from 'react-bootstrap';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 function World() {
   const palette = usePalette();
@@ -18,17 +18,17 @@ function World() {
   useEffect(() => {
     if (debounced) {
       new jsVectorMap({
-        selector: "#maps_world",
-        map: "world",
+        selector: '#maps_world',
+        map: 'world',
         regionStyle: {
           initial: {
-            fill: palette["gray-200"],
+            fill: palette['gray-200'],
           },
         },
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         containerStyle: {
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         },
         zoomOnScroll: false,
       });

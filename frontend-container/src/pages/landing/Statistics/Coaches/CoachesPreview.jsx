@@ -1,11 +1,11 @@
 // src/pages/landing/Statistics/Coaches/CoachesPreview.jsx
-import React from "react";
-import { Carousel } from "react-bootstrap";
-import coach1 from "/analysis/coach1.webp";
-import coach2 from "/analysis/coach2.webp";
-import coach3 from "/analysis/coach3.webp";
-import coach4 from "/analysis/coach4.webp";
-import coach5 from "/analysis/coach5.webp";
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
+import coach1 from '/analysis/coach1.webp';
+import coach2 from '/analysis/coach2.webp';
+import coach3 from '/analysis/coach3.webp';
+import coach4 from '/analysis/coach4.webp';
+import coach5 from '/analysis/coach5.webp';
 
 const CoachesPreview = () => {
   return (

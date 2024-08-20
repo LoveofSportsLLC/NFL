@@ -1,7 +1,7 @@
 // DonateModal.js
-import React from "react";
-import { Modal, Button } from "react-bootstrap";
-import Donate from "../../components/auth/Donate";
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import Donate from '../../components/auth/Donate';
 
 function DonateModal({ show, onHide }) {
   return (

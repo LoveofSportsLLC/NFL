@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Games/GameAnalysis.jsx
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const GameAnalysis = () => {
   // Dummy analysis data
-  const analysis = "In-depth analysis of key games.";
+  const analysis = 'In-depth analysis of key games.';
 
   return (
     <Card>

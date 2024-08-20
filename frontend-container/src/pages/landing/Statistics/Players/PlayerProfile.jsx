@@ -1,22 +1,22 @@
 // src/pages/landing/Statistics/Players/PlayerProfile.jsx
-import React from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import React from 'react';
+import { Card, ListGroup } from 'react-bootstrap';
 
 const PlayerProfile = () => {
-  const playerName = "Patrick Mahomes";
+  const playerName = 'Patrick Mahomes';
   const statistics = [
-    "Passing: 34 completions on 46 attempts, 333 yards, 2 touchdowns, 1 interception",
-    "Rushing: 9 carries, 66 yards",
+    'Passing: 34 completions on 46 attempts, 333 yards, 2 touchdowns, 1 interception',
+    'Rushing: 9 carries, 66 yards',
   ];
   const news = [
-    "Patrick Mahomes named Super Bowl LVIII MVP",
-    "Patrick Mahomes leads Chiefs to victory in overtime thriller",
-    "Mahomes throws game-winning TD in Super Bowl LVIII",
+    'Patrick Mahomes named Super Bowl LVIII MVP',
+    'Patrick Mahomes leads Chiefs to victory in overtime thriller',
+    'Mahomes throws game-winning TD in Super Bowl LVIII',
   ];
   const fantasyInsights = [
-    "Mahomes remains a top-tier fantasy QB with consistent high performance",
-    "His rushing ability adds valuable points in fantasy leagues",
-    "Strong connection with Travis Kelce boosts his fantasy value",
+    'Mahomes remains a top-tier fantasy QB with consistent high performance',
+    'His rushing ability adds valuable points in fantasy leagues',
+    'Strong connection with Travis Kelce boosts his fantasy value',
   ];
 
   return (

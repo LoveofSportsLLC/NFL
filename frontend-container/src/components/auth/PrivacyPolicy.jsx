@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
@@ -79,7 +79,7 @@ const PrivacyPolicy = () => {
       <h2>Contact Information</h2>
       <p>
         If you have any questions about this Privacy Policy or our handling of
-        data obtained via Google APIs, please contact us at{" "}
+        data obtained via Google APIs, please contact us at{' '}
         <a href="mailto:support@loveoffootball.io">support@loveoffootball.io</a>
         .
       </p>

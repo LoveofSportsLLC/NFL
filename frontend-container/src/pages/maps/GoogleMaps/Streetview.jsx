@@ -1,8 +1,6 @@
-import React, { useRef } from "react";
-import ReactDOM from "react-dom";
-import { Card } from "react-bootstrap";
-
-import GoogleMapReact from "google-map-react";
+import React, { useRef, useEffect } from 'react';
+import { Card } from 'react-bootstrap';
+import GoogleMapReact from 'google-map-react';
 
 const Streetview = () => {
   const panoramaRef = useRef(null);
@@ -18,9 +16,9 @@ const Streetview = () => {
   };
 
   const apiIsLoaded = (map, maps) => {
-    if (map) {
+    if (map && panoramaRef.current) {
       const panorama = new maps.StreetViewPanorama(
-        ReactDOM.findDOMNode(panoramaRef.current),
+        panoramaRef.current, // Use the ref directly here
         {
           position: {
             lat: 42.345573,
@@ -31,7 +29,7 @@ const Streetview = () => {
             pitch: 0,
           },
           visible: true,
-        }
+        },
       );
       map.setStreetView(panorama);
     }
@@ -47,18 +45,17 @@ const Streetview = () => {
         </h6>
       </Card.Header>
       <Card.Body>
-        <div style={{ height: 300, width: "100%" }}>
+        <div style={{ height: 300, width: '100%' }} ref={panoramaRef}>
           <GoogleMapReact
-            ref={panoramaRef}
-            options={getMapOptions}
             bootstrapURLKeys={{
-              key: "${{   secrets.GOOGLEMAPAPI }}",
+              key: process.env.REACT_APP_GOOGLE_MAP_API_KEY, // Assuming you're using an environment variable for this
             }}
             defaultCenter={{
               lat: 40.712784,
               lng: -74.005941,
             }}
             defaultZoom={14}
+            options={getMapOptions}
             onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps)}
             yesIWantToUseGoogleMapApiInternals={true}
           />

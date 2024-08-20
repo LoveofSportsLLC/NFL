@@ -18,7 +18,7 @@
 
 // router.post('/log', (req, res) => {
 //   const { fileName, functionName, messages, logCount } = req.body;
-//   logger.debug(
+//   console.log(
 //     `[LOG] [${fileName}:${functionName}] ${messages.join(' ')} (Log Count: ${logCount}) [CLIENT]`,
 //   );
 //   res.sendStatus(200);

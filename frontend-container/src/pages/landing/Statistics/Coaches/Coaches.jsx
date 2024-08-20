@@ -1,9 +1,9 @@
 // src/pages/landing/Statistics/Coaches/Coaches.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import CoachList from "./CoachList";
-import CoachProfile from "./CoachProfile";
-import ComparativeAnalysis from "./ComparativeAnalysis";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import CoachList from './CoachList';
+import CoachProfile from './CoachProfile';
+import ComparativeAnalysis from './ComparativeAnalysis';
 
 const Coaches = () => {
   return (

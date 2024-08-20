@@ -5,5 +5,10 @@
     "options": {
       "waitUntil": "networkidle0"
     }
+  },
+  "hints": {
+    "content-type": ["error", {
+        ".*\\.js": "application/javascript; charset=utf-8"
+    }]
   }
 }

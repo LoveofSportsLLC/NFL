@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Navbar } from "react-bootstrap";
+import { Navbar } from 'react-bootstrap';
 
-import useSidebar from "../../hooks/useSidebar";
+import useSidebar from '../../hooks/useSidebar';
 
 const NavbarMinimal = () => {
   const { isOpen, setIsOpen } = useSidebar();

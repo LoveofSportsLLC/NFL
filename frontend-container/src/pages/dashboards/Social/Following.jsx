@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Card, Dropdown } from "react-bootstrap";
+import React from 'react';
+import { Button, Card, Dropdown } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const Following = () => (
   <Card className="flex-fill mb-3">

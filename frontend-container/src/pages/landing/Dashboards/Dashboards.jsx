@@ -1,26 +1,26 @@
 // src/pages/landing/Dashboards/Dashboards.jsx
-import React from "react";
-import { Container, Row, Col, Carousel } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDesktop, faChartBar } from "@fortawesome/free-solid-svg-icons";
-import LazyImage from "../../../components/LazyImage"; // Import LazyImage component
-import darkDashboardOverview from "/analysis/darkdashboardoverview.webp";
-import lightDashboardOverview from "/analysis/lightdashboardoverview.webp";
-import nflDashboardOverview from "/analysis/nfldashboardoverview.webp";
-import teamDashboardOverview1 from "/analysis/teamdashboardoverview1.webp";
-import teamDashboardOverview2 from "/analysis/teamdashboardoverview2.webp";
-import teamDashboardOverview3 from "/analysis/teamdashboardoverview3.webp";
-import teamDashboardOverview4 from "/analysis/teamdashboardoverview4.webp";
-import teamDashboardOverview5 from "/analysis/teamdashboardoverview5.webp";
-import mobileDashboardOverview1 from "/analysis/mobiledashboardoverview1.webp";
-import mobileDashboardOverview2 from "/analysis/mobiledashboardoverview2.webp";
-import mobileDashboardOverview3 from "/analysis/mobiledashboardoverview3.webp";
+import React from 'react';
+import { Container, Row, Col, Carousel } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDesktop, faChartBar } from '@fortawesome/free-solid-svg-icons';
+import LazyImage from '../../../components/LazyImage'; // Import LazyImage component
+import darkDashboardOverview from '/analysis/darkdashboardoverview.webp';
+import lightDashboardOverview from '/analysis/lightdashboardoverview.webp';
+import nflDashboardOverview from '/analysis/nfldashboardoverview.webp';
+import teamDashboardOverview1 from '/analysis/teamdashboardoverview1.webp';
+import teamDashboardOverview2 from '/analysis/teamdashboardoverview2.webp';
+import teamDashboardOverview3 from '/analysis/teamdashboardoverview3.webp';
+import teamDashboardOverview4 from '/analysis/teamdashboardoverview4.webp';
+import teamDashboardOverview5 from '/analysis/teamdashboardoverview5.webp';
+import mobileDashboardOverview1 from '/analysis/mobiledashboardoverview1.webp';
+import mobileDashboardOverview2 from '/analysis/mobiledashboardoverview2.webp';
+import mobileDashboardOverview3 from '/analysis/mobiledashboardoverview3.webp';
 
 const Dashboards = () => {
   const handleImageError = (e) => {
     e.target.onerror = null; // Prevent infinite fallback loop
-    e.target.src = "Logo.png"; // Fallback image path
+    e.target.src = 'Logo.png'; // Fallback image path
   };
 
   return (

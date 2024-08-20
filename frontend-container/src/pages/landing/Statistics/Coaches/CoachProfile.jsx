@@ -1,12 +1,12 @@
 // src/pages/landing/Statistics/Coaches/CoachProfile.jsx
-import React from "react";
-import { Card, ListGroup } from "react-bootstrap";
+import React from 'react';
+import { Card, ListGroup } from 'react-bootstrap';
 
 const CoachProfile = () => {
   // Dummy data for example
-  const coachName = "Coach A";
-  const statistics = ["Win 1", "Win 2", "Win 3"];
-  const news = ["News 1", "News 2", "News 3"];
+  const coachName = 'Coach A';
+  const statistics = ['Win 1', 'Win 2', 'Win 3'];
+  const news = ['News 1', 'News 2', 'News 3'];
 
   return (
     <Card>

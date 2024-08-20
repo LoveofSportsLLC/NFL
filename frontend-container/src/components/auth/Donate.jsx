@@ -1,8 +1,7 @@
-import React from "react";
-import { buybuttonid, publishablekey } from "../../config";
+import React from 'react';
+import { buybuttonid, publishablekey } from '../../config';
 
 function Donate() {
-
   return (
     <stripe-buy-button
       buy-button-id={buybuttonid}

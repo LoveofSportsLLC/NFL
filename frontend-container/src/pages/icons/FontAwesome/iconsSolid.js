@@ -11,56 +11,56 @@ import {
   faAllergies,
   faAmbulance,
   faAmericanSignLanguageInterpreting,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
   {
     icon: faAd,
-    name: "faAd",
+    name: 'faAd',
   },
   {
     icon: faAddressBook,
-    name: "faAddressBook",
+    name: 'faAddressBook',
   },
   {
     icon: faAddressCard,
-    name: "faAddressCard",
+    name: 'faAddressCard',
   },
   {
     icon: faAdjust,
-    name: "faAdjust",
+    name: 'faAdjust',
   },
   {
     icon: faAirFreshener,
-    name: "faAirFreshener",
+    name: 'faAirFreshener',
   },
   {
     icon: faAlignCenter,
-    name: "faAlignCenter",
+    name: 'faAlignCenter',
   },
   {
     icon: faAlignJustify,
-    name: "faAlignJustify",
+    name: 'faAlignJustify',
   },
   {
     icon: faAlignLeft,
-    name: "faAlignLeft",
+    name: 'faAlignLeft',
   },
   {
     icon: faAlignRight,
-    name: "faAlignRight",
+    name: 'faAlignRight',
   },
   {
     icon: faAllergies,
-    name: "faAllergies",
+    name: 'faAllergies',
   },
   {
     icon: faAmbulance,
-    name: "faAmbulance",
+    name: 'faAmbulance',
   },
   {
     icon: faAmericanSignLanguageInterpreting,
-    name: "faAmericanSignLanguageInterpreting",
+    name: 'faAmericanSignLanguageInterpreting',
   },
 ];
 

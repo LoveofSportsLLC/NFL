@@ -1,6 +1,6 @@
 //NFL/frontend-container/src/redux/store.js
-import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./slices/counter";
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './slices/counter';
 
 // Combine the reducers
 const rootReducer = {

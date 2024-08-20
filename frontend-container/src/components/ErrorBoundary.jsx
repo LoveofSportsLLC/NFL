@@ -1,4 +1,4 @@
- //NFL/frontend-container/src/components/ErrorBoundary.jsx
+//NFL/frontend-container/src/components/ErrorBoundary.jsx
 import React, { Component } from 'react';
 
 class ErrorBoundary extends Component {

@@ -1,10 +1,10 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from 'react-bootstrap';
 
-import Main from "../components/Main";
-import Settings from "../components/Settings";
+import Main from '../components/Main';
+import Settings from '../components/Settings';
 
 const Auth = ({ children }) => (
   <React.Fragment>

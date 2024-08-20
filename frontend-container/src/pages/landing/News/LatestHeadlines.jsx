@@ -5,7 +5,6 @@ import CarouselComponent from '../../../components/CarouselComponent';
 import FilterComponent from '../../../components/FilterComponent';
 import { LATEST_NEWS_API_URL } from '../../../config';
 import placeholderImage from '/logo.png';
-import logger from '../../../utils/logger.js';
 
 const LatestHeadlines = () => {
   const [news, setNews] = useState([]);
@@ -22,10 +21,10 @@ const LatestHeadlines = () => {
           setNews(articles);
           filterNews(articles, filter, team);
         } else {
-          logger.debug('Invalid response data:', response.data);
+          console.log('Invalid response data:', response.data);
         }
       } catch (error) {
-        logger.debug('Error fetching news:', error);
+        console.log('Error fetching news:', error);
       }
     };
     fetchNews();

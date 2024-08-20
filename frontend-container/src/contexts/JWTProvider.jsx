@@ -3,7 +3,6 @@ import { useEffect, useReducer } from 'react';
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import AuthContext from './JWTContext';
-import logger from '../utils/logger.js'; // Import the log utility
 
 const INITIALIZE = 'INITIALIZE';
 const SIGN_IN = 'SIGN_IN';
@@ -80,7 +79,7 @@ function AuthProvider({ children }) {
           });
         }
       } catch (err) {
-        logger.debug('JWTProvider.jsx', 'initialize', 'Error:', err.message);
+        console.log('JWTProvider.jsx', 'initialize', 'Error:', err.message);
         dispatch({
           type: INITIALIZE,
           payload: {
@@ -108,7 +107,7 @@ function AuthProvider({ children }) {
         payload: { user },
       });
     } catch (error) {
-      logger.debug('JWTProvider.jsx', 'signIn', 'Error:', error.message);
+      console.log('JWTProvider.jsx', 'signIn', 'Error:', error.message);
     }
   };
 
@@ -133,12 +132,12 @@ function AuthProvider({ children }) {
         payload: { user },
       });
     } catch (error) {
-      logger.debug('JWTProvider.jsx', 'signUp', 'Error:', error.message);
+      console.log('JWTProvider.jsx', 'signUp', 'Error:', error.message);
     }
   };
 
   const resetPassword = (email) => {
-    logger.debug('JWTProvider.jsx', 'resetPassword', 'Email:', email);
+    console.log('JWTProvider.jsx', 'resetPassword', 'Email:', email);
   };
 
   return (

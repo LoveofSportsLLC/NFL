@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import SidebarNavList from "./SidebarNavList";
+import SidebarNavList from './SidebarNavList';
 
 const SidebarNavSection = (props) => {
   const { title, pages, className, ...rest } = props;

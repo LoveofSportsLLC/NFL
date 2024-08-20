@@ -1,7 +1,7 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { ListGroup, Row, Col } from "react-bootstrap";
-import { LogOut } from "react-feather"; // Assuming you are using react-feather for icons
+import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import { ListGroup, Row, Col } from 'react-bootstrap';
+import { LogOut } from 'react-feather'; // Assuming you are using react-feather for icons
 
 const LogoutButton = () => {
   const { logout } = useAuth0();

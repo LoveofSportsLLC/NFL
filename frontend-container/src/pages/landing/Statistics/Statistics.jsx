@@ -1,11 +1,11 @@
 // src/pages/landing/Statistics/Statistics.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import TeamsPreview from "./Teams/TeamsPreview";
-import PlayersPreview from "./Players/PlayersPreview";
-import GamesPreview from "./Games/GamesPreview";
-import StandingsPreview from "./Standings/StandingsPreview";
-import CoachesPreview from "./Coaches/CoachesPreview";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import TeamsPreview from './Teams/TeamsPreview';
+import PlayersPreview from './Players/PlayersPreview';
+import GamesPreview from './Games/GamesPreview';
+import StandingsPreview from './Standings/StandingsPreview';
+import CoachesPreview from './Coaches/CoachesPreview';
 
 const Statistics = () => {
   return (
@@ -14,9 +14,9 @@ const Statistics = () => {
         <Card
           className="p-4"
           style={{
-            backgroundColor: "#f8f9fa",
-            border: "1px solid #dee2e6",
-            borderRadius: "10px",
+            backgroundColor: '#f8f9fa',
+            border: '1px solid #dee2e6',
+            borderRadius: '10px',
           }}
         >
           <Row>

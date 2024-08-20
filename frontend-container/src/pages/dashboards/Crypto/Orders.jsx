@@ -1,7 +1,7 @@
-import React from "react";
-import { Card, Col, Dropdown, Row, Table } from "react-bootstrap";
+import React from 'react';
+import { Card, Col, Dropdown, Row, Table } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const Orders = () => (
   <Row>
