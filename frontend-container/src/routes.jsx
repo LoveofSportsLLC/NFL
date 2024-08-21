@@ -83,9 +83,9 @@ const MigratingToNextJS = lazy(() => import('./pages/docs/MigratingToNextJS'));
 const Support = lazy(() => import('./pages/docs/Support'));
 const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
-const StaticDashboard = lazy(
-  () => import('./pages/dashboards/Static-Dashboard/StaticDashboard'),
-);
+// const StaticDashboard = lazy(
+//   () => import('./pages/dashboards/Static-Dashboard/StaticDashboard'),
+// );
 
 const routes = [
   {
@@ -102,10 +102,10 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/static-dashboard',
-    element: <StaticDashboard />,
-  },
+  // {
+  //   path: '/static-dashboard',
+  //   element: <StaticDashboard />,
+  // },
   {
     path: 'dashboard',
     element: (

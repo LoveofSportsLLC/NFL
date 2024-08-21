@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -35,27 +35,25 @@ const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 let appInsights;
 const reactPlugin = new ReactPlugin();
 
-const initializeAppInsights = () =>{
-  if ( typeof window !== 'undefined' )
-  {
-    console.log( 'App.jsx', 'Initializing Application Insights' );
-    import( 'history' ).then( ( { createBrowserHistory } ) =>
-    {
-      const browserHistory = createBrowserHistory( { basename: '' } );
-      appInsights = new ApplicationInsights( {
+const initializeAppInsights = () => {
+  if (typeof window !== 'undefined') {
+    console.log('App.jsx', 'Initializing Application Insights');
+    import('history').then(({ createBrowserHistory }) => {
+      const browserHistory = createBrowserHistory({ basename: '' });
+      appInsights = new ApplicationInsights({
         config: {
           connectionString,
           instrumentationKey,
           enableAutoRouteTracking: true,
-          extensions: [ reactPlugin ],
+          extensions: [reactPlugin],
           extensionConfig: {
-            [ reactPlugin.identifier ]: { history: browserHistory },
+            [reactPlugin.identifier]: { history: browserHistory },
           },
         },
       });
       appInsights.loadAppInsights();
-      console.log( 'App.jsx', 'Application Insights initialized' );
-    } );
+      console.log('App.jsx', 'Application Insights initialized');
+    });
   }
 };
 
@@ -76,12 +74,9 @@ function App({ initialData }) {
         domain={domain}
         clientId={clientId}
         audience={audience}
-                  authorizationParams={{
-            redirect_uri:
-              typeof window !== 'undefined'
-                ? window.location.origin + '/dashboard/default'
-                : '',
-          }}
+        authorizationParams={{
+          redirect_uri: '',
+        }}
       >
         <ThemeProvider>
           <SidebarProvider>
@@ -112,13 +107,14 @@ WrappedApp.propTypes = {
 };
 
 export default function WrappedApp({ initialData }) {
+  const [redirectUri, setRedirectUri] = useState('');
+
   useEffect(() => {
     console.log('App.jsx', 'WrappedApp component mounted', { initialData });
     const serverHTML = document.documentElement.innerHTML;
 
     setTimeout(() => {
       const clientHTML = document.documentElement.innerHTML;
-      // Define compareHtml function
       const compareHtml = (serverHTML, clientHTML) => {
         if (serverHTML !== clientHTML) {
           console.warn('HTML content mismatch between server and client');
@@ -129,6 +125,10 @@ export default function WrappedApp({ initialData }) {
 
       compareHtml(serverHTML, clientHTML);
     }, 1000); // Wait a bit to ensure hydration is complete
+
+    if (typeof window !== 'undefined') {
+      setRedirectUri(window.location.origin + '/dashboard/default');
+    }
   }, [initialData]);
 
   return (
@@ -139,10 +139,7 @@ export default function WrappedApp({ initialData }) {
           clientId={clientId}
           audience={audience}
           authorizationParams={{
-            redirect_uri:
-              typeof window !== 'undefined'
-                ? window.location.origin + '/dashboard/default'
-                : '',
+            redirect_uri: redirectUri,
           }}
         >
           <App initialData={initialData} />
