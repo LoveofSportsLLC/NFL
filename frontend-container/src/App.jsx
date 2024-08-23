@@ -1,8 +1,9 @@
+import 'vite/modulepreload-polyfill';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+//import { ApplicationInsghts } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
 import { store } from './redux/store';
 import './i18n';

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
-import WrappedApp from './App';
+import WrappedApp from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from './utils/HelmetLoader';
 import * as diff from 'diff';
 
 console.log('Initializing Client Application');
@@ -22,13 +22,13 @@ const App = () => {
       // Hydrate the root with the initial data
       hydrateRoot(
         container,
-        <React.StrictMode>
+        <StrictMode>
           <HelmetProvider>
             <BrowserRouter>
               <WrappedApp initialData={initialData} />
             </BrowserRouter>
           </HelmetProvider>
-        </React.StrictMode>,
+        </StrictMode>,
       );
 
       setTimeout(() => {
@@ -60,7 +60,7 @@ const App = () => {
             console.log('HTML Diff (removed):', part.value);
           }
         });
-      }, 1000); // Wait a bit to ensure hydration is complete
+      }, 2000); // Wait a bit to ensure hydration is complete
     } else {
       console.error("Root container 'app' not found for hydration.");
     }

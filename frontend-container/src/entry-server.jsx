@@ -1,9 +1,8 @@
 import React from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
-import WrappedApp from './App';
-import { StaticRouter } from 'react-router-dom/server';
-import { HelmetProvider } from 'react-helmet-async';
-
+import WrappedApp from './App.jsx';
+import { StaticRouter } from 'react-router-dom/server.js';
+import { HelmetProvider } from './utils/HelmetLoader';
 /**
  * The main render function for SSR.
  * @param {string} url - The URL to render.
@@ -21,7 +20,6 @@ export function render(
   onShellReady,
   onShellError,
   onError,
-  options,
 ) {
   const helmetContext = {};
 
@@ -49,7 +47,6 @@ export function render(
         }
         console.error('Render Error encountered:', error);
       },
-      ...options,
     },
   );
 
