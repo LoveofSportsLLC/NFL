@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,32 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
   <link href="/assets/scss/light.css" rel="stylesheet" class="js-stylesheet" />
 
-  <!-- Load scripts based on serve or build -->
-  <% if (process.env.VITE_COMMAND==='serve' ) { %>
-    <!-- Development scripts -->
-    <script type="module">
-      import RefreshRuntime from 'http://localhost:3000/@react-refresh';
-      RefreshRuntime.injectIntoGlobalHook( window );
-      window.$RefreshReg$ = () => { };
-      window.$RefreshSig$ = () => ( type ) => type;
-      window.__vite_plugin_react_preamble_installed__ = true;
-    </script>
-    <script type="module" src="http://localhost:3000/@vite/client"></script>
-    <scruot type="module" src="http://localhost:3000/src/entry-client.jsx"></script>
-  <% } else { %>
-    <!-- Build scripts -->
-    <!-- CDN scripts will be injected by vite-plugin-cdn -->
-  <% } %>
-
   <!-- External Scripts -->
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <script src="https://cdn.auth0.com/js/lock/12.5.0/lock.min.js"></script>
   <!--app-head-->
+
+
 </head>
 
 <body>
   <div id="app"><!--app-html--></div>
-  <script type="module" src="/src/entry-client.jsx"></script>
+  <script type="module" src="/src/entry-client.jsx" async blocking="render"></script>
   <!-- Global Window Initialization for Polyfills -->
   <script>
     window.global = window;

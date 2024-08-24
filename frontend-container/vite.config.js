@@ -1,6 +1,6 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import cdn from 'vite-plugin-cdn-import';
 import nodeExternals from 'rollup-plugin-node-externals';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -59,48 +59,51 @@ export default defineConfig(async ({ command, mode }) => {
 
   const eslintConfig = await import('./eslint.config.js');
 
+  // Determine whether to use CDN for React/ReactDOM based on an environment variable or configuration
+  const useCDN = process.env.USE_CDN === 'true';
+  console.log('Using CDN for React and ReactDOM:', useCDN);
+
+  console.log('Configuration:', {
+    command,
+    mode,
+    isProduction,
+    isDocker,
+    isSSR,
+    useCDN,
+  } );
+  
   const plugins = [
     nodeExternals(),
-    react({
-      jsxRuntime: 'automatic',
-    }),
-    cdn({
-      enableInDevMode: true,
-      modules: [
-        {
-          name: 'react',
-          var: 'React',
-          path: 'https://cdn.skypack.dev/react@18.3.1',
-        },
-        {
-          name: 'react-dom',
-          var: 'ReactDOM',
-          path: 'https://cdn.skypack.dev/react-dom@18.3.1',
-        },
-        {
-          name: 'react-router-dom',
-          var: 'ReactRouterDOM',
-          path: 'https://cdn.skypack.dev/react-router-dom@6.2.1',
-        },
-        {
-          name: 'lodash',
-          var: '_',
-          path: 'https://cdn.skypack.dev/lodash',
-        },
-        {
-          name: 'axios',
-          var: 'axios',
-          path: 'https://cdn.skypack.dev/axios',
-        },
-      ],
-    }),
+    react(),
+    useCDN
+      ? cdn({
+          modules: [
+            {
+              name: 'react',
+              var: 'React',
+              path: 'https://cdn.skypack.dev/react@18.3.1',
+            },
+            {
+              name: 'react-dom',
+              var: 'ReactDOM',
+              path: 'https://cdn.skypack.dev/react-dom@18.3.1',
+            },
+            {
+              name: 'react-router-dom',
+              var: 'ReactRouterDOM',
+              path: 'https://cdn.skypack.dev/react-router-dom@6.2.1',
+            },
+          ],
+        })
+      : null, // Include the plugin only if useCDN is true
     nodePolyfills({ protocolImports: true }),
     svgrPlugin({ exportType: 'component' }),
     eslintConfig.default,
     ViteEjsPlugin(),
     Inspect({ build: true, outputDir: inspectOutput }),
     replace({ preventAssignment: true }),
-  ];
+  ].filter(Boolean); // Filter out null plugins
+  
   console.log(
     'Vite Plugins:',
     plugins.map((p) => p.name || 'UnnamedPlugin'),
@@ -109,18 +112,32 @@ export default defineConfig(async ({ command, mode }) => {
 
   const build = {
     manifest: true,
-    target: isSSR ? 'node20' : 'esnext',
+    //target: isSSR ? 'node20' : 'esnext',
     sourcemap: true,
     minify: isProduction ? 'esbuild' : false,
     outDir: `${outputDir}/${isSSR ? 'server' : 'client'}`,
     cssCodeSplit: true,
     chunkSizeWarningLimit: 3000,
-    ssrManifest: isSSR ? false : true,
+    ssrManifest: !isSSR,
     emptyOutDir: true,
     rollupOptions: {
-      external: isSSR
-        ? ['https', 'net', 'fs', 'tls', 'http', 'url', 'path', 'dns']
-        : [],
+      external:
+        useCDN || isSSR
+          ? [
+              'react',
+              'react-dom',
+              'node:fs',
+              'node:path',
+              'node:stream',
+              'node:url',
+              'express',
+              'dotenv',
+              'compression',
+              'sirv',
+              'mime',
+              'axios',
+            ]
+          : [],
       input: {
         main: path.resolve(__dirname, 'index.html'),
         'entry-client': path.resolve(__dirname, 'src/entry-client.jsx'),
@@ -136,22 +153,29 @@ export default defineConfig(async ({ command, mode }) => {
         entryFileNames: '[name].js', // Ensure unique file names
         chunkFileNames: '[name]-[hash].js', // Handle chunking
         assetFileNames: 'assets/[name][extname]',
+        globals: useCDN
+          ? {
+              react: 'React',
+              'react-dom': 'ReactDOM',
+            }
+          : {},
       },
     },
   };
   console.log('Vite Build Configuration:', build);
 
-  const reactAlias = path.resolve(__dirname, 'node_modules/react');
-  const reactDomAlias = path.resolve(__dirname, 'node_modules/react-dom');
-  console.log('Resolved React Path:', reactAlias);
-  console.log('Resolved React-Dom Path:', reactDomAlias);
+  // const reactAlias = path.resolve(__dirname, 'node_modules/react');
+  // const reactDomAlias = path.resolve(__dirname, 'node_modules/react-dom');
+  // console.log('Resolved React Path:', reactAlias);
+  // console.log('Resolved React-Dom Path:', reactDomAlias);
 
   return {
     logLevel: 'error',
-   // base: './',
+    base: '/',
     root: rootPath,
     publicDir: publicDir,
     server: {
+      port: 3000,
       historyApiFallback: true,
       proxy: {
         ...(command === 'serve' && { '/@vite': 'http://localhost:5173' }),
@@ -176,9 +200,10 @@ export default defineConfig(async ({ command, mode }) => {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.DOCKER_ENV': JSON.stringify(process.env.DOCKER_ENV),
       'process.env.PORT': JSON.stringify(process.env.PORT || 3000),
-      'process.env.BASE': JSON.stringify(process.env.BASE || './'),
+      //'process.env.BASE': JSON.stringify(process.env.BASE || './'),
       'process.env.BUILD_TARGET': JSON.stringify(process.env.BUILD_TARGET),
       'process.env.GIT_WORKFLOW': JSON.stringify(process.env.GIT_WORKFLOW),
+      'import.meta.env.VITE_COMMAND': JSON.stringify(command),
     },
     plugins: plugins.filter(Boolean).filter((plugin) => plugin && plugin.name),
     resolve: {
@@ -191,17 +216,18 @@ export default defineConfig(async ({ command, mode }) => {
     },
     build,
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      include: ['react', 'react-dom'],
     },
     ssr: {
       target: 'node',
-      noExternal: [
-        'react',
-        'react-dom',
-        '@react-bootstrap',
-        'got',
-        'openid-client',
-      ],
+      noExternal: !useCDN,
+      external: useCDN ? ['react', 'react-dom'] : [],
+      //   'react',
+      //   'react-dom',
+      //   '@react-bootstrap',
+      //   'got',
+      //   'openid-client',
+      // ],
     },
   };
 });

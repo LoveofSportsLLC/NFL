@@ -1,8 +1,8 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import express from 'express';
 import { Transform } from 'node:stream';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import path from 'path';
 import dotenv from 'dotenv';
 import compression from 'compression';
 import sirv from 'sirv';
@@ -13,7 +13,7 @@ dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
 const isInDocker = process.env.DOCKER_ENV === 'true';
 const port = process.env.PORT || 3000;
-const base = process.env.BASE || './';
+const base = process.env.BASE || '/';
 console.log(base)
 const ABORT_DELAY = 10000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -35,26 +35,23 @@ const sirvOptions = {
 
 async function startServer() {
   console.log('Server.js', 'Starting server...');
-
-  let ssrManifest = {};
-  let templateHtml = '';
   // Load template HTML and SSR manifest
-  try {
-    templateHtml = await fs.readFile(
-      path.resolve(__dirname, './dist/client/index.html'),
-      'utf-8',
-    );
-    ssrManifest = JSON.parse(
-      await fs.readFile(
-        path.resolve(__dirname, './dist/client/.vite/ssr-manifest.json'),
+    try {
+      const templateHtml = await fs.promises.readFile(
+        path.resolve(__dirname, './dist/client/index.html'),
         'utf-8',
-      ),
-    );
-    console.log('Server.js', 'Loaded template HTML and SSR manifest');
-  } catch (err) {
-    console.error('Error loading template HTML or SSR manifest:', err);
-    return;
-  }
+      );
+      const ssrManifest = JSON.parse(
+        await fs.promises.readFile(
+          path.resolve(__dirname, './dist/client/.vite/ssr-manifest.json'),
+          'utf-8',
+        ),
+      );
+      console.log('Server.js', 'Loaded template HTML and SSR manifest');
+    } catch (err) {
+      console.error('Error loading template HTML or SSR manifest:', err);
+      return;
+    }
 
   const app = express();
   app.use(express.json({ limit: '50mb' }));
@@ -165,8 +162,8 @@ async function startServer() {
     try {
       const url = req.originalUrl.replace(base, '');
       let initialData = {};
-      let template = templateHtml;
-      const { render } = await import('./dist/server/entry-server.js');
+      template = templateHtml;
+      const { render } = await import('./dist/server/entry-server.js').render;
       console.log(
         'Server.js',
         'Loaded template and SSR module in production mode',

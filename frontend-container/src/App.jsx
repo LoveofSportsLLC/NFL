@@ -1,5 +1,5 @@
 import 'vite/modulepreload-polyfill';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -25,7 +25,7 @@ import {
 } from './config';
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
-import authConfig from './components/auth/auth0';
+//import authConfig from './components/auth/auth0';
 // console.log('App.jsx', 'Starting execution');
 // console.log('App.jsx Client ID:', clientId);
 // console.log('App.jsx Domain:', domain);
