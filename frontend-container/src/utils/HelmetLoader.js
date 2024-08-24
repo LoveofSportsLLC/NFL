@@ -9,11 +9,8 @@ const useHelmet = () => {
     setHelmetComponent(() => Helmet);
   }, []);
 
-  return HelmetComponent;
+  return HelmetComponent || Helmet; // Ensure Helmet is always returned
 };
 
-// Ensure useHelmet is exported as the default
 export default useHelmet;
-
-// Optionally, re-export Helmet and HelmetProvider for direct use
 export { Helmet, HelmetProvider };

@@ -1,4 +1,3 @@
-// frontend-container/src/pages/landing/News/FeaturedHighlights.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card } from 'react-bootstrap';
@@ -21,8 +20,13 @@ const FeaturedHighlights = () => {
           method: 'get',
           url: HIGHLIGHTS_API_URL,
         });
+
         if (response.headers['content-type'].includes('application/json')) {
-          const articles = response.data.articles.map((article) => ({
+          const articles = Array.isArray(response.data.articles)
+            ? response.data.articles
+            : [];
+
+          const processedArticles = articles.map((article) => ({
             ...article,
             urlToImage: article.urlToImage || placeholderImage,
             url: article.url || '',
@@ -30,8 +34,9 @@ const FeaturedHighlights = () => {
             description: article.description || 'No Description',
             publishedAt: article.publishedAt || new Date().toISOString(),
           }));
-          setHighlights(articles);
-          filterHighlights(articles, filter, team);
+
+          setHighlights(processedArticles);
+          filterHighlights(processedArticles, filter, team);
         } else {
           console.log('Invalid response data:', response.data);
         }

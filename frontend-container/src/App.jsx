@@ -14,7 +14,7 @@ import LayoutProvider from './contexts/LayoutProvider';
 import ChartJsDefaults from './utils/ChartJsDefaults';
 import ErrorBoundary from './components/ErrorBoundary';
 import 'custom-event-polyfill';
-import useHelmet from './utils/HelmetLoader';
+import useHelmet, { Helmet } from './utils/HelmetLoader'; // Import Helmet directly
 import { Auth0Provider } from '@auth0/auth0-react';
 import {
   domain,
@@ -26,7 +26,6 @@ import {
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
 
-// Corrected the typo from "ApplicationInsghts" to "ApplicationInsights"
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 
@@ -57,7 +56,7 @@ const initializeAppInsights = () => {
 
 function App({ initialData, redirectUri }) {
   const routeContent = useRoutes(routes);
-  const Helmet = useHelmet();
+  const HelmetComponent = useHelmet(); // Always call useHelmet
 
   useEffect(() => {
     console.log('App.jsx', 'App component mounted', { initialData });
@@ -83,7 +82,7 @@ function App({ initialData, redirectUri }) {
               <ChartJsDefaults />
               <ErrorBoundary>
                 <Wrapper>
-                  {Helmet}
+                  {HelmetComponent && <HelmetComponent />}
                   {routeContent}
                 </Wrapper>
               </ErrorBoundary>
@@ -101,7 +100,8 @@ App.propTypes = {
 };
 
 function WrappedApp({ initialData }) {
-  const [redirectUri, setRedirectUri] = useState(null);
+  const [redirectUri, setRedirectUri] = useState('');
+  const HelmetComponent = useHelmet(); // Always call useHelmet
 
   useEffect(() => {
     console.log('App.jsx', 'WrappedApp component mounted', { initialData });
@@ -125,15 +125,19 @@ function WrappedApp({ initialData }) {
     }
   }, [initialData]);
 
-  if (!redirectUri) {
-    // Show a loader or placeholder until redirectUri is set
-    return <div>Loading...</div>;
-  }
-
   return (
     <ErrorBoundary>
       <SSRFriendlyWrapper onClientLoad={initializeAppInsights}>
-        <App initialData={initialData} redirectUri={redirectUri} />
+        {!redirectUri ? (
+          <>
+            <div>Loading...</div>
+            <HelmetComponent>
+              <title>Loading...</title>
+            </HelmetComponent>
+          </>
+        ) : (
+          <App initialData={initialData} redirectUri={redirectUri} />
+        )}
       </SSRFriendlyWrapper>
     </ErrorBoundary>
   );
