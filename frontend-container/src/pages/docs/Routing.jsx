@@ -20,7 +20,7 @@ const HowToAddRoutes = () => (
     <p className="text-lg">
       Open <code>/src/routes.js</code> and add your new route to the{' '}
       <code>routes</code> variable. The example below will result in the{' '}
-      <code>{`<NewPage />`}</code> element being called on the{' '}
+      <code>{'<NewPage />'}</code> element being called on the{' '}
       <code>http://localhost:3000/pages/new</code> route.
     </p>
 

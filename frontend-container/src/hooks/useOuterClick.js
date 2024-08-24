@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 function useOuterClick(callback) {
   // Initialize mutable ref, which stores callback
@@ -12,12 +12,14 @@ function useOuterClick(callback) {
   });
 
   useEffect(() => {
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
     function handleClick(e) {
-      if (innerRef.current &&
-              callbackRef.current &&
-              !innerRef.current.contains(e.target)) {
+      if (
+        innerRef.current &&
+        callbackRef.current &&
+        !innerRef.current.contains(e.target)
+      ) {
         callbackRef.current(e);
       }
     }

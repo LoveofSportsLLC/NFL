@@ -1,8 +1,8 @@
 // src/pages/landing/Statistics/Teams/Teams.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import TeamList from "./TeamList";
-import TeamProfile from "./TeamProfile";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import TeamList from './TeamList';
+import TeamProfile from './TeamProfile';
 
 const Teams = () => {
   return (

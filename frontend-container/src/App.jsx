@@ -1,5 +1,7 @@
+import 'vite/modulepreload-polyfill';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
@@ -11,10 +13,9 @@ import SidebarProvider from './contexts/SidebarProvider';
 import LayoutProvider from './contexts/LayoutProvider';
 import ChartJsDefaults from './utils/ChartJsDefaults';
 import ErrorBoundary from './components/ErrorBoundary';
-import logger from './utils/logger.js';
 import 'custom-event-polyfill';
 import useHelmet from './utils/HelmetLoader';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import {
   domain,
   clientId,
@@ -25,10 +26,7 @@ import {
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
 
-// logger.debug('App.jsx', 'Starting execution');
-// logger.debug('App.jsx Client ID:', clientId);
-// logger.debug('App.jsx Domain:', domain);
-
+// Corrected the typo from "ApplicationInsghts" to "ApplicationInsights"
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 
@@ -36,91 +34,113 @@ let appInsights;
 const reactPlugin = new ReactPlugin();
 
 const initializeAppInsights = () => {
-  logger.debug('App.jsx', 'Initializing Application Insights');
-  import('history').then(({ createBrowserHistory }) => {
-    const browserHistory = createBrowserHistory({ basename: '' });
-    appInsights = new ApplicationInsights({
-      config: {
-        connectionString,
-        instrumentationKey,
-        enableAutoRouteTracking: true,
-        extensions: [reactPlugin],
-        extensionConfig: {
-          [reactPlugin.identifier]: { history: browserHistory },
+  if (typeof window !== 'undefined') {
+    console.log('App.jsx', 'Initializing Application Insights');
+    import('history').then(({ createBrowserHistory }) => {
+      const browserHistory = createBrowserHistory({ basename: '' });
+      appInsights = new ApplicationInsights({
+        config: {
+          connectionString,
+          instrumentationKey,
+          enableAutoRouteTracking: true,
+          extensions: [reactPlugin],
+          extensionConfig: {
+            [reactPlugin.identifier]: { history: browserHistory },
+          },
         },
-      },
+      });
+      appInsights.loadAppInsights();
+      console.log('App.jsx', 'Application Insights initialized');
     });
-    appInsights.loadAppInsights();
-    logger.debug('App.jsx', 'Application Insights initialized');
-  });
+  }
 };
 
-function App({ initialData }) {
-  const navigate = useNavigate();
+function App({ initialData, redirectUri }) {
   const routeContent = useRoutes(routes);
   const Helmet = useHelmet();
 
   useEffect(() => {
-    logger.debug('App.jsx', 'App component mounted', { initialData });
+    console.log('App.jsx', 'App component mounted', { initialData });
   }, [initialData]);
 
-  logger.debug('App.jsx', 'Rendering Application with routeContent:', {
+  console.log('App.jsx', 'Rendering Application with routeContent:', {
     routeContent,
   });
+
   return (
-    <Wrapper>
-      <React.Fragment>
-        {Helmet && (
-          <Helmet
-            titleTemplate="%s | Love of Football - NFL Stats & Analytics"
-            defaultTitle="Love of Football - NFL Stats & Analytics"
-          >
-            <link rel="shortcut icon" href="/favicon.ico" />
-          </Helmet>
-        )}
-        <ReduxProvider store={store}>
-          <ThemeProvider>
-            <SidebarProvider>
-              <LayoutProvider>
-                <ChartJsDefaults />
-                <div id="routeContent">{routeContent}</div>
-              </LayoutProvider>
-            </SidebarProvider>
-          </ThemeProvider>
-        </ReduxProvider>
-      </React.Fragment>
-    </Wrapper>
+    <ReduxProvider store={store}>
+      <Auth0Provider
+        domain={domain}
+        clientId={clientId}
+        audience={audience}
+        authorizationParams={{
+          redirect_uri: redirectUri, // Use prop-based redirectUri
+        }}
+      >
+        <ThemeProvider>
+          <SidebarProvider>
+            <LayoutProvider>
+              <ChartJsDefaults />
+              <ErrorBoundary>
+                <Wrapper>
+                  {Helmet}
+                  {routeContent}
+                </Wrapper>
+              </ErrorBoundary>
+            </LayoutProvider>
+          </SidebarProvider>
+        </ThemeProvider>
+      </Auth0Provider>
+    </ReduxProvider>
   );
 }
 
-export default function WrappedApp({ initialData }) {
+App.propTypes = {
+  initialData: PropTypes.object,
+  redirectUri: PropTypes.string.isRequired, // Make redirectUri a required prop
+};
+
+function WrappedApp({ initialData }) {
+  const [redirectUri, setRedirectUri] = useState(null);
+
   useEffect(() => {
-    logger.debug('App.jsx', 'WrappedApp component mounted', { initialData });
+    console.log('App.jsx', 'WrappedApp component mounted', { initialData });
     const serverHTML = document.documentElement.innerHTML;
 
     setTimeout(() => {
       const clientHTML = document.documentElement.innerHTML;
-      //compareHtml(serverHTML, clientHTML);
+      const compareHtml = (serverHTML, clientHTML) => {
+        if (serverHTML !== clientHTML) {
+          console.warn('HTML content mismatch between server and client');
+        } else {
+          console.log('HTML content matches between server and client');
+        }
+      };
+
+      compareHtml(serverHTML, clientHTML);
     }, 1000); // Wait a bit to ensure hydration is complete
+
+    if (typeof window !== 'undefined') {
+      setRedirectUri(window.location.origin + '/dashboard/default');
+    }
   }, [initialData]);
+
+  if (!redirectUri) {
+    // Show a loader or placeholder until redirectUri is set
+    return <div>Loading...</div>;
+  }
 
   return (
     <ErrorBoundary>
       <SSRFriendlyWrapper onClientLoad={initializeAppInsights}>
-        <Auth0Provider
-          domain={domain}
-          clientId={clientId}
-          audience={audience}
-          authorizationParams={{
-            redirect_uri:
-              typeof window !== 'undefined'
-                ? window.location.origin + '/dashboard/default'
-                : '',
-          }}
-        >
-          <App initialData={initialData} />
-        </Auth0Provider>
+        <App initialData={initialData} redirectUri={redirectUri} />
       </SSRFriendlyWrapper>
     </ErrorBoundary>
   );
 }
+
+WrappedApp.propTypes = {
+  initialData: PropTypes.object,
+};
+
+export default WrappedApp;

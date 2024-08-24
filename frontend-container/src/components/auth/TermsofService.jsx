@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const TermsofService = () => {
   return (
@@ -78,7 +78,7 @@ const TermsofService = () => {
       <h2>Contact Information</h2>
       <p>
         For any questions or concerns about these terms, including those related
-        to the use of Google services, please contact us at{" "}
+        to the use of Google services, please contact us at{' '}
         <a href="mailto:support@loveoffootball.io">support@loveoffootball.io</a>
         .
       </p>

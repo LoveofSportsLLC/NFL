@@ -5,7 +5,6 @@ import CarouselComponent from '../../../components/CarouselComponent';
 import FilterComponent from '../../../components/FilterComponent';
 import { LATEST_NEWS_API_URL } from '../../../config';
 import placeholderImage from '/logo.png';
-import logger from '../../../utils/logger.js';
 
 const LatestHeadlines = () => {
   const [news, setNews] = useState([]);
@@ -18,20 +17,24 @@ const LatestHeadlines = () => {
       try {
         const response = await axios.get(LATEST_NEWS_API_URL);
         if (response.headers['content-type'].includes('application/json')) {
-          const articles = response.data.articles;
+          const articles = response.data.articles || []; // Safely handle undefined
           setNews(articles);
           filterNews(articles, filter, team);
         } else {
-          logger.debug('Invalid response data:', response.data);
+          console.log('Invalid response data:', response.data);
         }
       } catch (error) {
-        logger.debug('Error fetching news:', error);
+        console.log('Error fetching news:', error);
       }
     };
     fetchNews();
   }, [filter, team]);
 
-  const filterNews = (articles, filter, team) => {
+  const filterNews = (articles = [], filter, team) => {
+    if (!Array.isArray(articles) || articles.length === 0) {
+      setFilteredNews([]); // Handle empty or undefined articles
+      return;
+    }
     const now = new Date();
     let filtered;
     switch (filter) {

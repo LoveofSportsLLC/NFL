@@ -1,13 +1,13 @@
 // src/pages/landing/Overview.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChartBar,
   faChartLine,
   faUser,
   faClock,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const Overview = ({ overviewData, userEngagement }) => (
   <section className="py-6">

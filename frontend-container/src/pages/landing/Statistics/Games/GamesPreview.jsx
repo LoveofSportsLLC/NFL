@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Games/GamesPreview.jsx
-import React from "react";
-import { Carousel } from "react-bootstrap";
-import gamerecap1 from "/analysis/gamerecap1.webp";
-import gamerecap2 from "/analysis/gamerecap2.webp";
-import gamerecap3 from "/analysis/gamerecap3.webp";
-import gamerecap4 from "/analysis/gamerecap4.webp";
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
+import gamerecap1 from '/analysis/gamerecap1.webp';
+import gamerecap2 from '/analysis/gamerecap2.webp';
+import gamerecap3 from '/analysis/gamerecap3.webp';
+import gamerecap4 from '/analysis/gamerecap4.webp';
 
 const GamesPreview = () => {
   return (

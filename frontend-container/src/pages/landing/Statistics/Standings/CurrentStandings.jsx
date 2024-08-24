@@ -1,12 +1,12 @@
 // src/pages/landing/Statistics/Standings/CurrentStandings.jsx
-import React from "react";
-import { Table } from "react-bootstrap";
+import React from 'react';
+import { Table } from 'react-bootstrap';
 
 const CurrentStandings = () => {
   // Dummy data for example
   const standings = [
-    { team: "Team A", wins: 10, losses: 2 },
-    { team: "Team B", wins: 8, losses: 4 },
+    { team: 'Team A', wins: 10, losses: 2 },
+    { team: 'Team B', wins: 8, losses: 4 },
   ];
 
   return (

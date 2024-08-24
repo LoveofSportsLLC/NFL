@@ -1,9 +1,9 @@
 // src/pages/landing/Statistics/Players/Players.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import PlayerSearch from "./PlayerSearch";
-import PlayerProfile from "./PlayerProfile";
-import ComparisonTool from "./ComparisonTool";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import PlayerSearch from './PlayerSearch';
+import PlayerProfile from './PlayerProfile';
+import ComparisonTool from './ComparisonTool';
 
 const Players = () => {
   return (

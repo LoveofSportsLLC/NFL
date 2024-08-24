@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import React from 'react';
+import { Button, Modal } from 'react-bootstrap';
 
 const AboutUsModal = ({ show, onHide }) => {
   return (
@@ -23,7 +23,7 @@ const AboutUsModal = ({ show, onHide }) => {
             </p>
             <p>
               To support our mission and help us continue our work, please
-              consider becoming a sponsor on our{" "}
+              consider becoming a sponsor on our{' '}
               <a
                 href="https://github.com/sponsors/zepor"
                 target="_blank"

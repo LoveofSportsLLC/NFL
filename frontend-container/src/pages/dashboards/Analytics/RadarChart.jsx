@@ -1,22 +1,22 @@
-import React from "react";
-import { Radar } from "react-chartjs-2";
+import React from 'react';
+import { Radar } from 'react-chartjs-2';
 
-import { Card, Dropdown } from "react-bootstrap";
+import { Card, Dropdown } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const RadarChart = () => {
   const data = {
-    labels: ["Technology", "Sports", "Media", "Gaming", "Arts"],
+    labels: ['Technology', 'Sports', 'Media', 'Gaming', 'Arts'],
     datasets: [
       {
-        label: "Interests",
-        backgroundColor: "rgba(0, 123, 255, 0.2)",
-        borderColor: "#2979ff",
-        pointBackgroundColor: "#2979ff",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "#2979ff",
+        label: 'Interests',
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+        borderColor: '#2979ff',
+        pointBackgroundColor: '#2979ff',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: '#2979ff',
         data: [70, 53, 82, 60, 33],
       },
     ],

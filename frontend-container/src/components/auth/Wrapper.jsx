@@ -8,6 +8,6 @@ function Wrapper({ children }) {
   if (error) {
     return <div>Oops... {error.message}</div>;
   }
-  return <>{children}</>;
+  return <div className="wrapper">{children}</div>;
 }
 export default Wrapper;

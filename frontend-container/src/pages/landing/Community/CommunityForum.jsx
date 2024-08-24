@@ -1,7 +1,7 @@
 // src/pages/landing/Community/CommunityForum.jsx
-import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Ensure this import is included
+import React from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom'; // Ensure this import is included
 
 const CommunityForum = () => (
   <section className="py-6 bg-light">

@@ -7,117 +7,117 @@ import {
   Mail,
   Shield,
   Users,
-} from "react-feather";
+} from 'react-feather';
 
 const gettingStartedSection = [
   {
-    href: "/docs/introduction",
+    href: '/docs/introduction',
     icon: Info,
-    title: "Welcome",
+    title: 'Welcome',
   },
   {
-    href: "/docs/getting-started",
+    href: '/docs/getting-started',
     icon: Code,
-    title: "Getting Started",
+    title: 'Getting Started',
   },
 ];
 
 const developmentSection = [
   {
-    href: "/docs/routing",
+    href: '/docs/routing',
     icon: ArrowRightCircle,
-    title: "Routing",
+    title: 'Routing',
   },
   {
-    href: "/docs/auth",
+    href: '/docs/auth',
     icon: Users,
-    title: "Authentication",
+    title: 'Authentication',
     children: [
       {
-        href: "/docs/auth/auth0",
-        title: "Auth0",
+        href: '/docs/auth/auth0',
+        title: 'Auth0',
       },
       //{
       //  href: "/docs/auth/cognito",
       //  title: "Cognito",
       //},
       {
-        href: "/docs/auth/firebase",
-        title: "Firebase",
+        href: '/docs/auth/firebase',
+        title: 'Firebase',
       },
       {
-        href: "/docs/auth/jwt",
-        title: "JWT",
+        href: '/docs/auth/jwt',
+        title: 'JWT',
       },
     ],
   },
   {
-    href: "/docs/guards",
+    href: '/docs/guards',
     icon: Shield,
-    title: "Guards",
+    title: 'Guards',
   },
   {
-    href: "/docs/api-calls",
+    href: '/docs/api-calls',
     icon: ArrowRightCircle,
-    title: "API Calls",
+    title: 'API Calls',
   },
   {
-    href: "/docs/environment-variables",
+    href: '/docs/environment-variables',
     icon: ArrowRightCircle,
-    title: "Environment Variables",
+    title: 'Environment Variables',
   },
   {
-    href: "/docs/redux",
+    href: '/docs/redux',
     icon: ArrowRightCircle,
-    title: "Redux",
+    title: 'Redux',
   },
   {
-    href: "/docs/internationalization",
+    href: '/docs/internationalization',
     icon: Globe,
-    title: "Internationalization",
+    title: 'Internationalization',
   },
   {
-    href: "/docs/eslint-and-prettier",
+    href: '/docs/eslint-and-prettier',
     icon: ArrowRightCircle,
-    title: "ESLint & Prettier",
+    title: 'ESLint & Prettier',
   },
   {
-    href: "/docs/deployment",
+    href: '/docs/deployment',
     icon: ArrowRightCircle,
-    title: "Deployment",
+    title: 'Deployment',
   },
   {
-    href: "/docs/migrating-to-next-js",
+    href: '/docs/migrating-to-next-js',
     icon: ArrowRightCircle,
-    title: "Migrating to Next.js",
+    title: 'Migrating to Next.js',
   },
 ];
 
 const helpSection = [
   {
-    href: "/docs/support",
+    href: '/docs/support',
     icon: Mail,
-    title: "Support",
+    title: 'Support',
   },
   {
-    href: "/docs/changelog",
+    href: '/docs/changelog',
     icon: List,
-    title: "Changelog",
-    badge: "v3.1.0",
+    title: 'Changelog',
+    badge: 'v3.1.0',
   },
 ];
 
 const navItems = [
   {
-    title: "Getting Started",
+    title: 'Getting Started',
     pages: gettingStartedSection,
   },
   {
-    title: "Development",
+    title: 'Development',
     pages: developmentSection,
   },
   {
-    title: "Help",
+    title: 'Help',
     pages: helpSection,
   },
 ];

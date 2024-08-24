@@ -1,9 +1,9 @@
 // src/pages/landing/Faq.jsx
-import React, { useState } from "react";
-import { Container, Row, Col, Accordion, Card } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Container, Row, Col, Accordion, Card } from 'react-bootstrap';
 
 const Faq = () => {
-  const [activeKey, setActiveKey] = useState("0");
+  const [activeKey, setActiveKey] = useState('0');
 
   return (
     <section className="bg-white py-6">
@@ -24,7 +24,7 @@ const Faq = () => {
               <Card className="border mb-3">
                 <Card.Header
                   className="cursor-pointer"
-                  onClick={() => setActiveKey("0")}
+                  onClick={() => setActiveKey('0')}
                 >
                   <h6 className="mb-0">How do I access player statistics?</h6>
                 </Card.Header>
@@ -39,7 +39,7 @@ const Faq = () => {
               <Card className="border mb-3">
                 <Card.Header
                   className="cursor-pointer"
-                  onClick={() => setActiveKey("1")}
+                  onClick={() => setActiveKey('1')}
                 >
                   <h6 className="mb-0">What team statistics are available?</h6>
                 </Card.Header>
@@ -55,7 +55,7 @@ const Faq = () => {
               <Card className="border mb-3">
                 <Card.Header
                   className="cursor-pointer"
-                  onClick={() => setActiveKey("2")}
+                  onClick={() => setActiveKey('2')}
                 >
                   <h6 className="mb-0">How can I analyze past games?</h6>
                 </Card.Header>
@@ -71,7 +71,7 @@ const Faq = () => {
               <Card className="border mb-3">
                 <Card.Header
                   className="cursor-pointer"
-                  onClick={() => setActiveKey("3")}
+                  onClick={() => setActiveKey('3')}
                 >
                   <h6 className="mb-0">Can I compare player statistics?</h6>
                 </Card.Header>
@@ -87,7 +87,7 @@ const Faq = () => {
               <Card className="border mb-3">
                 <Card.Header
                   className="cursor-pointer"
-                  onClick={() => setActiveKey("4")}
+                  onClick={() => setActiveKey('4')}
                 >
                   <h6 className="mb-0">How often are statistics updated?</h6>
                 </Card.Header>

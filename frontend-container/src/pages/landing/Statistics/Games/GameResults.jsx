@@ -1,12 +1,12 @@
 // src/pages/landing/Statistics/Games/GameResults.jsx
-import React from "react";
-import { Table } from "react-bootstrap";
+import React from 'react';
+import { Table } from 'react-bootstrap';
 
 const GameResults = () => {
   // Dummy data for example
   const results = [
-    { date: "2023-10-01", teams: "Team A vs Team B", score: "20-17" },
-    { date: "2023-10-02", teams: "Team C vs Team D", score: "14-21" },
+    { date: '2023-10-01', teams: 'Team A vs Team B', score: '20-17' },
+    { date: '2023-10-02', teams: 'Team C vs Team D', score: '14-21' },
   ];
 
   return (

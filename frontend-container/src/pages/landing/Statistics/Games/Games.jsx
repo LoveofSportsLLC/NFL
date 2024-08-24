@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Games/Games.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import GameSchedule from "./GameSchedule";
-import GameResults from "./GameResults";
-import GameAnalysis from "./GameAnalysis";
-import GameHighlights from "./GameHighlights";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import GameSchedule from './GameSchedule';
+import GameResults from './GameResults';
+import GameAnalysis from './GameAnalysis';
+import GameHighlights from './GameHighlights';
 
 const Games = () => {
   return (

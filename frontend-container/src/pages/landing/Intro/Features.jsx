@@ -1,7 +1,7 @@
 // src/pages/landing/Features.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChartLine,
   faFootballBall,
@@ -9,7 +9,7 @@ import {
   faHistory,
   faChartBar,
   faDesktop,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 const Features = () => (
   <section className="py-6" id="features">

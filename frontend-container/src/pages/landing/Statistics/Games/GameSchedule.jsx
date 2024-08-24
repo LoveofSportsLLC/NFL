@@ -1,12 +1,12 @@
 // src/pages/landing/Statistics/Games/GameSchedule.jsx
-import React from "react";
-import { Table } from "react-bootstrap";
+import React from 'react';
+import { Table } from 'react-bootstrap';
 
 const GameSchedule = () => {
   // Dummy data for example
   const schedule = [
-    { date: "2023-10-01", teams: "Team A vs Team B" },
-    { date: "2023-10-02", teams: "Team C vs Team D" },
+    { date: '2023-10-01', teams: 'Team A vs Team B' },
+    { date: '2023-10-02', teams: 'Team C vs Team D' },
   ];
 
   return (

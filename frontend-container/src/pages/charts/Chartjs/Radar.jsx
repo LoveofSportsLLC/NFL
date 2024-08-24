@@ -1,33 +1,33 @@
-import React from "react";
-import { Radar } from "react-chartjs-2";
+import React from 'react';
+import { Radar } from 'react-chartjs-2';
 
-import { Card } from "react-bootstrap";
+import { Card } from 'react-bootstrap';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const RadarChart = () => {
   const palette = usePalette();
 
   const data = {
-    labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
+    labels: ['Speed', 'Reliability', 'Comfort', 'Safety', 'Efficiency'],
     datasets: [
       {
-        label: "Model X",
-        backgroundColor: "rgba(0, 123, 255, 0.2)",
+        label: 'Model X',
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
         borderColor: palette.primary,
         pointBackgroundColor: palette.primary,
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: palette.primary,
         data: [70, 53, 82, 60, 33],
       },
       {
-        label: "Model S",
-        backgroundColor: "rgba(220, 53, 69, 0.2)",
+        label: 'Model S',
+        backgroundColor: 'rgba(220, 53, 69, 0.2)',
         borderColor: palette.danger,
         pointBackgroundColor: palette.danger,
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: palette.danger,
         data: [35, 38, 65, 85, 84],
       },

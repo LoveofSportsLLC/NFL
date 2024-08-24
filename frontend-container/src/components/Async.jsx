@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Loader from "./Loader";
+import Loader from './Loader';
 
 export default function asyncComponent(importComponent) {
   class AsyncComponent extends React.Component {

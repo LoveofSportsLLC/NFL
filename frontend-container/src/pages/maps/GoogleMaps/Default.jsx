@@ -1,7 +1,7 @@
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
-import GoogleMapReact from "google-map-react";
+import GoogleMapReact from 'google-map-react';
 
 const Default = () => {
   const getMapOptions = (maps) => {
@@ -24,11 +24,11 @@ const Default = () => {
         </h6>
       </Card.Header>
       <Card.Body>
-        <div style={{ height: 300, width: "100%" }}>
+        <div style={{ height: 300, width: '100%' }}>
           <GoogleMapReact
             options={getMapOptions}
             bootstrapURLKeys={{
-              key: "${{   secrets.GOOGLEMAPAPI }}",
+              key: '${{   secrets.GOOGLEMAPAPI }}',
             }}
             defaultCenter={{
               lat: 40.712784,

@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
-import { Card } from "react-bootstrap";
-import usePalette from "../../../../hooks/usePalette";
+import React, { Suspense } from 'react';
+import { Card } from 'react-bootstrap';
+import usePalette from '../../../../hooks/usePalette';
 import Chart from 'react-apexcharts';
 
 const PieChart = () => {

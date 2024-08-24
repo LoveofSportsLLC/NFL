@@ -1,7 +1,7 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Badge, Col, Card, Row } from "react-bootstrap";
-import { DollarSign, ShoppingBag } from "react-feather";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Badge, Col, Card, Row } from 'react-bootstrap';
+import { DollarSign, ShoppingBag } from 'react-feather';
 
 const Statistics = () => {
   const { t } = useTranslation();

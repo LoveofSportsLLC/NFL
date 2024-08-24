@@ -1,33 +1,33 @@
-import React from "react";
-import { Bar } from "react-chartjs-2";
+import React from 'react';
+import { Bar } from 'react-chartjs-2';
 
-import { Card, Dropdown } from "react-bootstrap";
+import { Card, Dropdown } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const BarChart = () => {
   const palette = usePalette();
 
   const data = {
     labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
     datasets: [
       {
-        label: "Last year",
+        label: 'Last year',
         backgroundColor: palette.primary,
         borderColor: palette.primary,
         hoverBackgroundColor: palette.primary,
@@ -37,16 +37,16 @@ const BarChart = () => {
         categoryPercentage: 0.5,
       },
       {
-        label: "This year",
-        backgroundColor: palette["primary-light"],
-        borderColor: palette["primary-light"],
-        hoverBackgroundColor: palette["primary-light"],
-        hoverBorderColor: palette["primary-light"],
+        label: 'This year',
+        backgroundColor: palette['primary-light'],
+        borderColor: palette['primary-light'],
+        hoverBackgroundColor: palette['primary-light'],
+        hoverBorderColor: palette['primary-light'],
         data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
         barPercentage: 0.325,
         categoryPercentage: 0.5,
         borderRadius: 99,
-        borderSkipped: "bottom",
+        borderSkipped: 'bottom',
       },
     ],
   };
@@ -71,7 +71,7 @@ const BarChart = () => {
       },
       x: {
         grid: {
-          color: "transparent",
+          color: 'transparent',
         },
         stacked: true,
       },

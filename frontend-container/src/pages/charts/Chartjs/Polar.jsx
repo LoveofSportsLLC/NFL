@@ -1,25 +1,25 @@
-import React from "react";
-import { PolarArea } from "react-chartjs-2";
+import React from 'react';
+import { PolarArea } from 'react-chartjs-2';
 
-import { Card } from "react-bootstrap";
+import { Card } from 'react-bootstrap';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const PolarChart = () => {
   const palette = usePalette();
 
   const data = {
-    labels: ["Speed", "Reliability", "Comfort", "Safety", "Efficiency"],
+    labels: ['Speed', 'Reliability', 'Comfort', 'Safety', 'Efficiency'],
     datasets: [
       {
-        label: "Model S",
+        label: 'Model S',
         data: [35, 38, 65, 70, 24],
         backgroundColor: [
           palette.primary,
           palette.success,
           palette.danger,
           palette.warning,
-          "#5b7dff",
+          '#5b7dff',
         ],
       },
     ],

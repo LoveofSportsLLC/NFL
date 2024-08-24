@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
-import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-SyntaxHighlighter.registerLanguage("javascript", js);
+SyntaxHighlighter.registerLanguage('javascript', js);
 
 const Code = ({ children }) => {
   return (

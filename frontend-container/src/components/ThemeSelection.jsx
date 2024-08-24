@@ -1,6 +1,6 @@
-import React from "react";
-import { useTheme } from "../hooks/useTheme";
-import { THEME } from "../constants";
+import React from 'react';
+import { useTheme } from '../hooks/useTheme';
+import { THEME } from '../constants';
 
 const ThemeSelector = () => {
   const { setTheme } = useTheme();

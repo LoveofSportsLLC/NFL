@@ -1,6 +1,6 @@
 // src/pages/landing/StickyCTA.jsx
-import React from "react";
-import { Button } from "react-bootstrap";
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
 const StickyCTA = () => (
   <div className="sticky-cta">
@@ -14,11 +14,3 @@ const StickyCTA = () => (
 );
 
 export default StickyCTA;
-
-// CSS in global styles or specific component CSS
-.sticky-cta {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-}

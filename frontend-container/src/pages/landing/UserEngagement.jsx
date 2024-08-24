@@ -1,6 +1,6 @@
 // src/pages/landing/UserEngagement.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const UserEngagement = ({ userEngagement }) => (
   <section className="py-6">

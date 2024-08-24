@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import SidebarNavSection from "./SidebarNavSection";
+import SidebarNavSection from './SidebarNavSection';
 
 const SidebarNav = ({ items }) => {
   return (

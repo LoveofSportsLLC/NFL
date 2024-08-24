@@ -1,5 +1,4 @@
 // src/utils/retry.js
-import axios from "axios";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

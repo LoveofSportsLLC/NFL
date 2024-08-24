@@ -1,15 +1,15 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
+import React from 'react';
+import { Pie } from 'react-chartjs-2';
 
-import { Card } from "react-bootstrap";
+import { Card } from 'react-bootstrap';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const PieChart = () => {
   const palette = usePalette();
 
   const data = {
-    labels: ["Social", "Search Engines", "Direct", "Other"],
+    labels: ['Social', 'Search Engines', 'Direct', 'Other'],
     datasets: [
       {
         data: [260, 125, 54, 146],
@@ -17,9 +17,9 @@ const PieChart = () => {
           palette.primary,
           palette.warning,
           palette.danger,
-          "#E8EAED",
+          '#E8EAED',
         ],
-        borderColor: "transparent",
+        borderColor: 'transparent',
       },
     ],
   };

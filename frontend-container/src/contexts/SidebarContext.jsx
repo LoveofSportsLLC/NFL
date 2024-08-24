@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { SIDEBAR_POSITION, SIDEBAR_BEHAVIOR } from "../constants";
+import { SIDEBAR_POSITION, SIDEBAR_BEHAVIOR } from '../constants';
 
 const initialState = {
   isOpen: true,

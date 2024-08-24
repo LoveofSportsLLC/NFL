@@ -20,3 +20,9 @@ hint-report/
 .vscode/
 __azurite_db_queue__.json
 __azurite_db_queue_extent__.json
+MIGRATED_PROJECT.esproj
+NFL.njsproj
+NFL.njsproj.user
+NFL.sln
+nuget.config
+PROJECT_MIGRATION_LOG.txt

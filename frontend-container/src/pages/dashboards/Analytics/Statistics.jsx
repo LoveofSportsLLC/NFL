@@ -1,7 +1,7 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Badge, Col, Card, Row } from "react-bootstrap";
-import { ArrowUpRight, Clock, Users } from "react-feather";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Badge, Col, Card, Row } from 'react-bootstrap';
+import { ArrowUpRight, Clock, Users } from 'react-feather';
 
 import illustration from '/illustrations/searching.png';
 
@@ -18,7 +18,7 @@ const Statistics = () => {
                 <Col xs="6">
                   <div className="illustration-text p-3 m-1">
                     <h4 className="illustration-text">
-                      {t("Welcome back")}, Chris!
+                      {t('Welcome back')}, Chris!
                     </h4>
                     <p className="mb-0">AppStack Dashboard</p>
                   </div>

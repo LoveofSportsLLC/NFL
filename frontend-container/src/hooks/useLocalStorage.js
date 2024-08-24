@@ -1,6 +1,5 @@
 //NFL/frontend-container/src/hooks/useLocalStorage.jsx
 import { useState } from 'react';
-import logger from '../utils/logger.js'; // Import the log utility
 
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
@@ -8,7 +7,7 @@ function useLocalStorage(key, initialValue) {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      logger.debug('useLocalStorage.jsx', 'useState', 'Error:', error.message);
+      console.log('useLocalStorage.jsx', 'useState', 'Error:', error.message);
       return initialValue;
     }
   });
@@ -20,7 +19,7 @@ function useLocalStorage(key, initialValue) {
       setStoredValue(valueToStore);
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      logger.debug('useLocalStorage.jsx', 'setValue', 'Error:', error.message);
+      console.log('useLocalStorage.jsx', 'setValue', 'Error:', error.message);
     }
   };
 

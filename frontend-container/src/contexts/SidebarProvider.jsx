@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { SIDEBAR_POSITION, SIDEBAR_BEHAVIOR } from "../constants";
-import useSettingsState from "../hooks/useSettingsState";
-import SidebarContext from "./SidebarContext";
+import React, { useState } from 'react';
+import { SIDEBAR_POSITION, SIDEBAR_BEHAVIOR } from '../constants';
+import useSettingsState from '../hooks/useSettingsState';
+import SidebarContext from './SidebarContext';
 
 function SidebarProvider({ children }) {
   const [isOpen, setIsOpen] = useState(true);
   const [position, setPosition] = useSettingsState(
-    "sidebarPosition",
+    'sidebarPosition',
     SIDEBAR_POSITION.LEFT,
   );
 
   // State for the behavior of the sidebar (e.g., sticky or static)
   const [behavior, setBehavior] = useSettingsState(
-    "sidebarBehavior",
+    'sidebarBehavior',
     SIDEBAR_BEHAVIOR.STICKY,
   );
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Carousel } from "react-bootstrap";
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
 
 const CarouselComponent = ({ items, getYoutubeVideoId }) => {
   return (
@@ -18,7 +18,7 @@ const CarouselComponent = ({ items, getYoutubeVideoId }) => {
           ) : (
             <img
               className="d-block w-100"
-              src={item.urlToImage || "https://via.placeholder.com/150"}
+              src={item.urlToImage || 'https://via.placeholder.com/150'}
               alt={item.title}
               loading="lazy"
             />

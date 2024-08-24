@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Constants for repeated Tailwind CSS classes
 const cardBaseStyle =
-  "absolute top-10 bg-white text-white rounded-lg shadow-lg";
-const listItemStyle = "mb-2";
+  'absolute top-10 bg-white text-white rounded-lg shadow-lg';
+const listItemStyle = 'mb-2';
 
 function CardMenu() {
   // State to toggle the menu visibility
@@ -44,21 +44,19 @@ function CardMenu() {
         <div className={`${cardBaseStyle} left-10 bg-gray-900 w-200 p-2.5`}>
           <ul className="list-none p-0 m-0">
             {[
-              "Filters (Season, Team, Week)",
-              "Views (alternative data presentations)",
-              "Export Data (PDF, CSV)",
-              "Share Card",
-              "Settings (theme, size)",
-              "Discussion (forum/blog link)",
-              "Rate Feature",
-              "Duplicate",
-              "Delete",
-              "Lock Position (Pin/Unpin)",
+              'Filters (Season, Team, Week)',
+              'Views (alternative data presentations)',
+              'Export Data (PDF, CSV)',
+              'Share Card',
+              'Settings (theme, size)',
+              'Discussion (forum/blog link)',
+              'Rate Feature',
+              'Duplicate',
+              'Delete',
+              'Lock Position (Pin/Unpin)',
             ].map((item) => (
-              <li className={listItemStyle}>
-                <a href="#" className="text-white no-underline">
-                  {item}
-                </a>
+              <li className={listItemStyle} key={item}>
+                <button className="text-white no-underline">{item}</button>
               </li>
             ))}
           </ul>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet, HelmetProvider } from 'react-helmet-async'; // Use named imports
 
+// Define your custom hook
 const useHelmet = () => {
-  const [HelmetComponent, setHelmetComponent] = useState(null);
+  const [HelmetComponent, setHelmetComponent] = useState(() => Helmet);
 
   useEffect(() => {
     setHelmetComponent(() => Helmet);
@@ -11,4 +12,8 @@ const useHelmet = () => {
   return HelmetComponent;
 };
 
+// Ensure useHelmet is exported as the default
 export default useHelmet;
+
+// Optionally, re-export Helmet and HelmetProvider for direct use
+export { Helmet, HelmetProvider };

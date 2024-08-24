@@ -1,9 +1,9 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer } from 'react';
 
-import AuthContext from "./FirebaseAuthContext";
+import AuthContext from './FirebaseAuthContext';
 
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../config";
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../config';
 
 import {
   GoogleAuthProvider,
@@ -16,9 +16,9 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
   signOut,
-} from "firebase/auth";
+} from 'firebase/auth';
 
-const INITIALIZE = "INITIALIZE";
+const INITIALIZE = 'INITIALIZE';
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -103,13 +103,13 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         ...state,
-        method: "firebase",
+        method: 'firebase',
         user: {
           id: _auth.uid,
           email: _auth.email,
           avatar: _auth.avatar,
           displayName: _auth.displayName,
-          role: "user",
+          role: 'user',
         },
         signIn,
         signUp,

@@ -1,10 +1,10 @@
 // src/pages/landing/Statistics/Standings/Standings.jsx
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import CurrentStandings from "./CurrentStandings";
-import PlayoffPicture from "./PlayoffPicture";
-import Trends from "./Trends";
-import TeamComparisons from "./TeamComparisons";
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import CurrentStandings from './CurrentStandings';
+import PlayoffPicture from './PlayoffPicture';
+import Trends from './Trends';
+import TeamComparisons from './TeamComparisons';
 
 const Standings = () => {
   return (

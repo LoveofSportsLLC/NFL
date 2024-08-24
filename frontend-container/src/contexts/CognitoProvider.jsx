@@ -4,20 +4,19 @@
 //   useReducer,
 //   useState,
 //   useMemo,
-// } from "react";
+// } from 'react';
 // import {
 //   AuthenticationDetails,
 //   CognitoUser,
 //   CognitoUserAttribute,
 //   CognitoUserPool,
-// } from "amazon-cognito-identity-js";
-// import axios from "../utils/axios";
-// import AuthContext from "./CognitoContext";
-// import Loader from "../components/Loader";
-// import logger  from "../utils/logger.js"; // Import the log utility
+// } from 'amazon-cognito-identity-js';
+// import axios from '../utils/axios';
+// import AuthContext from './CognitoContext';
+// import Loader from '../components/Loader';
 
-// const INITIALIZE = "INITIALIZE";
-// const SIGN_OUT = "SIGN_OUT";
+// const INITIALIZE = 'INITIALIZE';
+// const SIGN_OUT = 'SIGN_OUT';
 
 // const initialState = {
 //   isAuthenticated: false,
@@ -51,8 +50,8 @@
 
 //   useEffect(() => {
 //     const loadConfig = async () => {
-//       if (process.env.PUBLIC_ENV__NODE_ENV === "development") {
-//         const configModule = await import("../config");
+//       if (process.env.PUBLIC_ENV__NODE_ENV === 'development') {
+//         const configModule = await import('../config');
 //         setCognitoConfig(configModule.cognitoConfig);
 //       } else {
 //         setCognitoConfig({
@@ -125,7 +124,12 @@
 //   useEffect(() => {
 //     if (cognitoConfig) {
 //       getSession().catch((error) => {
-//         logger.debug("CognitoProvider.jsx", "getSession", "Error:", error.message);
+//         console.log(
+//           'CognitoProvider.jsx',
+//           'getSession',
+//           'Error:',
+//           error.message,
+//         );
 //       });
 //     }
 //   }, [getSession, cognitoConfig]);
@@ -134,7 +138,7 @@
 //     (email, password) =>
 //       new Promise((resolve, reject) => {
 //         if (!UserPool) {
-//           return reject(new Error("Cognito User Pool not available"));
+//           return reject(new Error('Cognito User Pool not available'));
 //         }
 //         const user = new CognitoUser({ Username: email, Pool: UserPool });
 //         const authDetails = new AuthenticationDetails({
@@ -150,7 +154,7 @@
 //             reject(err);
 //           },
 //           newPasswordRequired: () => {
-//             resolve({ message: "New password required" });
+//             resolve({ message: 'New password required' });
 //           },
 //         });
 //       }),
@@ -172,51 +176,35 @@
 //           email,
 //           password,
 //           [
-//             new CognitoUserAttribute({ Name: "email", Value: email }),
-//             new CognitoUserAttribute({
-//               Name: "name",
-//               Value: `${firstName} ${lastName}`,
-//             }),
+//             new CognitoUserAttribute({ Name: 'given_name', Value: firstName }),
+//             new CognitoUserAttribute({ Name: 'family_name', Value: lastName }),
 //           ],
 //           null,
-//           (err) => {
+//           (err, result) => {
 //             if (err) {
 //               reject(err);
-//               return;
+//             } else {
+//               resolve(result);
 //             }
-//             resolve();
 //           },
 //         );
 //       }),
-//     [],
+//     [UserPool],
 //   );
-
-//   const resetPassword = useCallback((email) => {
-//     logger.debug("CognitoProvider.jsx", "resetPassword", "Email:", email);
-//   }, []);
-
-//   if (!cognitoConfig) {
-//     return <Loader />;
-//   }
 
 //   return (
 //     <AuthContext.Provider
 //       value={{
 //         ...state,
-//         method: "cognito",
-//         user: {
-//           displayName: state.user?.name || "Undefined",
-//           role: "user",
-//         },
 //         signIn,
-//         signUp,
 //         signOut,
-//         resetPassword,
+//         signUp,
 //       }}
 //     >
-//       {children}
+//       {state.isInitialized ? children : <Loader />}
 //     </AuthContext.Provider>
 //   );
 // }
 
 // export default AuthProvider;
+// // 

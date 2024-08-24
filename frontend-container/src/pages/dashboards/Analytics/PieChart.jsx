@@ -1,19 +1,19 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
+import React from 'react';
+import { Pie } from 'react-chartjs-2';
 
-import { Card, Dropdown, Table } from "react-bootstrap";
+import { Card, Dropdown, Table } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare } from "@fortawesome/free-solid-svg-icons";
+import { MoreHorizontal } from 'react-feather';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare } from '@fortawesome/free-solid-svg-icons';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 const PieChart = () => {
   const palette = usePalette();
 
   const data = {
-    labels: ["Social", "Search Engines", "Direct", "Other"],
+    labels: ['Social', 'Search Engines', 'Direct', 'Other'],
     datasets: [
       {
         data: [260, 125, 54, 146],
@@ -21,7 +21,7 @@ const PieChart = () => {
           palette.primary,
           palette.warning,
           palette.danger,
-          "#E8EAED",
+          '#E8EAED',
         ],
         borderWidth: 5,
         borderColor: palette.white,
@@ -31,7 +31,7 @@ const PieChart = () => {
 
   const options = {
     maintainAspectRatio: false,
-    cutout: "70%",
+    cutout: '70%',
     plugins: {
       legend: {
         display: false,
@@ -75,7 +75,7 @@ const PieChart = () => {
             <tbody>
               <tr>
                 <td>
-                  <FontAwesomeIcon icon={faSquare} className="text-primary" />{" "}
+                  <FontAwesomeIcon icon={faSquare} className="text-primary" />{' '}
                   Direct
                 </td>
                 <td className="text-end">$ 2602</td>
@@ -83,7 +83,7 @@ const PieChart = () => {
               </tr>
               <tr>
                 <td>
-                  <FontAwesomeIcon icon={faSquare} className="text-warning" />{" "}
+                  <FontAwesomeIcon icon={faSquare} className="text-warning" />{' '}
                   Affiliate
                 </td>
                 <td className="text-end">$ 1253</td>
@@ -91,7 +91,7 @@ const PieChart = () => {
               </tr>
               <tr>
                 <td>
-                  <FontAwesomeIcon icon={faSquare} className="text-danger" />{" "}
+                  <FontAwesomeIcon icon={faSquare} className="text-danger" />{' '}
                   E-mail
                 </td>
                 <td className="text-end">$ 541</td>
@@ -99,7 +99,7 @@ const PieChart = () => {
               </tr>
               <tr>
                 <td>
-                  <FontAwesomeIcon icon={faSquare} className="text-dark" />{" "}
+                  <FontAwesomeIcon icon={faSquare} className="text-dark" />{' '}
                   Other
                 </td>
                 <td className="text-end">$ 1465</td>

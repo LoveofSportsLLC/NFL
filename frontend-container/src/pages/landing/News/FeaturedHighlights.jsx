@@ -7,7 +7,6 @@ import CarouselComponent from '../../../components/CarouselComponent';
 import { HIGHLIGHTS_API_URL } from '../../../config';
 import { axiosRetry } from '../../../utils/retry';
 import placeholderImage from '/logo.png';
-import logger from '../../../utils/logger.js';
 
 const FeaturedHighlights = () => {
   const [highlights, setHighlights] = useState([]);
@@ -34,10 +33,10 @@ const FeaturedHighlights = () => {
           setHighlights(articles);
           filterHighlights(articles, filter, team);
         } else {
-          logger.debug('Invalid response data:', response.data);
+          console.log('Invalid response data:', response.data);
         }
       } catch (error) {
-        logger.debug('Error fetching highlights:', error);
+        console.log('Error fetching highlights:', error);
       }
     };
     fetchHighlights();

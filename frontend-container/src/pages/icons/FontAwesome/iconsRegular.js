@@ -11,56 +11,56 @@ import {
   faBookmark,
   faBuilding,
   faCalendar,
-} from "@fortawesome/free-regular-svg-icons";
+} from '@fortawesome/free-regular-svg-icons';
 
 const icons = [
   {
     icon: faAddressBook,
-    name: "faAddressBook",
+    name: 'faAddressBook',
   },
   {
     icon: faAddressCard,
-    name: "faAddressCard",
+    name: 'faAddressCard',
   },
   {
     icon: faAngry,
-    name: "faAngry",
+    name: 'faAngry',
   },
   {
     icon: faArrowAltCircleDown,
-    name: "faArrowAltCircleDown",
+    name: 'faArrowAltCircleDown',
   },
   {
     icon: faArrowAltCircleLeft,
-    name: "faArrowAltCircleLeft",
+    name: 'faArrowAltCircleLeft',
   },
   {
     icon: faArrowAltCircleRight,
-    name: "faArrowAltCircleRight",
+    name: 'faArrowAltCircleRight',
   },
   {
     icon: faArrowAltCircleUp,
-    name: "faArrowAltCircleUp",
+    name: 'faArrowAltCircleUp',
   },
   {
     icon: faBell,
-    name: "faBell",
+    name: 'faBell',
   },
   {
     icon: faBellSlash,
-    name: "faBellSlash",
+    name: 'faBellSlash',
   },
   {
     icon: faBookmark,
-    name: "faBookmark",
+    name: 'faBookmark',
   },
   {
     icon: faBuilding,
-    name: "faBuilding",
+    name: 'faBuilding',
   },
   {
     icon: faCalendar,
-    name: "faCalendar",
+    name: 'faCalendar',
   },
 ];
 

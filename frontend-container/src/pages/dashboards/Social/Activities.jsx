@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Button, Card, Dropdown } from "react-bootstrap";
+import { Button, Card, Dropdown } from 'react-bootstrap';
 
-import { MoreHorizontal } from "react-feather";
+import { MoreHorizontal } from 'react-feather';
 
 const Activities = () => (
   <Card className="flex-fill mb-3">

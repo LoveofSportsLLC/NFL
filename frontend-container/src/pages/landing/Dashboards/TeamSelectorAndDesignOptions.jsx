@@ -148,7 +148,7 @@ const TeamSelectorAndDesignOptions = () => {
 
   const handleImageError = (e, teamName, type) => {
     e.target.onerror = null; // Prevent infinite fallback loop
-    logger.debug(`Failed to load image for ${teamName} (${type})`);
+    console.log(`Failed to load image for ${teamName} (${type})`);
     e.target.src = 'Logo.png'; // Fallback image path
   };
 

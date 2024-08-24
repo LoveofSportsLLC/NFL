@@ -1,6 +1,6 @@
 // src/components/CarouselComponent.jsx
-import React from "react";
-import { Carousel, Card } from "react-bootstrap";
+import React from 'react';
+import { Carousel, Card } from 'react-bootstrap';
 
 const CarouselComponent = ({ items, getYoutubeVideoId }) => {
   const chunkItems = (arr, chunkSize) => {
@@ -19,7 +19,7 @@ const CarouselComponent = ({ items, getYoutubeVideoId }) => {
         <Carousel.Item key={index}>
           <div className="d-flex justify-content-around">
             {chunk.map((item, idx) => (
-              <Card className="h-100 m-2" style={{ width: "18rem" }} key={idx}>
+              <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
                 {getYoutubeVideoId ? (
                   getYoutubeVideoId(item.url) ? (
                     <div className="ratio ratio-16x9 mb-3">
@@ -33,19 +33,19 @@ const CarouselComponent = ({ items, getYoutubeVideoId }) => {
                   ) : (
                     <Card.Img
                       variant="top"
-                      src={item.urlToImage || "https://via.placeholder.com/150"}
+                      src={item.urlToImage || 'https://via.placeholder.com/150'}
                     />
                   )
                 ) : (
                   <Card.Img
                     variant="top"
-                    src={item.urlToImage || "https://via.placeholder.com/150"}
+                    src={item.urlToImage || 'https://via.placeholder.com/150'}
                   />
                 )}
                 <Card.Body>
                   <Card.Title>{item.title}</Card.Title>
                   <Card.Text>
-                    {item.description?.slice(0, 100) + "..."}
+                    {item.description?.slice(0, 100) + '...'}
                   </Card.Text>
                   <Card.Text>
                     <small>{new Date(item.publishedAt).toLocaleString()}</small>

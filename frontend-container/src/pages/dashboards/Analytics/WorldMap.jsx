@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import jsVectorMap from "jsvectormap";
-import { Card, Dropdown } from "react-bootstrap";
-import { MoreHorizontal } from "react-feather";
+import React, { useEffect, useState } from 'react';
+import jsVectorMap from 'jsvectormap';
+import { Card, Dropdown } from 'react-bootstrap';
+import { MoreHorizontal } from 'react-feather';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 function WorldMap() {
   const palette = usePalette();
@@ -19,108 +19,108 @@ function WorldMap() {
   useEffect(() => {
     if (debounced) {
       new jsVectorMap({
-        selector: "#analytics_world",
-        map: "world",
+        selector: '#analytics_world',
+        map: 'world',
         zoomOnScroll: false,
         regionStyle: {
           initial: {
-            fill: palette["gray-200"],
+            fill: palette['gray-200'],
           },
         },
         markerStyle: {
           initial: {
             r: 9,
             fill: palette.primary,
-            "fill-opacity": 0.9,
+            'fill-opacity': 0.9,
             stroke: palette.white,
-            "stroke-width": 7,
-            "stroke-opacity": 0.4,
+            'stroke-width': 7,
+            'stroke-opacity': 0.4,
           },
           hover: {
             fill: palette.primary,
-            "fill-opacity": 0.9,
+            'fill-opacity': 0.9,
             stroke: palette.primary,
-            "stroke-width": 7,
-            "stroke-opacity": 0.4,
+            'stroke-width': 7,
+            'stroke-opacity': 0.4,
           },
         },
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         markers: [
           {
             coords: [31.230391, 121.473701],
-            name: "Shanghai",
+            name: 'Shanghai',
           },
           {
             coords: [39.904202, 116.407394],
-            name: "Beijing",
+            name: 'Beijing',
           },
           {
             coords: [28.70406, 77.102493],
-            name: "Delhi",
+            name: 'Delhi',
           },
           {
             coords: [6.524379, 3.379206],
-            name: "Lagos",
+            name: 'Lagos',
           },
           {
             coords: [39.343357, 117.361649],
-            name: "Tianjin",
+            name: 'Tianjin',
           },
           {
             coords: [24.860735, 67.001137],
-            name: "Karachi",
+            name: 'Karachi',
           },
           {
             coords: [41.00824, 28.978359],
-            name: "Istanbul",
+            name: 'Istanbul',
           },
           {
             coords: [35.689487, 139.691711],
-            name: "Tokyo",
+            name: 'Tokyo',
           },
           {
             coords: [23.12911, 113.264381],
-            name: "Guangzhou",
+            name: 'Guangzhou',
           },
           {
             coords: [19.075983, 72.877655],
-            name: "Mumbai",
+            name: 'Mumbai',
           },
           {
             coords: [40.7127837, -74.0059413],
-            name: "New York",
+            name: 'New York',
           },
           {
             coords: [34.052235, -118.243683],
-            name: "Los Angeles",
+            name: 'Los Angeles',
           },
           {
             coords: [41.878113, -87.629799],
-            name: "Chicago",
+            name: 'Chicago',
           },
           {
             coords: [29.760427, -95.369804],
-            name: "Houston",
+            name: 'Houston',
           },
           {
             coords: [33.448376, -112.074036],
-            name: "Phoenix",
+            name: 'Phoenix',
           },
           {
             coords: [51.507351, -0.127758],
-            name: "London",
+            name: 'London',
           },
           {
             coords: [48.856613, 2.352222],
-            name: "Paris",
+            name: 'Paris',
           },
           {
             coords: [55.755825, 37.617298],
-            name: "Moscow",
+            name: 'Moscow',
           },
           {
             coords: [40.416775, -3.70379],
-            name: "Madrid",
+            name: 'Madrid',
           },
         ],
       });

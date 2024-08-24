@@ -1,8 +1,8 @@
 // src/pages/landing/Testimonials.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const Testimonials = () => (
   <section className="py-6">

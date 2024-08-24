@@ -1,6 +1,6 @@
 // src/pages/landing/Statistics/Players/ComparisonTool.jsx
-import React from "react";
-import { Card } from "react-bootstrap";
+import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const ComparisonTool = () => {
   // Dummy comparison tool

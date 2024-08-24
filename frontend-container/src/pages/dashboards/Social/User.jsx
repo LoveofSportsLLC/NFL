@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Card } from "react-bootstrap";
+import React from 'react';
+import { Button, Card } from 'react-bootstrap';
 
-import { MessageSquare } from "react-feather";
+import { MessageSquare } from 'react-feather';
 
 const User = () => (
   <Card className="flex-fill mb-3">

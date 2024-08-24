@@ -1,73 +1,73 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button } from 'react-bootstrap';
 
-import { Sliders, BookOpen } from "react-feather";
+import { Sliders, BookOpen } from 'react-feather';
 
 import {
   SIDEBAR_POSITION,
   SIDEBAR_BEHAVIOR,
   LAYOUT,
   THEME,
-} from "../constants";
-import useOuterClick from "../hooks/useOuterClick";
-import { useTheme } from "../hooks/useTheme";
-import useSidebar from "../hooks/useSidebar";
-import useLayout from "../hooks/useLayout";
+} from '../constants';
+import useOuterClick from '../hooks/useOuterClick';
+import { useTheme } from '../hooks/useTheme';
+import useSidebar from '../hooks/useSidebar';
+import useLayout from '../hooks/useLayout';
 
 const themeOptions = [
   {
-    name: "Default",
+    name: 'Default',
     value: THEME.DEFAULT,
   },
   {
-    name: "Colored",
+    name: 'Colored',
     value: THEME.COLORED,
   },
   {
-    name: "Dark",
+    name: 'Dark',
     value: THEME.DARK,
   },
   {
-    name: "Light",
+    name: 'Light',
     value: THEME.LIGHT,
   },
 ];
 
 const sidebarPositionOptions = [
   {
-    name: "Left",
+    name: 'Left',
     value: SIDEBAR_POSITION.LEFT,
   },
   {
-    name: "Right",
+    name: 'Right',
     value: SIDEBAR_POSITION.RIGHT,
   },
 ];
 
 const sidebarBehaviorOptions = [
   {
-    name: "Sticky",
+    name: 'Sticky',
     value: SIDEBAR_BEHAVIOR.STICKY,
   },
   {
-    name: "Fixed",
+    name: 'Fixed',
     value: SIDEBAR_BEHAVIOR.FIXED,
   },
   {
-    name: "Compact",
+    name: 'Compact',
     value: SIDEBAR_BEHAVIOR.COMPACT,
   },
 ];
 
 const layoutOptions = [
   {
-    name: "Fluid",
+    name: 'Fluid',
     value: LAYOUT.FLUID,
   },
   {
-    name: "Boxed",
+    name: 'Boxed',
     value: LAYOUT.BOXED,
   },
 ];
@@ -98,10 +98,10 @@ const Settings = () => {
   // Read from query parameter (e.g. ?theme=dark)
   // only for demo purposes
   useEffect(() => {
-    setSettingByQueryParam("theme", setTheme);
-    setSettingByQueryParam("sidebarPosition", setPosition);
-    setSettingByQueryParam("sidebarBehavior", setBehavior);
-    setSettingByQueryParam("layout", setLayout);
+    setSettingByQueryParam('theme', setTheme);
+    setSettingByQueryParam('sidebarPosition', setPosition);
+    setSettingByQueryParam('sidebarBehavior', setBehavior);
+    setSettingByQueryParam('layout', setLayout);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -109,7 +109,7 @@ const Settings = () => {
   return (
     <div
       ref={innerRef}
-      className={`settings js-settings ${isOpen ? "open" : ""}`}
+      className={`settings js-settings ${isOpen ? 'open' : ''}`}
     >
       <div className="settings-toggle">
         <div

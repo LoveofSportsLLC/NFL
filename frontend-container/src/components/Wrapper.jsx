@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Wrapper = ({ children }) => <div className="wrapper">{children}</div>;
 

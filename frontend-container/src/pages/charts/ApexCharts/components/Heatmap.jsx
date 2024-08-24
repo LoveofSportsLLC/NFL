@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
-import { Card } from "react-bootstrap";
-import usePalette from "../../../../hooks/usePalette";
+import React, { Suspense } from 'react';
+import { Card } from 'react-bootstrap';
+import usePalette from '../../../../hooks/usePalette';
 import Chart from 'react-apexcharts';
 
 const HeatmapChart = () => {
@@ -20,15 +20,15 @@ const HeatmapChart = () => {
   };
 
   const data = [
-    { name: "Metric1", data: generateData(20, { min: 0, max: 90 }) },
-    { name: "Metric2", data: generateData(20, { min: 0, max: 90 }) },
-    { name: "Metric9", data: generateData(20, { min: 0, max: 90 }) },
+    { name: 'Metric1', data: generateData(20, { min: 0, max: 90 }) },
+    { name: 'Metric2', data: generateData(20, { min: 0, max: 90 }) },
+    { name: 'Metric9', data: generateData(20, { min: 0, max: 90 }) },
   ];
 
   const options = {
     dataLabels: { enabled: false },
-    colors: ["#008FFB"],
-    xaxis: { type: "category" },
+    colors: ['#008FFB'],
+    xaxis: { type: 'category' },
   };
 
   return (

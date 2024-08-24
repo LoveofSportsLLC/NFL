@@ -46,12 +46,12 @@ const UpdateDependencies = () => (
       Remove the <code>vite</code>, <code>@vitejs/plugin-react</code> and{' '}
       <code>react-router-dom</code> dependencies.
     </p>
-    <Code>{`npm uninstall vite @vitejs/plugin-react vite-plugin-ejs vite-plugin-node-polyfills vite-plugin-svgr react-router-dom`}</Code>
+    <Code>{'npm uninstall vite @vitejs/plugin-react vite-plugin-ejs vite-plugin-node-polyfills vite-plugin-svgr react-router-dom'}</Code>
 
     <p className="text-lg">
       Install the <code>next.js</code> dependency.
     </p>
-    <Code>{`npm install next --save`}</Code>
+    <Code>{'npm install next --save'}</Code>
 
     <p className="text-lg">
       Open the <code>package.json</code> file and replace the{' '}
@@ -75,7 +75,7 @@ const UpdateEntryFile = () => (
       <code>/src/pages/_document.js</code>).
     </p>
     <p className="text-lg">
-      All code in the <code>{`<head>`}</code> section of the{' '}
+      All code in the <code>{'<head>'}</code> section of the{' '}
       <code>/index.html</code> file should be moved to the{' '}
       <code>/src/pages/_document.js</code> file. Learn more{' '}
       <a

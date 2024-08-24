@@ -1,8 +1,8 @@
 //src/pages/landing/Dashboards/CombinedComponent.jsx
-import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import Dashboards from "./Dashboards";
-import TeamSelectorAndDesignOptions from "./TeamSelectorAndDesignOptions";
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import Dashboards from './Dashboards';
+import TeamSelectorAndDesignOptions from './TeamSelectorAndDesignOptions';
 
 const CombinedComponent = () => {
   return (
@@ -10,9 +10,9 @@ const CombinedComponent = () => {
       <Card
         className="p-4"
         style={{
-          backgroundColor: "#f8f9fa",
-          border: "1px solid #dee2e6",
-          borderRadius: "10px",
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: '10px',
         }}
       >
         <Row className="mb-4">

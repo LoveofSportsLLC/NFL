@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
-
 import dragula from 'react-dragula';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 

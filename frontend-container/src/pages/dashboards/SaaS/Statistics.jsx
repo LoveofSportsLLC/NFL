@@ -1,7 +1,7 @@
-import React from "react";
-import { Col, Card, Badge, Row } from "react-bootstrap";
+import React from 'react';
+import { Col, Card, Badge, Row } from 'react-bootstrap';
 
-import { Activity, ShoppingBag, ShoppingCart } from "react-feather";
+import { Activity, ShoppingBag, ShoppingCart } from 'react-feather';
 
 import illustration from '/illustrations/social.png';
 
@@ -48,7 +48,7 @@ const Statistics = () => (
           <span className="h1 d-inline-block mt-1 mb-3">3.282</span>
           <div className="mb-0">
             <Badge bg="" className="badge-soft-danger me-2">
-              -4.65%{" "}
+              -4.65%{' '}
             </Badge>
             <span className="text-muted">Since last week</span>
           </div>

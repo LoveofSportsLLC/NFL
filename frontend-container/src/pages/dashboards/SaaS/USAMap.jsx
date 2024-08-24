@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import jsVectorMap from "jsvectormap";
-import { Card, Dropdown } from "react-bootstrap";
-import { MoreHorizontal } from "react-feather";
+import React, { useEffect, useState } from 'react';
+import jsVectorMap from 'jsvectormap';
+import { Card, Dropdown } from 'react-bootstrap';
+import { MoreHorizontal } from 'react-feather';
 
-import usePalette from "../../../hooks/usePalette";
+import usePalette from '../../../hooks/usePalette';
 
 function USAMap() {
   const palette = usePalette();
@@ -19,52 +19,52 @@ function USAMap() {
   useEffect(() => {
     if (debounced) {
       new jsVectorMap({
-        selector: "#saas_usa",
-        map: "us_aea_en",
+        selector: '#saas_usa',
+        map: 'us_aea_en',
         zoomOnScroll: false,
         regionStyle: {
           initial: {
-            fill: palette["gray-200"],
+            fill: palette['gray-200'],
           },
         },
         markerStyle: {
           initial: {
             r: 9,
             fill: palette.primary,
-            "fill-opacity": 0.9,
+            'fill-opacity': 0.9,
             stroke: palette.white,
-            "stroke-width": 7,
-            "stroke-opacity": 0.4,
+            'stroke-width': 7,
+            'stroke-opacity': 0.4,
           },
           hover: {
             fill: palette.primary,
-            "fill-opacity": 0.9,
+            'fill-opacity': 0.9,
             stroke: palette.primary,
-            "stroke-width": 7,
-            "stroke-opacity": 0.4,
+            'stroke-width': 7,
+            'stroke-opacity': 0.4,
           },
         },
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         markers: [
           {
             coords: [37.77, -122.41],
-            name: "San Francisco: 375",
+            name: 'San Francisco: 375',
           },
           {
             coords: [40.71, -74.0],
-            name: "New York: 350",
+            name: 'New York: 350',
           },
           {
             coords: [39.09, -94.57],
-            name: "Kansas City: 250",
+            name: 'Kansas City: 250',
           },
           {
             coords: [36.16, -115.13],
-            name: "Las Vegas: 275",
+            name: 'Las Vegas: 275',
           },
           {
             coords: [32.77, -96.79],
-            name: "Dallas: 225",
+            name: 'Dallas: 225',
           },
         ],
       });

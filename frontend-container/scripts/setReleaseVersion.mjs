@@ -1,13 +1,12 @@
 import { execSync } from 'child_process';
-import { promises as fs } from 'fs';
+import fs from 'vite-plugin-fs/browser';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import logger from '../src/utils/logger.js';
 
 // Determine __dirname in an ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-logger.debug('Running predev script');
+console.log('Running predev script');
 
 // Get the current Git commit hash
 let commitHash;
@@ -15,19 +14,19 @@ let commitHash;
 try {
   commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 } catch (error) {
-  logger.debug('Error fetching git commit hash', error);
+  console.error('Error fetching git commit hash', error);
   process.exit(1);
 }
 
 // Set the release version using the commit hash
 const releaseVersion = `release-${commitHash}`;
-log(`Computed release version: ${releaseVersion}`);
-log(`__dirname: ${__dirname}`);
+console.log(`Computed release version: ${releaseVersion}`);
+console.log(`__dirname: ${__dirname}`);
 
 // Function to write to .env file
 async function writeEnvFile() {
   const envFilePath = path.join(__dirname, '../.env');
-  logger.debug(`Writing to .env file at path: ${envFilePath}`);
+  console.log(`Writing to .env file at path: ${envFilePath}`);
 
   let envConfig = {};
 
@@ -47,7 +46,7 @@ async function writeEnvFile() {
       });
     }
   } catch (error) {
-    logger.debug('Error reading .env file', error);
+    console.error('Error reading .env file', error);
     process.exit(1);
   }
 
@@ -58,15 +57,10 @@ async function writeEnvFile() {
     .join('\n');
 
   try {
-    await fs.writeFile(envFilePath, newEnvContent, {
-      flag: 'w',
-    });
-    logger.debug(`SENTRY_RELEASE set to ${releaseVersion}`);
-    logger.debug(
-      `Type of SENTRY_RELEASE after setting: ${typeof releaseVersion}`,
-    );
+    await fs.writeFile(envFilePath, newEnvContent, { flag: 'w' });
+    console.log(`SENTRY_RELEASE set to ${releaseVersion}`);
   } catch (error) {
-    logger.debug('Error writing to .env file', error);
+    console.error('Error writing to .env file', error);
     process.exit(1);
   }
 }

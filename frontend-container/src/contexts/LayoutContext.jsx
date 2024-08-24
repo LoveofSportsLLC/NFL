@@ -1,7 +1,7 @@
 // src/contexts/LayoutContext.jsx
-import React from "react";
+import React from 'react';
 
-import { LAYOUT } from "../constants";
+import { LAYOUT } from '../constants';
 
 const initialState = {
   layout: LAYOUT.FLUID,

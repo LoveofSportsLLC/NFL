@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Image, Accordion } from "react-bootstrap";
-import CardMenu from "./CardMenu";
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Row, Col, Image, Accordion } from 'react-bootstrap';
+import CardMenu from './CardMenu';
 
 // Helper Component for displaying detailed scores per quarter
 const QuarterDetails = ({ scores }) => {
@@ -11,7 +11,6 @@ const QuarterDetails = ({ scores }) => {
     </Col>
   ));
 };
-
 
 const NFLScoreCard = () => {
   const [gameData, setGameData] = useState({

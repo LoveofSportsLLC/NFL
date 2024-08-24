@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Card, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import CarouselComponent from '../../../components/CarouselComponent';
 import FilterComponent from '../../../components/FilterComponent';
 import { INJURIES_API_URL } from '../../../config';
 import placeholderImage from '/logo.png';
-import logger from '../../../utils/logger.js';
 
 const InjuriesFeed = () => {
   const [injuries, setInjuries] = useState([]);
@@ -18,20 +17,24 @@ const InjuriesFeed = () => {
       try {
         const response = await axios.get(INJURIES_API_URL);
         if (response.headers['content-type'].includes('application/json')) {
-          const articles = response.data.articles;
+          const articles = response.data.articles || []; // Safely handle undefined articles
           setInjuries(articles);
           filterInjuries(articles, filter, team);
         } else {
-          logger.debug('Invalid response data:', response.data);
+          console.log('Invalid response data:', response.data);
         }
       } catch (error) {
-        logger.debug('Error fetching injuries:', error);
+        console.log('Error fetching injuries:', error);
       }
     };
     fetchInjuries();
   }, [filter, team]);
 
-  const filterInjuries = (articles, filter, team) => {
+  const filterInjuries = (articles = [], filter, team) => {
+    if (!Array.isArray(articles) || articles.length === 0) {
+      setFilteredInjuries([]); // Handle empty or undefined articles
+      return;
+    }
     const now = new Date();
     let filtered;
     switch (filter) {
@@ -107,27 +110,33 @@ const InjuriesFeed = () => {
           </span>
         </Col>
       </Row>
-      {filteredInjuries.length <= 3 ? (
-        <div className="d-flex justify-content-around">
-          {filteredInjuries.map((item, idx) => (
-            <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
-              <Card.Img
-                variant="top"
-                src={item.urlToImage || placeholderImage}
-                loading="lazy"
-              />
-              <Card.Body>
-                <Card.Title>{item.title}</Card.Title>
-                <Card.Text>{item.description?.slice(0, 100) + '...'}</Card.Text>
-                <Card.Link href={item.url} target="_blank">
-                  Read more
-                </Card.Link>
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
+      {filteredInjuries.length > 0 ? (
+        filteredInjuries.length <= 3 ? (
+          <div className="d-flex justify-content-around">
+            {filteredInjuries.map((item, idx) => (
+              <Card className="h-100 m-2" style={{ width: '18rem' }} key={idx}>
+                <Card.Img
+                  variant="top"
+                  src={item.urlToImage || placeholderImage}
+                  loading="lazy"
+                />
+                <Card.Body>
+                  <Card.Title>{item.title}</Card.Title>
+                  <Card.Text>
+                    {item.description?.slice(0, 100) + '...'}
+                  </Card.Text>
+                  <Card.Link href={item.url} target="_blank">
+                    Read more
+                  </Card.Link>
+                </Card.Body>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <CarouselComponent items={filteredInjuries.slice(0, 3)} />
+        )
       ) : (
-        <CarouselComponent items={filteredInjuries.slice(0, 3)} />
+        <p>No injury updates available.</p>
       )}
     </Container>
   );

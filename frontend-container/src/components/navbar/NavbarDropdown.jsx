@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Dropdown, ListGroup } from "react-bootstrap";
+import { Dropdown, ListGroup } from 'react-bootstrap';
 
 const NavbarDropdown = ({
   children,

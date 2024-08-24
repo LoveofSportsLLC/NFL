@@ -1,5 +1,5 @@
 // src/pages/landing/BottomPage/Integrations.jsx
-import React from "react";
+import React from 'react';
 import {
   Container,
   Row,
@@ -7,7 +7,7 @@ import {
   Button,
   OverlayTrigger,
   Tooltip,
-} from "react-bootstrap";
+} from 'react-bootstrap';
 import nflDataLogo from '/photos/nfl-data-logo.png';
 
 const Integrations = () => (

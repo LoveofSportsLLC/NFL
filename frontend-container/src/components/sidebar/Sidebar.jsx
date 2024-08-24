@@ -1,9 +1,9 @@
-import React from "react";
-import PerfectScrollbar from "react-perfect-scrollbar";
+import React from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import useSidebar from "../../hooks/useSidebar";
-import SidebarFooter from "./SidebarFooter";
-import SidebarNav from "./SidebarNav";
+import useSidebar from '../../hooks/useSidebar';
+import SidebarFooter from './SidebarFooter';
+import SidebarNav from './SidebarNav';
 
 const Sidebar = ({ items, showFooter = true }) => {
   const { isOpen } = useSidebar();

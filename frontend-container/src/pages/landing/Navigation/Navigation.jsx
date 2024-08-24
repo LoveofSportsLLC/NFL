@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Navbar, Nav, Button, NavDropdown } from "react-bootstrap";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useState } from 'react';
+import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
+import { useAuth0 } from '@auth0/auth0-react';
 import logo from '/logo.svg';
-import AboutUsModal from "../Aboutus/AboutUs";
-import SupportModal from "../Aboutus/SupportModal";
-import DonateModal from "../../auth/DonateModal";
+import AboutUsModal from '../Aboutus/AboutUs';
+import SupportModal from '../Aboutus/SupportModal';
+import DonateModal from '../../auth/DonateModal';
 
 const Navigation = () => {
   const [showDonateModal, setShowDonateModal] = useState(false);
@@ -22,34 +22,34 @@ const Navigation = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const analysisSections = [
-    { id: "analysis", label: "Analysis Overview" },
+    { id: 'analysis', label: 'Analysis Overview' },
     {
-      id: "advanced-performance-metrics",
-      label: "Advanced Performance Metrics",
+      id: 'advanced-performance-metrics',
+      label: 'Advanced Performance Metrics',
     },
-    { id: "real-time-team-game-analysis", label: "Team/Game Analysis" },
-    { id: "real-time-fantasy-analysis", label: "Fantasy Analysis" },
-    { id: "nfl-draft-analysis", label: "NFL Draft Analysis" },
+    { id: 'real-time-team-game-analysis', label: 'Team/Game Analysis' },
+    { id: 'real-time-fantasy-analysis', label: 'Fantasy Analysis' },
+    { id: 'nfl-draft-analysis', label: 'NFL Draft Analysis' },
   ];
 
   const statisticsSections = [
-    { id: "teams", label: "Teams" },
-    { id: "players", label: "Players" },
-    { id: "games", label: "Games" },
-    { id: "standings", label: "Standings" },
-    { id: "coaches", label: "Coaches" },
+    { id: 'teams', label: 'Teams' },
+    { id: 'players', label: 'Players' },
+    { id: 'games', label: 'Games' },
+    { id: 'standings', label: 'Standings' },
+    { id: 'coaches', label: 'Coaches' },
   ];
 
   const aiOverviewSections = [
-    { id: "model-overview", label: "Model Overview" },
-    { id: "model-insights", label: "Model Insights" },
-    { id: "predictions", label: "Predictions" },
-    { id: "predictions-accuracy", label: "Predictions Accuracy" },
+    { id: 'model-overview', label: 'Model Overview' },
+    { id: 'model-insights', label: 'Model Insights' },
+    { id: 'predictions', label: 'Predictions' },
+    { id: 'predictions-accuracy', label: 'Predictions Accuracy' },
   ];
 
   return (
@@ -59,7 +59,7 @@ const Navigation = () => {
       variant="dark"
       className="sticky-top py-3"
       style={{
-        width: "100%",
+        width: '100%',
       }}
     >
       <Navbar.Brand href="/" className="d-flex align-items-center">
@@ -75,7 +75,7 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto d-flex align-items-center">
-          <Nav.Link onClick={() => scrollToSection("dashboards")}>
+          <Nav.Link onClick={() => scrollToSection('dashboards')}>
             Dashboards
           </Nav.Link>
           <NavDropdown title="AI Overview" id="ai-overview-nav-dropdown">
@@ -110,9 +110,9 @@ const Navigation = () => {
             ))}
           </NavDropdown>
 
-          <Nav.Link onClick={() => scrollToSection("news")}>News</Nav.Link>
+          <Nav.Link onClick={() => scrollToSection('news')}>News</Nav.Link>
 
-          <Nav.Link onClick={() => scrollToSection("community")}>
+          <Nav.Link onClick={() => scrollToSection('community')}>
             Community
           </Nav.Link>
 

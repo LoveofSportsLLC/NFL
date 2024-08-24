@@ -1,9 +1,9 @@
 // src/pages/landing/Statistics/Standings/StandingsPreview.jsx
-import React from "react";
-import { Carousel } from "react-bootstrap";
-import standings1 from "/analysis/standings1.webp";
-import standings2 from "/analysis/standings2.webp";
-import standings3 from "/analysis/standings3.webp";
+import React from 'react';
+import { Carousel } from 'react-bootstrap';
+import standings1 from '/analysis/standings1.webp';
+import standings2 from '/analysis/standings2.webp';
+import standings3 from '/analysis/standings3.webp';
 
 const StandingsPreview = () => {
   return (
