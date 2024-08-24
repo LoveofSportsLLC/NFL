@@ -22,10 +22,8 @@ const isSSR =
   typeof import.meta !== 'undefined' && import.meta.env
     ? import.meta.env.SSR
     : process.env.SSR === 'true';
-const isLocal =
-  isSSR &&
-  (process.env.GIT_WORKFLOW === '0' || process.env.DOCKER_ENV === 'false');
-const isCluster = isSSR && process.env.GIT_WORKFLOW === '1';
+const isLocal =  process.env.GIT_WORKFLOW === '0' 
+const isCluster = process.env.GIT_WORKFLOW === '1';
 
 
 console.log('Server.js', 'Running Server.js script', '');
@@ -201,12 +199,8 @@ async function startServer() {
     try {
       const url = req.originalUrl.replace(base, '');
 
-      let template;
+      let template = templateHtml;
       let render;
-      const initialData = {};
-
-      // Assign the pre-loaded template HTML
-      template = templateHtml;
 
       // Dynamically import the render function from the server-side entry point
       const module = await import(
@@ -224,14 +218,13 @@ async function startServer() {
       console.log(
         'Server.js',
         'Loaded template and SSR module in production mode',
-        '',
         { templateLength: template.length },
       );
 
       let didError = false;
 
       const onShellReady = (pipe) => {
-        console.log('Server.js', 'onShellReady called', '');
+        console.log('Server.js', 'onShellReady called');
         res.status(didError ? 500 : 200);
         res.set({ 'Content-Type': 'text/html' });
 
@@ -242,14 +235,12 @@ async function startServer() {
         });
 
         const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(
-          initialData,
-        )}</script>`;
+        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
 
         res.write(htmlStart + initialStateScript);
 
         transformStream.on('finish', () => {
-          console.log('Server.js', 'HTML fully sent', '');
+          console.log('Server.js', 'HTML fully sent');
           res.end(htmlEnd);
         });
 
@@ -265,7 +256,7 @@ async function startServer() {
 
       const onError = (error) => {
         didError = true;
-        console.log('Server.js', 'Render error:', '', error);
+        console.error('Server.js', 'Render error:', error);
       };
 
       const { pipe, abort } = render(
@@ -284,7 +275,7 @@ async function startServer() {
       });
 
       htmlStream.on('finish', () => {
-        console.log('Server.js', 'Server rendered HTML fully sent', '');
+        console.log('Server.js', 'Server rendered HTML fully sent');
       });
 
       pipe(htmlStream);
