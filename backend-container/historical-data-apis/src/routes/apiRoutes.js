@@ -11,5 +11,6 @@ router.get('/hello', helloController.sayHello);
 router.post('/data', dataController.createData);
 router.put('/update/:id', dataController.updateData);
 router.delete('/delete/:id', dataController.deleteData);
+router.get('/blob/:blobName', dataController.getBlobData);
 
 module.exports = router;
