@@ -90,9 +90,11 @@ async function startServer() {
     'Express app configured with JSON, URL encoding, and compression',
   );
 
-  // Serve static files using sirv
-  app.use('/public', express.static(path.join(rootPath, 'public'))); // Updated to use rootPath
-  console.log('Server.js', 'Public static files route set up');
+  // Serve static files using express.static
+  app.use(express.static(path.join(rootPath, 'public')));
+  console.log('Server.js', 'Serving static files from public directory');
+
+  // Serve static files from dist/client using sirv
   app.use(
     sirv(path.resolve(rootPath, 'dist/client'), {
       dev: !isProduction,

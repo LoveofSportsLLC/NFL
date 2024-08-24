@@ -212,7 +212,7 @@ export default defineConfig( async ( { command, mode } ) =>
           changeOrigin: true,
         },
       },
-      hmr: command === 'serve' ? { overlay: true } : false,
+      hmr: process.env.GIT_WORKFLOW !== '1' ? { overlay: true } : false,
     },
     define: {
       'process.env.SSR': JSON.stringify(isSSR),
@@ -232,7 +232,7 @@ export default defineConfig( async ( { command, mode } ) =>
     },
     build,
     optimizeDeps: {
-      include: [ 'react', 'react-dom', 'react-bootstrap']
+      include: ['react', 'react-dom', 'react-bootstrap'],
     },
     ssr: isSSR ? ssrConfig : undefined,
   };

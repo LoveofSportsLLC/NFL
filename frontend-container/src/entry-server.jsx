@@ -3,6 +3,7 @@ import { renderToPipeableStream } from 'react-dom/server';
 import WrappedApp from './App.jsx';
 import { StaticRouter } from 'react-router-dom/server.js';
 import { HelmetProvider } from './utils/HelmetLoader';
+
 /**
  * The main render function for SSR.
  * @param {string} url - The URL to render.
@@ -17,9 +18,13 @@ export function render(
   url,
   ssrManifest,
   initialData,
-  onShellReady,
-  onShellError,
-  onError,
+  onShellReady = () => {}, // Default to a no-op function if not provided
+  onShellError = (err) => {
+    console.error('Shell Error:', err);
+  }, // Log error by default
+  onError = (err) => {
+    console.error('Render Error:', err);
+  }, // Log error by default
 ) {
   const helmetContext = {};
 
@@ -31,21 +36,14 @@ export function render(
     </HelmetProvider>,
     {
       onShellReady(pipe) {
-        onShellReady(pipe);
+        onShellReady(pipe);  // No need for type check since it’s guaranteed to be a function
       },
       onShellError(error) {
-        if (onShellError) {
-          onShellError(error);
-        } else {
-          console.error('Shell Error encountered:', error);
-        }
+        onShellError(error);  // No need for type check
         abort();
       },
       onError(error) {
-        if (onError) {
-          onError(error);
-        }
-        console.error('Render Error encountered:', error);
+        onError(error);  // No need for type check
       },
     },
   );
