@@ -42,12 +42,14 @@ console.log(
   path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
 );
 
+let templateHtml;
+
 async function startServer() {
   console.log('Server.js', 'Starting server...');
   // Load template HTML and SSR manifest
   // Use rootPath when constructing paths for template HTML and SSR manifest
   try {
-    const templateHtml = await fs.promises.readFile(
+    templateHtml = await fs.promises.readFile(
       path.resolve(rootPath, './dist/client/index.html'),
       'utf-8',
     );
@@ -71,8 +73,7 @@ async function startServer() {
   // Serve static files using sirv
   app.use('/public', express.static(path.join(rootPath, 'public'))); // Updated to use rootPath
   app.use(
-    sirv(path.join(rootPath, 'dist/client'), {
-      // Updated to use rootPath
+    sirv(path.resolve(rootPath, 'dist/client'), {
       dev: !isProduction,
       maxAge: isProduction ? 31536000 : 0,
       immutable: isProduction,
@@ -153,7 +154,7 @@ async function startServer() {
 
   // ROUTE /NON API ROUTE
   app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(rootPath, 'dist/client/index.html'), (err) => {
+    res.sendFile(path.resolve(rootPath, 'dist/client/index.html'), (err) => {
       // Updated to use rootPath
       if (err) {
         console.log('Server.js', 'Error sending index.html:', '', err);
@@ -167,7 +168,7 @@ async function startServer() {
     const isApiRequest = req.path.startsWith('/api');
     if (!isApiRequest) {
       // Render application or serve index.html
-      res.sendFile(path.join(rootPath, 'dist/client/index.html')); // Updated to use rootPath
+      res.sendFile(path.resolve(rootPath, 'dist/client/index.html')); // Updated to use rootPath
     } else {
       res.status(404).send('API route not found'); // Handle API route not found
     }
@@ -176,8 +177,8 @@ async function startServer() {
       let initialData = {};
       template = templateHtml;
       const { render } = await import(
-        path.join(rootPath, 'dist/server/entry-server.js')
-      ).render; // Updated to use rootPath
+        path.resolve(rootPath, 'dist/server/entry-server.js')
+      ).then((mod) => mod.render);
       console.log(
         'Server.js',
         'Loaded template and SSR module in production mode',
