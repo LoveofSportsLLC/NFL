@@ -35,20 +35,36 @@ export function render(
       </StaticRouter>
     </HelmetProvider>,
     {
-      onShellReady:
-        typeof onShellReady === 'function'
-          ? onShellReady
-          : () => console.error('Invalid onShellReady function'),
-      onShellError:
-        typeof onShellError === 'function'
-          ? onShellError
-          : (err) => console.error('Shell Error:', err),
-      onError:
-        typeof onError === 'function'
-          ? onError
-          : (err) => console.error('Render Error:', err),
+      onShellReady(pipe) {
+        console.log(
+          'onShellReady: pipe is a function:',
+          typeof pipe === 'function',
+        );
+        if (typeof pipe === 'function') {
+          onShellReady(pipe);
+        } else {
+          console.error('pipe is not a function:', pipe);
+        }
+      },
+      onShellError(error) {
+        console.error('onShellError called:', error);
+        if (typeof onShellError === 'function') {
+          onShellError(error);
+        }
+        abort();
+      },
+      onError(error) {
+        console.error('onError called:', error);
+        if (typeof onError === 'function') {
+          onError(error);
+        }
+      },
     },
   );
+
+  if (typeof pipe !== 'function') {
+    console.error('Returned pipe is not a function:', pipe);
+  }
 
   return { pipe, abort };
 }
