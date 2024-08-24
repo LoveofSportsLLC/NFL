@@ -17,7 +17,7 @@ const LatestHeadlines = () => {
       try {
         const response = await axios.get(LATEST_NEWS_API_URL);
         if (response.headers['content-type'].includes('application/json')) {
-          const articles = response.data.articles;
+          const articles = response.data.articles || []; // Safely handle undefined
           setNews(articles);
           filterNews(articles, filter, team);
         } else {
@@ -30,7 +30,11 @@ const LatestHeadlines = () => {
     fetchNews();
   }, [filter, team]);
 
-  const filterNews = (articles, filter, team) => {
+  const filterNews = (articles = [], filter, team) => {
+    if (!Array.isArray(articles) || articles.length === 0) {
+      setFilteredNews([]); // Handle empty or undefined articles
+      return;
+    }
     const now = new Date();
     let filtered;
     switch (filter) {

@@ -1,9 +1,9 @@
 import 'vite/modulepreload-polyfill';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRoutes } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
-//import { ApplicationInsghts } from '@microsoft/applicationinsights-web';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { ReactPlugin } from '@microsoft/applicationinsights-react-js';
 import { store } from './redux/store';
 import './i18n';
@@ -25,11 +25,8 @@ import {
 } from './config';
 import SSRFriendlyWrapper from './components/SSRFriendlyWrapper';
 import Wrapper from './components/auth/Wrapper';
-//import authConfig from './components/auth/auth0';
-// console.log('App.jsx', 'Starting execution');
-// console.log('App.jsx Client ID:', clientId);
-// console.log('App.jsx Domain:', domain);
 
+// Corrected the typo from "ApplicationInsghts" to "ApplicationInsights"
 const connectionString = VITE_APP_INSIGHTS_CONNECTION_STRING;
 const instrumentationKey = VITE_APP_INSIGHTS_INSTRUMENTATION_KEY;
 
@@ -58,7 +55,7 @@ const initializeAppInsights = () => {
   }
 };
 
-function App({ initialData }) {
+function App({ initialData, redirectUri }) {
   const routeContent = useRoutes(routes);
   const Helmet = useHelmet();
 
@@ -69,6 +66,7 @@ function App({ initialData }) {
   console.log('App.jsx', 'Rendering Application with routeContent:', {
     routeContent,
   });
+
   return (
     <ReduxProvider store={store}>
       <Auth0Provider
@@ -76,7 +74,7 @@ function App({ initialData }) {
         clientId={clientId}
         audience={audience}
         authorizationParams={{
-          redirect_uri: '',
+          redirect_uri: redirectUri, // Use prop-based redirectUri
         }}
       >
         <ThemeProvider>
@@ -84,12 +82,10 @@ function App({ initialData }) {
             <LayoutProvider>
               <ChartJsDefaults />
               <ErrorBoundary>
-                <SSRFriendlyWrapper>
-                  <Wrapper>
-                    {Helmet}
-                    {routeContent}
-                  </Wrapper>
-                </SSRFriendlyWrapper>
+                <Wrapper>
+                  {Helmet}
+                  {routeContent}
+                </Wrapper>
               </ErrorBoundary>
             </LayoutProvider>
           </SidebarProvider>
@@ -101,14 +97,11 @@ function App({ initialData }) {
 
 App.propTypes = {
   initialData: PropTypes.object,
+  redirectUri: PropTypes.string.isRequired, // Make redirectUri a required prop
 };
 
-WrappedApp.propTypes = {
-  initialData: PropTypes.object,
-};
-
-export default function WrappedApp({ initialData }) {
-  const [redirectUri, setRedirectUri] = useState('');
+function WrappedApp({ initialData }) {
+  const [redirectUri, setRedirectUri] = useState(null);
 
   useEffect(() => {
     console.log('App.jsx', 'WrappedApp component mounted', { initialData });
@@ -132,20 +125,22 @@ export default function WrappedApp({ initialData }) {
     }
   }, [initialData]);
 
+  if (!redirectUri) {
+    // Show a loader or placeholder until redirectUri is set
+    return <div>Loading...</div>;
+  }
+
   return (
     <ErrorBoundary>
       <SSRFriendlyWrapper onClientLoad={initializeAppInsights}>
-        <Auth0Provider
-          domain={domain}
-          clientId={clientId}
-          audience={audience}
-          authorizationParams={{
-            redirect_uri: redirectUri,
-          }}
-        >
-          <App initialData={initialData} />
-        </Auth0Provider>
+        <App initialData={initialData} redirectUri={redirectUri} />
       </SSRFriendlyWrapper>
     </ErrorBoundary>
   );
 }
+
+WrappedApp.propTypes = {
+  initialData: PropTypes.object,
+};
+
+export default WrappedApp;

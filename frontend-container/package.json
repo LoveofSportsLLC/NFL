@@ -148,6 +148,7 @@
     "text-encoding": "^0.7.0",
     "use-sync-external-store": "^1.2.2",
     "util": "^0.12.5",
+    "vite-plugin-ssr": "^0.4.142",
     "yup": "^1.4.0"
   },
   "devDependencies": {
