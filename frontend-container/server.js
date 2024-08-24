@@ -201,6 +201,7 @@ async function startServer() {
 
       let template = templateHtml;
       let render;
+      const initialData = {};
 
       // Dynamically import the render function from the server-side entry point
       const module = await import(
