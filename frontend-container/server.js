@@ -60,7 +60,7 @@ async function startServer() {
         'utf-8',
       ),
     );
-    
+
     console.log('Server.js', 'Loaded template HTML and SSR manifest');
   } catch (err) {
     console.error('Error loading template HTML or SSR manifest:', err);
@@ -176,85 +176,102 @@ async function startServer() {
     }
     try {
       const url = req.originalUrl.replace(base, '');
-      let initialData = {};
-      const template = templateHtml; 
-      const { render } = await import(
+
+      let template;
+      let render;
+      const initialData = {};
+
+      // Assign the pre-loaded template HTML
+      template = templateHtml;
+
+      // Dynamically import the render function from the server-side entry point
+      const module = await import(
         path.resolve(rootPath, 'dist/server/entry-server.js')
-      ).then((mod) => mod.render);
+      );
+      render = module.render;
+
+      // If render is not a function, log the error and return a 500 response
+      if (typeof render !== 'function') {
+        console.error('Render is not a function:', render);
+        res.status(500).send('Server Error');
+        return;
+      }
+
       console.log(
         'Server.js',
         'Loaded template and SSR module in production mode',
         '',
         { templateLength: template.length },
       );
+
       let didError = false;
 
-      const onShellReady = (pipe) => {
-        console.log('Server.js', 'onShellReady called', '');
-        res.status(didError ? 500 : 200);
-        res.set({ 'Content-Type': 'text/html' });
+    const onShellReady = (pipe) => {
+      console.log('Server.js', 'onShellReady called', '');
+      res.status(didError ? 500 : 200);
+      res.set({ 'Content-Type': 'text/html' });
 
-        const transformStream = new Transform({
-          transform(chunk, encoding, callback) {
-            callback(null, chunk);
-          },
-        });
-
-        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(
-          initialData,
-        )}</script>`;
-
-        res.write(htmlStart + initialStateScript);
-
-        transformStream.on('finish', () => {
-          console.log('Server.js', 'HTML fully sent', '');
-          res.end(htmlEnd);
-        });
-
-        pipe(transformStream);
-      };
-
-      const onShellError = () => {
-        console.log('Server.js', 'onShellError called', '');
-        res.status(500);
-        res.set({ 'Content-Type': 'text/html' });
-        res.send('<h1>Something went wrong</h1>');
-      };
-
-      const onError = (error) => {
-        didError = true;
-        console.log('Server.js', 'Render error:', '', error);
-      };
-
-      const { pipe, abort } = render(
-        url,
-        ssrManifest,
-        onShellReady,
-        onShellError,
-        onError,
-        initialData,
-      );
-
-      const htmlStream = new Transform({
+      const transformStream = new Transform({
         transform(chunk, encoding, callback) {
           callback(null, chunk);
         },
       });
 
-      htmlStream.on('finish', () => {
-        console.log('Server.js', 'Server rendered HTML fully sent', '');
+      const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
+      const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(
+        initialData,
+      )}</script>`;
+
+      res.write(htmlStart + initialStateScript);
+
+      transformStream.on('finish', () => {
+        console.log('Server.js', 'HTML fully sent', '');
+        res.end(htmlEnd);
       });
 
-      pipe(htmlStream);
+      pipe(transformStream);
+    };
 
-      setTimeout(() => {
-        abort();
-      }, ABORT_DELAY);
-    } catch (e) {
-      console.log(e.stack);
-      res.status(500).end(e.stack);
-    }
+    const onShellError = () => {
+      console.log('Server.js', 'onShellError called', '');
+      res.status(500);
+      res.set({ 'Content-Type': 'text/html' });
+      res.send('<h1>Something went wrong</h1>');
+    };
+
+    const onError = (error) => {
+      didError = true;
+      console.log('Server.js', 'Render error:', '', error);
+    };
+
+    const { pipe, abort } = render(
+      url,
+      ssrManifest,
+      onShellReady,
+      onShellError,
+      onError,
+      initialData,
+    );
+
+    const htmlStream = new Transform({
+      transform(chunk, encoding, callback) {
+        callback(null, chunk);
+      },
+    });
+
+    htmlStream.on('finish', () => {
+      console.log('Server.js', 'Server rendered HTML fully sent', '');
+    });
+
+    pipe(htmlStream);
+
+    setTimeout(() => {
+      abort();
+    }, ABORT_DELAY);
+  } catch (e) {
+    console.log(e.stack);
+    res.status(500).end(e.stack);
+  }
   });
 
   // Start http server
