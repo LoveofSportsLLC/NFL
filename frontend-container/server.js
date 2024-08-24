@@ -43,6 +43,7 @@ console.log(
 );
 
 let templateHtml;
+let ssrManifest;
 
 async function startServer() {
   console.log('Server.js', 'Starting server...');
@@ -53,12 +54,13 @@ async function startServer() {
       path.resolve(rootPath, './dist/client/index.html'),
       'utf-8',
     );
-    const ssrManifest = JSON.parse(
+    ssrManifest = JSON.parse(
       await fs.promises.readFile(
         path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
         'utf-8',
       ),
     );
+    
     console.log('Server.js', 'Loaded template HTML and SSR manifest');
   } catch (err) {
     console.error('Error loading template HTML or SSR manifest:', err);
