@@ -226,7 +226,12 @@ async function startServer() {
 
       let didError = false;
 
+      // Ensure functions are defined and check their types
       const onShellReady = (pipe) => {
+        if (typeof pipe !== 'function') {
+          console.error('onShellReady: pipe is not a function');
+          return;
+        }
         console.log('Server.js', 'onShellReady called');
         res.status(didError ? 500 : 200);
         res.set({ 'Content-Type': 'text/html' });
@@ -265,10 +270,10 @@ async function startServer() {
       const { pipe, abort } = render(
         url,
         ssrManifest,
+        initialData,
         onShellReady,
         onShellError,
         onError,
-        initialData,
       );
 
       const htmlStream = new Transform({

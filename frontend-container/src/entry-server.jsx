@@ -18,7 +18,7 @@ export function render(
   url,
   ssrManifest,
   initialData,
-  onShellReady = () => {}, // Default to a no-op function if not provided
+  onShellReady = (pipe) => {}, // Default to a no-op function if not provided
   onShellError = (err) => {
     console.error('Shell Error:', err);
   }, // Log error by default
@@ -35,16 +35,20 @@ export function render(
       </StaticRouter>
     </HelmetProvider>,
     {
-      onShellReady(pipe) {
-        onShellReady(pipe);  // No need for type check since it’s guaranteed to be a function
-      },
-      onShellError(error) {
-        onShellError(error);  // No need for type check
-        abort();
-      },
-      onError(error) {
-        onError(error);  // No need for type check
-      },
+      onShellReady:
+        typeof onShellReady === 'function' ? onShellReady : () => {}, // Ensure it's a function
+      onShellError:
+        typeof onShellError === 'function'
+          ? onShellError
+          : (err) => {
+              console.error('Shell Error:', err);
+            }, // Ensure it's a function
+      onError:
+        typeof onError === 'function'
+          ? onError
+          : (err) => {
+              console.error('Render Error:', err);
+            }, // Ensure it's a function
     },
   );
 

@@ -197,7 +197,7 @@ export default defineConfig( async ( { command, mode } ) =>
       port: 3000,
       historyApiFallback: true,
       proxy: {
-        ...(command === 'serve' && { '/@vite': 'http://localhost:5173' }),
+        ...(command === 'serve' && { '/@vite': 'http://localhost:3000' }),
         '/api': {
           target: 'https://newsapi.org/v2',
           changeOrigin: true,

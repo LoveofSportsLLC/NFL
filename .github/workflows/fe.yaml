@@ -104,6 +104,7 @@ jobs:
           LOG_URL: ${{ secrets.LOG_URL }}
           DOCKER_ENV: true
           GIT_WORKFLOW: "1"
+          SOURCE_PATH: "/app"
         run: |
           az acr build --image fe:${{ env.IMAGE_TAG }} --registry ${{ secrets.AZURE_CONTAINER_REGISTRY }} -g ${{ secrets.ACR_RESOURCE_GROUP }} -f $DOCKERFILE frontend-container
  
