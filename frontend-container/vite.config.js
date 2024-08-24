@@ -172,7 +172,19 @@ export default defineConfig( async ( { command, mode } ) =>
 
   const ssrConfig = {
     target: 'node',
-    noExternal: !useCDN, // Allow external dependencies if not using CDN
+    noExternal: [
+      'apexcharts',
+      'chart.js',
+      'react-chartjs-2',
+      'google-map-react',
+      'jsvectormap',
+      'src/vendor/us_aea_en.js',
+      'src/vendor/world.js',
+      '@fullcalendar/bootstrap',
+      '@fullcalendar/daygrid',
+      '@fullcalendar/react',
+      '@fullcalendar/timegrid',
+    ],
     external: useCDN ? ['react', 'react-dom'] : [],
   };
 
