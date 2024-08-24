@@ -184,6 +184,7 @@ export default defineConfig( async ( { command, mode } ) =>
       '@fullcalendar/daygrid',
       '@fullcalendar/react',
       '@fullcalendar/timegrid',
+      'react-helmet-async',
     ],
     external: useCDN ? ['react', 'react-dom'] : [],
   };
