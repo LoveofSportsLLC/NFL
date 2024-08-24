@@ -275,6 +275,12 @@ async function startServer() {
         onShellError,
         onError,
       );
+      
+      if (typeof pipe !== 'function') {
+        console.error('Pipe is not a function');
+        res.status(500).send('Internal Server Error');
+        return;
+      }
 
       const htmlStream = new Transform({
         transform(chunk, encoding, callback) {

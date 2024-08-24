@@ -21,10 +21,10 @@ export function render(
   onShellReady = (pipe) => {}, // Default to a no-op function if not provided
   onShellError = (err) => {
     console.error('Shell Error:', err);
-  }, // Log error by default
+  },
   onError = (err) => {
     console.error('Render Error:', err);
-  }, // Log error by default
+  },
 ) {
   const helmetContext = {};
 
@@ -36,19 +36,17 @@ export function render(
     </HelmetProvider>,
     {
       onShellReady:
-        typeof onShellReady === 'function' ? onShellReady : () => {}, // Ensure it's a function
+        typeof onShellReady === 'function'
+          ? onShellReady
+          : () => console.error('Invalid onShellReady function'),
       onShellError:
         typeof onShellError === 'function'
           ? onShellError
-          : (err) => {
-              console.error('Shell Error:', err);
-            }, // Ensure it's a function
+          : (err) => console.error('Shell Error:', err),
       onError:
         typeof onError === 'function'
           ? onError
-          : (err) => {
-              console.error('Render Error:', err);
-            }, // Ensure it's a function
+          : (err) => console.error('Render Error:', err),
     },
   );
 
