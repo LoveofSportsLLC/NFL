@@ -14,9 +14,10 @@ const isProduction = process.env.NODE_ENV === 'production';
 const isInDocker = process.env.DOCKER_ENV === 'true';
 const port = process.env.PORT || 3000;
 const base = process.env.BASE || '/';
-console.log(base)
+console.log(base);
 const ABORT_DELAY = 10000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootPath = isInDocker ? '/app' : __dirname; // Use rootPath as determined by the environment
 const isSSR =
   typeof import.meta !== 'undefined' && import.meta.env
     ? import.meta.env.SSR
@@ -36,22 +37,22 @@ const sirvOptions = {
 async function startServer() {
   console.log('Server.js', 'Starting server...');
   // Load template HTML and SSR manifest
-    try {
-      const templateHtml = await fs.promises.readFile(
-        path.resolve(__dirname, './dist/client/index.html'),
+  try {
+    const templateHtml = await fs.promises.readFile(
+      path.resolve(rootPath, 'dist/client/index.html'), // Updated to use rootPath
+      'utf-8',
+    );
+    const ssrManifest = JSON.parse(
+      await fs.promises.readFile(
+        path.resolve(rootPath, 'dist/client/.vite/ssr-manifest.json'), // Updated to use rootPath
         'utf-8',
-      );
-      const ssrManifest = JSON.parse(
-        await fs.promises.readFile(
-          path.resolve(__dirname, './dist/client/.vite/ssr-manifest.json'),
-          'utf-8',
-        ),
-      );
-      console.log('Server.js', 'Loaded template HTML and SSR manifest');
-    } catch (err) {
-      console.error('Error loading template HTML or SSR manifest:', err);
-      return;
-    }
+      ),
+    );
+    console.log('Server.js', 'Loaded template HTML and SSR manifest');
+  } catch (err) {
+    console.error('Error loading template HTML or SSR manifest:', err);
+    return;
+  }
 
   const app = express();
   app.use(express.json({ limit: '50mb' }));
@@ -59,9 +60,10 @@ async function startServer() {
   app.use(compression());
 
   // Serve static files using sirv
-  app.use('/public', express.static(path.join(__dirname, 'public')));
+  app.use('/public', express.static(path.join(rootPath, 'public'))); // Updated to use rootPath
   app.use(
-    sirv('dist/client', {
+    sirv(path.join(rootPath, 'dist/client'), {
+      // Updated to use rootPath
       dev: !isProduction,
       maxAge: isProduction ? 31536000 : 0,
       immutable: isProduction,
@@ -142,7 +144,8 @@ async function startServer() {
 
   // ROUTE /NON API ROUTE
   app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/client/index.html'), (err) => {
+    res.sendFile(path.join(rootPath, 'dist/client/index.html'), (err) => {
+      // Updated to use rootPath
       if (err) {
         console.log('Server.js', 'Error sending index.html:', '', err);
         res.status(500).send('Server Error');
@@ -155,7 +158,7 @@ async function startServer() {
     const isApiRequest = req.path.startsWith('/api');
     if (!isApiRequest) {
       // Render application or serve index.html
-      res.sendFile(path.join(__dirname, 'dist/client/index.html'));
+      res.sendFile(path.join(rootPath, 'dist/client/index.html')); // Updated to use rootPath
     } else {
       res.status(404).send('API route not found'); // Handle API route not found
     }
@@ -163,7 +166,9 @@ async function startServer() {
       const url = req.originalUrl.replace(base, '');
       let initialData = {};
       template = templateHtml;
-      const { render } = await import('./dist/server/entry-server.js').render;
+      const { render } = await import(
+        path.join(rootPath, 'dist/server/entry-server.js')
+      ).render; // Updated to use rootPath
       console.log(
         'Server.js',
         'Loaded template and SSR module in production mode',
