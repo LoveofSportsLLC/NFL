@@ -175,7 +175,7 @@ async function startServer() {
     try {
       const url = req.originalUrl.replace(base, '');
       let initialData = {};
-      template = templateHtml;
+      const template = templateHtml; 
       const { render } = await import(
         path.resolve(rootPath, 'dist/server/entry-server.js')
       ).then((mod) => mod.render);
