@@ -26,7 +26,17 @@ const isLocal =
   isSSR &&
   (process.env.GIT_WORKFLOW === '0' || process.env.DOCKER_ENV === 'false');
 const isCluster = isSSR && process.env.GIT_WORKFLOW === '1';
+
+
 console.log('Server.js', 'Running Server.js script', '');
+console.log('Environment Info:', {
+  isProduction,
+  isInDocker,
+  isSSR,
+  isLocal,
+  isCluster,
+});
+
 const sirvOptions = {
   dev: !isProduction,
   etag: isProduction,
@@ -47,19 +57,25 @@ let ssrManifest;
 
 async function startServer() {
   console.log('Server.js', 'Starting server...');
+
   // Load template HTML and SSR manifest
   // Use rootPath when constructing paths for template HTML and SSR manifest
   try {
+    console.log('Server.js', 'Loading template HTML...');
     templateHtml = await fs.promises.readFile(
       path.resolve(rootPath, './dist/client/index.html'),
       'utf-8',
     );
+    console.log('Server.js', 'Template HTML loaded successfully');
+
+    console.log('Server.js', 'Loading SSR manifest...');
     ssrManifest = JSON.parse(
       await fs.promises.readFile(
         path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
         'utf-8',
       ),
     );
+    console.log('Server.js', 'SSR manifest loaded successfully');
 
     console.log('Server.js', 'Loaded template HTML and SSR manifest');
   } catch (err) {
@@ -71,9 +87,14 @@ async function startServer() {
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   app.use(compression());
+  console.log(
+    'Server.js',
+    'Express app configured with JSON, URL encoding, and compression',
+  );
 
   // Serve static files using sirv
   app.use('/public', express.static(path.join(rootPath, 'public'))); // Updated to use rootPath
+  console.log('Server.js', 'Public static files route set up');
   app.use(
     sirv(path.resolve(rootPath, 'dist/client'), {
       dev: !isProduction,
@@ -87,6 +108,7 @@ async function startServer() {
       },
     }),
   );
+  console.log('Server.js', 'Serving static files from dist/client');
 
   // Middleware for MIME type handling
   const setCorrectMimeType = (req, res) => {
@@ -97,11 +119,11 @@ async function startServer() {
       console.log(`Set MIME type for ${req.url} as ${mimeType}`);
     }
   };
-
   app.use((req, res, next) => {
     setCorrectMimeType(req, res);
     next();
   });
+  console.log('Server.js', 'MIME type middleware set up');
 
   // ROUTE LOGGER
   app.use((req, res, next) => {
@@ -153,6 +175,7 @@ async function startServer() {
       res.status(500).json({ error: 'Failed to fetch game data' });
     }
   });
+  console.log('Server.js', 'API routes set up');
 
   // ROUTE /NON API ROUTE
   app.get(/^(?!\/api).*/, (req, res) => {
@@ -164,6 +187,7 @@ async function startServer() {
       }
     });
   });
+  console.log('Server.js', 'Catch-all route for non-API requests set up');
 
   // Serve HTML in CATCHALL ROUTE
   app.use('*', async (req, res) => {
@@ -206,72 +230,72 @@ async function startServer() {
 
       let didError = false;
 
-    const onShellReady = (pipe) => {
-      console.log('Server.js', 'onShellReady called', '');
-      res.status(didError ? 500 : 200);
-      res.set({ 'Content-Type': 'text/html' });
+      const onShellReady = (pipe) => {
+        console.log('Server.js', 'onShellReady called', '');
+        res.status(didError ? 500 : 200);
+        res.set({ 'Content-Type': 'text/html' });
 
-      const transformStream = new Transform({
+        const transformStream = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk);
+          },
+        });
+
+        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
+        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(
+          initialData,
+        )}</script>`;
+
+        res.write(htmlStart + initialStateScript);
+
+        transformStream.on('finish', () => {
+          console.log('Server.js', 'HTML fully sent', '');
+          res.end(htmlEnd);
+        });
+
+        pipe(transformStream);
+      };
+
+      const onShellError = (err) => {
+        console.log('Server.js', 'onShellError called', err);
+        res.status(500);
+        res.set({ 'Content-Type': 'text/html' });
+        res.send('<h1>Something went wrong during SSR</h1>');
+      };
+
+      const onError = (error) => {
+        didError = true;
+        console.log('Server.js', 'Render error:', '', error);
+      };
+
+      const { pipe, abort } = render(
+        url,
+        ssrManifest,
+        onShellReady,
+        onShellError,
+        onError,
+        initialData,
+      );
+
+      const htmlStream = new Transform({
         transform(chunk, encoding, callback) {
           callback(null, chunk);
         },
       });
 
-      const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-      const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(
-        initialData,
-      )}</script>`;
-
-      res.write(htmlStart + initialStateScript);
-
-      transformStream.on('finish', () => {
-        console.log('Server.js', 'HTML fully sent', '');
-        res.end(htmlEnd);
+      htmlStream.on('finish', () => {
+        console.log('Server.js', 'Server rendered HTML fully sent', '');
       });
 
-      pipe(transformStream);
-    };
+      pipe(htmlStream);
 
-    const onShellError = () => {
-      console.log('Server.js', 'onShellError called', '');
-      res.status(500);
-      res.set({ 'Content-Type': 'text/html' });
-      res.send('<h1>Something went wrong</h1>');
-    };
-
-    const onError = (error) => {
-      didError = true;
-      console.log('Server.js', 'Render error:', '', error);
-    };
-
-    const { pipe, abort } = render(
-      url,
-      ssrManifest,
-      onShellReady,
-      onShellError,
-      onError,
-      initialData,
-    );
-
-    const htmlStream = new Transform({
-      transform(chunk, encoding, callback) {
-        callback(null, chunk);
-      },
-    });
-
-    htmlStream.on('finish', () => {
-      console.log('Server.js', 'Server rendered HTML fully sent', '');
-    });
-
-    pipe(htmlStream);
-
-    setTimeout(() => {
-      abort();
-    }, ABORT_DELAY);
-  } catch (e) {
-    console.log(e.stack);
-    res.status(500).end(e.stack);
-  }
+      setTimeout(() => {
+        abort();
+      }, ABORT_DELAY);
+    } catch (e) {
+      console.log('Server.js - Catch Error:', e.stack);
+      res.status(500).end(e.stack);
+    }
   });
 
   // Start http server

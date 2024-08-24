@@ -2,7 +2,6 @@ import path, { resolve } from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import cdn from 'vite-plugin-cdn-import';
-//import nodeExternals from 'rollup-plugin-node-externals';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import Inspect from 'vite-plugin-inspect';
 import svgrPlugin from 'vite-plugin-svgr';
