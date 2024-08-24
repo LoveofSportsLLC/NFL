@@ -33,18 +33,27 @@ const sirvOptions = {
   maxAge: isProduction ? 31536000 : 0, // 1 year in production, 0 in development
   immutable: isProduction,
 };
+console.log(
+  'Path to template HTML:',
+  path.resolve(rootPath, './dist/client/index.html'),
+);
+console.log(
+  'Path to SSR manifest:',
+  path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
+);
 
 async function startServer() {
   console.log('Server.js', 'Starting server...');
   // Load template HTML and SSR manifest
+  // Use rootPath when constructing paths for template HTML and SSR manifest
   try {
     const templateHtml = await fs.promises.readFile(
-      path.resolve(rootPath, 'dist/client/index.html'), // Updated to use rootPath
+      path.resolve(rootPath, './dist/client/index.html'),
       'utf-8',
     );
     const ssrManifest = JSON.parse(
       await fs.promises.readFile(
-        path.resolve(rootPath, 'dist/client/.vite/ssr-manifest.json'), // Updated to use rootPath
+        path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
         'utf-8',
       ),
     );
