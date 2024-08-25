@@ -50,12 +50,10 @@ console.log(
   path.resolve(rootPath, './dist/client/.vite/ssr-manifest.json'),
 );
 
-let templateHtml;
-let ssrManifest;
-
 async function startServer() {
   console.log('Server.js', 'Starting server...');
-
+  let ssrManifest;
+  let templateHtml;
   // Load template HTML and SSR manifest
   // Use rootPath when constructing paths for template HTML and SSR manifest
   try {
@@ -230,22 +228,24 @@ async function startServer() {
       const onShellReady = (pipe) => {
         if (typeof pipe !== 'function') {
           console.error('onShellReady: pipe is not a function');
+          res.status(500).send('Internal Server Error');
           return;
         }
         console.log('Server.js', 'onShellReady called');
         res.status(didError ? 500 : 200);
         res.set({ 'Content-Type': 'text/html' });
 
+        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
+        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
+
+        res.write(htmlStart + initialStateScript);
+
+        // Stream the HTML content and ensure finalization
         const transformStream = new Transform({
           transform(chunk, encoding, callback) {
             callback(null, chunk);
           },
         });
-
-        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
-
-        res.write(htmlStart + initialStateScript);
 
         transformStream.on('finish', () => {
           console.log('Server.js', 'HTML fully sent');
@@ -267,21 +267,19 @@ async function startServer() {
         console.error('Server.js', 'Render error:', error);
       };
 
-      const { pipe, abort } = render(
-        url,
-        ssrManifest,
-        initialData,
+      const { pipe, abort } = render(url, ssrManifest, initialData, {
         onShellReady,
         onShellError,
         onError,
-      );
-      
+      });
+
       if (typeof pipe !== 'function') {
         console.error('Pipe is not a function');
         res.status(500).send('Internal Server Error');
         return;
       }
 
+      // Stream the content
       const htmlStream = new Transform({
         transform(chunk, encoding, callback) {
           callback(null, chunk);

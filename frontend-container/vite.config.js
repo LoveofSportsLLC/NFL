@@ -111,7 +111,7 @@ export default defineConfig( async ( { command, mode } ) =>
 
   const build = {
     manifest: true,
-    sourcemap: true,
+    sourcemap: isProduction && !isSSR,
     minify: isProduction ? 'esbuild' : false,
     outDir: `${outputDir}/${isSSR ? 'server' : 'client'}`,
     cssCodeSplit: true,
@@ -121,9 +121,9 @@ export default defineConfig( async ( { command, mode } ) =>
     rollupOptions: {
       onwarn(warning, warn) {
         if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-          return
+          return;
         }
-        warn(warning)
+        warn(warning);
       },
       external: useCDN && !isSSR ? ['react', 'react-dom'] : [],
       input: {
