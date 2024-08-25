@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { Card, Col, Container, Row } from 'react-bootstrap';
 
@@ -7,6 +8,10 @@ const GridText = ({ children }) => (
     <Card.Body>{children}</Card.Body>
   </Card>
 );
+
+GridText.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 const Grid = () => {
   useHelmet('Grid');

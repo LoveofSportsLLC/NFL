@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Badge,
@@ -61,6 +62,16 @@ const Project = ({ name, state, color, percentage, description, image }) => (
   </Card>
 );
 
+// PropTypes validation for the Project component
+Project.propTypes = {
+  name: PropTypes.string.isRequired,
+  state: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  percentage: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
+  image: PropTypes.string, // Not required, since it can be undefined
+};
+
 const Projects = () => {
   const Helmet = useHelmet();
 
@@ -79,7 +90,7 @@ const Projects = () => {
               name="Landing page redesign"
               state="Finished"
               color="success"
-              percentage="100"
+              percentage={100}
               description="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."
             />
           </Col>
@@ -88,7 +99,7 @@ const Projects = () => {
               name="Company posters"
               state="In progress"
               color="warning"
-              percentage="75"
+              percentage={75}
               description="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa."
             />
           </Col>
@@ -97,7 +108,7 @@ const Projects = () => {
               name="Product page design"
               state="Finished"
               color="success"
-              percentage="100"
+              percentage={100}
               description="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."
             />
           </Col>
@@ -106,7 +117,7 @@ const Projects = () => {
               name="Upgrade CRM software"
               state="In progress"
               color="warning"
-              percentage="50"
+              percentage={50}
               description="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."
             />
           </Col>
@@ -116,7 +127,7 @@ const Projects = () => {
               name="Fix form validation"
               state="In progress"
               color="warning"
-              percentage="65"
+              percentage={65}
               description="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."
               image={unsplash1}
             />
@@ -126,7 +137,7 @@ const Projects = () => {
               name="New company logo"
               state="On hold"
               color="danger"
-              percentage="20"
+              percentage={20}
               description="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."
               image={unsplash2}
             />
@@ -136,7 +147,7 @@ const Projects = () => {
               name="Upgrade to latest Maps API"
               state="Finished"
               color="success"
-              percentage="100"
+              percentage={100}
               description="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."
               image={unsplash3}
             />
@@ -146,7 +157,7 @@ const Projects = () => {
               name="Refactor backend templates"
               state="On hold"
               color="danger"
-              percentage="0"
+              percentage={0}
               description="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa."
               image={unsplash1}
             />

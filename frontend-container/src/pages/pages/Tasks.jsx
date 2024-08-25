@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import dragula from 'react-dragula';
@@ -30,6 +31,13 @@ const Lane = ({ name, children, onContainerLoaded }) => {
   );
 };
 
+// PropTypes validation for Lane component
+Lane.propTypes = {
+  name: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  onContainerLoaded: PropTypes.func.isRequired,
+};
+
 const Task = ({ id, checked, text, avatar }) => (
   <Card className="mb-3 bg-light cursor-grab border">
     <Card.Body className="p-3">
@@ -43,7 +51,7 @@ const Task = ({ id, checked, text, avatar }) => (
       <p>{text}</p>
       <div className="float-end mt-n1">
         <img
-          src="/avatars/avatar.jpg"
+          src={avatar}
           width="32"
           height="32"
           className="rounded-circle"
@@ -56,6 +64,14 @@ const Task = ({ id, checked, text, avatar }) => (
     </Card.Body>
   </Card>
 );
+
+// PropTypes validation for Task component
+Task.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  checked: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
 
 const containers = [];
 

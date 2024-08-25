@@ -1,5 +1,6 @@
 // src/pages/landing/PlayerPerformance.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const PlayerPerformance = ({ playerPerformance }) => (
@@ -34,5 +35,15 @@ const PlayerPerformance = ({ playerPerformance }) => (
     </Container>
   </section>
 );
+
+PlayerPerformance.propTypes = {
+  playerPerformance: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      performanceDetails: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default PlayerPerformance;

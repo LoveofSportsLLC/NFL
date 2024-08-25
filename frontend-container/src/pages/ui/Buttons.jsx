@@ -387,7 +387,7 @@ const ButtonDropdowns = () => (
     </Card.Header>
     <Card.Body className="text-center">
       <div className="mb-3">
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <DropdownButton
             as={ButtonGroup}
             key={color.name}
@@ -405,7 +405,7 @@ const ButtonDropdowns = () => (
         ))}
       </div>
       <div className="mb-3">
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <DropdownButton
             as={ButtonGroup}
             key={color.name}
@@ -426,6 +426,7 @@ const ButtonDropdowns = () => (
     </Card.Body>
   </Card>
 );
+
 
 const ButtonGroups = () => (
   <Card>

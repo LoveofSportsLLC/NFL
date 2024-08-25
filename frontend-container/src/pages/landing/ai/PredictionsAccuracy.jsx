@@ -206,11 +206,11 @@ const PredictionsAccuracy = () => {
                         <Accordion.Body>
                           <small>
                             R2 Score, or R-squared, measures how well our
-                            model’s predictions fit the real data. A score of 1
-                            means a perfect fit, while 0 means no fit. An R2
-                            score of 0.9 indicates that the model explains 90%
-                            of the variability in the player scores, meaning
-                            it's very accurate.
+                            model&rsquo;s predictions fit the real data. A score
+                            of 1 means a perfect fit, while 0 means no fit. An
+                            R2 score of 0.9 indicates that the model explains
+                            90% of the variability in the player scores, meaning
+                            it&rsquo;s very accurate.
                           </small>
                         </Accordion.Body>
                       </Accordion.Item>
@@ -235,11 +235,12 @@ const PredictionsAccuracy = () => {
                         <Accordion.Body>
                           <small>
                             Spearman Correlation measures the strength and
-                            direction of the relationship between our model's
-                            predictions and the actual outcomes. A value closer
-                            to 1 indicates a strong positive relationship,
-                            meaning that as our model's predictions go up, the
-                            actual outcomes also tend to go up.
+                            direction of the relationship between our
+                            model&rsquo;s predictions and the actual outcomes. A
+                            value closer to 1 indicates a strong positive
+                            relationship, meaning that as our model&rsquo;s
+                            predictions go up, the actual outcomes also tend to
+                            go up.
                           </small>
                         </Accordion.Body>
                       </Accordion.Item>

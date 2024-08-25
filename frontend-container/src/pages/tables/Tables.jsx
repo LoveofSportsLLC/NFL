@@ -151,8 +151,8 @@ const CondensedTable = () => (
     <Card.Header>
       <Card.Title>Condensed Table</Card.Title>
       <h6 className="card-subtitle text-muted">
-        Add <code>size="sm"</code> to make tables more compact by cutting cell
-        padding in half.
+        Add <code>size=&quot;sm&quot;</code> to make tables more compact by
+        cutting cell padding in half.
       </h6>
     </Card.Header>
     <Table size="sm" striped>

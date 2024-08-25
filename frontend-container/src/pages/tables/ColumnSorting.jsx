@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { useTable, useSortBy } from 'react-table';
-
 import { Card, Container, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +9,6 @@ import {
   faSortUp,
   faSortDown,
 } from '@fortawesome/free-solid-svg-icons';
-
 import { tableData, tableColumns } from './data.js';
 
 const ColumnSortingTable = ({ columns, data }) => {
@@ -80,6 +79,18 @@ const ColumnSortingTable = ({ columns, data }) => {
       </Card.Body>
     </Card>
   );
+};
+
+// Add PropTypes validation
+ColumnSortingTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+        .isRequired,
+      accessor: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const ColumnSorting = () => {

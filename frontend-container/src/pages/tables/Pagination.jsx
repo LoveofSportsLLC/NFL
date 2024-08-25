@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { useTable, usePagination } from 'react-table';
-
 import {
   Card,
   Container,
@@ -11,7 +11,6 @@ import {
   Col,
   Form,
 } from 'react-bootstrap';
-
 import { tableData, tableColumns } from './data.js';
 
 const PaginationTable = ({ columns, data }) => {
@@ -63,13 +62,11 @@ const PaginationTable = ({ columns, data }) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()} key={rowIndex}>
-                  {row.cells.map((cell, cellIndex) => {
-                    return (
-                      <td {...cell.getCellProps()} key={cellIndex}>
-                        {cell.render('Cell')}
-                      </td>
-                    );
-                  })}
+                  {row.cells.map((cell, cellIndex) => (
+                    <td {...cell.getCellProps()} key={cellIndex}>
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
                 </tr>
               );
             })}
@@ -135,6 +132,18 @@ const PaginationTable = ({ columns, data }) => {
       </Card.Body>
     </Card>
   );
+};
+
+// Add PropTypes validation
+PaginationTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+        .isRequired,
+      accessor: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const PaginationPage = () => {

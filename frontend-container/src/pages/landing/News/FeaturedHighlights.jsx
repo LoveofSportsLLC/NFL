@@ -105,11 +105,11 @@ const FeaturedHighlights = () => {
 
   const getYoutubeVideoId = (url) => {
     const regExp =
-      /^.*((m\.)?youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      /^.*((m\.)?youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     return match && match[3].length === 11 ? match[3] : null;
   };
-
+  
   return (
     <Container className="featured-highlights py-5">
       <h2 className="text-center mb-4">Featured Highlights</h2>

@@ -122,15 +122,15 @@ const Badges = () => (
       <h6 className="card-subtitle text-muted">Examples for badges.</h6>
     </Card.Header>
     <Card.Body>
-      {colors.map((color, index) => (
-        <Badge key={index} bg={color.value} className="me-1 mb-1">
+      {colors.map((color) => (
+        <Badge key={color.value} bg={color.value} className="me-1 mb-1">
           {color.name}
         </Badge>
       ))}
       <div>
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <Badge
-            key={index}
+            key={color.value}
             bg={color.value}
             className="rounded-pill me-1 mb-1"
           >
@@ -274,7 +274,7 @@ const Popovers = () => (
       </h6>
     </Card.Header>
     <Card.Body className="text-center">
-      {directions.map((direction, index) => (
+      {directions.map((direction) => (
         <span className="me-1" key={direction.value}>
           <OverlayTrigger
             trigger="click"
@@ -345,7 +345,7 @@ const Tooltips = () => (
       </h6>
     </Card.Header>
     <Card.Body className="text-center">
-      {directions.map((direction, index) => (
+      {directions.map((direction) => (
         <span className="me-1" key={direction.value}>
           <OverlayTrigger
             placement={direction.value}
@@ -374,10 +374,10 @@ const Spinners = () => (
     <Card.Body>
       <div className="mb-2">
         <Spinner animation="border" variant="dark" className="me-2" />
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <Spinner
             animation="border"
-            key={index}
+            key={color.value}
             variant={color.value}
             className="me-2"
           />
@@ -386,10 +386,10 @@ const Spinners = () => (
 
       <div className="mb-2">
         <Spinner animation="border" variant="dark" size="sm" className="me-2" />
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <Spinner
             animation="border"
-            key={index}
+            key={color.value}
             variant={color.value}
             size="sm"
             className="me-2"
@@ -401,10 +401,10 @@ const Spinners = () => (
 
       <div className="mb-2">
         <Spinner animation="grow" variant="dark" type="grow" className="me-2" />
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <Spinner
             animation="grow"
-            key={index}
+            key={color.value}
             variant={color.value}
             type="grow"
             className="me-2"
@@ -420,10 +420,10 @@ const Spinners = () => (
           size="sm"
           className="me-2"
         />
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <Spinner
             animation="grow"
-            key={index}
+            key={color.value}
             variant={color.value}
             type="grow"
             size="sm"

@@ -24,8 +24,8 @@ const Pricing = () => {
           <Col md="10" xl="8" className="mx-auto">
             <h1 className="text-center">We have a plan for everyone</h1>
             <p className="lead text-center mb-4">
-              Whether you're a business or an individual, 14-day trial no credit
-              card required.
+              Whether you&apos;re a business or an individual, 14-day trial no
+              credit card required.
             </p>
 
             <Tab.Container id="pricing-tabs" activeKey={activeTab}>

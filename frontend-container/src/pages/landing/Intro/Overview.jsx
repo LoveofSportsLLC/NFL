@@ -1,5 +1,6 @@
 // src/pages/landing/Overview.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -54,5 +55,16 @@ const Overview = ({ overviewData, userEngagement }) => (
     </Container>
   </section>
 );
+
+Overview.propTypes = {
+  overviewData: PropTypes.shape({
+    totalMatches: PropTypes.number.isRequired,
+    totalPlayers: PropTypes.number.isRequired,
+    activeUsers: PropTypes.number.isRequired,
+  }).isRequired,
+  userEngagement: PropTypes.shape({
+    timeSpent: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default Overview;

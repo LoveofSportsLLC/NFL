@@ -13,7 +13,7 @@ const CoachProfile = () => {
       <Card.Body>
         <Card.Title>{coachName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">Overview</Card.Subtitle>
-        <Card.Text>Coach's bio and career summary.</Card.Text>
+        <Card.Text>Coach&rsquo;s bio and career summary.</Card.Text>
         <Card.Subtitle className="mb-2 text-muted">Statistics</Card.Subtitle>
         <ListGroup variant="flush">
           {statistics.map((stat, idx) => (

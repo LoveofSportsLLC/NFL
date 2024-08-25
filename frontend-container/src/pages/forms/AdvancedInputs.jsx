@@ -98,7 +98,7 @@ const InputMasks = () => (
             <InputMask mask="99/99/9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "DD/MM/YYYY"</span>
+            <span className="text-muted">e.g &quot;DD/MM/YYYY&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -106,15 +106,17 @@ const InputMasks = () => (
             <InputMask mask="99:99:9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "HH:MM:SS"</span>
+            <span className="text-muted">e.g &quot;HH:MM:SS&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Date & Hour</Form.Label>
+            <Form.Label>Date &amp; Hour</Form.Label>
             <InputMask mask="99/99/9999 99:99:99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "DD/MM/YYYY HH:MM:SS"</span>
+            <span className="text-muted">
+              e.g &quot;DD/MM/YYYY HH:MM:SS&quot;
+            </span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -122,7 +124,9 @@ const InputMasks = () => (
             <InputMask mask="99999-999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "DD/MM/YYYY HH:MM:SS"</span>
+            <span className="text-muted">
+              e.g &quot;DD/MM/YYYY HH:MM:SS&quot;
+            </span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -130,7 +134,7 @@ const InputMasks = () => (
             <InputMask mask="9-99-99-99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "x-xx-xx-xx"</span>
+            <span className="text-muted">e.g &quot;x-xx-xx-xx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -138,7 +142,7 @@ const InputMasks = () => (
             <InputMask mask="999.999.999.999.999,99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "Your money"</span>
+            <span className="text-muted">e.g &quot;Your money&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -146,7 +150,7 @@ const InputMasks = () => (
             <InputMask mask="9.999,99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "x.xxx,xx"</span>
+            <span className="text-muted">e.g &quot;x.xxx,xx&quot;</span>
           </Form.Group>
         </Col>
         <Col lg="6">
@@ -155,7 +159,7 @@ const InputMasks = () => (
             <InputMask mask="9999-9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "xxxx-xxxx"</span>
+            <span className="text-muted">e.g &quot;xxxx-xxxx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -163,7 +167,7 @@ const InputMasks = () => (
             <InputMask mask="(99) 9999-9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "(xx) xxxx-xxxx"</span>
+            <span className="text-muted">e.g &quot;(xx) xxxx-xxxx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -171,7 +175,7 @@ const InputMasks = () => (
             <InputMask mask="(999) 999-9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "(xxx) xxx-xxxx"</span>
+            <span className="text-muted">e.g &quot;(xxx) xxx-xxxx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -179,7 +183,7 @@ const InputMasks = () => (
             <InputMask mask="(99) 99999-9999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "(xx) xxxxx-xxxx"</span>
+            <span className="text-muted">e.g &quot;(xx) xxxxx-xxxx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -187,7 +191,7 @@ const InputMasks = () => (
             <InputMask mask="999.999.999-99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "xxx.xxx.xxxx-xx"</span>
+            <span className="text-muted">e.g &quot;xxx.xxx.xxx-xx&quot;</span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -195,7 +199,9 @@ const InputMasks = () => (
             <InputMask mask="99.999.999/9999-99">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "xx.xxx.xxx/xxxx-xx"</span>
+            <span className="text-muted">
+              e.g &quot;xx.xxx.xxx/xxxx-xx&quot;
+            </span>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -203,7 +209,7 @@ const InputMasks = () => (
             <InputMask mask="999.999.999.999">
               {(inputProps) => <Form.Control {...inputProps} type="text" />}
             </InputMask>
-            <span className="text-muted">e.g "xxx.xxx.xxx.xxx"</span>
+            <span className="text-muted">e.g &quot;xxx.xxx.xxx.xxx&quot;</span>
           </Form.Group>
         </Col>
       </Row>

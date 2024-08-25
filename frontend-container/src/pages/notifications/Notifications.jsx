@@ -10,8 +10,6 @@ const Notifications = () => {
   const notyf = useContext(NotyfContext);
   const { getTokenSilently } = useAuth0();
 
-  const [notifications, setNotifications] = useState([]);
-
   const [message, setMessage] = useState('');
   const [type, setType] = useState('default');
   const [duration, setDuration] = useState('2500');
@@ -23,13 +21,15 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       const token = await getTokenSilently();
-      fetch('/api/notifications', {
+      await fetch('/api/notifications', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((response) => response.json())
-        .then((data) => setNotifications(data));
+      });
+      // .then((response) => response.json())
+      // .then((data) => {
+      //   // You can use the data here if needed
+      // });
     };
 
     fetchNotifications();

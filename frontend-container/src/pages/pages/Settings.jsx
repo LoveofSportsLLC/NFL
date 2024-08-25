@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   Button,
@@ -13,6 +14,20 @@ import {
 } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+
+// Assuming you have these components in the same file or they are imported from other files
+// If these components are in different files, make sure to import them at the top of this file
+import WidgetsSettings from './WidgetsSettings';
+import YourDataSettings from './YourDataSettings';
+import DeleteAccount from './DeleteAccount';
+import LeaguePreferences from './LeaguePreferences';
+import DashboardCustomization from './DashboardCustomization';
+import PlayerTracking from './PlayerTracking';
+import IntegrationSettings from './IntegrationSettings';
+import SecuritySettings from './SecuritySettings';
+import SocialSharingOptions from './SocialSharingOptions';
+import AccessibilitySettings from './AccessibilitySettings';
+import SubscriptionAndBilling from './SubscriptionAndBilling';
 
 // Navigation Component to switch between settings
 const Navigation = ({ setActiveSection }) => (
@@ -55,6 +70,11 @@ const Navigation = ({ setActiveSection }) => (
     </ListGroup>
   </Card>
 );
+
+// PropTypes validation for Navigation component
+Navigation.propTypes = {
+  setActiveSection: PropTypes.func.isRequired,
+};
 
 // Form Component for Public Info
 const PublicInfo = ({ userData, setUserData }) => {
@@ -116,6 +136,15 @@ const PublicInfo = ({ userData, setUserData }) => {
   );
 };
 
+// PropTypes validation for PublicInfo component
+PublicInfo.propTypes = {
+  userData: PropTypes.shape({
+    username: PropTypes.string,
+    bio: PropTypes.string,
+  }).isRequired,
+  setUserData: PropTypes.func.isRequired,
+};
+
 // Form Component for Private Info
 const PrivateInfo = ({ userData }) => (
   <Card>
@@ -140,6 +169,13 @@ const PrivateInfo = ({ userData }) => (
   </Card>
 );
 
+// PropTypes validation for PrivateInfo component
+PrivateInfo.propTypes = {
+  userData: PropTypes.shape({
+    email: PropTypes.string,
+  }).isRequired,
+};
+
 // Example of Password Settings
 const PasswordSettings = ({ isSocialLogin }) => (
   <Card>
@@ -149,7 +185,7 @@ const PasswordSettings = ({ isSocialLogin }) => (
         <div>
           <p>
             You are logged in using a social account. To change your password,
-            please visit the respective service's website.
+            please visit the respective service&#39;s website.
           </p>
           <Button variant="primary" href="https://accounts.google.com/">
             Change Password on Google
@@ -192,6 +228,11 @@ const PasswordSettings = ({ isSocialLogin }) => (
   </Card>
 );
 
+// PropTypes validation for PasswordSettings component
+PasswordSettings.propTypes = {
+  isSocialLogin: PropTypes.bool.isRequired,
+};
+
 // Email Notifications Settings
 const NotificationSettings = ({ type }) => {
   const [enabled, setEnabled] = useState(false);
@@ -218,66 +259,9 @@ const NotificationSettings = ({ type }) => {
   );
 };
 
-// Widget Settings Example
-const WidgetsSettings = () => (
-  <Card>
-    <Card.Header>Widgets</Card.Header>
-    <Card.Body>
-      <p>Select your preferred widgets for the dashboard:</p>
-      <Form.Check type="checkbox" label="Weather Widget" />
-      <Form.Check type="checkbox" label="News Feed Widget" />
-      <Form.Check type="checkbox" label="Calendar Widget" />
-      <Button variant="primary" type="submit">
-        Save Widget Settings
-      </Button>
-    </Card.Body>
-  </Card>
-);
-
-// Data Management
-const YourDataSettings = () => (
-  <Card>
-    <Card.Header>Your Data</Card.Header>
-    <Card.Body>
-      <Button
-        variant="primary"
-        onClick={() =>
-          console.log('Settings.jsx', 'YourDataSettings', 'User data requested')
-        }
-      >
-        Download My Data
-      </Button>
-    </Card.Body>
-  </Card>
-);
-
-// Account Deletion
-const DeleteAccount = () => {
-  const handleDelete = () => {
-    if (
-      window.confirm(
-        'Are you sure you want to delete your account permanently?',
-      )
-    ) {
-      console.log(
-        'Settings.jsx',
-        'DeleteAccount',
-        'Account deletion process started.',
-      );
-      // Implement deletion logic here
-    }
-  };
-
-  return (
-    <Card>
-      <Card.Header>Delete Account</Card.Header>
-      <Card.Body>
-        <Button variant="danger" onClick={handleDelete}>
-          Delete My Account
-        </Button>
-      </Card.Body>
-    </Card>
-  );
+// PropTypes validation for NotificationSettings component
+NotificationSettings.propTypes = {
+  type: PropTypes.string.isRequired,
 };
 
 // Main Settings Component
@@ -362,6 +346,20 @@ const Settings = () => {
       </Row>
     </Container>
   );
+};
+
+// Ensure the components used in the conditional rendering are defined or imported correctly
+
+Settings.propTypes = {
+  userData: PropTypes.shape({
+    username: PropTypes.string,
+    bio: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  setActiveSection: PropTypes.func.isRequired,
+  setUserData: PropTypes.func.isRequired,
+  isSocialLogin: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default Settings;

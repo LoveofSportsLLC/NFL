@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
 

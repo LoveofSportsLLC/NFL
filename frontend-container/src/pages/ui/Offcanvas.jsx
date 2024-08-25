@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import { Card, Col, Container, Row, Offcanvas, Button } from 'react-bootstrap';
 
@@ -60,6 +61,10 @@ const OffcanvasPlacementSingle = ({ name, ...props }) => {
   );
 };
 
+OffcanvasPlacementSingle.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 const OffcanvasPlacement = () => (
   <Card>
     <Card.Header>
@@ -103,6 +108,10 @@ const OffcanvasBackdropSingle = ({ name, ...props }) => {
       </Offcanvas>
     </>
   );
+};
+
+OffcanvasBackdropSingle.propTypes = {
+  name: PropTypes.string.isRequired,
 };
 
 const options = [

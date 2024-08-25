@@ -15,7 +15,7 @@ const CardWithImageAndLinks = () => (
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        of the card&apos;s content.
       </Card.Text>
       <Card.Link href="#">Card link</Card.Link>
       <Card.Link href="#">Another link</Card.Link>
@@ -32,7 +32,7 @@ const CardWithImageAndButton = () => (
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        of the card&apos;s content.
       </Card.Text>
       <Button href="#" variant="primary">
         Go somewhere
@@ -63,7 +63,7 @@ const CardWithLinks = () => (
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        of the card&apos;s content.
       </Card.Text>
       <Card.Link href="#">Card link</Card.Link>
       <Card.Link href="#">Another link</Card.Link>
@@ -79,7 +79,7 @@ const CardWithButton = () => (
     <Card.Body>
       <Card.Text>
         Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        of the card&apos;s content.
       </Card.Text>
       <Button href="#" variant="primary">
         Go somewhere

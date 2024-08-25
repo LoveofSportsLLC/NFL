@@ -1,5 +1,6 @@
 // src/pages/landing/MatchAnalysis.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const MatchAnalysis = ({ matchAnalysis }) => (
@@ -34,5 +35,15 @@ const MatchAnalysis = ({ matchAnalysis }) => (
     </Container>
   </section>
 );
+
+MatchAnalysis.propTypes = {
+  matchAnalysis: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      details: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
 
 export default MatchAnalysis;

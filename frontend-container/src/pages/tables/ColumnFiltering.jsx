@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
 import {
   useTable,
@@ -13,6 +14,11 @@ import { tableData } from './data.js';
 const FilterWrapper = ({ shouldRender, children }) => {
   if (!shouldRender) return null;
   return children;
+};
+
+FilterWrapper.propTypes = {
+  shouldRender: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 function NumberRangeColumnFilter({
@@ -36,7 +42,7 @@ function NumberRangeColumnFilter({
           type="number"
           onChange={(e) => {
             const val = e.target.value;
-            setFilter((old = []) => [
+            setFilter([
               val !== '' ? parseInt(val, 10) : undefined,
               filterValue[1],
             ]);
@@ -52,7 +58,7 @@ function NumberRangeColumnFilter({
           type="number"
           onChange={(e) => {
             const val = e.target.value;
-            setFilter((old = []) => [
+            setFilter([
               filterValue[0],
               val !== '' ? parseInt(val, 10) : undefined,
             ]);
@@ -66,6 +72,19 @@ function NumberRangeColumnFilter({
     </FilterWrapper>
   );
 }
+
+NumberRangeColumnFilter.propTypes = {
+  column: PropTypes.shape({
+    filterValue: PropTypes.array,
+    preFilteredRows: PropTypes.arrayOf(
+      PropTypes.shape({
+        values: PropTypes.object.isRequired,
+      }),
+    ).isRequired,
+    setFilter: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
@@ -91,28 +110,34 @@ function SelectColumnFilter({
   );
 }
 
+SelectColumnFilter.propTypes = {
+  column: PropTypes.shape({
+    filterValue: PropTypes.any,
+    preFilteredRows: PropTypes.arrayOf(
+      PropTypes.shape({
+        values: PropTypes.object.isRequired,
+      }),
+    ).isRequired,
+    setFilter: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
 function DefaultColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
-  const [selectedOptions, setSelectedOptions] = React.useState([]);
-
   const uniqueValues = new Set();
   preFilteredRows.forEach((row) => {
     uniqueValues.add(row.values[id]);
   });
   const options = [...uniqueValues.values()];
 
-  const handleSelectChange = (e) => {
-    setSelectedOptions(e.target.value);
-    setFilter(selectedOptions);
-  };
-
   return (
     <FilterWrapper shouldRender={true}>
       <Form.Control
         as="select"
-        value={selectedOptions}
-        onChange={handleSelectChange}
+        value={filterValue || ''}
+        onChange={(e) => setFilter(e.target.value || undefined)}
         multiple
       >
         <option value="">All</option>
@@ -125,6 +150,19 @@ function DefaultColumnFilter({
     </FilterWrapper>
   );
 }
+
+DefaultColumnFilter.propTypes = {
+  column: PropTypes.shape({
+    filterValue: PropTypes.any,
+    preFilteredRows: PropTypes.arrayOf(
+      PropTypes.shape({
+        values: PropTypes.object.isRequired,
+      }),
+    ).isRequired,
+    setFilter: PropTypes.func.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const ColumnFilteringTable = ({ columns, data }) => {
   const filterTypes = {
@@ -158,7 +196,7 @@ const ColumnFilteringTable = ({ columns, data }) => {
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize, filters },
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
@@ -269,6 +307,18 @@ const ColumnFilteringTable = ({ columns, data }) => {
       </Card.Body>
     </Card>
   );
+};
+
+ColumnFilteringTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.string.isRequired,
+      accessor: PropTypes.string.isRequired,
+      Filter: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+      filter: PropTypes.string,
+    }),
+  ).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const tableColumns = [

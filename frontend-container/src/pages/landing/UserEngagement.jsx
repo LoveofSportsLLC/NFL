@@ -1,5 +1,6 @@
 // src/pages/landing/UserEngagement.jsx
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
 const UserEngagement = ({ userEngagement }) => (
@@ -34,5 +35,14 @@ const UserEngagement = ({ userEngagement }) => (
     </Container>
   </section>
 );
+
+UserEngagement.propTypes = {
+  userEngagement: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    activeUsers: PropTypes.number.isRequired,
+    frequencyOfUsage: PropTypes.string.isRequired,
+    timeSpent: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default UserEngagement;
