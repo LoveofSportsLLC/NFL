@@ -1,3 +1,4 @@
+// src/pages/auth/Page500.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -17,8 +18,8 @@ const Page500 = () => {
         <h1 className="display-1 fw-bold">500</h1>
         <p className="h2">Internal server error.</p>
         <p className="lead fw-normal mt-3 mb-4">
-          The server encountered something unexpected that didn't allow it to
-          complete the request.
+          The server encountered something unexpected that didn&rsquo;t allow it
+          to complete the request.
         </p>
         <Link to="/dashboard/default">
           <Button variant="primary" size="lg">

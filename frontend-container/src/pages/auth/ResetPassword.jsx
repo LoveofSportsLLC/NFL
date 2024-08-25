@@ -1,3 +1,4 @@
+// src/pages/auth/ResetPassword.jsx
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -27,7 +28,7 @@ const ResetPasswordPage = () => {
         </Card.Body>
       </Card>
       <div className="text-center mb-3">
-        Don't have an account? <Link to="/auth/sign-up">Sign up</Link>
+        Don&rsquo;t have an account? <Link to="/auth/sign-up">Sign up</Link>
       </div>
     </React.Fragment>
   );

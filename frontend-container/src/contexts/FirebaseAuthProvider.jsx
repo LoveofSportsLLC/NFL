@@ -1,10 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
-
+import PropTypes from 'prop-types'; // Import PropTypes
 import AuthContext from './FirebaseAuthContext';
-
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../config';
-
 import {
   GoogleAuthProvider,
   FacebookAuthProvider,
@@ -82,11 +80,8 @@ function AuthProvider({ children }) {
     await signInWithPopup(auth, provider);
   };
 
-  const signUp = async (email, password, firstName, lastName) => {
-    await createUserWithEmailAndPassword(auth, email, password).then((res) => {
-      // You can choose to store additional info to a seperate Firestore collection here,
-      // like the firstName or lastName
-    });
+  const signUp = async (email, password) => {
+    await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const _signOut = async () => {
@@ -124,5 +119,9 @@ function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node, // Declare the type for children
+};
 
 export default AuthProvider;

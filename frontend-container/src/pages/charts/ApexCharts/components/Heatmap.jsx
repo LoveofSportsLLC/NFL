@@ -4,7 +4,7 @@ import usePalette from '../../../../hooks/usePalette';
 import Chart from 'react-apexcharts';
 
 const HeatmapChart = () => {
-  const palette = usePalette();
+  const palette = usePalette(); // Use palette to access color scheme
 
   const generateData = (count, yrange) => {
     let series = [];
@@ -27,7 +27,7 @@ const HeatmapChart = () => {
 
   const options = {
     dataLabels: { enabled: false },
-    colors: ['#008FFB'],
+    colors: palette || ['#008FFB'], // Use palette colors if available, otherwise default
     xaxis: { type: 'category' },
   };
 

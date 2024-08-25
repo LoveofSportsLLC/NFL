@@ -1,7 +1,7 @@
-// Import necessary dependencies from @auth0/auth0-react
 import React, { useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { useAuth0 } from '@auth0/auth0-react';
-import { domain, clientId, audience } from '../config';
+// Remove import for unused config: { domain, clientId, audience }
 
 // Define action types
 const INITIALIZE = 'INITIALIZE';
@@ -41,7 +41,7 @@ function AuthProvider({ children }) {
     isAuthenticated,
     user,
     isLoading,
-    error,
+    // Remove unused variable: error
     getAccessTokenSilently,
     loginWithRedirect,
     logout,
@@ -59,7 +59,6 @@ function AuthProvider({ children }) {
   }, [isLoading, isAuthenticated, user]);
 
   // Context value that will be provided to the rest of the application
-  // Directly use the state and functions from useAuth0 and the local reducer
   const authContextValue = {
     ...state,
     getAccessTokenSilently,
@@ -67,8 +66,6 @@ function AuthProvider({ children }) {
     logout,
   };
 
-  // Since AuthContext is no longer used, we directly return the children wrapped with the necessary context values
-  // This could be a React Context if needed, or simply pass down props to children components
   return (
     <>
       {React.Children.map(children, (child) => {
@@ -80,5 +77,9 @@ function AuthProvider({ children }) {
     </>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node, // Define the type for children
+};
 
 export default AuthProvider;

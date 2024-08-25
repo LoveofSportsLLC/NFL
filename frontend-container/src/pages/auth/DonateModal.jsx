@@ -1,6 +1,6 @@
-// DonateModal.js
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import PropTypes from 'prop-types'; // Import PropTypes
 import Donate from '../../components/auth/Donate';
 
 function DonateModal({ show, onHide }) {
@@ -15,5 +15,10 @@ function DonateModal({ show, onHide }) {
     </Modal>
   );
 }
+
+DonateModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+};
 
 export default DonateModal;

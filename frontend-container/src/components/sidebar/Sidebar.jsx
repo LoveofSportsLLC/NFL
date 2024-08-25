@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import useSidebar from '../../hooks/useSidebar';
@@ -19,7 +20,7 @@ const Sidebar = ({ items, showFooter = true }) => {
             </div>
             <div className="brand-text">
               <span className="align-middle me-3">
-                "For the Love of Sports"
+                &quot;For the Love of Sports&quot;
               </span>
             </div>
           </a>
@@ -29,6 +30,11 @@ const Sidebar = ({ items, showFooter = true }) => {
       </div>
     </nav>
   );
+};
+
+Sidebar.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object).isRequired, // Validate that `items` is an array of objects
+  showFooter: PropTypes.bool, // Validate that `showFooter` is a boolean
 };
 
 export default Sidebar;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { Outlet } from 'react-router-dom';
 
 import { Col, Container, Row } from 'react-bootstrap';
@@ -23,5 +24,9 @@ const Auth = ({ children }) => (
     <Settings />
   </React.Fragment>
 );
+
+Auth.propTypes = {
+  children: PropTypes.node, // Define the type for children
+};
 
 export default Auth;

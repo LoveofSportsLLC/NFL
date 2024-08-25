@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { forwardRef } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { NavLink } from 'react-router-dom';
 import { Badge, Collapse } from 'react-bootstrap';
 
@@ -8,6 +8,7 @@ const CustomRouterLink = forwardRef((props, ref) => (
     <NavLink {...props} />
   </React.Fragment>
 ));
+CustomRouterLink.displayName = 'CustomRouterLink'; // Add display name
 
 const SidebarNavListItem = (props) => {
   const {
@@ -35,15 +36,14 @@ const SidebarNavListItem = (props) => {
   if (children) {
     return (
       <li className={`sidebar-item ${open ? 'active' : ''}`}>
-        <a
+        <button
+          type="button"
           className={`sidebar-link ${open ? '' : 'collapsed'}`}
           data-bs-toggle="collapse"
           aria-expanded={open ? 'true' : 'false'}
-          role="button"
-          tabIndex="0"
           onClick={handleToggle}
           onKeyDown={handleKeyDown}
-          data-depth={depth} // Changed to data-depth
+          data-depth={depth}
         >
           {Icon && <Icon className="feather align-middle" />}{' '}
           <span className="align-middle" data-depth={depth}>
@@ -54,7 +54,7 @@ const SidebarNavListItem = (props) => {
               {badge}
             </Badge>
           )}
-        </a>
+        </button>
         <Collapse in={open}>
           <ul className="sidebar-dropdown list-unstyled">{children}</ul>
         </Collapse>
@@ -65,7 +65,7 @@ const SidebarNavListItem = (props) => {
   return (
     <li className="sidebar-item">
       <CustomRouterLink
-        data-depth={depth} // Changed to data-depth
+        data-depth={depth}
         to={href}
         activeclassname="active"
         className="sidebar-link"
@@ -82,6 +82,16 @@ const SidebarNavListItem = (props) => {
       </CustomRouterLink>
     </li>
   );
+};
+
+SidebarNavListItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+  depth: PropTypes.number,
+  children: PropTypes.node,
+  icon: PropTypes.elementType, // Expecting a component type
+  badge: PropTypes.node,
+  open: PropTypes.bool,
 };
 
 export default SidebarNavListItem;

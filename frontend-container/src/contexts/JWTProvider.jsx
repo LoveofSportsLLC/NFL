@@ -1,5 +1,6 @@
-//NFL/frontend-container/src/contexts/JWTProvider.jsx
+// src/contexts/JWTProvider.jsx
 import React, { useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import AuthContext from './JWTContext';
@@ -155,5 +156,9 @@ function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node, // Declare the type for children
+};
 
 export default AuthProvider;

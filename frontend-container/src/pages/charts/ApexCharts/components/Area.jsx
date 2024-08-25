@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import usePalette from '../../../../hooks/usePalette';
 import ReactApexChart from 'react-apexcharts';
 
@@ -54,6 +54,17 @@ const AreaChart = () => {
             />
           </Suspense>
         </div>
+        <Button
+          variant="primary"
+          onClick={() =>
+            setSeries([
+              { name: 'series1', data: [0, 15, 25, 20, 60, 20, 120] },
+              { name: 'series2', data: [20, 10, 30, 40, 50, 80, 70] },
+            ])
+          }
+        >
+          Update Data
+        </Button>
       </Card.Body>
     </Card>
   );

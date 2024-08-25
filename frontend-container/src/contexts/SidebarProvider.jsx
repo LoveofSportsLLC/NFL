@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { SIDEBAR_POSITION, SIDEBAR_BEHAVIOR } from '../constants';
 import useSettingsState from '../hooks/useSettingsState';
 import SidebarContext from './SidebarContext';
@@ -31,5 +32,9 @@ function SidebarProvider({ children }) {
     </SidebarContext.Provider>
   );
 }
+
+SidebarProvider.propTypes = {
+  children: PropTypes.node, // Declare the type for children
+};
 
 export default SidebarProvider;

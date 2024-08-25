@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react';
+import React, { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import WrappedApp from './App.jsx';

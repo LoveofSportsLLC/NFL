@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 import { Outlet } from 'react-router-dom';
 
 import Wrapper from '../components/Wrapper';
@@ -30,5 +31,9 @@ const Dashboard = ({ children }) => (
     <Settings />
   </React.Fragment>
 );
+
+Dashboard.propTypes = {
+  children: PropTypes.node, // Declare the type for children
+};
 
 export default Dashboard;
