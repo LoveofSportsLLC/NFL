@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
 import { Alert, Button } from 'react-bootstrap';
-
 import { Sliders, BookOpen } from 'react-feather';
-
 import {
   SIDEBAR_POSITION,
   SIDEBAR_BEHAVIOR,
@@ -17,59 +14,26 @@ import useSidebar from '../hooks/useSidebar';
 import useLayout from '../hooks/useLayout';
 
 const themeOptions = [
-  {
-    name: 'Default',
-    value: THEME.DEFAULT,
-  },
-  {
-    name: 'Colored',
-    value: THEME.COLORED,
-  },
-  {
-    name: 'Dark',
-    value: THEME.DARK,
-  },
-  {
-    name: 'Light',
-    value: THEME.LIGHT,
-  },
+  { name: 'Default', value: THEME.DEFAULT },
+  { name: 'Colored', value: THEME.COLORED },
+  { name: 'Dark', value: THEME.DARK },
+  { name: 'Light', value: THEME.LIGHT },
 ];
 
 const sidebarPositionOptions = [
-  {
-    name: 'Left',
-    value: SIDEBAR_POSITION.LEFT,
-  },
-  {
-    name: 'Right',
-    value: SIDEBAR_POSITION.RIGHT,
-  },
+  { name: 'Left', value: SIDEBAR_POSITION.LEFT },
+  { name: 'Right', value: SIDEBAR_POSITION.RIGHT },
 ];
 
 const sidebarBehaviorOptions = [
-  {
-    name: 'Sticky',
-    value: SIDEBAR_BEHAVIOR.STICKY,
-  },
-  {
-    name: 'Fixed',
-    value: SIDEBAR_BEHAVIOR.FIXED,
-  },
-  {
-    name: 'Compact',
-    value: SIDEBAR_BEHAVIOR.COMPACT,
-  },
+  { name: 'Sticky', value: SIDEBAR_BEHAVIOR.STICKY },
+  { name: 'Fixed', value: SIDEBAR_BEHAVIOR.FIXED },
+  { name: 'Compact', value: SIDEBAR_BEHAVIOR.COMPACT },
 ];
 
 const layoutOptions = [
-  {
-    name: 'Fluid',
-    value: LAYOUT.FLUID,
-  },
-  {
-    name: 'Boxed',
-    value: LAYOUT.BOXED,
-  },
+  { name: 'Fluid', value: LAYOUT.FLUID },
+  { name: 'Boxed', value: LAYOUT.BOXED },
 ];
 
 function useQuery() {
@@ -79,14 +43,11 @@ function useQuery() {
 const Settings = () => {
   const query = useQuery();
   const [isOpen, setIsOpen] = useState(false);
-
   const { theme, setTheme } = useTheme();
   const { position, setPosition, behavior, setBehavior } = useSidebar();
   const { layout, setLayout } = useLayout();
 
-  const innerRef = useOuterClick(() => {
-    setIsOpen(false);
-  });
+  const innerRef = useOuterClick(() => setIsOpen(false));
 
   const setSettingByQueryParam = (name, set) => {
     const value = query.get(name);
@@ -161,20 +122,20 @@ const Settings = () => {
                 The perfect color mode for your app.
               </span>
               <div className="row g-0 text-center mx-n1 mb-2">
-                {layoutOptions.map(({ name, value }) => (
+                {themeOptions.map(({ name, value }) => (
                   <label
                     className="me-1"
                     key={value}
-                    htmlFor={`layout-${value}`}
+                    htmlFor={`theme-${value}`}
                   >
                     <input
                       className="settings-button-label"
                       type="radio"
-                      id={`layout-${value}`}
-                      name="layout"
+                      id={`theme-${value}`}
+                      name="theme"
                       value={value}
-                      checked={layout === value}
-                      onChange={() => setLayout(value)}
+                      checked={theme === value}
+                      onChange={() => setTheme(value)}
                     />
                     <div className="settings-button">{name}</div>
                   </label>

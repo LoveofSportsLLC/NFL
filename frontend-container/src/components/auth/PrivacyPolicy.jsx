@@ -61,12 +61,12 @@ const PrivacyPolicy = () => {
         information, including any data received via Google APIs.
       </p>
 
-      <h2>Compliance with Google's User Data Policy</h2>
+      <h2>Compliance with Google&rsquo;s User Data Policy</h2>
       <p>
-        We adhere to Google's API Services User Data Policy in our handling of
-        any data obtained from Google services. This includes transparent use,
-        secure storage, and limited access in line with the permissions you have
-        granted.
+        We adhere to Google&rsquo;s API Services User Data Policy in our
+        handling of any data obtained from Google services. This includes
+        transparent use, secure storage, and limited access in line with the
+        permissions you have granted.
       </p>
 
       <h2>Changes to the Privacy Policy</h2>

@@ -1,8 +1,8 @@
-//NFL/frontend-container/src/contexts/AuthGuard.jsx
+// src/contexts/AuthGuard.jsx
 import * as React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-
 
 // For routes that can only be accessed by authenticated users
 function AuthGuard({ children }) {
@@ -22,5 +22,9 @@ function AuthGuard({ children }) {
 
   return <React.Fragment>{children}</React.Fragment>;
 }
+
+AuthGuard.propTypes = {
+  children: PropTypes.node.isRequired, // Define the type for children
+};
 
 export default AuthGuard;

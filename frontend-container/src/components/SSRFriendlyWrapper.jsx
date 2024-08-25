@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 
 const SSRFriendlyWrapper = ({ children, onClientLoad }) => {
   const [isClient, setIsClient] = useState(false);
@@ -26,6 +27,11 @@ const SSRFriendlyWrapper = ({ children, onClientLoad }) => {
   }
 
   return <>{children}</>;
+};
+
+SSRFriendlyWrapper.propTypes = {
+  children: PropTypes.node, // Define the type for children
+  onClientLoad: PropTypes.func, // Define the type for onClientLoad
 };
 
 export default SSRFriendlyWrapper;

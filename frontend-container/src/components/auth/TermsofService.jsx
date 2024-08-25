@@ -42,8 +42,8 @@ const TermsofService = () => {
         All content on LoveOfFootball.io, including text, graphics, logos, and
         images, is the property of LoveOfFootball.io or its content suppliers
         and protected by intellectual property laws. The use of Google services
-        within our platform must also respect Google's intellectual property
-        rights.
+        within our platform must also respect Google&rsquo;s intellectual
+        property rights.
       </p>
 
       <h2>Termination and Suspension</h2>
@@ -55,17 +55,17 @@ const TermsofService = () => {
 
       <h2>Disclaimers and Limitations of Liability</h2>
       <p>
-        LoveOfFootball.io is provided on an "as is" and "as available" basis. We
-        disclaim all warranties of any kind, whether express or implied. We will
-        not be liable for any damages arising from the use of our service or any
-        integrated Google services.
+        LoveOfFootball.io is provided on an &quot;as is&quot; and &quot;as
+        available&quot; basis. We disclaim all warranties of any kind, whether
+        express or implied. We will not be liable for any damages arising from
+        the use of our service or any integrated Google services.
       </p>
 
       <h2>Governing Law</h2>
       <p>
         These terms are governed by the laws of the jurisdiction where
         LoveOfFootball.io is headquartered, and any disputes involving Google
-        services will also be subject to Google's terms and conditions.
+        services will also be subject to Google&rsquo;s terms and conditions.
       </p>
 
       <h2>Changes to Terms</h2>

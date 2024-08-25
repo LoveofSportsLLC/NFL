@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 
 const TeamOption = ({ teamName, onSelect, logoPath }) => {
   const handleKeyDown = (event) => {
@@ -19,6 +20,12 @@ const TeamOption = ({ teamName, onSelect, logoPath }) => {
       <span>{teamName}</span>
     </div>
   );
+};
+
+TeamOption.propTypes = {
+  teamName: PropTypes.string.isRequired, // Ensure teamName is a string
+  onSelect: PropTypes.func.isRequired, // Ensure onSelect is a function
+  logoPath: PropTypes.string.isRequired, // Ensure logoPath is a string (for the image source)
 };
 
 export default TeamOption;

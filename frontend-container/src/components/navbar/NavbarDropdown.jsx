@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { Dropdown, ListGroup } from 'react-bootstrap';
 
 const NavbarDropdown = ({
@@ -29,5 +29,14 @@ const NavbarDropdown = ({
     </Dropdown.Menu>
   </Dropdown>
 );
+
+NavbarDropdown.propTypes = {
+  children: PropTypes.node, // Validate that `children` is a renderable node
+  count: PropTypes.number, // Ensure `count` is a number
+  showBadge: PropTypes.bool, // Ensure `showBadge` is a boolean
+  header: PropTypes.node, // Validate that `header` is a renderable node
+  footer: PropTypes.node, // Validate that `footer` is a renderable node
+  icon: PropTypes.elementType.isRequired, // Ensure `icon` is a component, required
+};
 
 export default NavbarDropdown;
