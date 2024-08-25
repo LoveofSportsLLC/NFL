@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import WrappedApp from './App.jsx';
-import { StaticRouter } from 'react-router-dom/server.js';
+import { StaticRouter } from 'react-router-dom/server';
 import { HelmetProvider } from './utils/HelmetLoader';
 
 /**
@@ -12,81 +12,48 @@ import { HelmetProvider } from './utils/HelmetLoader';
  * @param {object} options - Options for the renderToPipeableStream function.
  * @returns {object} An object containing the pipe and abort methods.
  */
-
-
 export function render(url, ssrManifest, initialData, options = {}) {
   const helmetContext = {};
 
-  // Type and value checks with logging
-  if (typeof url !== 'string' || !url) {
-    console.error('Render Error: Invalid or missing URL:', url);
-    throw new Error('Invalid URL passed to render function.');
+  // Basic validation and logging
+  if (!url || typeof url !== 'string') {
+    throw new Error(`Invalid URL passed to render function: ${url}`);
   }
 
-  if (typeof ssrManifest !== 'object' || ssrManifest === null) {
-    console.error(
-      'Render Error: Invalid or missing SSR Manifest:',
-      ssrManifest,
+  if (!ssrManifest || typeof ssrManifest !== 'object') {
+    throw new Error(
+      `Invalid SSR Manifest passed to render function: ${ssrManifest}`,
     );
-    throw new Error('Invalid SSR Manifest passed to render function.');
   }
 
-  if (typeof initialData !== 'object' || initialData === null) {
-    console.error(
-      'Render Error: Invalid or missing Initial Data:',
-      initialData,
+  if (!initialData || typeof initialData !== 'object') {
+    throw new Error(
+      `Invalid Initial Data passed to render function: ${initialData}`,
     );
-    throw new Error('Invalid Initial Data passed to render function.');
   }
 
-  if (typeof options !== 'object' || options === null) {
-    console.error('Render Error: Invalid or missing Options:', options);
-    throw new Error('Invalid Options passed to render function.');
+  if (!options || typeof options !== 'object') {
+    throw new Error(`Invalid Options passed to render function: ${options}`);
   }
 
-  // Log detailed information about the options object
-  console.log(
-    'Options received in render function:',
-    JSON.stringify(options, null, 2),
-  );
-
-  // Check if required callbacks are present in options
   const { onShellReady, onShellError, onError } = options;
 
   if (typeof onShellReady !== 'function') {
-    console.error(
-      'Render Error: onShellReady is not a function:',
-      onShellReady,
-    );
-    throw new Error('Invalid onShellReady function passed to render function.');
+    throw new Error('onShellReady must be a function.');
   }
 
   if (typeof onShellError !== 'function') {
-    console.error(
-      'Render Error: onShellError is not a function:',
-      onShellError,
-    );
-    throw new Error('Invalid onShellError function passed to render function.');
+    throw new Error('onShellError must be a function.');
   }
 
   if (typeof onError !== 'function') {
-    console.error('Render Error: onError is not a function:', onError);
-    throw new Error('Invalid onError function passed to render function.');
+    throw new Error('onError must be a function.');
   }
 
-  console.log('Entry-Server: Render Function Called');
-  console.log('Entry-Server: URL:', url);
-  console.log(
-    'Entry-Server: SSR Manifest:',
-    JSON.stringify(ssrManifest).slice(0, 250),
-  );
-  console.log(
-    'Entry-Server: Initial Data:',
-    JSON.stringify(initialData).slice(0, 250),
-  );
-  console.log('Entry-Server: Options:', JSON.stringify(options).slice(0, 250));
+  console.log('Rendering URL:', url);
+  console.log('Initial Data:', JSON.stringify(initialData).slice(0, 250));
+  console.log('Options:', JSON.stringify(options).slice(0, 250));
 
-  // Proceed with rendering after checks
   try {
     const { pipe, abort } = renderToPipeableStream(
       <HelmetProvider context={helmetContext}>
@@ -95,25 +62,29 @@ export function render(url, ssrManifest, initialData, options = {}) {
         </StaticRouter>
       </HelmetProvider>,
       {
-        onShellReady: options.onShellReady,
-        onShellError: options.onShellError,
-        onError: options.onError,
+        onShellReady() {
+          console.log('Shell ready, starting to stream.');
+          onShellReady(pipe);
+        },
+        onShellError(err) {
+          console.error('Error during shell rendering:', err);
+          onShellError(err);
+        },
+        onError(err) {
+          console.error('Error during streaming:', err);
+          onError(err);
+        },
       },
     );
 
     if (typeof pipe !== 'function') {
-      throw new Error('pipe is not a function');
+      throw new Error('Expected pipe to be a function.');
     }
 
-    // Log success
-    console.log('Render Function: renderToPipeableStream called successfully.');
-
+    console.log('Render function executed successfully.');
     return { pipe, abort };
   } catch (error) {
-    console.error(
-      'Render Function: Error during renderToPipeableStream:',
-      error,
-    );
+    console.error('Error during SSR render:', error);
     throw error;
   }
 }

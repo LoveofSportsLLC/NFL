@@ -79,26 +79,35 @@ async function startServer() {
     return;
   }
 
+  // Initialize Express app
   const app = express();
+
+  // Middleware for JSON and URL-encoded payloads
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+  // Middleware for compression
+  const compression = (await import('compression')).default;
   app.use(compression());
+
+  // Serve static files from the public directory
+  app.use(express.static(path.join(rootPath, 'public')));
   console.log(
     'Server.js',
     'Express app configured with JSON, URL encoding, and compression',
   );
 
-  // Serve static files using express.static
-  app.use(express.static(path.join(rootPath, 'public')));
+  // Import and configure sirv to serve static files
+  const sirv = (await import('sirv')).default;
   console.log('Server.js', 'Serving static files from public directory');
 
   // Serve static files from dist/client using sirv
   app.use(
     sirv(path.resolve(rootPath, 'dist/client'), {
       dev: !isProduction,
-      maxAge: isProduction ? 31536000 : 0,
-      immutable: isProduction,
-      etag: isProduction,
+      maxAge: isProduction ? 31536000 : 0, // Cache for 1 year in production
+      immutable: isProduction, // Cache-control header: immutable
+      etag: isProduction, // Use ETag header for cache validation
       setHeaders: (res, pathname) => {
         if (pathname.endsWith('.js')) {
           res.setHeader('Content-Type', 'application/javascript');
@@ -189,25 +198,25 @@ async function startServer() {
 
   // Serve HTML in CATCHALL ROUTE
   app.use('*', async (req, res) => {
-    const isApiRequest = req.path.startsWith('/api');
-    if (!isApiRequest) {
-      // Render application or serve index.html
-      res.sendFile(path.resolve(rootPath, 'dist/client/index.html')); // Updated to use rootPath
-    } else {
-      res.status(404).send('API route not found'); // Handle API route not found
-    }
     try {
+      const isApiRequest = req.path.startsWith('/api');
+      if (isApiRequest) {
+        res.status(404).send('API route not found');
+        return;
+      }
+
       const url = req.originalUrl.replace(base, '');
 
-      let template = templateHtml;
-      let render;
-      const initialData = {};
-
-      // Dynamically import the render function from the server-side entry point
-      const module = await import(
-        path.resolve(rootPath, 'dist/server/entry-server.js')
+      // Use rootPath to resolve the path to entry-server.js
+      const entryServerPath = path.resolve(
+        rootPath,
+        'dist/server/entry-server.js',
       );
-      render = module.render;
+      const render = ( await import( entryServerPath ) ).render;
+
+      let template = templateHtml; // Using preloaded templateHtml
+
+      const initialData = {};
 
       // If render is not a function, log the error and return a 500 response
       if (typeof render !== 'function') {
@@ -224,80 +233,52 @@ async function startServer() {
 
       let didError = false;
 
-      // Ensure functions are defined and check their types
-      const onShellReady = (pipe) => {
-        if (typeof pipe !== 'function') {
-          console.error('onShellReady: pipe is not a function');
-          res.status(500).send('Internal Server Error');
-          return;
-        }
-        console.log('Server.js', 'onShellReady called');
-        res.status(didError ? 500 : 200);
-        res.set({ 'Content-Type': 'text/html' });
-
-        const [htmlStart, htmlEnd] = template.split(`<!--app-html-->`);
-        const initialStateScript = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
-
-        res.write(htmlStart + initialStateScript);
-
-        // Stream the HTML content and ensure finalization
-        const transformStream = new Transform({
-          transform(chunk, encoding, callback) {
-            callback(null, chunk);
-          },
-        });
-
-        transformStream.on('finish', () => {
-          console.log('Server.js', 'HTML fully sent');
-          res.end(htmlEnd);
-        });
-
-        pipe(transformStream);
-      };
-
-      const onShellError = (err) => {
-        console.log('Server.js', 'onShellError called', err);
-        res.status(500);
-        res.set({ 'Content-Type': 'text/html' });
-        res.send('<h1>Something went wrong during SSR</h1>');
-      };
-
-      const onError = (error) => {
-        didError = true;
-        console.error('Server.js', 'Render error:', error);
-      };
-
       const { pipe, abort } = render(url, ssrManifest, initialData, {
-        onShellReady,
-        onShellError,
-        onError,
-      });
+        onShellError() {
+          res.status(500);
+          res.set({ 'Content-Type': 'text/html' });
+          res.send('<h1>Something went wrong during SSR</h1>');
+        },
+        onShellReady() {
+          res.status(didError ? 500 : 200);
+          res.set({ 'Content-Type': 'text/html' });
+          if (typeof pipe !== 'function') {
+            console.error('onShellReady: pipe is not a function');
+            res.status(500).send('Internal Server Error');
+            return;
+          }
 
-      if (typeof pipe !== 'function') {
-        console.error('Pipe is not a function');
-        res.status(500).send('Internal Server Error');
-        return;
-      }
+          const transformStream = new Transform({
+            transform(chunk, encoding, callback) {
+              res.write(chink, encoding);
+              callback();
+            },
+          });
 
-      // Stream the content
-      const htmlStream = new Transform({
-        transform(chunk, encoding, callback) {
-          callback(null, chunk);
+          const [htmlStart, htmlEnd] = template.split('<!--app-html-->');
+
+          res.write(htmlStart);
+
+          transformStream.on('finish', () => {
+            res.end(htmlEnd);
+          });
+
+          pipe(transformStream);
+        },
+        onError(error) {
+          didError = true;
+          console.error(error);
         },
       });
-
-      htmlStream.on('finish', () => {
-        console.log('Server.js', 'Server rendered HTML fully sent');
-      });
-
-      pipe(htmlStream);
 
       setTimeout(() => {
         abort();
       }, ABORT_DELAY);
-    } catch (e) {
-      console.log('Server.js - Catch Error:', e.stack);
-      res.status(500).end(e.stack);
+    } catch (error) {
+      console.error('Server.js - Catch Error:', error.stack);
+      if (!res.headersSent) {
+        res.status(500).end('Internal Server Error');
+      }
     }
   });
 

@@ -15,15 +15,6 @@ const FilterWrapper = ({ shouldRender, children }) => {
   return children;
 };
 
-/**
- * A custom filter component for number range filtering.
- * @param {Object} props - The component props.
- * @param {Array} props.filterValue - The current filter value.
- * @param {Array} props.preFilteredRows - The rows before filtering.
- * @param {Function} props.setFilter - The function to set the filter value.
- * @param {String} props.id - The unique identifier for the column.
- * @returns {JSX.Element} - The NumberRangeColumnFilter component.
- */
 function NumberRangeColumnFilter({
   column: { filterValue = [], preFilteredRows, setFilter, id },
 }) {
@@ -76,15 +67,6 @@ function NumberRangeColumnFilter({
   );
 }
 
-/**
- * A custom filter component for selecting options.
- * @param {Object} props - The component props.
- * @param {Array} props.filterValue - The current filter value.
- * @param {Array} props.preFilteredRows - The rows before filtering.
- * @param {Function} props.setFilter - The function to set the filter value.
- * @param {String} props.id - The unique identifier for the column.
- * @returns {JSX.Element} - The SelectColumnFilter component.
- */
 function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
@@ -99,8 +81,8 @@ function SelectColumnFilter({
         }}
       >
         <option value="">All</option>
-        {options.map((option) => (
-          <option key={option} value={option}>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
             {option}
           </option>
         ))}
@@ -109,15 +91,6 @@ function SelectColumnFilter({
   );
 }
 
-/**
- * A custom filter component for default filtering.
- * @param {Object} props - The component props.
- * @param {Array} props.filterValue - The current filter value.
- * @param {Array} props.preFilteredRows - The rows before filtering.
- * @param {Function} props.setFilter - The function to set the filter value.
- * @param {String} props.id - The unique identifier for the column.
- * @returns {JSX.Element} - The DefaultColumnFilter component.
- */
 function DefaultColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
 }) {
@@ -153,13 +126,6 @@ function DefaultColumnFilter({
   );
 }
 
-/**
- * A custom table component with column filtering, sorting, and pagination.
- * @param {Object} props - The component props.
- * @param {Array} props.columns - The table columns.
- * @param {Array} props.data - The table data.
- * @returns {JSX.Element} - The ColumnFilteringTable component.
- */
 const ColumnFilteringTable = ({ columns, data }) => {
   const filterTypes = {
     text: (rows, id, filterValue) => {
@@ -217,10 +183,13 @@ const ColumnFilteringTable = ({ columns, data }) => {
       <Card.Body>
         <Table striped bordered {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+            {headerGroups.map((headerGroup, headerGroupIndex) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                {headerGroup.headers.map((column, columnIndex) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    key={columnIndex}
+                  >
                     {column.render('Header')}
                     {column.canFilter ? column.render('Filter') : null}
                   </th>
@@ -229,13 +198,15 @@ const ColumnFilteringTable = ({ columns, data }) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row, rowIndex) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
+                <tr {...row.getRowProps()} key={rowIndex}>
+                  {row.cells.map((cell, cellIndex) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td {...cell.getCellProps()} key={cellIndex}>
+                        {cell.render('Cell')}
+                      </td>
                     );
                   })}
                 </tr>

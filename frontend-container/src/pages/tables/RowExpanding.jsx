@@ -44,7 +44,7 @@ const RowSelectionTable = ({ columns, data }) => {
               </div>
             ),
             // The cell can use the individual row's getToggleRowSelectedProps method
-            // to the render a checkbox
+            // to render a checkbox
             Cell: ({ row }) => (
               <div>
                 <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
@@ -67,10 +67,10 @@ const RowSelectionTable = ({ columns, data }) => {
       <Card.Body>
         <Table striped bordered {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+            {headerGroups.map((headerGroup, headerGroupIndex) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                {headerGroup.headers.map((column, columnIndex) => (
+                  <th {...column.getHeaderProps()} key={columnIndex}>
                     {column.render('Header')}
                   </th>
                 ))}
@@ -78,13 +78,15 @@ const RowSelectionTable = ({ columns, data }) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row, rowIndex) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
+                <tr {...row.getRowProps()} key={rowIndex}>
+                  {row.cells.map((cell, cellIndex) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      <td {...cell.getCellProps()} key={cellIndex}>
+                        {cell.render('Cell')}
+                      </td>
                     );
                   })}
                 </tr>
