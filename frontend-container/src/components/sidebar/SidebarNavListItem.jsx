@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { forwardRef } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import { Badge, Collapse } from 'react-bootstrap';
 
 const CustomRouterLink = forwardRef((props, ref) => (
@@ -27,6 +26,12 @@ const SidebarNavListItem = (props) => {
     setOpen((state) => !state);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleToggle();
+    }
+  };
+
   if (children) {
     return (
       <li className={`sidebar-item ${open ? 'active' : ''}`}>
@@ -34,11 +39,14 @@ const SidebarNavListItem = (props) => {
           className={`sidebar-link ${open ? '' : 'collapsed'}`}
           data-bs-toggle="collapse"
           aria-expanded={open ? 'true' : 'false'}
-          depth={depth}
+          role="button"
+          tabIndex="0"
           onClick={handleToggle}
+          onKeyDown={handleKeyDown}
+          data-depth={depth} // Changed to data-depth
         >
           {Icon && <Icon className="feather align-middle" />}{' '}
-          <span className="align-middle" depth={depth}>
+          <span className="align-middle" data-depth={depth}>
             {title}
           </span>
           {badge && (
@@ -57,13 +65,13 @@ const SidebarNavListItem = (props) => {
   return (
     <li className="sidebar-item">
       <CustomRouterLink
-        depth={depth}
+        data-depth={depth} // Changed to data-depth
         to={href}
         activeclassname="active"
         className="sidebar-link"
       >
         {Icon && <Icon className="feather align-middle" />}{' '}
-        <span className="align-middle" depth={depth}>
+        <span className="align-middle" data-depth={depth}>
           {title}
         </span>
         {badge && (

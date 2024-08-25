@@ -20,43 +20,16 @@ import NavbarDropdownItem from './NavbarDropdownItem';
 import NavbarLanguages from './NavbarLanguages';
 import NavbarUser from './NavbarUser';
 
-const initialMessages = [
-  {
-    name: 'Ashley Briggs',
-    avatar: '/avatars/avatar-5.jpg',
-    description: 'Nam pretium turpis et arcu. Duis arcu tortor.',
-    time: '15m ago',
-  },
-  {
-    name: 'Chris Wood',
-    avatar: '/avatars/avatar.jpg',
-    description: 'Curabitur ligula sapien euismod vitae.',
-    time: '2h ago',
-  },
-  {
-    name: 'Stacie Hall',
-    avatar: '/avatars/avatar-4.jpg',
-    description: 'Pellentesque auctor neque nec urna.',
-    time: '4h ago',
-  },
-  {
-    name: 'Bertha Martin',
-    avatar: '/avatars/avatar-3.jpg',
-    description: 'Aenean tellus metus, bibendum sed, posuere ac, mattis non.',
-    time: '5h ago',
-  },
-];
-
 const NavbarComponent = () => {
   const { t } = useTranslation();
   const { isOpen, setIsOpen } = useSidebar();
-  const { getAccessTokenSilently, loginWithRedirect } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
   const [notifications, setNotifications] = useState([]);
   const [inboxMessages, setInboxMessages] = useState([]);
 
   const getToken = useCallback(async () => {
     try {
-      let token = sessionStorage.getItem('authToken'); // Changed to sessionStorage for better security
+      let token = sessionStorage.getItem('authToken');
       if (!token) {
         token = await getAccessTokenSilently({
           authorizationParams: {
@@ -64,15 +37,11 @@ const NavbarComponent = () => {
             scope: 'openid profile email',
           },
         });
-        sessionStorage.setItem('authToken', token); // Changed to sessionStorage
+        sessionStorage.setItem('authToken', token);
       }
       return token;
     } catch (e) {
-      if (e.error === 'consent_required') {
-        //loginWithRedirect(); // Automatically redirect for consent
-      } else {
-        console.error('Error obtaining access token:', e);
-      }
+      console.error('Error obtaining access token:', e);
       return null;
     }
   }, [getAccessTokenSilently]);
@@ -104,13 +73,22 @@ const NavbarComponent = () => {
     fetchData();
   }, [getToken]);
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      setIsOpen(!isOpen);
+    }
+  };
+
   return (
     <Navbar variant="light" expand className="navbar-bg">
       <span
         className="sidebar-toggle d-flex"
+        role="button"
+        tabIndex="0"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
+        onKeyDown={handleKeyDown}
       >
         <i className="hamburger align-self-center" />
       </span>

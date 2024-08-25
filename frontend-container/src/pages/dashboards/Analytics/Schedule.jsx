@@ -18,7 +18,7 @@ function GamesSchedule(props) {
       <header className="header">NFL Games Schedule</header>
       <section>
         <div
-          css={{
+          style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))',
             gap: '20px',

@@ -1,5 +1,5 @@
 //NFL/frontend-container/src/contexts/JWTProvider.jsx
-import { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import AuthContext from './JWTContext';

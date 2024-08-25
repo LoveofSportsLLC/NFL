@@ -115,10 +115,18 @@ const Settings = () => {
         <div
           className="settings-toggle-option settings-toggle-option-text js-settings-toggle"
           title="Theme Builder"
+          role="button"
+          tabIndex="0"
           onClick={() => setIsOpen(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              setIsOpen(true);
+            }
+          }}
         >
           <Sliders className="feather align-middle" /> Builder
         </div>
+
         <a
           className="settings-toggle-option"
           title="Documentation"
@@ -153,25 +161,23 @@ const Settings = () => {
                 The perfect color mode for your app.
               </span>
               <div className="row g-0 text-center mx-n1 mb-2">
-                {themeOptions.map(({ name, value }) => (
-                  <div className="col-6" key={value}>
-                    <label className="mx-1 d-block mb-1">
-                      <input
-                        className="settings-scheme-label"
-                        type="radio"
-                        name="theme"
-                        value={value}
-                        checked={theme === value}
-                        onChange={() => setTheme(value)}
-                      />
-                      <div className="settings-scheme">
-                        <div
-                          className={`settings-scheme-theme settings-scheme-theme-${value}`}
-                        ></div>
-                      </div>
-                    </label>
-                    {name}
-                  </div>
+                {layoutOptions.map(({ name, value }) => (
+                  <label
+                    className="me-1"
+                    key={value}
+                    htmlFor={`layout-${value}`}
+                  >
+                    <input
+                      className="settings-button-label"
+                      type="radio"
+                      id={`layout-${value}`}
+                      name="layout"
+                      value={value}
+                      checked={layout === value}
+                      onChange={() => setLayout(value)}
+                    />
+                    <div className="settings-button">{name}</div>
+                  </label>
                 ))}
               </div>
             </div>

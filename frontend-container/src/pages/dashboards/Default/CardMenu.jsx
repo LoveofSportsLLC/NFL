@@ -12,11 +12,21 @@ function CardMenu() {
   // Function to toggle the menu visibility
   const toggleMenu = () => setMenuVisible(!isMenuVisible);
 
+  // Function to handle key presses for accessibility
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      toggleMenu();
+    }
+  };
+
   return (
     <div className="relative w-300 h-400 bg-gray-800 text-white rounded-lg shadow-md">
       <div
         className={`${cardBaseStyle} left-2.5 cursor-pointer`}
         onClick={toggleMenu}
+        role="button"
+        tabIndex="0"
+        onKeyDown={handleKeyDown}
       >
         <svg
           width="24"
