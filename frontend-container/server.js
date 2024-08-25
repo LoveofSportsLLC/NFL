@@ -33,14 +33,8 @@ console.log('Environment Info:', {
   isSSR,
   isLocal,
   isCluster,
-});
+} );
 
-const sirvOptions = {
-  dev: !isProduction,
-  etag: isProduction,
-  maxAge: isProduction ? 31536000 : 0, // 1 year in production, 0 in development
-  immutable: isProduction,
-};
 console.log(
   'Path to template HTML:',
   path.resolve(rootPath, './dist/client/index.html'),
@@ -87,7 +81,6 @@ async function startServer() {
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
   // Middleware for compression
-  const compression = (await import('compression')).default;
   app.use(compression());
 
   // Serve static files from the public directory
@@ -98,7 +91,6 @@ async function startServer() {
   );
 
   // Import and configure sirv to serve static files
-  const sirv = (await import('sirv')).default;
   console.log('Server.js', 'Serving static files from public directory');
 
   // Serve static files from dist/client using sirv
@@ -250,7 +242,7 @@ async function startServer() {
 
           const transformStream = new Transform({
             transform(chunk, encoding, callback) {
-              res.write(chink, encoding);
+              res.write(chunk, encoding);
               callback();
             },
           });

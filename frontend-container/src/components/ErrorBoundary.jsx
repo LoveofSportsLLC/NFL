@@ -1,5 +1,5 @@
-//NFL/frontend-container/src/components/ErrorBoundary.jsx
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ class ErrorBoundary extends Component {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
@@ -23,5 +23,9 @@ class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired, // Define the type for children
+};
 
 export default ErrorBoundary;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { Form } from 'react-bootstrap';
 import { TEAMS } from '../constants';
 
@@ -37,5 +38,12 @@ const FilterComponent = ({ filter, team, onFilterChange, onTeamChange }) => (
     </Form.Group>
   </div>
 );
+
+FilterComponent.propTypes = {
+  filter: PropTypes.string.isRequired, // Ensure `filter` is a string and required
+  team: PropTypes.string.isRequired, // Ensure `team` is a string and required
+  onFilterChange: PropTypes.func.isRequired, // Ensure `onFilterChange` is a function and required
+  onTeamChange: PropTypes.func.isRequired, // Ensure `onTeamChange` is a function and required
+};
 
 export default FilterComponent;

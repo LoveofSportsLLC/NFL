@@ -14,7 +14,7 @@ import LayoutProvider from './contexts/LayoutProvider';
 import ChartJsDefaults from './utils/ChartJsDefaults';
 import ErrorBoundary from './components/ErrorBoundary';
 import 'custom-event-polyfill';
-import useHelmet, { Helmet } from './utils/HelmetLoader'; // Import Helmet directly
+import useHelmet from './utils/HelmetLoader'; // Import Helmet directly
 import { Auth0Provider } from '@auth0/auth0-react';
 import {
   domain,

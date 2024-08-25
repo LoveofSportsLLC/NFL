@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 
@@ -17,6 +18,10 @@ const Code = ({ children }) => {
       {children}
     </SyntaxHighlighter>
   );
+};
+
+Code.propTypes = {
+  children: PropTypes.node.isRequired, // Define the type for children
 };
 
 export default Code;

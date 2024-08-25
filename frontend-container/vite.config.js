@@ -1,7 +1,7 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import cdn from 'vite-plugin-cdn-import';
+// import cdn from 'vite-plugin-cdn-import';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import Inspect from 'vite-plugin-inspect';
 import svgrPlugin from 'vite-plugin-svgr';
@@ -60,8 +60,8 @@ export default defineConfig( async ( { command, mode } ) =>
   const eslintConfig = await import( './eslint.config.js' );
 
   // Determine whether to use CDN for React/ReactDOM based on an environment variable or configuration
-  const useCDN = process.env.USE_CDN === 'true';
-  console.log( 'Using CDN for React and ReactDOM:', useCDN );
+  // const useCDN = process.env.USE_CDN === 'true';
+  // console.log( 'Using CDN for React and ReactDOM:', useCDN );
 
   console.log( 'Configuration:', {
     command,
@@ -75,27 +75,27 @@ export default defineConfig( async ( { command, mode } ) =>
   const plugins = [
     //nodeExternals(),
     react(),
-    !isSSR && useCDN
-      ? cdn({
-          modules: [
-            {
-              name: 'react',
-              var: 'React',
-              path: 'https://cdn.skypack.dev/react@18.3.1',
-            },
-            {
-              name: 'react-dom',
-              var: 'ReactDOM',
-              path: 'https://cdn.skypack.dev/react-dom@18.3.1',
-            },
-            {
-              name: 'react-router-dom',
-              var: 'ReactRouterDOM',
-              path: 'https://cdn.skypack.dev/react-router-dom@6.2.1',
-            },
-          ],
-        })
-      : null,
+    // !isSSR && useCDN
+    //   ? cdn({
+    //       modules: [
+    //         {
+    //           name: 'react',
+    //           var: 'React',
+    //           path: 'https://cdn.skypack.dev/react@18.3.1',
+    //         },
+    //         {
+    //           name: 'react-dom',
+    //           var: 'ReactDOM',
+    //           path: 'https://cdn.skypack.dev/react-dom@18.3.1',
+    //         },
+    //         {
+    //           name: 'react-router-dom',
+    //           var: 'ReactRouterDOM',
+    //           path: 'https://cdn.skypack.dev/react-router-dom@6.2.1',
+    //         },
+    //       ],
+    //     })
+    //   : null,
     nodePolyfills({ protocolImports: true }),
     svgrPlugin({ exportType: 'component' }),
     eslintConfig.default,
@@ -111,8 +111,7 @@ export default defineConfig( async ( { command, mode } ) =>
 
   const build = {
     manifest: true,
-    sourcemap: isProduction && !isSSR,
-    minify: isProduction ? 'esbuild' : false,
+    sourcemap: true,
     outDir: `${outputDir}/${isSSR ? 'server' : 'client'}`,
     cssCodeSplit: true,
     chunkSizeWarningLimit: 3000,

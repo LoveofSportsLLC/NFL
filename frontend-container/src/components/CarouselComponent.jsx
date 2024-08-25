@@ -1,5 +1,6 @@
 // src/components/CarouselComponent.jsx
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { Carousel, Card } from 'react-bootstrap';
 
 const CarouselComponent = ({ items, getYoutubeVideoId }) => {
@@ -61,6 +62,19 @@ const CarouselComponent = ({ items, getYoutubeVideoId }) => {
       ))}
     </Carousel>
   );
+};
+
+CarouselComponent.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string.isRequired, // Assuming there's a 'url' property used
+      urlToImage: PropTypes.string, // Image URL might be optional
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      publishedAt: PropTypes.string,
+    }),
+  ).isRequired, // Ensure `items` is an array of properly shaped objects
+  getYoutubeVideoId: PropTypes.func, // Ensure `getYoutubeVideoId` is a function
 };
 
 export default CarouselComponent;
