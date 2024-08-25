@@ -38,10 +38,22 @@ const FeaturedHighlights = () => {
           setHighlights(processedArticles);
           filterHighlights(processedArticles, filter, team);
         } else {
-          console.log('Invalid response data:', response.data);
+          const responseData = JSON.stringify(response.data);
+          console.log(
+            'Invalid response data:',
+            responseData.length > 200
+              ? responseData.slice(0, 200) + '...'
+              : responseData,
+          );
         }
       } catch (error) {
-        console.log('Error fetching highlights:', error);
+        const errorMessage = error.toString();
+        console.log(
+          'Error fetching highlights:',
+          errorMessage.length > 200
+            ? errorMessage.slice(0, 200) + '...'
+            : errorMessage,
+        );
       }
     };
     fetchHighlights();

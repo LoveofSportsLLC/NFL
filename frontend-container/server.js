@@ -8,6 +8,7 @@ import compression from 'compression';
 import sirv from 'sirv';
 import mime from 'mime';
 import axios from 'axios';
+import * as diff from 'diff'; // Import diff for HTML comparison
 
 dotenv.config();
 const isProduction = process.env.NODE_ENV === 'production';
@@ -18,13 +19,9 @@ console.log(base);
 const ABORT_DELAY = 10000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootPath = isInDocker ? '/app' : __dirname; // Use rootPath as determined by the environment
-const isSSR =
-  typeof import.meta !== 'undefined' && import.meta.env
-    ? import.meta.env.SSR
-    : process.env.SSR === 'true';
-const isLocal =  process.env.GIT_WORKFLOW === '0' 
+const isSSR = process.env.SSR === 'true';
+const isLocal = process.env.GIT_WORKFLOW === '0';
 const isCluster = process.env.GIT_WORKFLOW === '1';
-
 
 console.log('Server.js', 'Running Server.js script', '');
 console.log('Environment Info:', {
@@ -33,7 +30,7 @@ console.log('Environment Info:', {
   isSSR,
   isLocal,
   isCluster,
-} );
+});
 
 console.log(
   'Path to template HTML:',
@@ -75,31 +72,29 @@ async function startServer() {
 
   // Initialize Express app
   const app = express();
-
   // Middleware for JSON and URL-encoded payloads
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
   // Middleware for compression
   app.use(compression());
-
-  // Serve static files from the public directory
-  app.use(express.static(path.join(rootPath, 'public')));
   console.log(
     'Server.js',
     'Express app configured with JSON, URL encoding, and compression',
   );
 
   // Import and configure sirv to serve static files
+
+  // Serve static files from the public directory
+  app.use(express.static(path.join(rootPath, 'public')));
   console.log('Server.js', 'Serving static files from public directory');
 
   // Serve static files from dist/client using sirv
   app.use(
     sirv(path.resolve(rootPath, 'dist/client'), {
       dev: !isProduction,
-      maxAge: isProduction ? 31536000 : 0, // Cache for 1 year in production
-      immutable: isProduction, // Cache-control header: immutable
-      etag: isProduction, // Use ETag header for cache validation
+      maxAge: isProduction ? 31536000 : 0,
+      immutable: isProduction,
+      etag: isProduction,
       setHeaders: (res, pathname) => {
         if (pathname.endsWith('.js')) {
           res.setHeader('Content-Type', 'application/javascript');
@@ -110,19 +105,19 @@ async function startServer() {
   console.log('Server.js', 'Serving static files from dist/client');
 
   // Middleware for MIME type handling
-  const setCorrectMimeType = (req, res) => {
-    const ext = path.extname(req.url);
-    const mimeType = mime.getType(ext); // Get the correct MIME type for the extension
-    if (mimeType) {
-      res.setHeader('Content-Type', mimeType);
-      console.log(`Set MIME type for ${req.url} as ${mimeType}`);
-    }
-  };
-  app.use((req, res, next) => {
-    setCorrectMimeType(req, res);
-    next();
-  });
-  console.log('Server.js', 'MIME type middleware set up');
+  // const setCorrectMimeType = (req, res) => {
+  //   const ext = path.extname(req.url);
+  //   const mimeType = mime.getType(ext); // Get the correct MIME type for the extension
+  //   if (mimeType) {
+  //     res.setHeader('Content-Type', mimeType);
+  //     console.log(`Set MIME type for ${req.url} as ${mimeType}`);
+  //   }
+  // };
+  // app.use((req, res, next) => {
+  //   setCorrectMimeType(req, res);
+  //   next();
+  // });
+  // console.log('Server.js', 'MIME type middleware set up');
 
   // ROUTE LOGGER
   app.use((req, res, next) => {
@@ -131,10 +126,10 @@ async function startServer() {
   });
 
   // ROUTE /
-  app.get('/', (req, res) => {
-    console.log('Server.js', 'Incoming request', '/');
-    res.redirect(base);
-  });
+  // app.get('/', (req, res) => {
+  //   console.log('Server.js', 'Incoming request', '/');
+  //   res.redirect(base);
+  // });
 
   // ROUTE /LOG
   app.post('/log', (req, res) => {
@@ -145,140 +140,180 @@ async function startServer() {
   });
 
   // ROUTES /API/*
-  app.get('/api/*', (req, res) => {
-    res.json({ message: 'API response' });
-  });
+  // app.get('/api/*', (req, res) => {
+  //   res.json({ message: 'API response' });
+  // });
 
   // ROUTE /API/GAME/:GAMEID
-  app.get('/api/game/:gameId', async (req, res) => {
-    const { gameId } = req.params;
-    const apiKey = process.env.SPORTRADAR_API_KEY;
-    const url = `https://api.sportradar.us/nfl/official/trial/v7/en/games/${gameId}/timeline.json?api_key=${apiKey}`;
-    try {
-      const response = await axios.get(url);
-      const gameData = response.data.timeline.map((event) => ({
-        time: event.clock,
-        momentum: event.momentum,
-        score: `${event.home_points}-${event.away_points}`,
-        play: event.description,
-        keyPlayer: event.keyPlayer,
-        gameContext: {
-          down: event.down,
-          distance: event.distance,
-          redZone: event.redZone,
-        },
-      }));
-      res.json(gameData);
-    } catch (error) {
-      console.error('Error fetching game data:', error);
-      res.status(500).json({ error: 'Failed to fetch game data' });
-    }
-  });
-  console.log('Server.js', 'API routes set up');
+  // app.get('/api/game/:gameId', async (req, res) => {
+  //   const { gameId } = req.params;
+  //   const apiKey = process.env.SPORTRADAR_API_KEY;
+  //   const url = `https://api.sportradar.us/nfl/official/trial/v7/en/games/${gameId}/timeline.json?api_key=${apiKey}`;
+  //   try {
+  //     const response = await axios.get(url);
+  //     const gameData = response.data.timeline.map((event) => ({
+  //       time: event.clock,
+  //       momentum: event.momentum,
+  //       score: `${event.home_points}-${event.away_points}`,
+  //       play: event.description,
+  //       keyPlayer: event.keyPlayer,
+  //       gameContext: {
+  //         down: event.down,
+  //         distance: event.distance,
+  //         redZone: event.redZone,
+  //       },
+  //     }));
+  //     res.json(gameData);
+  //   } catch (error) {
+  //     console.error('Error fetching game data:', error);
+  //     res.status(500).json({ error: 'Failed to fetch game data' });
+  //   }
+  // });
+  // console.log('Server.js', 'API routes set up');
 
   // ROUTE /NON API ROUTE
-  app.get(/^(?!\/api).*/, (req, res) => {
-    res.sendFile(path.resolve(rootPath, 'dist/client/index.html'), (err) => {
-      // Updated to use rootPath
-      if (err) {
-        console.log('Server.js', 'Error sending index.html:', '', err);
-        res.status(500).send('Server Error');
-      }
-    });
-  });
-  console.log('Server.js', 'Catch-all route for non-API requests set up');
+  // app.get(/^(?!\/api).*/, (req, res) => {
+  //   res.sendFile(path.resolve(rootPath, 'dist/client/index.html'), (err) => {
+  // Updated to use rootPath
+  //     if (err) {
+  //       console.log('Server.js', 'Error sending index.html:', '', err);
+  //       res.status(500).send('Server Error');
+  //     }
+  //   });
+  // });
+  // console.log('Server.js', 'Catch-all route for non-API requests set up');
 
-  // Serve HTML in CATCHALL ROUTE
-  app.use('*', async (req, res) => {
-    try {
-      const isApiRequest = req.path.startsWith('/api');
-      if (isApiRequest) {
-        res.status(404).send('API route not found');
-        return;
-      }
-
-      const url = req.originalUrl.replace(base, '');
-
-      // Use rootPath to resolve the path to entry-server.js
-      const entryServerPath = path.resolve(
-        rootPath,
-        'dist/server/entry-server.js',
-      );
-      const render = ( await import( entryServerPath ) ).render;
-
-      let template = templateHtml; // Using preloaded templateHtml
-
-      const initialData = {};
-
-      // If render is not a function, log the error and return a 500 response
-      if (typeof render !== 'function') {
-        console.error('Render is not a function:', render);
-        res.status(500).send('Server Error');
-        return;
-      }
-
-      console.log(
-        'Server.js',
-        'Loaded template and SSR module in production mode',
-        { templateLength: template.length },
-      );
-
-      let didError = false;
-
-      const { pipe, abort } = render(url, ssrManifest, initialData, {
-        onShellError() {
-          res.status(500);
-          res.set({ 'Content-Type': 'text/html' });
-          res.send('<h1>Something went wrong during SSR</h1>');
-        },
-        onShellReady() {
-          res.status(didError ? 500 : 200);
-          res.set({ 'Content-Type': 'text/html' });
-          if (typeof pipe !== 'function') {
-            console.error('onShellReady: pipe is not a function');
-            res.status(500).send('Internal Server Error');
-            return;
-          }
-
-          const transformStream = new Transform({
-            transform(chunk, encoding, callback) {
-              res.write(chunk, encoding);
-              callback();
-            },
-          });
-
-          const [htmlStart, htmlEnd] = template.split('<!--app-html-->');
-
-          res.write(htmlStart);
-
-          transformStream.on('finish', () => {
-            res.end(htmlEnd);
-          });
-
-          pipe(transformStream);
-        },
-        onError(error) {
-          didError = true;
-          console.error(error);
-        },
-      });
-
-      setTimeout(() => {
-        abort();
-      }, ABORT_DELAY);
-    } catch (error) {
-      console.error('Server.js - Catch Error:', error.stack);
-      if (!res.headersSent) {
-        res.status(500).end('Internal Server Error');
-      }
+app.use('*', async (req, res) => {
+  try {
+    const isApiRequest = req.path.startsWith('/api');
+    if (isApiRequest) {
+      res.status(404).send('API route not found');
+      return;
     }
-  });
 
-  // Start http server
+    const url = req.originalUrl.replace(base, '');
+    const entryServerPath = path.resolve(
+      rootPath,
+      'dist/server/entry-server.js',
+    );
+    const { render } = await import(entryServerPath);
+
+    const initialData = {};
+    let didError = false;
+
+    if (typeof render !== 'function') {
+      console.error('Render is not a function:', render);
+      res.status(500).send('Server Error');
+      return;
+    }
+
+    const { pipe, abort, helmetContext } = render(
+      url,
+      ssrManifest,
+      initialData,
+    );
+
+    const onShellReady = (htmlStart, htmlEnd) => {
+      try {
+        res.status(didError ? 500 : 200);
+        res.set({ 'Content-Type': 'text/html' });
+
+        const transformStream = new Transform({
+          transform(chunk, encoding, callback) {
+            res.write(chunk, encoding);
+            callback();
+          },
+        });
+
+        // Inject the Helmet data collected on the server
+        const { helmet } = helmetContext;
+
+        if (!helmet || !helmet.title || !helmet.title.toString().trim()) {
+          throw new Error('Helmet title is not set correctly.');
+        }
+
+        const helmetTags = `
+          ${helmet.title.toString()}
+          ${helmet.meta.toString()}
+          ${helmet.link.toString()}
+        `;
+
+        const finalHtmlStart = htmlStart + helmetTags;
+        const finalHtml = finalHtmlStart + htmlEnd;
+
+        // Compare server-side rendered HTML with the initial HTML template
+        const templateContent = templateHtml;
+        const diffResult = diff.diffLines(templateContent, finalHtml);
+
+        let mismatchFound = false;
+
+        diffResult.forEach((part, index) => {
+          if (part.added || part.removed) {
+            mismatchFound = true;
+            const source = part.added ? 'Server' : 'Template';
+            console.log(`Mismatch at difference ${index + 1}:`);
+            console.log(`Source: ${source}`);
+            console.log(`Difference: ${part.value}`);
+            console.log('-----------------------------------');
+
+            // Optionally, log the specific element or line causing the mismatch
+            const match = part.value.match(/<(\w+)(\s|>)/);
+            if (match) {
+              console.log(`Element: <${match[1]}>`);
+            }
+          }
+        });
+
+        if (!mismatchFound) {
+          console.log('Server-generated HTML matches template HTML');
+        } else {
+          console.warn(
+            'Mismatch found between server-generated and template HTML',
+          );
+        }
+
+        res.write(finalHtmlStart);
+        res.write(
+          `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData).replace(/</g, '\\u003c')}</script>`,
+        );
+
+        transformStream.on('finish', () => {
+          res.end(htmlEnd);
+        });
+
+        pipe(transformStream);
+      } catch (error) {
+        onShellError(error);
+      }
+    };
+
+    const onShellError = (error) => {
+      console.error('Shell Error:', error);
+      res.status(500).send('<h1>Something went wrong during SSR</h1>');
+    };
+
+    const onError = (error) => {
+      didError = true;
+      console.error('SSR Error:', error);
+    };
+
+    setTimeout(() => {
+      abort();
+    }, ABORT_DELAY);
+
+    onShellReady(); // Call onShellReady when ready to send the response
+  } catch (error) {
+    console.error('Server.js - Catch Error:', error.stack);
+    if (!res.headersSent) {
+      res.status(500).end('Internal Server Error');
+    }
+  }
+});
+
+
   app.listen(port, () => {
     console.log(`Server started at http://localhost:${port}`);
   });
 }
 
-// Invoke the function to start the server
 startServer();

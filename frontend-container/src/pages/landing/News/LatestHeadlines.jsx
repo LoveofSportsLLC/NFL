@@ -21,12 +21,25 @@ const LatestHeadlines = () => {
           setNews(articles);
           filterNews(articles, filter, team);
         } else {
-          console.log('Invalid response data:', response.data);
+          const responseData = JSON.stringify(response.data);
+          console.log(
+            'Invalid response data:',
+            responseData.length > 200
+              ? responseData.slice(0, 200) + '...'
+              : responseData,
+          );
         }
       } catch (error) {
-        console.log('Error fetching news:', error);
+        const errorMessage = error.toString();
+        console.log(
+          'Error fetching news:',
+          errorMessage.length > 200
+            ? errorMessage.slice(0, 200) + '...'
+            : errorMessage,
+        );
       }
     };
+
     fetchNews();
   }, [filter, team]);
 

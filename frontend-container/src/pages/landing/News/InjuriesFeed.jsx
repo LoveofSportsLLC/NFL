@@ -12,23 +12,35 @@ const InjuriesFeed = () => {
   const [filter, setFilter] = useState('2months');
   const [team, setTeam] = useState('all');
 
-  useEffect(() => {
-    const fetchInjuries = async () => {
-      try {
-        const response = await axios.get(INJURIES_API_URL);
-        if (response.headers['content-type'].includes('application/json')) {
-          const articles = response.data.articles || []; // Safely handle undefined articles
-          setInjuries(articles);
-          filterInjuries(articles, filter, team);
-        } else {
-          console.log('Invalid response data:', response.data);
-        }
-      } catch (error) {
-        console.log('Error fetching injuries:', error);
+useEffect(() => {
+  const fetchInjuries = async () => {
+    try {
+      const response = await axios.get(INJURIES_API_URL);
+      if (response.headers['content-type'].includes('application/json')) {
+        const articles = response.data.articles || []; // Safely handle undefined articles
+        setInjuries(articles);
+        filterInjuries(articles, filter, team);
+      } else {
+        const responseData = JSON.stringify(response.data);
+        console.log(
+          'Invalid response data:',
+          responseData.length > 200
+            ? responseData.slice(0, 200) + '...'
+            : responseData,
+        );
       }
-    };
-    fetchInjuries();
-  }, [filter, team]);
+    } catch (error) {
+      const errorMessage = error.toString();
+      console.log(
+        'Error fetching injuries:',
+        errorMessage.length > 200
+          ? errorMessage.slice(0, 200) + '...'
+          : errorMessage,
+      );
+    }
+  };
+  fetchInjuries();
+}, [filter, team]);
 
   const filterInjuries = (articles = [], filter, team) => {
     if (!Array.isArray(articles) || articles.length === 0) {
