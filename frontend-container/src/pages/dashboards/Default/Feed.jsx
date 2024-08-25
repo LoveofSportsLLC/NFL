@@ -1,5 +1,5 @@
+// src/pages/dashboards/Default/Feed.jsx
 import React from 'react';
-
 import { Badge, Button, Card } from 'react-bootstrap';
 
 const Feed = () => (
@@ -41,7 +41,7 @@ const Feed = () => (
         <div className="flex-grow-1">
           <small className="float-end text-navy">30m ago</small>
           <strong>Chris Wood</strong> posted something on{' '}
-          <strong>Stacie Hall</strong>'s timeline
+          <strong>Stacie Hall&rsquo;s</strong> timeline
           <br />
           <small className="text-muted">Today 7:21 pm</small>
           <div className="border text-sm text-muted p-2 mt-1">

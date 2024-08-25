@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+// Removed Link from the imports since it's not used
 import screenshotFootballAnalytics from '/photos/screenshot-football-analytics.png';
 
 const Intro = ({ handleDonateClick }) => (
@@ -52,5 +53,9 @@ const Intro = ({ handleDonateClick }) => (
     </Container>
   </section>
 );
+
+Intro.propTypes = {
+  handleDonateClick: PropTypes.func.isRequired, // Define propTypes to validate handleDonateClick
+};
 
 export default Intro;

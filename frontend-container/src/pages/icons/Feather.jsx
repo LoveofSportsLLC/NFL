@@ -1,10 +1,9 @@
 import React from 'react';
-import useHelmet from '../../utils/HelmetLoader'; // Import the utility module
+import PropTypes from 'prop-types'; // Import PropTypes
+import useHelmet from '../../utils/HelmetLoader';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
 import * as Icon from 'react-feather';
 
 const icons = [
@@ -116,6 +115,13 @@ const FeatherIcon = ({ icon }) => (
     </div>
   </Col>
 );
+
+FeatherIcon.propTypes = {
+  icon: PropTypes.shape({
+    icon: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const FeatherIcons = () => {
   const Helmet = useHelmet();

@@ -43,6 +43,11 @@ const Default = () => {
             <Appointments />
           </Col>
         </Row>
+        <Row>
+          <Col lg="6" xl="4" className="d-flex">
+            <BarChart />
+          </Col>
+        </Row>
         <Projects />
       </Container>
     </React.Fragment>

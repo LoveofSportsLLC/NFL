@@ -1,7 +1,6 @@
+// src/pages/dashboards/Social/Activities.jsx
 import React from 'react';
-
 import { Button, Card, Dropdown } from 'react-bootstrap';
-
 import { MoreHorizontal } from 'react-feather';
 
 const Activities = () => (
@@ -52,7 +51,7 @@ const Activities = () => (
         <div className="flex-grow-1 ms-3">
           <small className="float-end text-navy">30m ago</small>
           <strong>Chris Wood</strong> posted something on{' '}
-          <strong>Stacie Hall</strong>'s timeline
+          <strong>Stacie Hall&rsquo;s</strong> timeline
           <br />
           <small className="text-muted">Today 7:21 pm</small>
           <div className="border text-sm text-muted p-2 mt-1">
@@ -91,7 +90,7 @@ const Activities = () => (
         <div className="flex-grow-1 ms-3">
           <small className="float-end text-navy">3h ago</small>
           <strong>Carl Jenkins</strong> posted two photos on{' '}
-          <strong>Stacie Hall</strong>'s timeline
+          <strong>Stacie Hall&rsquo;s</strong> timeline
           <br />
           <small className="text-muted">Today 5:12 pm</small>
           <div className="row no-gutters mt-1">

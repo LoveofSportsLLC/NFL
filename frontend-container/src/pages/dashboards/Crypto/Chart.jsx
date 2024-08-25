@@ -2,7 +2,7 @@ import React, { Suspense, useEffect } from 'react';
 import { Card, Dropdown } from 'react-bootstrap';
 import { MoreHorizontal } from 'react-feather';
 
-const LazyApexCharts = R;
+const LazyApexCharts = React.lazy(() => import('react-apexcharts'));
 const data = [
   {
     data: [

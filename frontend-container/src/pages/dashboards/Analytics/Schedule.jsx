@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function GamesSchedule(props) {
+function GamesSchedule() {
   const [graphql, setGraphql] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,20 @@ function GamesSchedule(props) {
           }}
           role="grid"
           aria-label="Games Schedule"
-        ></div>
+        >
+          {graphql && graphql.data ? (
+            graphql.data.games.map((game, index) => (
+              <div key={index}>
+                <strong>
+                  {game.team1} vs. {game.team2}
+                </strong>
+                <p>{game.date}</p>
+              </div>
+            ))
+          ) : (
+            <p>Loading games...</p>
+          )}
+        </div>
       </section>
     </div>
   );

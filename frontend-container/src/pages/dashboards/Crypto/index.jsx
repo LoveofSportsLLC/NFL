@@ -4,6 +4,7 @@ import Chart from './Chart';
 import Header from './Header';
 import Markets from './Markets';
 import Orders from './Orders';
+import Tickers from './Tickers'; // Import Tickers component
 import useHelmet from '../../../utils/HelmetLoader';
 
 const Crypto = () => {

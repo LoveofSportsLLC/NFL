@@ -1,10 +1,11 @@
 import React from 'react';
-import useHelmet from '../../../utils/HelmetLoader'; // Import the utility module
+import PropTypes from 'prop-types';
+import useHelmet from '../../../utils/HelmetLoader';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+// Ensure these are defined or imported correctly
 import iconsSolid from './iconsSolid';
 import iconsRegular from './iconsRegular';
 import iconsBrands from './iconsBrands';
@@ -21,6 +22,13 @@ const Icon = ({ icon }) => (
     </div>
   </Col>
 );
+
+Icon.propTypes = {
+  icon: PropTypes.shape({
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const FontAwesomeIcons = () => {
   const Helmet = useHelmet();

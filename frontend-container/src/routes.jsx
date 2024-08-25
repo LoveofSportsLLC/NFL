@@ -2,7 +2,6 @@
 import React, { lazy } from 'react';
 import AuthLayout from './layouts/Auth';
 import DashboardLayout from './layouts/Dashboard';
-import DocLayout from './layouts/Doc';
 import LandingLayout from './layouts/Landing';
 import AuthGuard from './components/guards/AuthGuard';
 import DonatePage from './pages/auth/Donate';
@@ -61,27 +60,6 @@ const Notifications = lazy(() => import('./pages/notifications/Notifications'));
 const GoogleMaps = lazy(() => import('./pages/maps/GoogleMaps'));
 const VectorMaps = lazy(() => import('./pages/maps/VectorMaps'));
 const Calendar = lazy(() => import('./pages/calendar/Calendar'));
-const Introduction = lazy(() => import('./pages/docs/Introduction'));
-const GettingStarted = lazy(() => import('./pages/docs/GettingStarted'));
-const Routing = lazy(() => import('./pages/docs/Routing'));
-const Auth0 = lazy(() => import('./pages/docs/auth/Auth0'));
-const Cognito = lazy(() => import('./pages/docs/auth/Cognito'));
-const Firebase = lazy(() => import('./pages/docs/auth/Firebase'));
-const JWT = lazy(() => import('./pages/docs/auth/JWT'));
-const Guards = lazy(() => import('./pages/docs/Guards'));
-const APICalls = lazy(() => import('./pages/docs/APICalls'));
-const Redux = lazy(() => import('./pages/docs/Redux'));
-const Internationalization = lazy(
-  () => import('./pages/docs/Internationalization'),
-);
-const EnvironmentVariables = lazy(
-  () => import('./pages/docs/EnvironmentVariables'),
-);
-const ESLintAndPrettier = lazy(() => import('./pages/docs/ESLintAndPrettier'));
-const Deployment = lazy(() => import('./pages/docs/Deployment'));
-const MigratingToNextJS = lazy(() => import('./pages/docs/MigratingToNextJS'));
-const Support = lazy(() => import('./pages/docs/Support'));
-const Changelog = lazy(() => import('./pages/docs/Changelog'));
 const ProtectedPage = lazy(() => import('./pages/protected/ProtectedPage'));
 // const StaticDashboard = lazy(
 //   () => import('./pages/dashboards/Static-Dashboard/StaticDashboard'),
@@ -393,80 +371,6 @@ const routes = [
       {
         path: '',
         element: <Calendar />,
-      },
-    ],
-  },
-  {
-    path: 'docs',
-    element: <DocLayout />,
-    children: [
-      {
-        path: 'introduction',
-        element: <Introduction />,
-      },
-      {
-        path: 'getting-started',
-        element: <GettingStarted />,
-      },
-      {
-        path: 'routing',
-        element: <Routing />,
-      },
-      {
-        path: 'auth/auth0',
-        element: <Auth0 />,
-      },
-      {
-        path: 'auth/cognito',
-        element: <Cognito />,
-      },
-      {
-        path: 'auth/firebase',
-        element: <Firebase />,
-      },
-      {
-        path: 'auth/jwt',
-        element: <JWT />,
-      },
-      {
-        path: 'guards',
-        element: <Guards />,
-      },
-      {
-        path: 'api-calls',
-        element: <APICalls />,
-      },
-      {
-        path: 'redux',
-        element: <Redux />,
-      },
-      {
-        path: 'internationalization',
-        element: <Internationalization />,
-      },
-      {
-        path: 'environment-variables',
-        element: <EnvironmentVariables />,
-      },
-      {
-        path: 'eslint-and-prettier',
-        element: <ESLintAndPrettier />,
-      },
-      {
-        path: 'deployment',
-        element: <Deployment />,
-      },
-      {
-        path: 'migrating-to-next-js',
-        element: <MigratingToNextJS />,
-      },
-      {
-        path: 'support',
-        element: <Support />,
-      },
-      {
-        path: 'changelog',
-        element: <Changelog />,
       },
     ],
   },

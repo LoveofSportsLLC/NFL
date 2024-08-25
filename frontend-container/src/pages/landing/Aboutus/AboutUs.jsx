@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal } from 'react-bootstrap';
 
 const AboutUsModal = ({ show, onHide }) => {
@@ -43,6 +44,11 @@ const AboutUsModal = ({ show, onHide }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+AboutUsModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
 };
 
 export default AboutUsModal;

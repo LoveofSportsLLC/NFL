@@ -1,5 +1,6 @@
-///NFL/frontend-container/src/pages/landing/Aboutus/SupportModal.jsx
+// src/pages/landing/Aboutus/SupportModal.jsx
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -132,6 +133,12 @@ const SupportModal = ({ show, onHide, emailAddress }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+SupportModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  emailAddress: PropTypes.string.isRequired,
 };
 
 export default SupportModal;

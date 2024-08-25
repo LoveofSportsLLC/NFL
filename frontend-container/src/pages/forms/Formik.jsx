@@ -49,10 +49,10 @@ const FormikExample = () => (
         {({
           handleSubmit,
           handleChange,
-          handleBlur,
+          handleBlur,  // Remove this if unused
           values,
           touched,
-          isValid,
+          isValid,  // Remove this if unused
           errors,
         }) => (
           <Form noValidate onSubmit={handleSubmit}>
@@ -64,6 +64,7 @@ const FormikExample = () => (
                   name="firstName"
                   value={values.firstName}
                   onChange={handleChange}
+                  onBlur={handleBlur} // <-- Add handleBlur here
                   isValid={touched.firstName && !errors.firstName}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -145,7 +146,9 @@ const FormikExample = () => (
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            <Button type="submit">Submit form</Button>
+            <Button type="submit" disabled={!isValid}>
+              Submit form
+            </Button>
           </Form>
         )}
       </Formik>

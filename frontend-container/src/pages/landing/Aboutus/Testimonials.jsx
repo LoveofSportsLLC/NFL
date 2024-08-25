@@ -1,4 +1,4 @@
-// src/pages/landing/Testimonials.jsx
+// src/pages/landing/Aboutus/Testimonials.jsx
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +14,7 @@ const Testimonials = () => (
         <h2 className="h1">Users love our NFL Statistics Analytics</h2>
         <p className="text-muted fs-lg">
           See what some of our satisfied users have to say about the valuable
-          insights they've gained from our platform.
+          insights they&rsquo;ve gained from our platform.
         </p>
       </div>
       <Row>
@@ -38,10 +38,10 @@ const Testimonials = () => (
                 </div>
               </div>
               <p className="lead mb-2">
-                "The NFL Statistics Analytics platform has revolutionized the
-                way I analyze games. The in-depth player statistics and
+                &quot;The NFL Statistics Analytics platform has revolutionized
+                the way I analyze games. The in-depth player statistics and
                 historical data are incredibly valuable for making informed
-                predictions."
+                predictions.&quot;
               </p>
               <div className="landing-stars">
                 <FontAwesomeIcon icon={faStar} />

@@ -1,4 +1,4 @@
-// src/pages/landing/Faq.jsx
+// src/pages/landing/Aboutus/Faq.jsx
 import React, { useState } from 'react';
 import { Container, Row, Col, Accordion, Card } from 'react-bootstrap';
 
@@ -31,8 +31,9 @@ const Faq = () => {
                 <Accordion.Collapse eventKey="0">
                   <Card.Body className="py-3">
                     You can access player statistics by navigating to the
-                    "Player Stats" dashboard on our platform. There, you'll find
-                    detailed information about individual players' performance.
+                    &quot;Player Stats&quot; dashboard on our platform. There,
+                    you&rsquo;ll find detailed information about individual
+                    players&rsquo; performance.
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -48,7 +49,7 @@ const Faq = () => {
                     Our platform provides comprehensive team statistics,
                     including offensive and defensive performance, win-loss
                     records, player rosters, and more. You can explore these
-                    statistics in the "Team Stats" dashboard.
+                    statistics in the &quot;Team Stats&quot; dashboard.
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -61,10 +62,10 @@ const Faq = () => {
                 </Card.Header>
                 <Accordion.Collapse eventKey="2">
                   <Card.Body className="py-3">
-                    To analyze past games, you can use our "Game Analysis"
-                    dashboard. It provides in-depth insights into historical
-                    games, key plays, and game-changing moments. You can review
-                    game statistics, player performances, and more.
+                    To analyze past games, you can use our &quot;Game
+                    Analysis&quot; dashboard. It provides in-depth insights into
+                    historical games, key plays, and game-changing moments. You
+                    can review game statistics, player performances, and more.
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
@@ -79,8 +80,9 @@ const Faq = () => {
                   <Card.Body className="py-3">
                     Yes, our platform allows you to compare player statistics.
                     You can select multiple players and view their performance
-                    metrics side by side in the "Player Stats" dashboard. This
-                    feature helps you make informed decisions and comparisons.
+                    metrics side by side in the &quot;Player Stats&quot;
+                    dashboard. This feature helps you make informed decisions
+                    and comparisons.
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
