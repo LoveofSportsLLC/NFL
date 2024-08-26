@@ -4,7 +4,12 @@ import "./inc/css/theme.css";
 const Menu = () => (
     <div>
         <section className="navMenu">
-
+            <div className="clientLogo">
+                <a href="">
+                    <img src="/src/pages/dashboards/Static-Dashboard/images/logo.png" style="max-width:70px;"/>
+                    <img src="/src/pages/dashboards/Static-Dashboard/images/logo-intial.png" style="display:none;"/>
+                </a>
+            </div>
             <section className="menuWrapper">
                 <nav className="leftMenu">
                     <ul>

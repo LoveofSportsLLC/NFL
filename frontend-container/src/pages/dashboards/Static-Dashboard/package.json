@@ -10,5 +10,8 @@
     "type": "git",
     "url": "https://github.com/LoveofSportsLLC/NFL.git"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "react-helmet": "^6.1.0"
+  }
 }
