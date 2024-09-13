@@ -25,7 +25,7 @@ body {
   color: #ffffff;
   overflow: hidden;
   overflow-y: scroll;
-  background-color: rgb(0, 216, 255);
+  background-color: rgb(0, 216, 255, 0.6);
   background: url("../../images/background-bg.png") no-repeat;
   background-position: top;
   background-size: 100%;
