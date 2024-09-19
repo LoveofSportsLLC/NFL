@@ -330,13 +330,12 @@ flex-grow: 0;
   margin-top:10px;;
 }
 .card h2 {
-
   font-size:25px;
   font-weight:500;
   color: #52b899;
  /* padding-bottom:18px;*/
 }
-.barCharts{
+.barCharts {
 width: 530px;
 height: 325px;
 background: rgba(0, 4, 49, 0.8);

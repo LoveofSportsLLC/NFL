@@ -3313,10 +3313,11 @@ Custom Icon
   
   @media (min-width: 900px) {
 	  .notification-ui_dd {
-		  min-width: 530px;
-		  position: absolute;
-		  left: 134px;
-		  top: 70px;
+		color: #000000;
+		min-width: 530px;
+		position: absolute;
+		left: 134px;
+		top: 70px;
 	  }
   }
   
@@ -3352,6 +3353,7 @@ Custom Icon
 	  box-shadow: 0 5px 20px -3px rgba(0, 0, 0, 0.16);
 	  border: 0;
 	  max-width: 400px;
+	  color:#000000;
   }
   
   .notification-ui_dd:after {
@@ -3601,3 +3603,4 @@ Custom Icon
 	.h3, h3 {
 	  font-size: 1.75rem;
 	}
+}
