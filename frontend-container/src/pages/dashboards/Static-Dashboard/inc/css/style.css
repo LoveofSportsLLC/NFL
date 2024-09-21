@@ -3314,7 +3314,7 @@ Custom Icon
   @media (min-width: 900px) {
 	  .notification-ui_dd {
 		color: #000000;
-		min-width: 530px;
+		min-width:400px;
 		position: absolute;
 		left: 134px;
 		top: 70px;
@@ -3380,7 +3380,7 @@ Custom Icon
 	  max-height: 500px;
 	  overflow: auto;
   }
-  
+
   .notification-list {
 	  display: -webkit-box;
 	  display: -ms-flexbox;
@@ -3585,7 +3585,7 @@ Custom Icon
   .navbar-dark .navbar-text a:hover {
 	color:#fff
   }
-  .card {
+.card {
 	position:relative;
 	display:flex;
 	flex-direction:column;
