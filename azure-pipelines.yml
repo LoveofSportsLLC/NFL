@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - KagleNFL2025  # Replace with your primary branch if different
+      - KaggleNFL2025  # Replace with your primary branch if different
 
 pool:
   name: 'Ubuntu-latest'  # Replace with the name of your self-hosted agent pool
@@ -23,10 +23,15 @@ steps:
       USERNAME: $(USERNAME)  # Ensure these variables are set in your Azure DevOps pipeline settings or secret variables
       EMAIL: $(EMAIL)
 
+  # Make sure we are on the correct branch before pushing
+  - script: |
+      git checkout $(Build.SourceBranchName)
+    displayName: 'Checkout Source Branch'
+
   # Push changes to GitHub
   - script: |
       git remote add github https://$USERNAME:$GITHUB_TOKEN@github.com/$USERNAME/$GITHUB_REPO.git || echo "Remote already exists"
-      git push github $(Build.SourceBranchName)  # Replace with 'main' or a specific branch if needed
+      git push github $(Build.SourceBranchName)  # Push the current branch to GitHub
     env:
       GITHUB_TOKEN: $(GITHUB_TOKEN)
       USERNAME: $(USERNAME)
