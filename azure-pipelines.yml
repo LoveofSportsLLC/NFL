@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include:
+      - KagleNFL2025  # or your primary branch
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: self
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+
+  - script: |
+      git config --global user.name "$(GITHUB_USERNAME)"
+      git config --global user.email "$(EMAIL)"  # replace with your email
+
+  - script: |
+      git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/$(GITHUB_USERNAME)/$(GITHUB_REPO).git
+      git push github ADO
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
+    displayName: 'Push changes to GitHub'
