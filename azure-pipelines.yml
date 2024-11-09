@@ -11,8 +11,8 @@ steps:
 
   - task: UsePythonVersion@0
     inputs:
-      versionSpec: '3.x'
-
+      versionSpec: '3.10'
+      addToPath: true
   - script: |
       git config --global user.name "$(GITHUB_USERNAME)"
       git config --global user.email "$(EMAIL)"  # replace with your email
