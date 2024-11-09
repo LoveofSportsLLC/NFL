@@ -4,7 +4,7 @@ trigger:
       - KagleNFL2025  # or your primary branch
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'Hosted Agent'
 
 steps:
   - checkout: self
