@@ -4,19 +4,26 @@ trigger:
       - KagleNFL2025  # or your primary branch
 
 pool:
-  name: 'Ubuntu-latest'
+  name: 'Ubuntu-latest'  # Replace with the name of your self-hosted agent pool
 
 steps:
   - checkout: self
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.10'
-      addToPath: true
+  # Verify that Python is available
+  - script: |
+      python3 --version
+      which python3
+    displayName: 'Verify Python Version'
+    
+  # Configure git settings for GitHub push
   - script: |
       git config --global user.name "$(GITHUB_USERNAME)"
       git config --global user.email "$(EMAIL)"  # replace with your email
+    env:
+      GITHUB_USERNAME: $(GITHUB_USERNAME)
+      EMAIL: $(EMAIL)
 
+  # Push changes to GitHub
   - script: |
       git remote add github https://$(GITHUB_USERNAME):$(GITHUB_TOKEN)@github.com/$(GITHUB_USERNAME)/$(GITHUB_REPO).git
       git push github ADO
