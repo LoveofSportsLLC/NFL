@@ -1,16 +1,10 @@
 trigger:
   branches:
     include:
-      - KagleNFL2025  # or your primary branch
+      - KagleNFL2025  # Replace with your primary branch if different
 
 pool:
   name: 'Ubuntu-latest'  # Replace with the name of your self-hosted agent pool
-
-variables:
-  GITHUB_TOKEN: $(GITHUB_TOKEN)          
-  USERNAME: $(USERNAME)  
-  EMAIL: $(EMAIL)       
-  GITHUB_REPO: $(GITHUB_REPO) 
 
 steps:
   - checkout: self
@@ -23,16 +17,18 @@ steps:
     
   # Configure git settings for GitHub push
   - script: |
-      git config --global user.name "$(USERNAME)"
-      git config --global user.email "$(EMAIL)" 
+      git config --global user.name "$USERNAME"
+      git config --global user.email "$EMAIL"
     env:
-      USERNAME: $(USERNAME)
+      USERNAME: $(USERNAME)  # Ensure these variables are set in your Azure DevOps pipeline settings or secret variables
       EMAIL: $(EMAIL)
 
   # Push changes to GitHub
   - script: |
-      git remote add github https://$(USERNAME):$(GITHUB_TOKEN)@github.com/$(USERNAME)/$(GITHUB_REPO).git
-      git push github azure-pipelines
+      git remote add github https://$USERNAME:$GITHUB_TOKEN@github.com/$USERNAME/$GITHUB_REPO.git || echo "Remote already exists"
+      git push github $(Build.SourceBranchName)  # Replace with 'main' or a specific branch if needed
     env:
       GITHUB_TOKEN: $(GITHUB_TOKEN)
+      USERNAME: $(USERNAME)
+      GITHUB_REPO: $(GITHUB_REPO)
     displayName: 'Push changes to GitHub'
