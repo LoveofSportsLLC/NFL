@@ -26,11 +26,15 @@ steps:
       USERNAME: $(USERNAME)  # Ensure these variables are set in your Azure DevOps pipeline settings or secret variables
       EMAIL: $(EMAIL)
 
-  # List branches to check for KaggleNFL2025
+  # Fetch all branches and explicitly checkout KaggleNFL2025
   - script: |
-      git branch -r
       git fetch origin
-      git checkout -B KaggleNFL2025 origin/KaggleNFL2025 || echo "Branch KaggleNFL2025 not found"
+      if git rev-parse --verify origin/KaggleNFL2025; then
+        git checkout -B KaggleNFL2025 origin/KaggleNFL2025
+      else
+        echo "Branch KaggleNFL2025 not found on origin. Please ensure it exists and is spelled correctly."
+        exit 1
+      fi
     displayName: 'Fetch and Checkout KaggleNFL2025 Branch'
 
   # Push changes to GitHub target branch (azure-pipelines)
