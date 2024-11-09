@@ -4,7 +4,7 @@ trigger:
       - KagleNFL2025  # or your primary branch
 
 pool:
-  name: 'Azure Pipelines'
+  name: 'Ubuntu-latest'
 
 steps:
   - checkout: self
