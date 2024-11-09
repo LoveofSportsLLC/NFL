@@ -1,17 +1,16 @@
 trigger:
   branches:
     include:
-      - KaggleNFL2025  # The branch in Azure DevOps that triggers the pipeline
+      - KaggleNFL2025
 
 pool:
-  name: 'Ubuntu-latest'  # Use your self-hosted agent pool name
+  name: 'Ubuntu-latest'
 
 variables:
   TARGET_BRANCH: 'azure-pipelines'  # Target branch on GitHub
 
 steps:
   - checkout: self
-    # Link the GitHub service connection for OAuth authentication
     persistCredentials: true
 
   # Verify Python installation
@@ -25,7 +24,7 @@ steps:
       git config --global user.name "Azure Pipelines"
       git config --global user.email "$(EMAIL)"  # Replace with your email
 
-  # Push changes to GitHub target branch (azure-pipelines)
+  # Force push changes to GitHub target branch (azure-pipelines)
   - script: |
-      git push origin HEAD:$(TARGET_BRANCH)
+      git push --force origin HEAD:$(TARGET_BRANCH)
     displayName: 'Push changes to GitHub'
