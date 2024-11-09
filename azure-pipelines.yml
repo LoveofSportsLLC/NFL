@@ -2,6 +2,8 @@ trigger:
   branches:
     include:
       - KaggleNFL2025
+    exclude:
+      - azure-pipelines
 
 pool:
   name: 'Ubuntu-latest'
