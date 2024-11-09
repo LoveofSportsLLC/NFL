@@ -11,27 +11,21 @@ variables:
 
 steps:
   - checkout: self
+    # Link the GitHub service connection for OAuth authentication
+    persistCredentials: true
 
   # Verify Python installation
   - script: |
       python3 --version
       which python3
     displayName: 'Verify Python Version'
-    
-  # Configure Git settings for GitHub push
+ 
+  # Configure Git settings for pushing to GitHub
   - script: |
-      git config --global user.name "$USERNAME"
-      git config --global user.email "$EMAIL"
-    env:
-      USERNAME: $(USERNAME)  # Ensure these are set as pipeline secrets
-      EMAIL: $(EMAIL)
+      git config --global user.name "Azure Pipelines"
+      git config --global user.email "$(EMAIL)"  # Replace with your email
 
   # Push changes to GitHub target branch (azure-pipelines)
   - script: |
-      git remote add github https://$USERNAME:$GITHUB_TOKEN@github.com/$USERNAME/$GITHUB_REPO.git || echo "Remote already exists"
-      git push github HEAD:$(TARGET_BRANCH)  # Push current changes to azure-pipelines on GitHub
-    env:
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
-      USERNAME: $(USERNAME)
-      GITHUB_REPO: $(GITHUB_REPO)
+      git push origin HEAD:$(TARGET_BRANCH)
     displayName: 'Push changes to GitHub'
