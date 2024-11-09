@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - KaggleNFL2025  # Replace with your primary branch in Azure DevOps
+      - KaggleNFL2025  # Your primary branch in Azure DevOps
 
 pool:
   name: 'Ubuntu-latest'  # Replace with the name of your self-hosted agent pool
@@ -23,18 +23,19 @@ steps:
       git config --global user.name "$USERNAME"
       git config --global user.email "$EMAIL"
     env:
-      USERNAME: $(USERNAME)  # Ensure these variables are set in your Azure DevOps pipeline settings or secret variables
+      USERNAME: $(USERNAME)  # Set these in your Azure DevOps pipeline settings or secret variables
       EMAIL: $(EMAIL)
 
-  # Explicitly checkout the KaggleNFL2025 branch
+  # Fetch and checkout KaggleNFL2025 branch explicitly
   - script: |
-      git checkout KaggleNFL2025
-    displayName: 'Checkout KaggleNFL2025 Branch'
+      git fetch origin KaggleNFL2025  # Ensure the branch exists locally
+      git checkout -B KaggleNFL2025 origin/KaggleNFL2025
+    displayName: 'Fetch and Checkout KaggleNFL2025 Branch'
 
   # Push changes to GitHub target branch (azure-pipelines)
   - script: |
       git remote add github https://$USERNAME:$GITHUB_TOKEN@github.com/$USERNAME/$GITHUB_REPO.git || echo "Remote already exists"
-      git push github KaggleNFL2025:$(TARGET_BRANCH)  # Push the KaggleNFL2025 branch in ADO to azure-pipelines on GitHub
+      git push github KaggleNFL2025:$(TARGET_BRANCH)  # Push KaggleNFL2025 branch to azure-pipelines on GitHub
     env:
       GITHUB_TOKEN: $(GITHUB_TOKEN)
       USERNAME: $(USERNAME)
